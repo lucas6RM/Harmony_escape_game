@@ -62,7 +62,7 @@ export interface GameSave {
 - [x] Tâche 3 : Créer le composant `HeroScreen` (écran d'accueil immersif Mario Galaxy avec titre, emojis, texte d'intro)
 - [x] Tâche 4 : Créer le composant `CharacterSelector` (grille des 4 personnages cliquables avec résumé et emoji)
 - [x] Tâche 5 : Configurer le routage : `/accueil` → HeroScreen + CharacterSelector, puis navigation vers le jeu après sélection
-- [ ] Tâche 6 : Tests d'intégration du composant `CharacterSelector` (sélection, persistance localStorage, navigation)
+- [x] Tâche 6 : Tests d'intégration du composant `CharacterSelector` (sélection, persistance localStorage, navigation)
 - [ ] Tâche 7 : Vérifier build et tests passent
 
 ## Zone de Transit & Logs
