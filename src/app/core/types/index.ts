@@ -10,3 +10,5 @@ export type { QuizType, Quiz } from './quiz';
 export type { NarrativeChoice } from './narrative-choice';
 export type { Zone } from './zone';
 export type { CharacterPath } from './character-path';
+export type { GameSave } from './game-save';
+export { GAME_SAVE_KEY } from './game-save';
