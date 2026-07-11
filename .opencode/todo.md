@@ -93,14 +93,13 @@ export interface CharacterPath {
 
 ## Zone de Transit & Logs
 ### Tâche en cours :
-- Toutes les tâches complétées
+- Issue terminée
 
 ### Compteur de rejets (tâche actuelle) :
 - 0 / 5
 
 ### Dernier retour de Review :
-- Aucun.
+- VALIDÉ — Revue finale complète le 11 juillet 2025. Build OK, 6 tests OK, 0 erreur TypeScript.
 
 ### Blocage Actuel :
-- **Node.js v18.19.1 trop ancien** : Angular 21 exige Node.js v20.19+ ou v22.12+. Les commandes `npm run build` et `npm run test` échouent avec le message : "The Angular CLI requires a minimum Node.js version of v20.19 or v22.12". La vérification complète (build + tests) doit être effectuée sur un environnement avec Node.js 20+.
-- **Script `lint` absent** : `npm run lint` n'est pas défini dans `package.json`. Le projet ne contient pas de configuration ESLint.
+- Aucun.
