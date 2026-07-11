@@ -1,0 +1,5 @@
+@if (!showSelector()) {
+  <app-hero-screen (startGame)="onStartGame()" />
+} @else {
+  <app-character-selector (characterSelected)="onCharacterSelected($event)" />
+}

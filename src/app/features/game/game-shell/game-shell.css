@@ -1,0 +1,13 @@
+:host {
+  display: block;
+}
+
+.game-shell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: radial-gradient(ellipse at center, #1a1040 0%, #0a0a2e 50%, #000010 100%);
+  color: #e2e8f0;
+  font-size: 1.25rem;
+}
