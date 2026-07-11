@@ -1,0 +1,176 @@
+:host {
+  display: block;
+}
+
+.selector-screen {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: radial-gradient(ellipse at center, #1a1040 0%, #0a0a2e 50%, #000010 100%);
+  padding: 2rem;
+}
+
+/* ── Étoiles décoratives ─────────────────────────────── */
+
+.stars {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.star {
+  position: absolute;
+  color: #fbbf24;
+  opacity: 0;
+  animation: twinkle 3s ease-in-out infinite;
+  font-size: 1rem;
+}
+
+.star--1  { top: 5%;  left: 10%; animation-delay: 0s;    font-size: 0.8rem; }
+.star--2  { top: 12%; left: 80%; animation-delay: 0.4s;  font-size: 1.2rem; }
+.star--3  { top: 25%; left: 20%; animation-delay: 0.8s;  font-size: 0.6rem; }
+.star--4  { top: 35%; left: 70%; animation-delay: 1.2s;  font-size: 1rem;   }
+.star--5  { top: 45%; left: 5%;  animation-delay: 1.6s;  font-size: 0.9rem; }
+.star--6  { top: 55%; left: 90%; animation-delay: 2s;    font-size: 0.7rem; }
+.star--7  { top: 65%; left: 15%; animation-delay: 2.4s;  font-size: 1.1rem; }
+.star--8  { top: 75%; left: 85%; animation-delay: 0.2s;  font-size: 0.8rem; }
+.star--9  { top: 85%; left: 40%; animation-delay: 0.6s;  font-size: 1rem;   }
+.star--10 { top: 15%; left: 50%; animation-delay: 1s;    font-size: 0.6rem; }
+.star--11 { top: 30%; left: 95%; animation-delay: 1.4s;  font-size: 0.9rem; }
+.star--12 { top: 50%; left: 30%; animation-delay: 1.8s;  font-size: 0.7rem; }
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; transform: scale(0.8); }
+  50%      { opacity: 1;   transform: scale(1.2); }
+}
+
+/* ── Contenu principal ───────────────────────────────── */
+
+.selector-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.5rem;
+  max-width: 960px;
+  width: 100%;
+  text-align: center;
+}
+
+/* ── En-tête ─────────────────────────────────────────── */
+
+.selector-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.selector-title {
+  font-size: clamp(1.75rem, 5vw, 2.5rem);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 25%, #fde68a 50%, #f59e0b 75%, #fbbf24 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 4s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+
+.selector-subtitle {
+  font-size: clamp(0.95rem, 2vw, 1.15rem);
+  color: #c4b5fd;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  margin: 0;
+}
+
+/* ── Grille des personnages ──────────────────────────── */
+
+.character-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* ── Carte personnage ────────────────────────────────── */
+
+.character-card {
+  --card-color: #ffffff;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.5rem 1.25rem;
+  background: rgba(30, 20, 60, 0.7);
+  border: 2px solid var(--card-color);
+  border-radius: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  backdrop-filter: blur(8px);
+  color: #e2e8f0;
+  font-family: inherit;
+  text-align: center;
+  box-shadow: 0 0 12px rgba(var(--card-color-rgb, 255, 255, 255), 0.15);
+}
+
+.character-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  background: rgba(40, 30, 80, 0.85);
+  box-shadow: 0 0 24px var(--card-color), 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.character-card:focus-visible {
+  outline: 3px solid #a78bfa;
+  outline-offset: 3px;
+}
+
+.character-card:active {
+  transform: scale(0.98);
+}
+
+/* ── Emoji du personnage ─────────────────────────────── */
+
+.character-emoji {
+  font-size: 3.5rem;
+  line-height: 1;
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-6px); }
+}
+
+/* ── Nom du personnage ───────────────────────────────── */
+
+.character-name {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--card-color);
+  letter-spacing: 0.02em;
+}
+
+/* ── Résumé du personnage ────────────────────────────── */
+
+.character-summary {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #cbd5e1;
+}
