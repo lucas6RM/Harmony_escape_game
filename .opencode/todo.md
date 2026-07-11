@@ -87,13 +87,13 @@ export interface CharacterPath {
 ## Tableau d'Avancement
 - [x] Tâche 1 : Créer les types TypeScript (Zone, NarrativeChoice, Quiz, QuizType, CharacterPath) dans `src/app/core/types/`
 - [x] Tâche 2 : Créer les fichiers JSON placeholder (`mario.json`, `luigi.json`, `peach.json`, `daisy.json`, `shared.json`) dans `public/assets/content/`
-- [ ] Tâche 3 : Créer `ContentLoaderService` avec méthode `loadPath(character: string)` qui retourne un signal `CharacterPath`
+- [x] Tâche 3 : Créer `ContentLoaderService` avec méthode `loadPath(character: string)` qui retourne un signal `CharacterPath`
 - [ ] Tâche 4 : Tests unitaires du ContentLoaderService avec JSON mocké
 - [ ] Tâche 5 : Vérifier build et tests passent
 
 ## Zone de Transit & Logs
 ### Tâche en cours :
-- Tâche 3
+- Tâche 4
 
 ### Compteur de rejets (tâche actuelle) :
 - 0 / 5
