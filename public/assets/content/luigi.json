@@ -1,0 +1,19 @@
+{
+  "character": "luigi",
+  "zones": [
+    {
+      "id": "luigi_zone_1",
+      "narration": "Luigi tremble un peu en approchant du palais, mais il se raidit. Il ne laissera pas Bowser Junior gagner.",
+      "choices": [
+        { "text": "Prendre le chemin secret par les souterrains", "nextNarrationId": "luigi_n1", "blocking": false },
+        { "text": "Frapper à la porte principale", "nextNarrationId": "luigi_n1", "blocking": true, "penalty": "recommencer la zone" }
+      ],
+      "quiz": {
+        "type": "francais",
+        "question": "Quel est le pluriel de « cheval » ?",
+        "answers": ["chevals", "chevaux", "chevaus", "chevauxs"],
+        "correctIndex": 1
+      }
+    }
+  ]
+}

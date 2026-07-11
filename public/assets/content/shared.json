@@ -1,0 +1,18 @@
+{
+  "sharedZones": [
+    {
+      "id": "shared_final",
+      "narration": "Tu arrives enfin dans la chambre où Harmony est retenue. Bowser Junior est là, endormi sur un trône de jeux vidéo.",
+      "choices": [
+        { "text": "Libérer Harmony discrètement", "nextNarrationId": "shared_final_free", "blocking": false },
+        { "text": "Réveiller Bowser Junior pour le défier", "nextNarrationId": "shared_final_fight", "blocking": true, "penalty": "recommencer la zone" }
+      ],
+      "quiz": {
+        "type": "maths",
+        "question": "Si tu as 15 Pièces et que tu en dépenses 7, combien t'en reste-t-il ?",
+        "answers": ["7", "8", "9", "6"],
+        "correctIndex": 1
+      }
+    }
+  ]
+}

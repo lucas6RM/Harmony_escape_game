@@ -1,0 +1,19 @@
+{
+  "character": "peach",
+  "zones": [
+    {
+      "id": "peach_zone_1",
+      "narration": "La princesse Peach atterrit gracieusement devant le palais. Elle sait qu'Harmony a besoin d'elle.",
+      "choices": [
+        { "text": "Utiliser sa couronne pour ouvrir le portail magique", "nextNarrationId": "peach_n1", "blocking": false },
+        { "text": "Demander poliment à entrer", "nextNarrationId": "peach_n1", "blocking": true, "penalty": "recommencer la zone" }
+      ],
+      "quiz": {
+        "type": "univers-mario",
+        "question": "Quel est le nom du fils de Bowser ?",
+        "answers": ["Bowser Jr", "Baby Bowser", "Junior Koopa", "Bowser Jr"],
+        "correctIndex": 0
+      }
+    }
+  ]
+}
