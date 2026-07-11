@@ -60,7 +60,7 @@ export interface GameSave {
 - [x] Tâche 1 : Créer le type `Character` dans `src/app/core/types/` + tableau des 4 personnages avec leurs données (nom, emoji, résumé, couleur)
 - [x] Tâche 2 : Créer `CharacterPersistenceService` (sauvegarder/restaurer le personnage choisi dans le localStorage)
 - [x] Tâche 3 : Créer le composant `HeroScreen` (écran d'accueil immersif Mario Galaxy avec titre, emojis, texte d'intro)
-- [ ] Tâche 4 : Créer le composant `CharacterSelector` (grille des 4 personnages cliquables avec résumé et emoji)
+- [x] Tâche 4 : Créer le composant `CharacterSelector` (grille des 4 personnages cliquables avec résumé et emoji)
 - [ ] Tâche 5 : Configurer le routage : `/accueil` → HeroScreen + CharacterSelector, puis navigation vers le jeu après sélection
 - [ ] Tâche 6 : Tests d'intégration du composant `CharacterSelector` (sélection, persistance localStorage, navigation)
 - [ ] Tâche 7 : Vérifier build et tests passent
