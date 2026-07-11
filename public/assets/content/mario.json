@@ -1,0 +1,19 @@
+{
+  "character": "mario",
+  "zones": [
+    {
+      "id": "mario_zone_1",
+      "narration": "Tu arrives devant le palais d'Harmony. Luma t'attend, l'air inquiet.",
+      "choices": [
+        { "text": "Entrer par le grand portail", "nextNarrationId": "mario_n1", "blocking": false },
+        { "text": "Essayer de passer par la fenêtre", "nextNarrationId": "mario_n1", "blocking": true, "penalty": "recommencer la zone" }
+      ],
+      "quiz": {
+        "type": "maths",
+        "question": "Combien font 245 + 378 ?",
+        "answers": ["613", "623", "618", "603"],
+        "correctIndex": 1
+      }
+    }
+  ]
+}

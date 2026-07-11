@@ -1,0 +1,19 @@
+{
+  "character": "daisy",
+  "zones": [
+    {
+      "id": "daisy_zone_1",
+      "narration": "Daisy arrive avec détermination. Sa loyauté envers Peach et Harmony ne connaît pas de limites.",
+      "choices": [
+        { "text": "Explorer le jardin du palais", "nextNarrationId": "daisy_n1", "blocking": false },
+        { "text": "Sauter par-dessus le mur", "nextNarrationId": "daisy_n1", "blocking": true, "penalty": "recommencer la zone" }
+      ],
+      "quiz": {
+        "type": "contexte",
+        "question": "Qui a capturé Harmony ?",
+        "answers": ["Bowser", "Bowser Junior", "Kamek", "Dry Bones"],
+        "correctIndex": 1
+      }
+    }
+  ]
+}
