@@ -63,17 +63,17 @@ export interface GameSave {
 - [x] Tâche 4 : Créer le composant `CharacterSelector` (grille des 4 personnages cliquables avec résumé et emoji)
 - [x] Tâche 5 : Configurer le routage : `/accueil` → HeroScreen + CharacterSelector, puis navigation vers le jeu après sélection
 - [x] Tâche 6 : Tests d'intégration du composant `CharacterSelector` (sélection, persistance localStorage, navigation)
-- [ ] Tâche 7 : Vérifier build et tests passent
+- [x] Tâche 7 : Vérifier build et tests passent
 
 ## Zone de Transit & Logs
 ### Tâche en cours :
-- Aucune
+- Issue terminée
 
 ### Compteur de rejets (tâche actuelle) :
 - 0 / 5
 
 ### Dernier retour de Review :
-- Aucun.
+- VALIDÉ — Build et tests OK
 
 ### Blocage Actuel :
 - Aucun.
