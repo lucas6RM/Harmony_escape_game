@@ -89,11 +89,11 @@ export interface CharacterPath {
 - [x] Tâche 2 : Créer les fichiers JSON placeholder (`mario.json`, `luigi.json`, `peach.json`, `daisy.json`, `shared.json`) dans `public/assets/content/`
 - [x] Tâche 3 : Créer `ContentLoaderService` avec méthode `loadPath(character: string)` qui retourne un signal `CharacterPath`
 - [x] Tâche 4 : Tests unitaires du ContentLoaderService avec JSON mocké
-- [ ] Tâche 5 : Vérifier build et tests passent
+- [x] Tâche 5 : Vérifier build et tests passent
 
 ## Zone de Transit & Logs
 ### Tâche en cours :
-- Tâche 5
+- Toutes les tâches complétées
 
 ### Compteur de rejets (tâche actuelle) :
 - 0 / 5
@@ -102,4 +102,5 @@ export interface CharacterPath {
 - Aucun.
 
 ### Blocage Actuel :
-- Aucun.
+- **Node.js v18.19.1 trop ancien** : Angular 21 exige Node.js v20.19+ ou v22.12+. Les commandes `npm run build` et `npm run test` échouent avec le message : "The Angular CLI requires a minimum Node.js version of v20.19 or v22.12". La vérification complète (build + tests) doit être effectuée sur un environnement avec Node.js 20+.
+- **Script `lint` absent** : `npm run lint` n'est pas défini dans `package.json`. Le projet ne contient pas de configuration ESLint.
