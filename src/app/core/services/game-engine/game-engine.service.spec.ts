@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import type { CharacterPath, GameSave, Zone } from '../../types';
+import { CompletedPathsService } from '../completed-paths/completed-paths.service';
 import { ContentLoaderService } from '../content-loader';
 import { PersistenceService } from '../persistence';
 import { GameEngineService } from './game-engine.service';
@@ -107,9 +108,40 @@ class PersistenceServiceMock {
   clearSave() {}
 }
 
+/**
+ * Mock de CompletedPathsService qui capture les appels.
+ */
+class CompletedPathsServiceMock {
+  completedPaths: string[] = [];
+
+  addCompletedPath(characterId: string): void {
+    if (!this.completedPaths.includes(characterId)) {
+      this.completedPaths.push(characterId);
+    }
+  }
+
+  getCompletedPaths(): string[] {
+    return [...this.completedPaths];
+  }
+
+  isPathCompleted(characterId: string): boolean {
+    return this.completedPaths.includes(characterId);
+  }
+
+  getAllCompleted(): boolean {
+    const validIds = ['mario', 'luigi', 'peach', 'daisy'];
+    return validIds.every(id => this.completedPaths.includes(id));
+  }
+
+  clearCompletedPaths(): void {
+    this.completedPaths = [];
+  }
+}
+
 describe('GameEngineService', () => {
   let service: GameEngineService;
   let persistenceMock: PersistenceServiceMock;
+  let completedPathsMock: CompletedPathsServiceMock;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -117,10 +149,12 @@ describe('GameEngineService', () => {
         GameEngineService,
         { provide: ContentLoaderService, useClass: ContentLoaderServiceMock },
         { provide: PersistenceService, useClass: PersistenceServiceMock },
+        { provide: CompletedPathsService, useClass: CompletedPathsServiceMock },
       ],
     });
     service = TestBed.inject(GameEngineService);
     persistenceMock = TestBed.inject(PersistenceService) as unknown as PersistenceServiceMock;
+    completedPathsMock = TestBed.inject(CompletedPathsService) as unknown as CompletedPathsServiceMock;
   });
 
   describe('startGame', () => {
@@ -1104,6 +1138,136 @@ describe('GameEngineService', () => {
     it('la Zone courante est null après returnToMenu', () => {
       service.returnToMenu();
       expect(service.currentZone()).toBe(null);
+    });
+  });
+
+  describe('returnToCharacterSelect', () => {
+    beforeEach(() => {
+      service.startGame('mario');
+    });
+
+    it('réinitialise gameStarted à false', () => {
+      service.returnToCharacterSelect();
+      expect(service.gameStarted()).toBe(false);
+    });
+
+    it('réinitialise gameWon à false', () => {
+      service.returnToCharacterSelect();
+      expect(service.gameWon()).toBe(false);
+    });
+
+    it('réinitialise les Pièces à 0', () => {
+      service.addCoins(10);
+      service.returnToCharacterSelect();
+      expect(service.coins()).toBe(0);
+    });
+
+    it('réinitialise l\'index de Zone à 0', () => {
+      service.advanceZone();
+      service.returnToCharacterSelect();
+      expect(service.currentZoneIndex()).toBe(0);
+    });
+
+    it('réinitialise les Zones terminées', () => {
+      service.completeZone();
+      service.returnToCharacterSelect();
+      expect(service.zonesCompleted()).toEqual([]);
+    });
+
+    it('appelle clearSave() sur le PersistenceService', () => {
+      const clearSpy = vi.spyOn(persistenceMock, 'clearSave');
+      service.returnToCharacterSelect();
+      expect(clearSpy).toHaveBeenCalled();
+    });
+
+    it('ne PAS effacer les Chemins complétés', () => {
+      // Simuler que Mario a complété son Chemin
+      completedPathsMock.addCompletedPath('mario');
+      expect(completedPathsMock.getCompletedPaths()).toContain('mario');
+
+      service.returnToCharacterSelect();
+
+      // Le Chemin complété de Mario doit rester
+      expect(completedPathsMock.getCompletedPaths()).toContain('mario');
+    });
+
+    it('réinitialise quizActive à false', () => {
+      service.selectChoice(0);
+      expect(service.quizActive()).toBe(true);
+      service.returnToCharacterSelect();
+      expect(service.quizActive()).toBe(false);
+    });
+
+    it('la Zone courante est null après returnToCharacterSelect', () => {
+      service.returnToCharacterSelect();
+      expect(service.currentZone()).toBe(null);
+    });
+  });
+
+  describe('addCompletedPath à la victoire', () => {
+    beforeEach(() => {
+      service.startGame('mario');
+    });
+
+    it('appelle addCompletedPath quand le Quiz final est réussi', () => {
+      // Avancer jusqu'à la dernière Zone
+      service.selectChoice(0);
+      service.submitQuizAnswer(1); // Zone 1 réussie
+      service.advanceZone();
+
+      service.selectChoice(0);
+      service.submitQuizAnswer(0); // Zone 2 réussie
+      service.advanceZone();
+
+      // Zone 3 = Quiz final (isFinal: true)
+      service.selectChoice(0);
+      service.submitQuizAnswer(0); // correctIndex de mario_zone_3
+
+      expect(completedPathsMock.getCompletedPaths()).toContain('mario');
+    });
+
+    it('n\'appelle pas addCompletedPath pour un Quiz non-final', () => {
+      service.selectChoice(0);
+      service.submitQuizAnswer(1); // Zone 1 réussie (non-final)
+
+      expect(completedPathsMock.getCompletedPaths()).not.toContain('mario');
+    });
+
+    it('n\'appelle pas addCompletedPath quand le Quiz final échoue', () => {
+      // Avancer jusqu'à la dernière Zone
+      service.selectChoice(0);
+      service.submitQuizAnswer(1);
+      service.advanceZone();
+
+      service.selectChoice(0);
+      service.submitQuizAnswer(0);
+      service.advanceZone();
+
+      // Zone 3 = Quiz final → 2 erreurs
+      service.selectChoice(0);
+      service.submitQuizAnswer(1); // faux
+      service.submitQuizAnswer(2); // faux → pénalité
+
+      expect(completedPathsMock.getCompletedPaths()).not.toContain('mario');
+    });
+  });
+
+  describe('allPathsCompleted', () => {
+    it('retourne false quand aucun Chemin n\'est complété', () => {
+      expect(service.allPathsCompleted()).toBe(false);
+    });
+
+    it('retourne false quand un seul Chemin est complété', () => {
+      completedPathsMock.addCompletedPath('mario');
+      expect(service.allPathsCompleted()).toBe(false);
+    });
+
+    it('retourne true quand les 4 Chemins sont complétés', () => {
+      completedPathsMock.addCompletedPath('mario');
+      completedPathsMock.addCompletedPath('luigi');
+      completedPathsMock.addCompletedPath('peach');
+      completedPathsMock.addCompletedPath('daisy');
+      expect(service.allPathsCompleted()).toBe(true);
     });
   });
 
