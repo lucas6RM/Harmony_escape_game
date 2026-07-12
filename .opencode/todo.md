@@ -110,7 +110,7 @@ Le `GameEngineService` doit gérer :
   - Réinitialiser hint et eliminatedAnswers dans `restartZone()`, `advanceZone()` et quand le Quiz est activé (`selectChoice` choix valide)
   - Exporter les nouveaux types depuis `index.ts`
 
-[ ] Tâche 2 : Tests unitaires du `GameEngineService` pour les Aides
+[x] Tâche 2 : Tests unitaires du `GameEngineService` pour les Aides
   - buyHint avec solde suffisant : coins diminués de 3, hintText non null
   - buyHint avec solde insuffisant : rien ne change
   - buyHint quand quiz non actif : rien ne change

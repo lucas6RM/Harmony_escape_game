@@ -461,4 +461,145 @@ describe('GameEngineService', () => {
       });
     });
   });
+
+  describe('Aides', () => {
+    describe('buyHint', () => {
+      beforeEach(() => {
+        service.startGame('mario');
+      });
+
+      it('buyHint avec quiz non actif : retourne false, rien ne change', () => {
+        const result = service.buyHint();
+        expect(result).toBe(false);
+        expect(service.hintText()).toBe(null);
+        expect(service.coins()).toBe(0);
+      });
+
+      it('buyHint avec solde insuffisant : retourne false', () => {
+        service.selectChoice(0); // active le quiz
+        service.addCoins(2); // 2 pièces, besoin de 3
+        const result = service.buyHint();
+        expect(result).toBe(false);
+        expect(service.hintText()).toBe(null);
+        expect(service.coins()).toBe(2);
+      });
+
+      it('buyHint avec solde suffisant : coûte 3 pièces, hintText non null', () => {
+        service.selectChoice(0); // active le quiz
+        service.addCoins(5); // 5 pièces
+        const result = service.buyHint();
+        expect(result).toBe(true);
+        expect(service.coins()).toBe(2); // 5 - 3 = 2
+        expect(service.hintText()).not.toBe(null);
+        expect(service.hintText()).toContain('Indice');
+      });
+
+      it('buyHint affiche un indice basé sur la bonne réponse', () => {
+        service.selectChoice(0); // active le quiz, zone 1, bonne réponse = '623'
+        service.addCoins(3);
+        service.buyHint();
+        // La bonne réponse est '623', donc l'indice contient '623'
+        expect(service.hintText()).toContain('623');
+      });
+
+      it("buyHint ne peut être acheté qu'une seule fois par quiz", () => {
+        service.selectChoice(0);
+        service.addCoins(10);
+        service.buyHint();
+        const result2 = service.buyHint();
+        expect(result2).toBe(false);
+        expect(service.coins()).toBe(7); // Seule le premier achat a coûté 3
+      });
+    });
+
+    describe('buyElimination', () => {
+      beforeEach(() => {
+        service.startGame('mario');
+      });
+
+      it('buyElimination avec quiz non actif : retourne false', () => {
+        const result = service.buyElimination();
+        expect(result).toBe(false);
+        expect(service.eliminatedAnswers()).toEqual([]);
+        expect(service.coins()).toBe(0);
+      });
+
+      it('buyElimination avec solde insuffisant : retourne false', () => {
+        service.selectChoice(0);
+        service.addCoins(4); // 4 pièces, besoin de 5
+        const result = service.buyElimination();
+        expect(result).toBe(false);
+        expect(service.eliminatedAnswers()).toEqual([]);
+        expect(service.coins()).toBe(4);
+      });
+
+      it('buyElimination avec solde suffisant : coûte 5 pièces, 2 indices éliminés', () => {
+        service.selectChoice(0);
+        service.addCoins(7);
+        const result = service.buyElimination();
+        expect(result).toBe(true);
+        expect(service.coins()).toBe(2); // 7 - 5 = 2
+        expect(service.eliminatedAnswers()).toHaveLength(2);
+      });
+
+      it('buyElimination ne contient jamais le correctIndex', () => {
+        service.selectChoice(0); // zone 1, correctIndex = 1
+        service.addCoins(5);
+        service.buyElimination();
+        const eliminated = service.eliminatedAnswers();
+        expect(eliminated).not.toContain(1); // correctIndex de mario_zone_1
+      });
+
+      it("buyElimination ne peut être acheté qu'une seule fois par quiz", () => {
+        service.selectChoice(0);
+        service.addCoins(15);
+        service.buyElimination();
+        const result2 = service.buyElimination();
+        expect(result2).toBe(false);
+        expect(service.coins()).toBe(10); // Seul le premier achat a coûté 5
+      });
+    });
+
+    describe('Réinitialisation des aides', () => {
+      beforeEach(() => {
+        service.startGame('mario');
+      });
+
+      it('restartZone réinitialise hintText et eliminatedAnswers', () => {
+        service.selectChoice(0);
+        service.addCoins(10);
+        service.buyHint();
+        service.buyElimination();
+        expect(service.hintText()).not.toBe(null);
+        expect(service.eliminatedAnswers()).toHaveLength(2);
+
+        service.restartZone();
+        expect(service.hintText()).toBe(null);
+        expect(service.eliminatedAnswers()).toEqual([]);
+      });
+
+      it('advanceZone réinitialise hintText et eliminatedAnswers', () => {
+        service.selectChoice(0);
+        service.addCoins(10);
+        service.buyHint();
+        service.buyElimination();
+
+        service.advanceZone();
+        expect(service.hintText()).toBe(null);
+        expect(service.eliminatedAnswers()).toEqual([]);
+      });
+
+      it('selectChoice (choix valide) réinitialise hintText et eliminatedAnswers', () => {
+        service.addCoins(10);
+        service.selectChoice(0);
+        service.buyHint();
+        expect(service.hintText()).not.toBe(null);
+
+        // Refaire un choix valide réinitialise
+        service.selectChoice(0);
+        expect(service.hintText()).toBe(null);
+        expect(service.eliminatedAnswers()).toEqual([]);
+      });
+    });
+  });
 });
