@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { PersistenceService } from '../../core/services/persistence';
+import { BadgeBonusScreen } from '../badge-bonus-screen/badge-bonus-screen';
 import { CharacterSelector } from '../character-selector/character-selector';
 import { HeroScreen } from '../hero-screen/hero-screen';
 import { ResumeScreen } from '../resume-screen/resume-screen';
@@ -9,6 +10,7 @@ import { ResumeScreen } from '../resume-screen/resume-screen';
  * Écran d'accueil qui orchestre le flux :
  * — si une partie est en cours → ResumeScreen
  * — sinon → HeroScreen → CharacterSelector
+ * — si le Badge de complétion est cliqué → BadgeBonusScreen
  *
  * Au chargement, vérifie s'il existe une sauvegarde en cours via
  * `PersistenceService.isGameInProgress()`. Si oui, affiche l'écran de
@@ -18,7 +20,7 @@ import { ResumeScreen } from '../resume-screen/resume-screen';
   selector: 'app-welcome-screen',
   templateUrl: './welcome-screen.html',
   styleUrl: './welcome-screen.css',
-  imports: [ResumeScreen, HeroScreen, CharacterSelector],
+  imports: [ResumeScreen, HeroScreen, CharacterSelector, BadgeBonusScreen],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WelcomeScreen {
@@ -33,6 +35,9 @@ export class WelcomeScreen {
 
   /** `true` quand le HeroScreen a été fermé et qu'on affiche le CharacterSelector */
   protected readonly showSelector = signal(false);
+
+  /** `true` quand le Badge de complétion a été cliqué → on affiche la scène bonus */
+  protected readonly showBadgeBonus = signal(false);
 
   constructor() {
     if (this.persistence.isGameInProgress()) {
@@ -62,5 +67,15 @@ export class WelcomeScreen {
   protected onCharacterSelected(characterId: string): void {
     this.persistence.saveCharacter(characterId as 'mario' | 'luigi' | 'peach' | 'daisy');
     this.router.navigate(['/game']);
+  }
+
+  /** Le joueur clique sur le Badge de complétion → afficher la scène bonus */
+  protected onBadgeClicked(): void {
+    this.showBadgeBonus.set(true);
+  }
+
+  /** Le joueur ferme la scène bonus → revenir au CharacterSelector */
+  protected onBadgeBonusClose(): void {
+    this.showBadgeBonus.set(false);
   }
 }

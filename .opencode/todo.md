@@ -31,15 +31,18 @@ Décisions clés :
 - [x] Tâche 2 : Game Engine — marquer un Chemin comme complété à la victoire + méthode retour à la sélection
 - [x] Tâche 3 : Victory Screen — bouton "Choisir un autre personnage" qui retourne à la sélection sans effacer les Chemins complétés
 - [x] Tâche 4 : Character Selector — afficher les Chemins déjà complétés + Badge de complétion quand les 4 sont terminés
-- [ ] Tâche 5 : Scène bonus du Badge de complétion (composant dédié)
+- [x] Tâche 5 : Scène bonus du Badge de complétion (composant dédié)
 - [ ] Tâche 6 : Tests unitaires (Game Engine badge/reset + PersistenceService Chemins complétés)
 
 ## Zone de Transit & Logs
 ### Tâche en cours :
-- Tâche 4 terminée
+- Tâche 5 terminée
 
 ### Compteur de rejets (tâche actuelle) :
 - 0 / 5
+
+### Dernier retour de Review :
+- Tâche 5 : Build OK, 357 tests passants (15 fichiers).
 
 ### Dernier retour de Review :
 - Tâche 4 : Build OK, 345 tests passants (14 fichiers).

@@ -1,0 +1,221 @@
+:host {
+  display: block;
+}
+
+.bonus-screen {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: radial-gradient(ellipse at center, #1a1040 0%, #0a0a2e 50%, #000010 100%);
+  padding: 2rem;
+}
+
+/* ── Confettis / étoiles décoratives ───────────────────── */
+
+.confetti {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.confetti--1  { position: absolute; top: 3%;  left: 8%;  animation: confetti-fall 4s ease-in-out infinite; font-size: 1.2rem; }
+.confetti--2  { position: absolute; top: 8%;  left: 85%; animation: confetti-fall 5s ease-in-out infinite 0.3s; font-size: 1rem; }
+.confetti--3  { position: absolute; top: 15%; left: 25%; animation: confetti-fall 3.5s ease-in-out infinite 0.6s; font-size: 1.4rem; }
+.confetti--4  { position: absolute; top: 20%; left: 70%; animation: confetti-fall 4.5s ease-in-out infinite 0.9s; font-size: 0.9rem; }
+.confetti--5  { position: absolute; top: 30%; left: 5%;  animation: confetti-fall 5.5s ease-in-out infinite 1.2s; font-size: 1.1rem; }
+.confetti--6  { position: absolute; top: 35%; left: 92%; animation: confetti-fall 4s ease-in-out infinite 1.5s; font-size: 1.3rem; }
+.confetti--7  { position: absolute; top: 45%; left: 15%; animation: confetti-fall 3.8s ease-in-out infinite 1.8s; font-size: 0.8rem; }
+.confetti--8  { position: absolute; top: 50%; left: 78%; animation: confetti-fall 4.2s ease-in-out infinite 2.1s; font-size: 1rem; }
+.confetti--9  { position: absolute; top: 55%; left: 40%; animation: confetti-fall 5s ease-in-out infinite 2.4s; font-size: 1.2rem; }
+.confetti--10 { position: absolute; top: 60%; left: 55%; animation: confetti-fall 3.6s ease-in-out infinite 2.7s; font-size: 0.9rem; }
+.confetti--11 { position: absolute; top: 70%; left: 10%; animation: confetti-fall 4.8s ease-in-out infinite 3s; font-size: 1.1rem; }
+.confetti--12 { position: absolute; top: 75%; left: 88%; animation: confetti-fall 4.3s ease-in-out infinite 3.3s; font-size: 1rem; }
+.confetti--13 { position: absolute; top: 80%; left: 30%; animation: confetti-fall 5.2s ease-in-out infinite 3.6s; font-size: 1.3rem; }
+.confetti--14 { position: absolute; top: 85%; left: 65%; animation: confetti-fall 3.9s ease-in-out infinite 3.9s; font-size: 0.8rem; }
+.confetti--15 { position: absolute; top: 90%; left: 48%; animation: confetti-fall 4.6s ease-in-out infinite 4.2s; font-size: 1.2rem; }
+.confetti--16 { position: absolute; top: 95%; left: 20%; animation: confetti-fall 5.1s ease-in-out infinite 4.5s; font-size: 1rem; }
+
+@keyframes confetti-fall {
+  0%   { opacity: 0; transform: translateY(-20px) rotate(0deg); }
+  25%  { opacity: 1; }
+  50%  { opacity: 0.8; transform: translateY(30px) rotate(180deg); }
+  75%  { opacity: 1; }
+  100% { opacity: 0; transform: translateY(60px) rotate(360deg); }
+}
+
+/* ── Contenu principal ─────────────────────────────────── */
+
+.bonus-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  max-width: 720px;
+  width: 100%;
+  text-align: center;
+}
+
+/* ── Titre ─────────────────────────────────────────────── */
+
+.bonus-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.bonus-title {
+  font-size: clamp(1.5rem, 4.5vw, 2.2rem);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 25%, #fde68a 50%, #f59e0b 75%, #fbbf24 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 4s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+
+/* ── Narration ─────────────────────────────────────────── */
+
+.bonus-narration {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.5rem 2rem;
+  background: rgba(30, 20, 60, 0.6);
+  border: 1px solid rgba(167, 139, 250, 0.3);
+  border-radius: 1rem;
+  backdrop-filter: blur(6px);
+}
+
+.narration-text {
+  font-size: clamp(0.95rem, 2vw, 1.1rem);
+  color: #e2e8f0;
+  line-height: 1.7;
+  margin: 0;
+  font-weight: 400;
+}
+
+/* ── Personnages alignés ───────────────────────────────── */
+
+.bonus-characters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.character-showcase {
+  --char-color: #ffffff;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 1.25rem;
+  background: rgba(30, 20, 60, 0.5);
+  border: 2px solid var(--char-color);
+  border-radius: 1rem;
+  animation: float 4s ease-in-out infinite;
+  box-shadow: 0 0 16px rgba(255, 255, 255, 0.1);
+}
+
+.character-showcase:nth-child(2) { animation-delay: 0.5s; }
+.character-showcase:nth-child(3) { animation-delay: 1s; }
+.character-showcase:nth-child(4) { animation-delay: 1.5s; }
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-6px); }
+}
+
+.character-showcase__emoji {
+  font-size: 3rem;
+  line-height: 1;
+}
+
+.character-showcase__name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--char-color);
+  letter-spacing: 0.02em;
+}
+
+/* ── Célébration ───────────────────────────────────────── */
+
+.bonus-celebration {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.25rem 1.5rem;
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(245, 158, 11, 0.15));
+  border: 2px solid rgba(251, 191, 36, 0.4);
+  border-radius: 1rem;
+  box-shadow: 0 0 24px rgba(251, 191, 36, 0.2);
+}
+
+.celebration-text {
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  font-weight: 600;
+  color: #fde68a;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.celebration-stars {
+  font-size: 1.5rem;
+  letter-spacing: 0.3em;
+  animation: stars-pulse 2s ease-in-out infinite;
+}
+
+@keyframes stars-pulse {
+  0%, 100% { opacity: 0.7; transform: scale(1); }
+  50%      { opacity: 1; transform: scale(1.05); }
+}
+
+/* ── Bouton retour ─────────────────────────────────────── */
+
+.bonus-footer {
+  margin-top: 1rem;
+}
+
+.btn-back {
+  padding: 0.75rem 2rem;
+  background: linear-gradient(135deg, #7c3aed, #6d28d9);
+  border: none;
+  border-radius: 9999px;
+  color: #fff;
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  letter-spacing: 0.02em;
+  box-shadow: 0 4px 16px rgba(124, 58, 237, 0.4);
+}
+
+.btn-back:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 6px 24px rgba(124, 58, 237, 0.5);
+}
+
+.btn-back:focus-visible {
+  outline: 3px solid #a78bfa;
+  outline-offset: 3px;
+}
+
+.btn-back:active {
+  transform: scale(0.97);
+}
