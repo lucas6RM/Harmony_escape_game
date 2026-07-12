@@ -120,7 +120,7 @@ Le `GameEngineService` doit gérer :
   - eliminatedAnswers ne contient jamais le correctIndex
   - restartZone/advanceZone réinitialisent hint et eliminatedAnswers
 
-[ ] Tâche 3 : Intégrer les boutons d'Aide dans `QuizPanel`
+[x] Tâche 3 : Intégrer les boutons d'Aide dans `QuizPanel`
   - Ajouter les inputs `hintText`, `eliminatedAnswers`, `coins`, `canBuyHint`, `canBuyElimination`
   - Ajouter les outputs `hintRequested`, `eliminationRequested`
   - Afficher le texte de l'indice quand `hintText` est non null (zone aria-live="polite")
@@ -140,13 +140,13 @@ Le `GameEngineService` doit gérer :
 
 ## Zone de Transit & Logs
 ### Tâche en cours :
-- Tâche 1
+- Tâche 3
 
 ### Compteur de rejets (tâche actuelle) :
 - 0 / 5
 
 ### Dernier retour de Review :
-- Corrections validées : réinitialisation dans selectChoice() et import mort supprimés.
+- Tâche 3 validée : inputs/outputs, accessibilité, styles, tests conformes.
 
 ### Blocage Actuel :
 - Aucun.

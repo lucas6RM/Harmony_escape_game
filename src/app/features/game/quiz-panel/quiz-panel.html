@@ -21,6 +21,40 @@
     }
   </div>
 
+  <!-- ── Indice acheté ──────────────────────────────────────────── -->
+  @if (hintText()) {
+  <div class="hint-display" role="status" aria-live="polite">
+    <span class="hint-icon" aria-hidden="true">💡</span>
+    <span class="hint-text">{{ hintText() }}</span>
+  </div>
+  }
+
+  <!-- ── Boutons d'Aide ──────────────────────────────────────────── -->
+  @if (!disabled()) {
+  <div class="help-buttons" role="group" aria-label="Aides disponibles">
+    <button
+      type="button"
+      class="help-button help-hint"
+      [disabled]="!canBuyHint()"
+      [attr.aria-label]="'Acheter un Indice pour 3 pièces'"
+      (click)="onBuyHint()"
+    >
+      <span aria-hidden="true">💡</span>
+      <span>Indice (3 🪙)</span>
+    </button>
+    <button
+      type="button"
+      class="help-button help-elimination"
+      [disabled]="!canBuyElimination()"
+      [attr.aria-label]="'Éliminer 2 réponses pour 5 pièces'"
+      (click)="onBuyElimination()"
+    >
+      <span aria-hidden="true">✨</span>
+      <span>Éliminer 2 (5 🪙)</span>
+    </button>
+  </div>
+  }
+
   <!-- ── Boutons de réponse ────────────────────────────────────── -->
   <div class="quiz-answers" role="radiogroup" aria-label="Réponses possibles">
     @for (answer of quiz().answers; track $index) {
@@ -28,6 +62,7 @@
       type="button"
       class="answer-button {{ getAnswerButtonClass($index) }}"
       [disabled]="disabled()"
+      [hidden]="isEliminated($index)"
       [attr.aria-label]="'Réponse ' + ($index + 1) + ': ' + answer"
       [attr.aria-checked]="feedback() === 'correct' && $index === quiz().correctIndex"
       role="radio"

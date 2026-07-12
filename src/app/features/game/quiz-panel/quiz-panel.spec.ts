@@ -21,6 +21,10 @@ describe('QuizPanelComponent', () => {
     feedback: 'correct' | 'incorrect' | null = null,
     disabled = false,
     selectedAnswerIndex: number | null = null,
+    hintText: string | null = null,
+    eliminatedAnswers: number[] = [],
+    canBuyHint = false,
+    canBuyElimination = false,
   ): Promise<{ component: QuizPanelComponent; fixture: ComponentFixture<QuizPanelComponent> }> {
     await TestBed.configureTestingModule({
       imports: [QuizPanelComponent],
@@ -31,6 +35,10 @@ describe('QuizPanelComponent', () => {
     f.componentRef.setInput('feedback', feedback);
     f.componentRef.setInput('disabled', disabled);
     f.componentRef.setInput('selectedAnswerIndex', selectedAnswerIndex);
+    f.componentRef.setInput('hintText', hintText);
+    f.componentRef.setInput('eliminatedAnswers', eliminatedAnswers);
+    f.componentRef.setInput('canBuyHint', canBuyHint);
+    f.componentRef.setInput('canBuyElimination', canBuyElimination);
     f.detectChanges();
     return { component: f.componentInstance, fixture: f };
   }
@@ -230,6 +238,106 @@ describe('QuizPanelComponent', () => {
       buttons.forEach((btn: Element) => {
         expect(btn.hasAttribute('disabled')).toBe(true);
       });
+    });
+  });
+
+  describe("boutons d'Aide", () => {
+    it('affiche les boutons d\'aide quand disabled est false', async () => {
+      ({ component, fixture } = await createWithInputs());
+      fixture.componentRef.setInput('canBuyHint', true);
+      fixture.componentRef.setInput('canBuyElimination', true);
+      fixture.detectChanges();
+
+      const helpButtons = fixture.nativeElement.querySelectorAll('.help-button');
+      expect(helpButtons.length).toBe(2);
+    });
+
+    it('masque les boutons d\'aide quand disabled est true', async () => {
+      ({ component, fixture } = await createWithInputs(sampleQuiz, null, true));
+      fixture.detectChanges();
+
+      const helpButtons = fixture.nativeElement.querySelectorAll('.help-button');
+      expect(helpButtons.length).toBe(0);
+    });
+
+    it('émet hintRequested quand on clique sur "Indice" et canBuyHint est true', async () => {
+      ({ component, fixture } = await createWithInputs());
+      fixture.componentRef.setInput('canBuyHint', true);
+      fixture.detectChanges();
+
+      let emitted = false;
+      component.hintRequested.subscribe(() => { emitted = true; });
+
+      const hintBtn = fixture.nativeElement.querySelector('.help-hint');
+      hintBtn.click();
+      fixture.detectChanges();
+
+      expect(emitted).toBe(true);
+    });
+
+    it('ne rien émettre quand on clique sur "Indice" et canBuyHint est false', async () => {
+      ({ component, fixture } = await createWithInputs());
+      fixture.componentRef.setInput('canBuyHint', false);
+      fixture.detectChanges();
+
+      let emitted = false;
+      component.hintRequested.subscribe(() => { emitted = true; });
+
+      const hintBtn = fixture.nativeElement.querySelector('.help-hint');
+      hintBtn.click();
+      fixture.detectChanges();
+
+      expect(emitted).toBe(false);
+    });
+
+    it('émet eliminationRequested quand on clique sur "Éliminer" et canBuyElimination est true', async () => {
+      ({ component, fixture } = await createWithInputs());
+      fixture.componentRef.setInput('canBuyElimination', true);
+      fixture.detectChanges();
+
+      let emitted = false;
+      component.eliminationRequested.subscribe(() => { emitted = true; });
+
+      const elimBtn = fixture.nativeElement.querySelector('.help-elimination');
+      elimBtn.click();
+      fixture.detectChanges();
+
+      expect(emitted).toBe(true);
+    });
+  });
+
+  describe('indice affiché', () => {
+    it('affiche le texte de l\'indice quand hintText est non null', async () => {
+      ({ component, fixture } = await createWithInputs());
+      fixture.componentRef.setInput('hintText', 'Indice : la réponse commence par "623"...');
+      fixture.detectChanges();
+
+      const hintDisplay = fixture.nativeElement.querySelector('.hint-display');
+      expect(hintDisplay).toBeTruthy();
+      expect(hintDisplay.textContent).toContain('Indice : la réponse commence par "623"...');
+    });
+
+    it('ne affiche pas l\'indice quand hintText est null', async () => {
+      ({ component, fixture } = await createWithInputs());
+      fixture.detectChanges();
+
+      const hintDisplay = fixture.nativeElement.querySelector('.hint-display');
+      expect(hintDisplay).toBeFalsy();
+    });
+  });
+
+  describe('réponses éliminées', () => {
+    it('masque les réponses dont l\'index est dans eliminatedAnswers', async () => {
+      ({ component, fixture } = await createWithInputs());
+      fixture.componentRef.setInput('eliminatedAnswers', [0, 2]);
+      fixture.detectChanges();
+
+      const buttons = fixture.nativeElement.querySelectorAll('.answer-button');
+      // Les boutons éliminés ont [hidden], donc hidden=true
+      expect(buttons[0].hidden).toBe(true);
+      expect(buttons[1].hidden).toBe(false);
+      expect(buttons[2].hidden).toBe(true);
+      expect(buttons[3].hidden).toBe(false);
     });
   });
 });
