@@ -1,14 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CharacterSelector } from './character-selector';
+import { CompletedPathsService } from '../../core/services/completed-paths/completed-paths.service';
 
 describe('CharacterSelector', () => {
   let fixture: ComponentFixture<CharacterSelector>;
   let component: CharacterSelector;
+  let completedPathsService: CompletedPathsService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [CharacterSelector],
     }).compileComponents();
+
+    completedPathsService = TestBed.inject(CompletedPathsService);
+    completedPathsService.clearCompletedPaths();
 
     fixture = TestBed.createComponent(CharacterSelector);
     component = fixture.componentInstance;
@@ -169,5 +174,76 @@ describe('CharacterSelector', () => {
       const descElement = compiled.querySelector(`#${describedBy}`);
       expect(descElement).toBeTruthy();
     });
+  });
+
+  it('ne doit pas afficher d\'indicateur "Complété" quand aucun Chemin n\'est terminé', () => {
+    const compiled = fixture.nativeElement as HTMLElement;
+    const indicators = compiled.querySelectorAll('.completed-indicator');
+    expect(indicators.length).toBe(0);
+  });
+
+  it('doit afficher l\'indicateur "Complété" sur les cartes dont le Chemin est terminé', () => {
+    completedPathsService.addCompletedPath('mario');
+    completedPathsService.addCompletedPath('peach');
+    fixture.detectChanges();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    const indicators = compiled.querySelectorAll('.completed-indicator');
+    expect(indicators.length).toBe(2);
+  });
+
+  it('ne doit pas afficher le Badge de complétion quand tous les Chemins ne sont pas terminés', () => {
+    completedPathsService.addCompletedPath('mario');
+    fixture.detectChanges();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    const badge = compiled.querySelector('.completion-badge');
+    expect(badge).toBeFalsy();
+  });
+
+  it('doit afficher le Badge de complétion quand les 4 Chemins sont terminés', () => {
+    completedPathsService.addCompletedPath('mario');
+    completedPathsService.addCompletedPath('luigi');
+    completedPathsService.addCompletedPath('peach');
+    completedPathsService.addCompletedPath('daisy');
+    fixture.detectChanges();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    const badge = compiled.querySelector('.completion-badge');
+    expect(badge).toBeTruthy();
+    expect(badge?.textContent).toContain('Badge de Complétion Débloqué');
+    expect(badge?.textContent).toContain('Tu as terminé les 4 Chemins');
+  });
+
+  it('doit avoir le rôle ARIA "alert" sur le Badge de complétion', () => {
+    completedPathsService.addCompletedPath('mario');
+    completedPathsService.addCompletedPath('luigi');
+    completedPathsService.addCompletedPath('peach');
+    completedPathsService.addCompletedPath('daisy');
+    fixture.detectChanges();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    const badge = compiled.querySelector('[role="alert"]');
+    expect(badge).toBeTruthy();
+  });
+
+  it('doit émettre badgeClicked quand on clique sur "Voir la scène bonus"', () => {
+    completedPathsService.addCompletedPath('mario');
+    completedPathsService.addCompletedPath('luigi');
+    completedPathsService.addCompletedPath('peach');
+    completedPathsService.addCompletedPath('daisy');
+    fixture.detectChanges();
+
+    let emitted = false;
+    component.badgeClicked.subscribe(() => {
+      emitted = true;
+    });
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    const button = compiled.querySelector<HTMLButtonElement>('.completion-badge__button');
+    button?.click();
+    fixture.detectChanges();
+
+    expect(emitted).toBe(true);
   });
 });

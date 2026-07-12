@@ -30,19 +30,19 @@ Décisions clés :
 - [x] Tâche 1 : Persister les Chemins complétés dans le localStorage (nouveau service + type)
 - [x] Tâche 2 : Game Engine — marquer un Chemin comme complété à la victoire + méthode retour à la sélection
 - [x] Tâche 3 : Victory Screen — bouton "Choisir un autre personnage" qui retourne à la sélection sans effacer les Chemins complétés
-- [ ] Tâche 4 : Character Selector — afficher les Chemins déjà complétés + Badge de complétion quand les 4 sont terminés
+- [x] Tâche 4 : Character Selector — afficher les Chemins déjà complétés + Badge de complétion quand les 4 sont terminés
 - [ ] Tâche 5 : Scène bonus du Badge de complétion (composant dédié)
 - [ ] Tâche 6 : Tests unitaires (Game Engine badge/reset + PersistenceService Chemins complétés)
 
 ## Zone de Transit & Logs
 ### Tâche en cours :
-- Tâche 3 terminée
+- Tâche 4 terminée
 
 ### Compteur de rejets (tâche actuelle) :
 - 0 / 5
 
 ### Dernier retour de Review :
-- Tâche 3 : Build OK, 339 tests passants (14 fichiers).
+- Tâche 4 : Build OK, 345 tests passants (14 fichiers).
 
 ### Dernier retour de Review :
 - Tâche 2 : Build OK, 337 tests passants (14 fichiers).
