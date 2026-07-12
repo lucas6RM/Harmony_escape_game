@@ -280,4 +280,185 @@ describe('GameEngineService', () => {
       expect(service.currentZone()).toBe(null);
     });
   });
+
+  describe('Quiz', () => {
+    describe('Quiz non actif au démarrage', () => {
+      it('quizActive() est false après startGame', () => {
+        service.startGame('mario');
+        expect(service.quizActive()).toBe(false);
+      });
+
+      it('quizAttempts() est 0 après startGame', () => {
+        service.startGame('mario');
+        expect(service.quizAttempts()).toBe(0);
+      });
+
+      it('quizFeedback() est null après startGame', () => {
+        service.startGame('mario');
+        expect(service.quizFeedback()).toBe(null);
+      });
+    });
+
+    describe('Quiz activé après un choix valide', () => {
+      beforeEach(() => {
+        service.startGame('mario');
+      });
+
+      it('quizActive() devient true après selectChoice(0)', () => {
+        service.selectChoice(0);
+        expect(service.quizActive()).toBe(true);
+      });
+
+      it('quizAttempts() est 0 après activation du Quiz', () => {
+        service.selectChoice(0);
+        expect(service.quizAttempts()).toBe(0);
+      });
+
+      it('quizFeedback() est null après activation du Quiz', () => {
+        service.selectChoice(0);
+        expect(service.quizFeedback()).toBe(null);
+      });
+    });
+
+    describe('Quiz réussi du 1er coup', () => {
+      beforeEach(() => {
+        service.startGame('mario');
+        service.selectChoice(0);
+      });
+
+      it('quizActive() devient false après réponse correcte', () => {
+        service.submitQuizAnswer(1); // correctIndex de mario_zone_1
+        expect(service.quizActive()).toBe(false);
+      });
+
+      it('coins() augmente de 2', () => {
+        service.submitQuizAnswer(1);
+        expect(service.coins()).toBe(2);
+      });
+
+      it('isZoneCompleted() devient true', () => {
+        service.submitQuizAnswer(1);
+        expect(service.isZoneCompleted()).toBe(true);
+      });
+
+      it('quizFeedback() est "correct"', () => {
+        service.submitQuizAnswer(1);
+        expect(service.quizFeedback()).toBe('correct');
+      });
+    });
+
+    describe('Quiz réussi au 2ème coup', () => {
+      beforeEach(() => {
+        service.startGame('mario');
+        service.selectChoice(0);
+      });
+
+      it('1ère tentative fausse : quizActive() reste true, quizAttempts() = 1, quizFeedback() = "incorrect"', () => {
+        service.submitQuizAnswer(0); // faux
+        expect(service.quizActive()).toBe(true);
+        expect(service.quizAttempts()).toBe(1);
+        expect(service.quizFeedback()).toBe('incorrect');
+      });
+
+      it('2ème tentative correcte : quizActive() devient false, coins +2, isZoneCompleted = true, feedback = "correct"', () => {
+        service.submitQuizAnswer(0); // faux
+        service.submitQuizAnswer(1); // correct
+        expect(service.quizActive()).toBe(false);
+        expect(service.coins()).toBe(2);
+        expect(service.isZoneCompleted()).toBe(true);
+        expect(service.quizFeedback()).toBe('correct');
+      });
+    });
+
+    describe('Quiz échoué après 2 tentatives', () => {
+      beforeEach(() => {
+        service.startGame('mario');
+        service.selectChoice(0);
+      });
+
+      it('1ère tentative fausse : quizAttempts() = 1, quizActive() reste true', () => {
+        service.submitQuizAnswer(0); // faux
+        expect(service.quizAttempts()).toBe(1);
+        expect(service.quizActive()).toBe(true);
+      });
+
+      it('2ème tentative fausse : quizActive() devient false, coins -1, isBlockingChoice = true, narrationEvent contient "Pénalité"', () => {
+        service.submitQuizAnswer(0); // 1ère faux
+        service.submitQuizAnswer(2); // 2ème faux
+        expect(service.quizActive()).toBe(false);
+        expect(service.coins()).toBe(-1);
+        expect(service.isBlockingChoice()).toBe(true);
+        expect(service.narrationEvent()).toContain('Pénalité');
+      });
+    });
+
+    describe('submitQuizAnswer sans quiz actif ne fait rien', () => {
+      it('ne change rien avant tout choix', () => {
+        service.startGame('mario');
+        service.submitQuizAnswer(0);
+        expect(service.quizActive()).toBe(false);
+        expect(service.quizAttempts()).toBe(0);
+        expect(service.quizFeedback()).toBe(null);
+        expect(service.coins()).toBe(0);
+      });
+    });
+
+    describe('restartZone réinitialise l\'état du Quiz', () => {
+      beforeEach(() => {
+        service.startGame('mario');
+      });
+
+      it('quizActive() redevient false', () => {
+        service.selectChoice(0);
+        expect(service.quizActive()).toBe(true);
+        service.restartZone();
+        expect(service.quizActive()).toBe(false);
+      });
+
+      it('quizAttempts() redevient 0', () => {
+        service.selectChoice(0);
+        service.submitQuizAnswer(0); // faux → attempts = 1
+        expect(service.quizAttempts()).toBe(1);
+        service.restartZone();
+        expect(service.quizAttempts()).toBe(0);
+      });
+
+      it('quizFeedback() redevient null', () => {
+        service.selectChoice(0);
+        service.submitQuizAnswer(0); // faux → feedback = 'incorrect'
+        expect(service.quizFeedback()).toBe('incorrect');
+        service.restartZone();
+        expect(service.quizFeedback()).toBe(null);
+      });
+    });
+
+    describe('advanceZone réinitialise l\'état du Quiz', () => {
+      beforeEach(() => {
+        service.startGame('mario');
+      });
+
+      it('quizActive() redevient false', () => {
+        service.selectChoice(0);
+        expect(service.quizActive()).toBe(true);
+        service.advanceZone();
+        expect(service.quizActive()).toBe(false);
+      });
+
+      it('quizAttempts() redevient 0', () => {
+        service.selectChoice(0);
+        service.submitQuizAnswer(0); // faux → attempts = 1
+        expect(service.quizAttempts()).toBe(1);
+        service.advanceZone();
+        expect(service.quizAttempts()).toBe(0);
+      });
+
+      it('quizFeedback() redevient null', () => {
+        service.selectChoice(0);
+        service.submitQuizAnswer(0); // faux → feedback = 'incorrect'
+        expect(service.quizFeedback()).toBe('incorrect');
+        service.advanceZone();
+        expect(service.quizFeedback()).toBe(null);
+      });
+    });
+  });
 });

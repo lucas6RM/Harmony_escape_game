@@ -106,7 +106,7 @@ Décompose l'issue en tâches atomiques basées sur les acceptance criteria. Cha
 ## Tableau d'Avancement
 [x] Tâche 1 : Ajouter la gestion du Quiz au `GameEngineService` : état du Quiz en cours (signal `quizActive`, `quizAttempts`), méthode `submitQuizAnswer(index)` qui gère les 2 chances (1ère erreur = nouvelle tentative, 2ème erreur = -1 Pièce + recommencer la Zone), réponse correcte = +2 Pièces + marquer Zone terminée + avancer automatiquement. Le Quiz ne s'affiche qu'après que le joueur a fait un choix narratif valide (narrationEvent non null et non bloquant).
 
-[ ] Tâche 2 : Tests unitaires du `GameEngineService` pour le Quiz : Quiz réussi du 1er coup (+2 pièces, zone terminée, avance), Quiz réussi au 2ème coup (+2 pièces, zone terminée, avance), Quiz échoué après 2 tentatives (-1 pièce, zone recommencée), Quiz non accessible tant qu'aucun choix valide n'est fait, Compteur de tentatives réinitialisé entre les zones.
+[x] Tâche 2 : Tests unitaires du `GameEngineService` pour le Quiz : Quiz réussi du 1er coup (+2 pièces, zone terminée, avance), Quiz réussi au 2ème coup (+2 pièces, zone terminée, avance), Quiz échoué après 2 tentatives (-1 pièce, zone recommencée), Quiz non accessible tant qu'aucun choix valide n'est fait, Compteur de tentatives réinitialisé entre les zones.
 
 [ ] Tâche 3 : Créer le composant `QuizPanel` (`src/app/features/game/quiz-panel/`) qui affiche la question du Quiz, le type de Quiz (badge coloré), les 4 réponses comme boutons, et gère l'état visuel (réponse sélectionnée, feedback vert/rouge, message de pénalité). Le composant émet un `output()` `answerSelected` avec l'index de la réponse.
 
@@ -118,13 +118,13 @@ Décompose l'issue en tâches atomiques basées sur les acceptance criteria. Cha
 
 ## Zone de Transit & Logs
 ### Tâche en cours :
-- Tâche 2
+- Tâche 3
 
 ### Compteur de rejets (tâche actuelle) :
 - 0 / 5
 
 ### Dernier retour de Review :
-- Tâche 1 validée : signals Quiz, submitQuizAnswer, selectChoice, restartZone, advanceZone conformes.
+- Tâche 2 validée : 181 lignes de tests ajoutées, tous les cas couverts (quiz inactif au démarrage, activation après choix valide, succès 1er/2ème coup, échec après 2 tentatives, submit sans quiz actif, reset par restartZone/advanceZone).
 
 ### Blocage Actuel :
 - Aucun.
