@@ -1,0 +1,132 @@
+.victory-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem;
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ── En-tête ────────────────────────────────────────────────────── */
+.victory-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.victory-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #ffd700;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+  margin: 0;
+}
+
+.victory-icon {
+  font-size: 2rem;
+  animation: sparkle 1.5s ease-in-out infinite alternate;
+}
+
+/* ── Narration ──────────────────────────────────────────────────── */
+.victory-narration {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.narration-line {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin: 0;
+  color: #e0e0e0;
+}
+
+.narration-highlight {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #ffd700;
+}
+
+/* ── Score ──────────────────────────────────────────────────────── */
+.victory-score {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.2rem;
+  padding: 1rem 2rem;
+  background: rgba(255, 215, 0, 0.1);
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+.score-icon {
+  font-size: 1.5rem;
+}
+
+.score-label {
+  color: #b0b0b0;
+}
+
+.score-value {
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: #ffd700;
+}
+
+/* ── Boutons ────────────────────────────────────────────────────── */
+.victory-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.action-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.action-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.action-button:focus-visible {
+  outline: 2px solid #ffd700;
+  outline-offset: 2px;
+}
+
+.action-restart {
+  background: linear-gradient(135deg, #4BAE4E, #3d8b40);
+  color: white;
+}
+
+.action-menu {
+  background: linear-gradient(135deg, #E52521, #c41e1a);
+  color: white;
+}
+
+/* ── Animation ──────────────────────────────────────────────────── */
+@keyframes sparkle {
+  0% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}

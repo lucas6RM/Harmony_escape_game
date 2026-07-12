@@ -64,6 +64,11 @@ export class QuizPanelComponent {
     return labels[type] ?? type;
   });
 
+  /** true si le Quiz courant est le Quiz final (plus difficile) */
+  protected readonly isFinal = computed(() => {
+    return this.quiz()?.isFinal ?? false;
+  });
+
   /**
    * Traite le clic sur une réponse et émet l'index.
    * Ne fait rien si le composant est désactivé.

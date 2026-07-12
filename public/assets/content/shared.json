@@ -23,9 +23,10 @@
       ],
       "quiz": {
         "type": "maths",
-        "question": "Si tu as 15 Pièces et que tu en dépenses 7, combien t'en reste-t-il ?",
-        "answers": ["7", "8", "9", "6"],
-        "correctIndex": 1
+        "question": "Si une Power Star vaut 125 points et que tu en collectes 8, combien de points as-tu au total ?",
+        "answers": ["900", "1000", "1100", "1025"],
+        "correctIndex": 1,
+        "isFinal": true
       }
     }
   ],

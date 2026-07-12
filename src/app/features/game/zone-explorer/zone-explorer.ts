@@ -61,6 +61,12 @@ export class ZoneExplorer {
     return this.quizActive() && this.coins() >= 5 && this.eliminatedAnswers().length === 0;
   });
 
+  /** true si le Quiz de la Zone courante est le Quiz final */
+  readonly isFinalQuiz = computed(() => {
+    const zone = this.currentZone();
+    return zone?.quiz.isFinal ?? false;
+  });
+
   /** Liste des choix de la Zone courante (ou tableau vide si pas de Zone) */
   readonly choices = computed<NarrativeChoice[]>(() => {
     const zone = this.currentZone();

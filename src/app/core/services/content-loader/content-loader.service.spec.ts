@@ -79,6 +79,7 @@ const MOCK_SHARED_CONTENT: SharedZoneContent = {
         question: 'Quel est le synonyme de "libérer" ?',
         answers: ['Affranchir', 'Capturer', 'Enfermer', 'Blesser'],
         correctIndex: 0,
+        isFinal: true,
       },
     },
   ],

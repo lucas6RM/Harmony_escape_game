@@ -1,0 +1,54 @@
+<div class="victory-screen" role="main" aria-label="Scène de victoire">
+  <!-- ── En-tête de victoire ────────────────────────────────────── -->
+  <div class="victory-header" role="banner">
+    <span class="victory-icon" aria-hidden="true">🌟</span>
+    <h1 class="victory-title">Victoire !</h1>
+    <span class="victory-icon" aria-hidden="true">🌟</span>
+  </div>
+
+  <!-- ── Texte narratif ─────────────────────────────────────────── -->
+  <div class="victory-narration" role="region" aria-label="Narration de victoire">
+    <p class="narration-line">
+      {{ characterEmoji() }} {{ characterName() }} a réussi le Quiz final !
+    </p>
+    <p class="narration-line">
+      Les chaînes de Bowser Junior se brisent en mille éclats d'étoiles...
+    </p>
+    <p class="narration-line narration-highlight">
+      ✨ Harmony est libérée ! ✨
+    </p>
+    <p class="narration-line">
+      Le palais redevient lumineux. Luma sautille de joie autour de toi.
+      Merci d'avoir sauvé Harmony, {{ characterName() }} !
+    </p>
+  </div>
+
+  <!-- ── Score final ────────────────────────────────────────────── -->
+  <div class="victory-score" role="status" aria-live="polite" aria-label="Score final">
+    <span class="score-icon" aria-hidden="true">🪙</span>
+    <span class="score-label">Pièces collectées :</span>
+    <span class="score-value">{{ coins() }}</span>
+  </div>
+
+  <!-- ── Boutons d'action ───────────────────────────────────────── -->
+  <div class="victory-actions" role="group" aria-label="Actions disponibles">
+    <button
+      type="button"
+      class="action-button action-restart"
+      aria-label="Recommencer la partie avec le même personnage"
+      (click)="onRestartGame()"
+    >
+      <span aria-hidden="true">🔄</span>
+      <span>Recommencer</span>
+    </button>
+    <button
+      type="button"
+      class="action-button action-menu"
+      aria-label="Retourner au menu principal"
+      (click)="onReturnToMenu()"
+    >
+      <span aria-hidden="true">🏠</span>
+      <span>Menu principal</span>
+    </button>
+  </div>
+</div>

@@ -13,8 +13,11 @@
   </div>
   }
 
+  <!-- Scène de victoire (après Quiz final réussi) -->
+  @if (gameWon()) {
+  <app-victory-screen />
+  } @else if (gameStarted()) {
   <!-- Exploration de la Zone -->
-  @if (gameStarted()) {
   <app-zone-explorer />
   }
 </div>
