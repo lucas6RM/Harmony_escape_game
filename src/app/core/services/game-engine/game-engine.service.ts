@@ -2,6 +2,7 @@ import { computed, inject, Injectable, signal } from '@angular/core';
 import type { Signal } from '@angular/core';
 import { ContentLoaderService } from '../content-loader';
 import type { CharacterPath, NarrativeChoice, Zone } from '../../types';
+import { HINT_COSTS } from '../../types';
 
 /**
  * Service central du moteur de jeu.
@@ -28,6 +29,9 @@ export class GameEngineService {
   private readonly quizActiveSignal = signal<boolean>(false);
   private readonly quizAttemptsSignal = signal<number>(0);
   private readonly quizFeedbackSignal = signal<'correct' | 'incorrect' | null>(null);
+
+  private readonly hintTextSignal = signal<string | null>(null);
+  private readonly eliminatedAnswersSignal = signal<number[]>([]);
 
   // ── Accès public (Signals) ──────────────────────────────────────
 
@@ -68,6 +72,12 @@ export class GameEngineService {
 
   /** Feedback visuel après une réponse au Quiz */
   readonly quizFeedback: Signal<'correct' | 'incorrect' | null> = this.quizFeedbackSignal;
+
+  /** Texte de l'Indice acheté (ou `null` si aucun Indice acheté) */
+  readonly hintText: Signal<string | null> = this.hintTextSignal;
+
+  /** Indices des réponses éliminées (ou tableau vide si aucune élimination) */
+  readonly eliminatedAnswers: Signal<number[]> = this.eliminatedAnswersSignal;
 
   /** Le Chemin complet du personnage (pour itérer sur les Zones) */
   readonly path: Signal<CharacterPath> = computed(() => {
@@ -128,6 +138,8 @@ export class GameEngineService {
     this.quizActiveSignal.set(true);
     this.quizAttemptsSignal.set(0);
     this.quizFeedbackSignal.set(null);
+    this.hintTextSignal.set(null);
+    this.eliminatedAnswersSignal.set([]);
   }
 
   /**
@@ -147,6 +159,8 @@ export class GameEngineService {
       this.quizActiveSignal.set(false);
       this.quizAttemptsSignal.set(0);
       this.quizFeedbackSignal.set(null);
+      this.hintTextSignal.set(null);
+      this.eliminatedAnswersSignal.set([]);
     }
   }
 
@@ -162,6 +176,8 @@ export class GameEngineService {
     this.quizActiveSignal.set(false);
     this.quizAttemptsSignal.set(0);
     this.quizFeedbackSignal.set(null);
+    this.hintTextSignal.set(null);
+    this.eliminatedAnswersSignal.set([]);
   }
 
   /**
@@ -185,6 +201,74 @@ export class GameEngineService {
    */
   clearEvent(): void {
     this.narrationEventSignal.set(null);
+  }
+
+  /**
+   * Achète un Indice textuel pendant un Quiz.
+   *
+   * Coûte 3 Pièces. Ne fonctionne que si le Quiz est actif et que
+   * le joueur a assez de Pièces. L'indice donne un indice textuel
+   * basé sur la première lettre ou le début de la bonne réponse.
+   *
+   * @returns true si l'achat a réussi, false sinon
+   */
+  buyHint(): boolean {
+    if (!this.quizActiveSignal()) {
+      return false;
+    }
+    const cost = HINT_COSTS.indice;
+    if (this.coinsSignal() < cost) {
+      return false;
+    }
+    if (this.hintTextSignal() !== null) {
+      // Déjà acheté
+      return false;
+    }
+    const zone = this.currentZone();
+    if (!zone) {
+      return false;
+    }
+    const correctAnswer = zone.quiz.answers[zone.quiz.correctIndex];
+    // Indice : donne les 2-3 premiers caractères de la bonne réponse
+    const preview = correctAnswer.slice(0, Math.min(3, correctAnswer.length));
+    const hint = `Indice : la réponse commence par '${preview}...'`;
+    this.coinsSignal.update(c => c - cost);
+    this.hintTextSignal.set(hint);
+    return true;
+  }
+
+  /**
+   * Achète l'élimination de 2 fausses réponses pendant un Quiz.
+   *
+   * Coûte 5 Pièces. Ne fonctionne que si le Quiz est actif et que
+   * le joueur a assez de Pièces. Retourne les indices de 2 réponses
+   * fausses à masquer.
+   *
+   * @returns true si l'achat a réussi, false sinon
+   */
+  buyElimination(): boolean {
+    if (!this.quizActiveSignal()) {
+      return false;
+    }
+    const cost = HINT_COSTS.elimination;
+    if (this.coinsSignal() < cost) {
+      return false;
+    }
+    if (this.eliminatedAnswersSignal().length > 0) {
+      // Déjà acheté
+      return false;
+    }
+    const zone = this.currentZone();
+    if (!zone) {
+      return false;
+    }
+    // Trouver tous les indices incorrects
+    const incorrectIndices = [0, 1, 2, 3].filter(i => i !== zone.quiz.correctIndex);
+    // Prendre les 2 premiers indices incorrects
+    const toEliminate = incorrectIndices.slice(0, 2);
+    this.coinsSignal.update(c => c - cost);
+    this.eliminatedAnswersSignal.set(toEliminate);
+    return true;
   }
 
   /**

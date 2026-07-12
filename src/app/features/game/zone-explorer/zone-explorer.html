@@ -76,7 +76,13 @@
     [quiz]="currentZone()!.quiz"
     [feedback]="quizFeedback()"
     [disabled]="quizFeedback() !== null"
+    [hintText]="hintText()"
+    [eliminatedAnswers]="eliminatedAnswers()"
+    [canBuyHint]="canBuyHint()"
+    [canBuyElimination]="canBuyElimination()"
     (answerSelected)="onSelectAnswer($event)"
+    (hintRequested)="onBuyHint()"
+    (eliminationRequested)="onBuyElimination()"
   />
   }
   }

@@ -7,6 +7,8 @@
 export type { Character } from './character';
 export { CHARACTERS } from './character';
 export type { QuizType, Quiz } from './quiz';
+export type { HintType } from './quiz';
+export { HINT_COSTS } from './quiz';
 export type { NarrativeChoice } from './narrative-choice';
 export type { Zone } from './zone';
 export type { CharacterPath } from './character-path';
