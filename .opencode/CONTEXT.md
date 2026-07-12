@@ -1,6 +1,7 @@
 # Projet : Harmony Escape Game
 
 ## Stack Technique
+- **Node.js** : 24 LTS — utilise TOUJOURS `source ~/.nvm/nvm.sh && nvm use 24` avant tout appel npm/ng si `node --version` retourne autre chose que v24
 - **Framework** : Angular (standalone components)
 - **Langage** : TypeScript strict
 - **Build** : Angular CLI
