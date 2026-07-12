@@ -65,6 +65,7 @@ const MOCK_MARIO_PATH: CharacterPath = {
         question: 'Qui t\'a attendu à l\'entrée du palais ?',
         answers: ['Luma', 'Toad', 'Yoshi', 'Peach'],
         correctIndex: 0,
+        isFinal: true,
       },
     },
   ] as Zone[],

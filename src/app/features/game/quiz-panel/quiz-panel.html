@@ -4,6 +4,13 @@
     {{ typeLabel() }}
   </span>
 
+  <!-- ── Badge Quiz Final ───────────────────────────────────────── -->
+  @if (isFinal()) {
+  <span class="quiz-badge quiz-final-badge" aria-hidden="true">
+    ⚡ Quiz Final
+  </span>
+  }
+
   <!-- ── Question ───────────────────────────────────────────────── -->
   <h2 class="quiz-question">{{ quiz().question }}</h2>
 

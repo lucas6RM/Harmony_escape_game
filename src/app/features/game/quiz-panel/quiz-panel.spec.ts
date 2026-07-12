@@ -340,4 +340,41 @@ describe('QuizPanelComponent', () => {
       expect(buttons[3].hidden).toBe(false);
     });
   });
+
+  describe('Quiz final', () => {
+    it('affiche le badge "Quiz Final" quand isFinal est true', async () => {
+      const finalQuiz: Quiz = {
+        type: 'maths',
+        question: 'Si une Power Star vaut 125 points et que tu en collectes 8, combien de points as-tu au total ?',
+        answers: ['900', '1000', '1100', '1025'],
+        correctIndex: 1,
+        isFinal: true,
+      };
+      ({ component, fixture } = await createWithInputs(finalQuiz));
+
+      const finalBadge = fixture.nativeElement.querySelector('.quiz-final-badge');
+      expect(finalBadge).toBeTruthy();
+      expect(finalBadge.textContent).toContain('Quiz Final');
+    });
+
+    it('ne affiche pas le badge "Quiz Final" quand isFinal est false', async () => {
+      ({ component, fixture } = await createWithInputs());
+
+      const finalBadge = fixture.nativeElement.querySelector('.quiz-final-badge');
+      expect(finalBadge).toBeFalsy();
+    });
+
+    it('ne affiche pas le badge "Quiz Final" quand isFinal est undefined', async () => {
+      const quizWithoutFinal: Quiz = {
+        type: 'francais',
+        question: 'Quel est le pluriel de "cheval" ?',
+        answers: ['chevals', 'chevaux', 'chevaus', 'chevauxs'],
+        correctIndex: 1,
+      };
+      ({ component, fixture } = await createWithInputs(quizWithoutFinal));
+
+      const finalBadge = fixture.nativeElement.querySelector('.quiz-final-badge');
+      expect(finalBadge).toBeFalsy();
+    });
+  });
 });

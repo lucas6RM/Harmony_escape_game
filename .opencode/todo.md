@@ -1,57 +1,43 @@
-# Issue #8 : Zones partagées + Rôles narratifs
+# Issue #9 : Fin de partie + Quiz final
 
 ## Spécification
-
-## Parent
-#1 (PRD: Harmony Escape Game)
-
-## What to build
-Ajouter les types `SharedZoneContent` et `CharacterRole` au modèle de domaine, puis mettre à jour `shared.json` avec au moins 2 Zones partagées et les rôles narratifs par personnage.
+Quiz final pour libérer Harmony et scène de victoire.
 
 Décisions clés :
-- Zones partagées : communes à tous les Chemins (ex: hall d'entrée, salle finale)
-- Rôles narratifs : chaque Personnage non joué obtient un rôle dans l'histoire du joueur
-- Contenu dans `public/assets/content/shared.json`
+- Quiz final plus difficile en dernière Zone
+- Scène de victoire narrative après succès
+- Gestion de l'échec : recommencer la Zone finale
 
 ## Acceptance criteria
-- [x] Type `SharedZoneContent` ajouté au modèle de domaine
-- [x] Types `CharacterRole` et `CharacterRoles` ajoutés au modèle de domaine
-- [x] Exports dans `index.ts`
-- [x] `shared.json` contient au moins 2 Zones partagées
-- [x] `shared.json` contient les rôles narratifs pour les 4 personnages
+- Quiz final affiché en dernière Zone
+- Scène de victoire après Quiz réussi
+- Échec : recommencer la Zone finale
+- Tests unitaires du Game Engine (fin de partie)
 
 ## Skills à Charger
 - angular-developer
-- domain-modeling
+- tdd
 
-## Standards du Projet
+## Standards du Projet & Commandes
 - Build : `npm run build`
 - Test : `npm run test --watch=false`
-- Framework : Angular 21.2 avec Signals
-- Testing : Vitest + jsdom
-- Styling : Tailwind CSS v4
-- Changement de détection : OnPush
-
-## Architecture existante
-- Types dans `src/app/core/types/`
-- JSON de contenu dans `public/assets/content/`
-- `shared.json` existait déjà avec une Zone `shared_final`
+- Lint : `npm run lint`
 
 ## Tableau d'Avancement
-- [x] Tâche 1 : Ajouter le type `SharedZoneContent` et `CharacterRole` au modèle de domaine, puis mettre à jour `shared.json` avec au moins 2 Zones partagées et les rôles narratifs par personnage
-- [x] Tâche 2 : Étendre le ContentLoaderService pour charger shared.json et résoudre les références de Zones partagées dans les chemins
-- [x] Tâche 3 : Ajouter loadCharacterRoles() au ContentLoaderService pour charger les rôles narratifs des autres personnages
-- [x] Tâche 4 : Tests unitaires du ContentLoaderService couvrant le chargement des Zones partagées, la résolution des références, et les rôles de personnages
+- [x] Tâche 1 : Implémenter le Quiz final en dernière Zone (plus difficile)
+- [ ] Tâche 2 : Implémenter la scène de victoire narrative après Quiz réussi
+- [ ] Tâche 3 : Gérer l'échec : recommencer la Zone finale
+- [ ] Tâche 4 : Tests unitaires du Game Engine pour la fin de partie
 
 ## Zone de Transit & Logs
 ### Tâche en cours :
-- Aucune — Tâche 4 validée.
+- Tâche 1 complétée
 
 ### Compteur de rejets (tâche actuelle) :
 - 0 / 5
 
 ### Dernier retour de Review :
-- Tâche 4 validée : 8 nouveaux tests ajoutés (3 Zones partagées, 3 résolution, 2 rôles), HttpClientMock avec simulation asynchrone pour shared.json, flushResources() via ɵEffectScheduler, correction params: () => 0 dans sharedZonesResource, build OK, 260 tests passants.
+- Aucun.
 
 ### Blocage Actuel :
 - Aucun.

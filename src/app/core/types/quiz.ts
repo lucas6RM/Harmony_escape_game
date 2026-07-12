@@ -26,6 +26,9 @@ export interface Quiz {
 
   /** Index de la réponse correcte (0-3) */
   correctIndex: number;
+
+  /** true si c'est le Quiz final de la dernière Zone (plus difficile) */
+  isFinal?: boolean;
 }
 
 /**
