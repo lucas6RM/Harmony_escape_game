@@ -1,4 +1,10 @@
-@if (!showSelector()) {
+@if (showResume()) {
+  <app-resume-screen
+    [characterId]="savedCharacterId()"
+    (resume)="onResume()"
+    (newGame)="onNewGame()"
+  />
+} @else if (!showSelector()) {
   <app-hero-screen (startGame)="onStartGame()" />
 } @else {
   <app-character-selector (characterSelected)="onCharacterSelected($event)" />

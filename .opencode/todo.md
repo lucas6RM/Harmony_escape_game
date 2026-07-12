@@ -54,7 +54,7 @@ Schéma de sauvegarde :
 - [x] Tâche 1 : Étendre l'interface GameSave et le PersistenceService pour gérer l'état complet (zoneCourante, pieces, tentativesQuiz, completes) + tests unitaires
 - [x] Tâche 2 : Implémenter l'auto-save après chaque Zone terminée (dans GameEngineService ou via un mécanisme d'écoute)
 - [x] Tâche 3 : Créer le composant de reprise (ResumeScreen) avec les boutons "Reprendre" et "Recommencer"
-- [ ] Tâche 4 : Intégrer l'écran de reprise dans le WelcomeScreen (affiché quand une sauvegarde en cours existe)
+- [x] Tâche 4 : Intégrer l'écran de reprise dans le WelcomeScreen (affiché quand une sauvegarde en cours existe)
 - [ ] Tâche 5 : Permettre au GameEngine de charger un état sauvegardé (méthode restoreGame)
 
 ## Zone de Transit & Logs
@@ -65,7 +65,7 @@ Schéma de sauvegarde :
 - 0 / 5
 
 ### Dernier retour de Review :
-- Tâche 3 validée : composant ResumeScreen standalone OnPush, input()/output(), computed() pour dérivations, ARIA complet (role, aria-label, aria-hidden), 12 tests (4 personnages + fallback + outputs + ARIA), CSS thème Mario Galaxy cohérent, 235 tests passants, build OK.
+- Tâche 4 validée : WelcomeScreen injecte PersistenceService, signaux showResume/savedCharacterId, isGameInProgress() au chargement, flux ResumeScreen → HeroScreen → CharacterSelector correct, onResume() navigue vers /game, onNewGame() appelle clearSave() + réaffiche HeroScreen, GameShell migré vers PersistenceService, 5 nouveaux tests de reprise, 241 tests passants, build OK.
 
 ### Blocage Actuel :
 - Aucun.
