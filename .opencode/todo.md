@@ -26,20 +26,21 @@ Décisions clés :
 ## Tableau d'Avancement
 - [x] Tâche 1 : Implémenter le Quiz final en dernière Zone (plus difficile)
 - [x] Tâche 2 : Implémenter la scène de victoire narrative après Quiz réussi
-- [ ] Tâche 3 : Gérer l'échec : recommencer la Zone finale
+- [x] Tâche 3 : Gérer l'échec : recommencer la Zone finale
 - [ ] Tâche 4 : Tests unitaires du Game Engine pour la fin de partie
 
 ## Zone de Transit & Logs
 ### Tâche en cours :
 - Tâche 1 complétée
 - Tâche 2 complétée (bug corrigé)
+- Tâche 3 complétée
 
 ### Compteur de rejets (tâche actuelle) :
-- 2 / 5 (résolu)
+- 0 / 5
 
 ### Dernier retour de Review :
-- Bug corrigé : `this.gameWonSignal.set(false);` ajouté dans `startGame()`.
-- Test unitaire ajouté : simule une victoire complète puis vérifie que `restartGame()` remet `gameWon` à `false`.
+- Message de pénalité adapté au Quiz final : "Presque là ! -1 Pièce. Bowser Junior rit, mais tu peux le battre — recommence cette Zone !"
+- Tests unitaires ajoutés : 5 nouveaux tests dans le bloc "Fin de partie — Quiz final" couvrant l'échec du Quiz final, le message motivant, isBlockingChoice, restartZone, et la distinction avec les Quiz non-finaux.
 
 ### Blocage Actuel :
 - Aucun.

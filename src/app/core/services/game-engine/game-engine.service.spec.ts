@@ -870,6 +870,80 @@ describe('GameEngineService', () => {
       expect(service.gameWon()).toBe(false);
     });
 
+    it('l\'échec du Quiz final affiche un message motivant spécifique', () => {
+      // Avancer jusqu'à la dernière Zone
+      service.selectChoice(0);
+      service.submitQuizAnswer(1);
+      service.advanceZone();
+
+      service.selectChoice(0);
+      service.submitQuizAnswer(0);
+      service.advanceZone();
+
+      // Zone 3 = Quiz final → 2 erreurs
+      service.selectChoice(0);
+      service.submitQuizAnswer(1); // faux
+      service.submitQuizAnswer(2); // faux → pénalité
+      expect(service.narrationEvent()).toContain('Presque là');
+      expect(service.narrationEvent()).toContain('Bowser Junior');
+      expect(service.narrationEvent()).toContain('recommence');
+    });
+
+    it('l\'échec du Quiz final met isBlockingChoice à true (bouton Recommencer disponible)', () => {
+      // Avancer jusqu'à la dernière Zone
+      service.selectChoice(0);
+      service.submitQuizAnswer(1);
+      service.advanceZone();
+
+      service.selectChoice(0);
+      service.submitQuizAnswer(0);
+      service.advanceZone();
+
+      // Zone 3 = Quiz final → 2 erreurs
+      service.selectChoice(0);
+      service.submitQuizAnswer(1); // faux
+      service.submitQuizAnswer(2); // faux → pénalité
+      expect(service.isBlockingChoice()).toBe(true);
+    });
+
+    it('restartZone() permet de recommencer la Zone finale après échec', () => {
+      // Avancer jusqu'à la dernière Zone
+      service.selectChoice(0);
+      service.submitQuizAnswer(1);
+      service.advanceZone();
+
+      service.selectChoice(0);
+      service.submitQuizAnswer(0);
+      service.advanceZone();
+
+      // Zone 3 = Quiz final → 2 erreurs
+      service.selectChoice(0);
+      service.submitQuizAnswer(1); // faux
+      service.submitQuizAnswer(2); // faux → pénalité
+      expect(service.isBlockingChoice()).toBe(true);
+      expect(service.quizActive()).toBe(false);
+
+      // Le joueur clique sur "Recommencer la Zone"
+      service.restartZone();
+      expect(service.isBlockingChoice()).toBe(false);
+      expect(service.narrationEvent()).toBe(null);
+      expect(service.quizActive()).toBe(false);
+      expect(service.quizAttempts()).toBe(0);
+      expect(service.quizFeedback()).toBe(null);
+      // La Zone courante reste la Zone finale
+      expect(service.currentZone()?.id).toBe('mario_zone_3');
+      expect(service.currentZone()?.quiz.isFinal).toBe(true);
+    });
+
+    it('l\'échec d\'un Quiz non-final affiche le message générique de pénalité', () => {
+      // Zone 1 (non-final) → 2 erreurs
+      service.selectChoice(0);
+      service.submitQuizAnswer(0); // faux
+      service.submitQuizAnswer(2); // faux → pénalité
+      expect(service.narrationEvent()).toBe('Pénalité ! -1 Pièce. Recommence cette Zone.');
+      expect(service.narrationEvent()).not.toContain('Presque là');
+    });
+
     it('characterId() retourne l\'identifiant du personnage', () => {
       expect(service.characterId()).toBe('mario');
     });

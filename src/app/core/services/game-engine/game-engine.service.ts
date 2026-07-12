@@ -421,7 +421,15 @@ export class GameEngineService {
       this.addCoins(-1);
       this.quizFeedbackSignal.set('incorrect');
       this.quizActiveSignal.set(false);
-      this.narrationEventSignal.set('Pénalité ! -1 Pièce. Recommence cette Zone.');
+
+      // Message adapté selon qu'il s'agit du Quiz final ou non
+      if (zone.quiz.isFinal) {
+        this.narrationEventSignal.set(
+          'Presque là ! -1 Pièce. Bowser Junior rit, mais tu peux le battre — recommence cette Zone !',
+        );
+      } else {
+        this.narrationEventSignal.set('Pénalité ! -1 Pièce. Recommence cette Zone.');
+      }
       this.isBlockingChoiceSignal.set(true);
     }
   }
