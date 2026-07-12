@@ -1,20 +1,21 @@
-# Issue #3 : Écran d'accueil + Sélection du Personnage
+# Issue #4 : Exploration d'une Zone + Choix narratifs
 
 ## Spécification
-Écran d'accueil immersif dans l'univers Mario Galaxy et sélection du Personnage parmi 4 héros (Mario, Luigi, Peach, Daisy).
+Exploration d'une Zone avec texte narratif, emojis et Choix narratifs. Le Game Engine Service orchestre la navigation.
 
 Décisions clés :
-- Interface textuelle + emojis (pas d'images)
-- Résumé du personnage et son objectif avant de commencer
-- Persistance du personnage choisi dans le local storage
+- Game Engine Service : seam principale, gère l'état du jeu (zone courante, progression)
+- Choix narratifs : certains mènent à des événements différents, d'autres sont bloquants (pénalité ou recommencer la Zone)
+- Interface textuelle + emojis
 
 ## Acceptance criteria
 
-- [ ] Écran d'accueil avec ambiance Mario Galaxy (texte + emojis)
-- [ ] Les 4 personnages sont affichés avec un résumé
-- [ ] Le joueur peut choisir un personnage
-- [ ] Le choix est sauvegardé dans le local storage
-- [ ] Tests d'intégration du composant de sélection
+- [ ] Game Engine Service gère la navigation entre Zones
+- [ ] Affichage narration avec emojis
+- [ ] Choix narratifs affichés comme boutons
+- [ ] Choix bloquants : pénalité ou recommencer la Zone
+- [ ] Choix avec conséquence : événements différents
+- [ ] Tests unitaires du Game Engine (navigation, choix bloquants)
 
 ## Skills à Charger
 - **`angular-developer`** — génération de code Angular
@@ -25,7 +26,7 @@ Décisions clés :
 - Test : `npm run test --watch=false`
 - Lint : `npm run lint`
 
-## Décisions de Design (héritées de l'issue #2)
+## Décisions de Design (héritées des issues #2 et #3)
 
 | Décision | Choix |
 |----------|-------|
@@ -38,42 +39,64 @@ Décisions clés :
 | Types | `src/app/core/types/` |
 | Services | `src/app/core/services/` |
 
-## Modèle de Domaine Additionnel
+## Modèle de Domaine (existant)
 
-```typescript
-// Personnage jouable
-export interface Character {
-  id: 'mario' | 'luigi' | 'peach' | 'daisy';
-  name: string;
-  emoji: string;
-  summary: string;       // court résumé affiché à l'écran de sélection
-  color: string;         // couleur thématique (ex: "#E52521" pour Mario)
-}
+Les types suivants existent déjà dans `src/app/core/types/` :
 
-// État de la persistance
-export interface GameSave {
-  selectedCharacterId: 'mario' | 'luigi' | 'peach' | 'daisy' | null;
-}
+- `Zone` : `{ id, narration, choices: NarrativeChoice[], quiz: Quiz }`
+- `NarrativeChoice` : `{ text, nextNarrationId, blocking, penalty? }`
+- `Quiz` : `{ type, question, answers: string[], correctIndex }`
+- `CharacterPath` : `{ character, zones: Zone[] }`
+- `Character` : `{ id, name, emoji, summary, color }`
+- `GameSave` : `{ selectedCharacterId }`
+
+## Services existants
+
+- `ContentLoaderService` : charge le `CharacterPath` depuis JSON via HTTP
+- `CharacterPersistenceService` : gère le localStorage du personnage choisi
+
+## Structure du projet existante
+
+```
+src/app/
+├── core/
+│   ├── services/
+│   │   ├── character-persistence/
+│   │   └── content-loader/
+│   └── types/
+│       ├── character-path.ts
+│       ├── character.ts
+│       ├── game-save.ts
+│       ├── index.ts
+│       ├── narrative-choice.ts
+│       ├── quiz.ts
+│       └── zone.ts
+└── features/
+    ├── character-selector/
+    ├── game/
+    │   └── game-shell/     ← placeholder, à enrichir
+    ├── hero-screen/
+    └── welcome-screen/
 ```
 
 ## Tableau d'Avancement
-- [x] Tâche 1 : Créer le type `Character` dans `src/app/core/types/` + tableau des 4 personnages avec leurs données (nom, emoji, résumé, couleur)
-- [x] Tâche 2 : Créer `CharacterPersistenceService` (sauvegarder/restaurer le personnage choisi dans le localStorage)
-- [x] Tâche 3 : Créer le composant `HeroScreen` (écran d'accueil immersif Mario Galaxy avec titre, emojis, texte d'intro)
-- [x] Tâche 4 : Créer le composant `CharacterSelector` (grille des 4 personnages cliquables avec résumé et emoji)
-- [x] Tâche 5 : Configurer le routage : `/accueil` → HeroScreen + CharacterSelector, puis navigation vers le jeu après sélection
-- [x] Tâche 6 : Tests d'intégration du composant `CharacterSelector` (sélection, persistance localStorage, navigation)
+- [x] Tâche 1 : Créer le `GameEngineService` (service `providedIn: 'root'`) qui gère l'état du jeu : zone courante, index dans le Chemin, navigation vers la zone suivante/précédente, gestion des choix narratifs (bloquants vs conséquences), et le nombre de Pièces. Utilise Signals pour l'état.
+- [x] Tâche 2 : Tests unitaires du `GameEngineService` (navigation entre zones, choix bloquants avec pénalité, choix avec conséquence, gain de Pièces)
+- [x] Tâche 3 : Créer le composant `ZoneExplorer` qui affiche la narration de la Zone courante avec emojis et les Choix narratifs comme boutons cliquables
+- [x] Tâche 4 : Créer le composant `NarrativeChoice` (bouton de choix individuel avec feedback visuel pour les choix bloquants)
+- [x] Tâche 5 : Intégrer `ZoneExplorer` dans `GameShell`, remplacer le placeholder
+- [x] Tâche 6 : Gérer l'affichage des événements de pénalité (choix bloquant) avec un message et un bouton pour recommencer la Zone
 - [x] Tâche 7 : Vérifier build et tests passent
 
 ## Zone de Transit & Logs
 ### Tâche en cours :
-- Issue terminée
+- Tâche 7 terminée
 
 ### Compteur de rejets (tâche actuelle) :
 - 0 / 5
 
 ### Dernier retour de Review :
-- VALIDÉ — Build et tests OK
+- Aucun.
 
 ### Blocage Actuel :
 - Aucun.
