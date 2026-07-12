@@ -44,4 +44,40 @@
   </div>
   }
   }
+
+  <!-- Message de succès : Zone terminée -->
+  @if (isZoneCompleted()) {
+  <div class="success-block" role="alert" aria-live="polite">
+    <span class="success-icon" aria-hidden="true">🎉</span>
+    <p class="success-text">Bravo ! +2 Pièces 🪙</p>
+    <button
+      type="button"
+      class="advance-button"
+      aria-label="Passer à la Zone suivante"
+      (click)="onAdvanceZone()"
+    >
+      Zone suivante
+    </button>
+  </div>
+  }
+
+  <!-- Message « Nouvelle tentative » après 1ère erreur au Quiz -->
+  @if (quizFeedback() === 'incorrect' && quizAttempts() < 2 && quizActive()) {
+  <div class="retry-block" role="alert" aria-live="polite">
+    <span class="retry-icon" aria-hidden="true">🔄</span>
+    <p class="retry-text">Nouvelle tentative ! Choisis une autre réponse.</p>
+  </div>
+  }
+
+  <!-- QuizPanel : s'affiche après un choix narratif valide -->
+  @if (quizActive()) {
+  @if (currentZone()) {
+  <app-quiz-panel
+    [quiz]="currentZone()!.quiz"
+    [feedback]="quizFeedback()"
+    [disabled]="quizFeedback() !== null"
+    (answerSelected)="onSelectAnswer($event)"
+  />
+  }
+  }
 </div>

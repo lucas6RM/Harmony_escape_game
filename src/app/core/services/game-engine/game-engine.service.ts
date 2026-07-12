@@ -25,6 +25,10 @@ export class GameEngineService {
   private readonly isBlockingChoiceSignal = signal<boolean>(false);
   private readonly gameStartedSignal = signal<boolean>(false);
 
+  private readonly quizActiveSignal = signal<boolean>(false);
+  private readonly quizAttemptsSignal = signal<number>(0);
+  private readonly quizFeedbackSignal = signal<'correct' | 'incorrect' | null>(null);
+
   // ── Accès public (Signals) ──────────────────────────────────────
 
   /** Index de la Zone courante dans le Chemin du personnage */
@@ -55,6 +59,15 @@ export class GameEngineService {
 
   /** Indique si le jeu a été démarré */
   readonly gameStarted: Signal<boolean> = this.gameStartedSignal;
+
+  /** Indique si le Quiz est actuellement affiché (après un choix narratif valide) */
+  readonly quizActive: Signal<boolean> = this.quizActiveSignal;
+
+  /** Nombre de tentatives pour le Quiz courant (0, 1 ou 2) */
+  readonly quizAttempts: Signal<number> = this.quizAttemptsSignal;
+
+  /** Feedback visuel après une réponse au Quiz */
+  readonly quizFeedback: Signal<'correct' | 'incorrect' | null> = this.quizFeedbackSignal;
 
   /** Le Chemin complet du personnage (pour itérer sur les Zones) */
   readonly path: Signal<CharacterPath> = computed(() => {
@@ -109,9 +122,12 @@ export class GameEngineService {
       return;
     }
 
-    // Choix valide → conséquence narrative
+    // Choix valide → conséquence narrative et activation du Quiz
     this.narrationEventSignal.set(choice.nextNarrationId);
     this.isBlockingChoiceSignal.set(false);
+    this.quizActiveSignal.set(true);
+    this.quizAttemptsSignal.set(0);
+    this.quizFeedbackSignal.set(null);
   }
 
   /**
@@ -128,6 +144,9 @@ export class GameEngineService {
       this.isZoneCompletedSignal.set(false);
       this.narrationEventSignal.set(null);
       this.isBlockingChoiceSignal.set(false);
+      this.quizActiveSignal.set(false);
+      this.quizAttemptsSignal.set(0);
+      this.quizFeedbackSignal.set(null);
     }
   }
 
@@ -140,6 +159,9 @@ export class GameEngineService {
     this.isZoneCompletedSignal.set(false);
     this.narrationEventSignal.set(null);
     this.isBlockingChoiceSignal.set(false);
+    this.quizActiveSignal.set(false);
+    this.quizAttemptsSignal.set(0);
+    this.quizFeedbackSignal.set(null);
   }
 
   /**
@@ -163,5 +185,53 @@ export class GameEngineService {
    */
   clearEvent(): void {
     this.narrationEventSignal.set(null);
+  }
+
+  /**
+   * Soumet une réponse au Quiz en cours.
+   *
+   * - Réponse correcte : +2 Pièces, Zone terminée, Quiz désactivé.
+   * - 1ère erreur : nouvelle tentative (pas de pénalité).
+   * - 2ème erreur : -1 Pièce, pénalité, Zone à recommencer.
+   *
+   * @param answerIndex - Index de la réponse sélectionnée (0-3)
+   */
+  submitQuizAnswer(answerIndex: number): void {
+    if (!this.quizActiveSignal()) {
+      return;
+    }
+
+    const zone = this.currentZone();
+    if (!zone) {
+      return;
+    }
+
+    const correctIndex = zone.quiz.correctIndex;
+
+    if (answerIndex === correctIndex) {
+      // Réponse correcte
+      this.addCoins(2);
+      this.completeZone();
+      this.quizFeedbackSignal.set('correct');
+      this.quizActiveSignal.set(false);
+      return;
+    }
+
+    // Réponse incorrecte → incrémenter les tentatives
+    const newAttempts = this.quizAttemptsSignal() + 1;
+    this.quizAttemptsSignal.set(newAttempts);
+
+    if (newAttempts === 1) {
+      // 1ère erreur → nouvelle tentative sans pénalité
+      this.quizFeedbackSignal.set('incorrect');
+      // quizActive reste true
+    } else {
+      // 2ème erreur → pénalité et recommencer la Zone
+      this.addCoins(-1);
+      this.quizFeedbackSignal.set('incorrect');
+      this.quizActiveSignal.set(false);
+      this.narrationEventSignal.set('Pénalité ! -1 Pièce. Recommence cette Zone.');
+      this.isBlockingChoiceSignal.set(true);
+    }
   }
 }
