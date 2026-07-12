@@ -1,0 +1,32 @@
+<div class="zone-explorer" role="main" aria-label="Exploration de la Zone">
+  <!-- Narration de la Zone -->
+  @if (narration()) {
+  <div class="narration-block" role="region" aria-label="Narration de la Zone">
+    <p class="narration-text">{{ narration() }}</p>
+  </div>
+  }
+
+  <!-- Choix narratifs -->
+  @if (choices().length > 0) {
+  <div class="choices-container" role="group" aria-label="Choix narratifs">
+    @for (choice of choices(); track choice.text; let i = $index) {
+    <button
+      type="button"
+      class="choice-button"
+      [class.choice-blocking]="choice.blocking"
+      [attr.aria-label]="'Choix ' + (i + 1) + ': ' + choice.text + (choice.blocking ? ' (chemin risqué)' : '')"
+      (click)="onSelectChoice(i)"
+    >
+      {{ choice.text }}
+    </button>
+    }
+  </div>
+  }
+
+  <!-- Événement narratif -->
+  @if (narrationEvent()) {
+  <div class="event-block" role="alert" aria-live="polite">
+    <p class="event-text">{{ narrationEvent() }}</p>
+  </div>
+  }
+</div>

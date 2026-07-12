@@ -1,0 +1,204 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { GameEngineService } from '../../../core/services/game-engine';
+import { ContentLoaderService } from '../../../core/services/content-loader';
+import type { CharacterPath, Zone } from '../../../core/types';
+import { ZoneExplorer } from './zone-explorer';
+
+/**
+ * Chemin de test avec 2 Zones pour Mario.
+ */
+const MOCK_MARIO_PATH: CharacterPath = {
+  character: 'mario',
+  zones: [
+    {
+      id: 'mario_zone_1',
+      narration: "⭐ Tu arrives devant le palais d'Harmony. Luma t'attend, l'air inquiet. 🌟",
+      choices: [
+        {
+          text: "Entrer par le grand portail 🚪",
+          nextNarrationId: 'mario_n1_portal',
+          blocking: false,
+        },
+        {
+          text: "Essayer de grimper au mur 🧗",
+          nextNarrationId: 'mario_n1_wall',
+          blocking: true,
+          penalty: 'Le mur est trop glissant ! Tu tombes à l\'eau. 💦',
+        },
+      ],
+      quiz: {
+        type: 'maths',
+        question: 'Combien font 245 + 378 ?',
+        answers: ['613', '623', '618', '603'],
+        correctIndex: 1,
+      },
+    },
+    {
+      id: 'mario_zone_2',
+      narration: "🌟 Tu traverses le hall principal. Des étoiles flottent dans l'air.",
+      choices: [
+        {
+          text: "Attraper une étoile ⭐",
+          nextNarrationId: 'mario_n2_star',
+          blocking: false,
+        },
+      ],
+      quiz: {
+        type: 'univers-mario',
+        question: 'Qui est le frère de Mario ?',
+        answers: ['Luigi', 'Wario', 'Toad', 'Yoshi'],
+        correctIndex: 0,
+      },
+    },
+  ] as Zone[],
+};
+
+/**
+ * Mock de ContentLoaderService qui retourne un chemin déterministe.
+ */
+class ContentLoaderServiceMock {
+  loadPath(_character: string) {
+    return () => MOCK_MARIO_PATH;
+  }
+}
+
+describe('ZoneExplorer', () => {
+  let component: ZoneExplorer;
+  let fixture: ComponentFixture<ZoneExplorer>;
+  let gameEngine: GameEngineService;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [ZoneExplorer],
+      providers: [
+        GameEngineService,
+        { provide: ContentLoaderService, useClass: ContentLoaderServiceMock },
+      ],
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(ZoneExplorer);
+    gameEngine = TestBed.inject(GameEngineService);
+    component = fixture.componentInstance;
+  });
+
+  describe('afficher la narration de la Zone courante', () => {
+    it('affiche la narration de la première Zone après startGame', () => {
+      gameEngine.startGame('mario');
+      fixture.detectChanges();
+
+      const narrationText = fixture.nativeElement.querySelector('.narration-text');
+      expect(narrationText).toBeTruthy();
+      expect(narrationText.textContent).toContain("Tu arrives devant le palais d'Harmony");
+    });
+
+    it('ne affiche pas de narration quand le jeu n\'est pas démarré', () => {
+      fixture.detectChanges();
+
+      const narrationBlock = fixture.nativeElement.querySelector('.narration-block');
+      expect(narrationBlock).toBeFalsy();
+    });
+  });
+
+  describe('afficher les Choix narratifs', () => {
+    beforeEach(() => {
+      gameEngine.startGame('mario');
+      fixture.detectChanges();
+    });
+
+    it('affiche un bouton par choix narratif', () => {
+      const buttons = fixture.nativeElement.querySelectorAll('.choice-button');
+      expect(buttons.length).toBe(2);
+    });
+
+    it('le premier bouton affiche le texte du premier choix', () => {
+      const buttons = fixture.nativeElement.querySelectorAll('.choice-button');
+      expect(buttons[0].textContent).toContain('Entrer par le grand portail');
+    });
+
+    it('le deuxième bouton affiche le texte du deuxième choix', () => {
+      const buttons = fixture.nativeElement.querySelectorAll('.choice-button');
+      expect(buttons[1].textContent).toContain('Essayer de grimper au mur');
+    });
+
+    it('le choix bloquant a la classe choice-blocking', () => {
+      const buttons = fixture.nativeElement.querySelectorAll('.choice-button');
+      expect(buttons[1].classList.contains('choice-blocking')).toBe(true);
+    });
+
+    it('le choix non bloquant n\'a pas la classe choice-blocking', () => {
+      const buttons = fixture.nativeElement.querySelectorAll('.choice-button');
+      expect(buttons[0].classList.contains('choice-blocking')).toBe(false);
+    });
+
+    it('chaque bouton a un aria-label descriptif', () => {
+      const buttons = fixture.nativeElement.querySelectorAll('.choice-button');
+      expect(buttons[0].getAttribute('aria-label')).toContain('Choix 1');
+      expect(buttons[1].getAttribute('aria-label')).toContain('Choix 2');
+      expect(buttons[1].getAttribute('aria-label')).toContain('chemin risqué');
+    });
+  });
+
+  describe('cliquer sur un choix', () => {
+    beforeEach(() => {
+      gameEngine.startGame('mario');
+      fixture.detectChanges();
+    });
+
+    it('cliquer sur le premier choix appelle selectChoice(0)', () => {
+      const spy = vi.spyOn(gameEngine, 'selectChoice');
+      const buttons = fixture.nativeElement.querySelectorAll('.choice-button');
+      buttons[0].click();
+      fixture.detectChanges();
+
+      expect(spy).toHaveBeenCalledWith(0);
+    });
+
+    it('cliquer sur le deuxième choix appelle selectChoice(1)', () => {
+      const spy = vi.spyOn(gameEngine, 'selectChoice');
+      const buttons = fixture.nativeElement.querySelectorAll('.choice-button');
+      buttons[1].click();
+      fixture.detectChanges();
+
+      expect(spy).toHaveBeenCalledWith(1);
+    });
+  });
+
+  describe('événement narratif', () => {
+    beforeEach(() => {
+      gameEngine.startGame('mario');
+      fixture.detectChanges();
+    });
+
+    it('ne affiche pas d\'événement au démarrage', () => {
+      const eventBlock = fixture.nativeElement.querySelector('.event-block');
+      expect(eventBlock).toBeFalsy();
+    });
+
+    it('affiche l\'événement narratif après un choix non bloquant', () => {
+      gameEngine.selectChoice(0);
+      fixture.detectChanges();
+
+      const eventBlock = fixture.nativeElement.querySelector('.event-block');
+      expect(eventBlock).toBeTruthy();
+      expect(eventBlock.textContent).toContain('mario_n1_portal');
+    });
+
+    it('affiche la pénalité après un choix bloquant', () => {
+      gameEngine.selectChoice(1);
+      fixture.detectChanges();
+
+      const eventBlock = fixture.nativeElement.querySelector('.event-block');
+      expect(eventBlock).toBeTruthy();
+      expect(eventBlock.textContent).toContain('Le mur est trop glissant');
+    });
+
+    it('l\'événement a role="alert" et aria-live="polite"', () => {
+      gameEngine.selectChoice(0);
+      fixture.detectChanges();
+
+      const eventBlock = fixture.nativeElement.querySelector('.event-block');
+      expect(eventBlock.getAttribute('role')).toBe('alert');
+      expect(eventBlock.getAttribute('aria-live')).toBe('polite');
+    });
+  });
+});
