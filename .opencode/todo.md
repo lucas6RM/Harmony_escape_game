@@ -10,11 +10,11 @@ Décisions clés :
 
 ## Acceptance criteria
 
-- [ ] Bouton "Acheter un Indice" (3 Pièces) disponible pendant un Quiz
-- [ ] Bouton "Éliminer 2 réponses" (5 Pièces) disponible pendant un Quiz
-- [ ] Solde insuffisant : boutons désactivés
-- [ ] Solde de Pièces affiché en permanence
-- [ ] Tests unitaires du Game Engine (achat aide, solde)
+- [x] Bouton "Acheter un Indice" (3 Pièces) disponible pendant un Quiz
+- [x] Bouton "Éliminer 2 réponses" (5 Pièces) disponible pendant un Quiz
+- [x] Solde insuffisant : boutons désactivés
+- [x] Solde de Pièces affiché en permanence
+- [x] Tests unitaires du Game Engine (achat aide, solde)
 
 ## Skills à Charger
 - **`angular-developer`** — génération de code Angular
@@ -136,17 +136,17 @@ Le `GameEngineService` doit gérer :
   - `canBuyHint` = quizActive() && coins() >= 3 && !hintText()
   - `canBuyElimination` = quizActive() && coins() >= 5 && eliminatedAnswers().length === 0
 
-[ ] Tâche 5 : Vérifier build et tests passent
+[x] Tâche 5 : Vérifier build et tests passent
 
 ## Zone de Transit & Logs
 ### Tâche en cours :
-- Tâche 4
+- Tâche 5 (complétée)
 
 ### Compteur de rejets (tâche actuelle) :
 - 0 / 5
 
 ### Dernier retour de Review :
-- Tâche 4 validée : bindings ZoneExplorer conformes, computed corrects, template conforme.
+- Issue #6 complétée : toutes les tâches validées, build et tests OK.
 
 ### Blocage Actuel :
 - Aucun.
