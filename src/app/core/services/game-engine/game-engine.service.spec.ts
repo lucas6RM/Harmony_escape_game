@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import type { CharacterPath, Zone } from '../../types';
+import type { CharacterPath, GameSave, Zone } from '../../types';
 import { ContentLoaderService } from '../content-loader';
 import { PersistenceService } from '../persistence';
 import { GameEngineService } from './game-engine.service';
@@ -631,6 +631,91 @@ describe('GameEngineService', () => {
         expect(service.hintText()).toBe(null);
         expect(service.eliminatedAnswers()).toEqual([]);
       });
+    });
+  });
+
+  describe('restoreGame', () => {
+    const mockGameSave: GameSave = {
+      selectedCharacterId: 'mario',
+      currentZoneIndex: 2,
+      coins: 7,
+      quizAttempts: 1,
+      zonesCompleted: [0, 1],
+    };
+
+    it('charge le Chemin du personnage sauvegardé', () => {
+      service.restoreGame(mockGameSave);
+      expect(service.path().character).toBe('mario');
+    });
+
+    it('restaure l\'index de Zone courante', () => {
+      service.restoreGame(mockGameSave);
+      expect(service.currentZoneIndex()).toBe(2);
+    });
+
+    it('restaure les Pièces accumulées', () => {
+      service.restoreGame(mockGameSave);
+      expect(service.coins()).toBe(7);
+    });
+
+    it('restaure les tentatives de Quiz', () => {
+      service.restoreGame(mockGameSave);
+      expect(service.quizAttempts()).toBe(1);
+    });
+
+    it('restaure les Zones terminées (copie défensive)', () => {
+      service.restoreGame(mockGameSave);
+      expect(service.zonesCompleted()).toEqual([0, 1]);
+      // Vérifier que c\'est une copie et non la même référence
+      expect(service.zonesCompleted()).not.toBe(mockGameSave.zonesCompleted);
+    });
+
+    it('démarre le jeu (gameStarted = true)', () => {
+      service.restoreGame(mockGameSave);
+      expect(service.gameStarted()).toBe(true);
+    });
+
+    it('la Zone courante correspond à l\'index restauré', () => {
+      service.restoreGame(mockGameSave);
+      expect(service.currentZone()?.id).toBe('mario_zone_3');
+    });
+
+    it('réinitialise isZoneCompleted à false', () => {
+      service.restoreGame(mockGameSave);
+      expect(service.isZoneCompleted()).toBe(false);
+    });
+
+    it('réinitialise les signaux de session (narration, quiz, aides)', () => {
+      service.restoreGame(mockGameSave);
+      expect(service.narrationEvent()).toBe(null);
+      expect(service.isBlockingChoice()).toBe(false);
+      expect(service.quizActive()).toBe(false);
+      expect(service.quizFeedback()).toBe(null);
+      expect(service.hintText()).toBe(null);
+      expect(service.eliminatedAnswers()).toEqual([]);
+    });
+
+    it('ne fait rien si selectedCharacterId est null', () => {
+      const invalidSave: GameSave = {
+        selectedCharacterId: null,
+        currentZoneIndex: 0,
+        coins: 0,
+        quizAttempts: 0,
+        zonesCompleted: [],
+      };
+      service.restoreGame(invalidSave);
+      expect(service.gameStarted()).toBe(false);
+    });
+
+    it('fonctionne après un startGame précédent (restaure par-dessus)', () => {
+      service.startGame('mario');
+      expect(service.currentZoneIndex()).toBe(0);
+      expect(service.coins()).toBe(0);
+
+      service.restoreGame(mockGameSave);
+      expect(service.currentZoneIndex()).toBe(2);
+      expect(service.coins()).toBe(7);
+      expect(service.zonesCompleted()).toEqual([0, 1]);
     });
   });
 

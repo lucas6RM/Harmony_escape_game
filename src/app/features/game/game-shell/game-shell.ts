@@ -28,9 +28,9 @@ export class GameShell implements OnInit {
   readonly loading = computed(() => !this.gameStarted());
 
   ngOnInit(): void {
-    const savedCharacter = this.persistence.getSavedCharacter();
-    if (savedCharacter) {
-      this.gameEngine.startGame(savedCharacter);
+    const gameSave = this.persistence.getGameSave();
+    if (gameSave) {
+      this.gameEngine.restoreGame(gameSave);
     }
   }
 }

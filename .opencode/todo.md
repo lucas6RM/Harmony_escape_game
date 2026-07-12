@@ -55,7 +55,7 @@ Schéma de sauvegarde :
 - [x] Tâche 2 : Implémenter l'auto-save après chaque Zone terminée (dans GameEngineService ou via un mécanisme d'écoute)
 - [x] Tâche 3 : Créer le composant de reprise (ResumeScreen) avec les boutons "Reprendre" et "Recommencer"
 - [x] Tâche 4 : Intégrer l'écran de reprise dans le WelcomeScreen (affiché quand une sauvegarde en cours existe)
-- [ ] Tâche 5 : Permettre au GameEngine de charger un état sauvegardé (méthode restoreGame)
+- [x] Tâche 5 : Permettre au GameEngine de charger un état sauvegardé (méthode restoreGame)
 
 ## Zone de Transit & Logs
 ### Tâche en cours :
@@ -65,7 +65,7 @@ Schéma de sauvegarde :
 - 0 / 5
 
 ### Dernier retour de Review :
-- Tâche 4 validée : WelcomeScreen injecte PersistenceService, signaux showResume/savedCharacterId, isGameInProgress() au chargement, flux ResumeScreen → HeroScreen → CharacterSelector correct, onResume() navigue vers /game, onNewGame() appelle clearSave() + réaffiche HeroScreen, GameShell migré vers PersistenceService, 5 nouveaux tests de reprise, 241 tests passants, build OK.
+- Tâche 5 validée : restoreGame() restaure tous les signaux (currentZoneIndex, coins, quizAttempts, zonesCompleted avec copie défensive), réinitialise les signaux de session (narrationEvent, isBlockingChoice, quizActive, quizFeedback, hintText, eliminatedAnswers, isZoneCompleted), active gameStarted, guard sur selectedCharacterId null, export public zonesCompleted, GameShell utilise restoreGame() via getGameSave(), 11 nouveaux tests, 252 tests passants, build OK.
 
 ### Blocage Actuel :
 - Aucun.

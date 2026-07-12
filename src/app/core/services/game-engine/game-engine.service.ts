@@ -2,7 +2,7 @@ import { computed, inject, Injectable, signal } from '@angular/core';
 import type { Signal } from '@angular/core';
 import { ContentLoaderService } from '../content-loader';
 import { PersistenceService } from '../persistence';
-import type { CharacterPath, NarrativeChoice, Zone } from '../../types';
+import type { CharacterPath, GameSave, NarrativeChoice, Zone } from '../../types';
 import { HINT_COSTS } from '../../types';
 
 /**
@@ -82,6 +82,9 @@ export class GameEngineService {
   /** Indices des réponses éliminées (ou tableau vide si aucune élimination) */
   readonly eliminatedAnswers: Signal<number[]> = this.eliminatedAnswersSignal;
 
+  /** Indices des Zones déjà terminées par le joueur */
+  readonly zonesCompleted: Signal<number[]> = this.zonesCompletedSignal;
+
   /** Le Chemin complet du personnage (pour itérer sur les Zones) */
   readonly path: Signal<CharacterPath> = computed(() => {
     if (!this.pathSignal) {
@@ -107,6 +110,35 @@ export class GameEngineService {
     this.zonesCompletedSignal.set([]);
     this.gameStartedSignal.set(true);
     this.saveGameState();
+  }
+
+  /**
+   * Restaure un état de jeu sauvegardé et reprend la partie là où elle s'était arrêtée.
+   *
+   * Charge le Chemin du Personnage sauvegardé, restaure la progression
+   * (Zone courante, Pièces, tentatives de Quiz, Zones terminées) et
+   * réinitialise les signaux de session (événement narratif, Quiz actif, aides).
+   *
+   * @param gameSave - État sauvegardé à restaurer
+   */
+  restoreGame(gameSave: GameSave): void {
+    if (!gameSave.selectedCharacterId) {
+      return;
+    }
+
+    this.pathSignal = this.contentLoader.loadPath(gameSave.selectedCharacterId);
+    this.currentZoneIndexSignal.set(gameSave.currentZoneIndex);
+    this.coinsSignal.set(gameSave.coins);
+    this.quizAttemptsSignal.set(gameSave.quizAttempts);
+    this.zonesCompletedSignal.set([...gameSave.zonesCompleted]);
+    this.isZoneCompletedSignal.set(false);
+    this.narrationEventSignal.set(null);
+    this.isBlockingChoiceSignal.set(false);
+    this.quizActiveSignal.set(false);
+    this.quizFeedbackSignal.set(null);
+    this.hintTextSignal.set(null);
+    this.eliminatedAnswersSignal.set([]);
+    this.gameStartedSignal.set(true);
   }
 
   /**
