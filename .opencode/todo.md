@@ -114,16 +114,17 @@ Décompose l'issue en tâches atomiques basées sur les acceptance criteria. Cha
 
 [x] Tâche 5 : Gérer les états visuels du Quiz : feedback vert pour réponse correcte, feedback rouge pour réponse incorrecte, message "Nouvelle tentative" après 1ère erreur, message "Pénalité ! -1 Pièce" après 2ème erreur avec bouton pour recommencer la Zone. Le type de Quiz s'affiche avec un badge coloré (Maths = bleu, Français = vert, Univers Mario = rouge, Contexte = violet).
 
-[ ] Tâche 6 : Vérifier build et tests passent
+[x] Tâche 6 : Vérifier build et tests passent
 
 ## Zone de Transit & Logs
 ### Tâche en cours :
-- Tâche 5
+- Tâche 6
 
 ### Compteur de rejets (tâche actuelle) :
 - 0 / 5
 
 ### Dernier retour de Review :
-- Tâche 5 validée : États visuels du Quiz ajoutés dans ZoneExplorer (10 lignes TS, 24 lignes HTML, 98 lignes CSS, 169 lignes de tests). Bloc succès (vert, "Bravo ! +2 Pièces", bouton "Zone suivante" appelant advanceZone), bloc nouvelle tentative (orange, condition feedback=incorrect ET attempts<2 ET quizActive), accessibilité WCAG AA (role=alert, aria-live=polite, aria-label), 13 tests couvrant affichage conditionnel, contenu, accessibilité, interaction, disparition après 2ème erreur, apparition bloc pénalité.
+- Tâche 6 validée : Build réussi (0 erreur), 11 fichiers de tests passés avec 176 tests au vert. Le lint n'est pas configuré dans ce projet (pas de script `lint` dans package.json).
+
 ### Blocage Actuel :
 - Aucun.
