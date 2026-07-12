@@ -1,0 +1,11 @@
+<div class="resume-screen" role="main" aria-label="Reprise de partie">
+  <div class="resume-card">
+    <span class="character-emoji" aria-hidden="true">{{ characterEmoji() }}</span>
+    <h2 class="resume-title">Reprendre l'aventure de {{ characterName() }} ?</h2>
+    <p class="resume-subtitle">Votre progression a été sauvegardée.</p>
+    <div class="resume-actions">
+      <button type="button" class="btn-resume" (click)="onResume()">Reprendre</button>
+      <button type="button" class="btn-new-game" (click)="onNewGame()">Recommencer</button>
+    </div>
+  </div>
+</div>

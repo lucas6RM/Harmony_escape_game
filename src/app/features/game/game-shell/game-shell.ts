@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, inject, OnInit } from '@angular/core';
 import { GameEngineService } from '../../../core/services/game-engine';
-import { CharacterPersistenceService } from '../../../core/services/character-persistence';
+import { PersistenceService } from '../../../core/services/persistence';
 import { ZoneExplorer } from '../zone-explorer/zone-explorer';
 
 /**
@@ -16,7 +16,7 @@ import { ZoneExplorer } from '../zone-explorer/zone-explorer';
 })
 export class GameShell implements OnInit {
   private readonly gameEngine = inject(GameEngineService);
-  private readonly persistence = inject(CharacterPersistenceService);
+  private readonly persistence = inject(PersistenceService);
 
   /** Nombre de Pièces accumulées par le joueur */
   readonly coins = this.gameEngine.coins;
@@ -28,9 +28,9 @@ export class GameShell implements OnInit {
   readonly loading = computed(() => !this.gameStarted());
 
   ngOnInit(): void {
-    const savedCharacter = this.persistence.getSavedCharacter();
-    if (savedCharacter) {
-      this.gameEngine.startGame(savedCharacter);
+    const gameSave = this.persistence.getGameSave();
+    if (gameSave) {
+      this.gameEngine.restoreGame(gameSave);
     }
   }
 }
