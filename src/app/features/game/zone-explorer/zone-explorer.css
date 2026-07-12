@@ -99,6 +99,54 @@
   color: #fde68a;
 }
 
+/* ── Événement de pénalité (choix bloquant) ───────────────────── */
+
+.event-penalty {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background: rgba(239, 68, 68, 0.15);
+  border: 2px solid rgba(239, 68, 68, 0.5);
+  animation: penaltySlideIn 0.4s ease;
+}
+
+.event-penalty .event-text {
+  color: #fca5a5;
+}
+
+.event-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.restart-button {
+  align-self: flex-start;
+  padding: 0.625rem 1.25rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #fef2f2;
+  background: rgba(239, 68, 68, 0.6);
+  border: 2px solid rgba(239, 68, 68, 0.8);
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.1s ease;
+}
+
+.restart-button:hover {
+  background: rgba(239, 68, 68, 0.8);
+  border-color: rgba(239, 68, 68, 1);
+  transform: translateY(-1px);
+}
+
+.restart-button:focus-visible {
+  outline: 2px solid #f87171;
+  outline-offset: 2px;
+}
+
+.restart-button:active {
+  transform: translateY(0);
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -108,5 +156,17 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes penaltySlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }

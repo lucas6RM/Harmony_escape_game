@@ -25,8 +25,23 @@
 
   <!-- Événement narratif -->
   @if (narrationEvent()) {
+  @if (isBlockingChoice()) {
+  <div class="event-block event-penalty" role="alert">
+    <span class="event-icon" aria-hidden="true">⚠️</span>
+    <p class="event-text">{{ narrationEvent() }}</p>
+    <button
+      type="button"
+      class="restart-button"
+      aria-label="Recommencer la Zone après pénalité"
+      (click)="onRestartZone()"
+    >
+      Recommencer la Zone
+    </button>
+  </div>
+  } @else {
   <div class="event-block" role="alert" aria-live="polite">
     <p class="event-text">{{ narrationEvent() }}</p>
   </div>
+  }
   }
 </div>

@@ -201,4 +201,73 @@ describe('ZoneExplorer', () => {
       expect(eventBlock.getAttribute('aria-live')).toBe('polite');
     });
   });
+
+  describe('événement de pénalité (choix bloquant)', () => {
+    beforeEach(() => {
+      gameEngine.startGame('mario');
+      fixture.detectChanges();
+    });
+
+    it('affiche le bouton "Recommencer la Zone" après un choix bloquant', () => {
+      gameEngine.selectChoice(1);
+      fixture.detectChanges();
+
+      const restartButton = fixture.nativeElement.querySelector('.restart-button');
+      expect(restartButton).toBeTruthy();
+      expect(restartButton.textContent).toContain('Recommencer la Zone');
+    });
+
+    it('ne affiche pas le bouton "Recommencer la Zone" après un choix non bloquant', () => {
+      gameEngine.selectChoice(0);
+      fixture.detectChanges();
+
+      const restartButton = fixture.nativeElement.querySelector('.restart-button');
+      expect(restartButton).toBeFalsy();
+    });
+
+    it('cliquer sur le bouton appelle restartZone() du service', () => {
+      gameEngine.selectChoice(1);
+      fixture.detectChanges();
+
+      const spy = vi.spyOn(gameEngine, 'restartZone');
+      const restartButton = fixture.nativeElement.querySelector('.restart-button');
+      restartButton.click();
+      fixture.detectChanges();
+
+      expect(spy).toHaveBeenCalled();
+    });
+
+    it('l\'événement de pénalité a role="alert"', () => {
+      gameEngine.selectChoice(1);
+      fixture.detectChanges();
+
+      const eventBlock = fixture.nativeElement.querySelector('.event-block');
+      expect(eventBlock.getAttribute('role')).toBe('alert');
+    });
+
+    it('l\'événement de pénalité a la classe event-penalty', () => {
+      gameEngine.selectChoice(1);
+      fixture.detectChanges();
+
+      const eventBlock = fixture.nativeElement.querySelector('.event-block');
+      expect(eventBlock.classList.contains('event-penalty')).toBe(true);
+    });
+
+    it('le bouton a un aria-label descriptif', () => {
+      gameEngine.selectChoice(1);
+      fixture.detectChanges();
+
+      const restartButton = fixture.nativeElement.querySelector('.restart-button');
+      expect(restartButton.getAttribute('aria-label')).toContain('Recommencer la Zone');
+    });
+
+    it('l\'événement de pénalité contient l\'icône d\'avertissement', () => {
+      gameEngine.selectChoice(1);
+      fixture.detectChanges();
+
+      const eventIcon = fixture.nativeElement.querySelector('.event-icon');
+      expect(eventIcon).toBeTruthy();
+      expect(eventIcon.textContent).toContain('⚠️');
+    });
+  });
 });

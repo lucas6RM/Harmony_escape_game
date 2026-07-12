@@ -22,6 +22,7 @@ export class GameEngineService {
   private readonly coinsSignal = signal<number>(0);
   private readonly isZoneCompletedSignal = signal<boolean>(false);
   private readonly narrationEventSignal = signal<string | null>(null);
+  private readonly isBlockingChoiceSignal = signal<boolean>(false);
   private readonly gameStartedSignal = signal<boolean>(false);
 
   // ── Accès public (Signals) ──────────────────────────────────────
@@ -49,6 +50,9 @@ export class GameEngineService {
   /** Événement narratif affiché (choix bloquant, conséquence, etc.) */
   readonly narrationEvent: Signal<string | null> = this.narrationEventSignal;
 
+  /** Indique si l'événement narratif actuel provient d'un choix bloquant (pénalité) */
+  readonly isBlockingChoice: Signal<boolean> = this.isBlockingChoiceSignal;
+
   /** Indique si le jeu a été démarré */
   readonly gameStarted: Signal<boolean> = this.gameStartedSignal;
 
@@ -73,6 +77,7 @@ export class GameEngineService {
     this.coinsSignal.set(0);
     this.isZoneCompletedSignal.set(false);
     this.narrationEventSignal.set(null);
+    this.isBlockingChoiceSignal.set(false);
     this.gameStartedSignal.set(true);
   }
 
@@ -100,11 +105,13 @@ export class GameEngineService {
     if (choice.blocking) {
       // Choix bloquant → pénalité
       this.narrationEventSignal.set(choice.penalty ?? 'Ce chemin est bloqué !');
+      this.isBlockingChoiceSignal.set(true);
       return;
     }
 
     // Choix valide → conséquence narrative
     this.narrationEventSignal.set(choice.nextNarrationId);
+    this.isBlockingChoiceSignal.set(false);
   }
 
   /**
@@ -120,6 +127,7 @@ export class GameEngineService {
       this.currentZoneIndexSignal.set(currentIndex + 1);
       this.isZoneCompletedSignal.set(false);
       this.narrationEventSignal.set(null);
+      this.isBlockingChoiceSignal.set(false);
     }
   }
 
@@ -131,6 +139,7 @@ export class GameEngineService {
   restartZone(): void {
     this.isZoneCompletedSignal.set(false);
     this.narrationEventSignal.set(null);
+    this.isBlockingChoiceSignal.set(false);
   }
 
   /**

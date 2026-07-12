@@ -24,6 +24,9 @@ export class ZoneExplorer {
   /** Événement narratif exposé par le service */
   readonly narrationEvent = this.gameEngine.narrationEvent;
 
+  /** Indique si l'événement actuel provient d'un choix bloquant (pénalité) */
+  readonly isBlockingChoice = this.gameEngine.isBlockingChoice;
+
   /** Liste des choix de la Zone courante (ou tableau vide si pas de Zone) */
   readonly choices = computed<NarrativeChoice[]>(() => {
     const zone = this.currentZone();
@@ -43,5 +46,12 @@ export class ZoneExplorer {
    */
   onSelectChoice(index: number): void {
     this.gameEngine.selectChoice(index);
+  }
+
+  /**
+   * Recommence la Zone courante après une pénalité de choix bloquant.
+   */
+  onRestartZone(): void {
+    this.gameEngine.restartZone();
   }
 }
