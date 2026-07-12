@@ -17,11 +17,11 @@ Schéma de sauvegarde :
 { personnage, zoneCourante, pieces, tentativesQuiz, completes }
 
 ## Acceptance criteria
-- [ ] Persistance Service lit/écrit le local storage
-- [ ] Auto-save après chaque Zone terminée
-- [ ] Écran de reprise au retour sur l'app
-- [ ] Possibilité de reprendre ou de recommencer
-- [ ] Tests unitaires du Persistence Service avec mock
+- [x] Persistance Service lit/écrit le local storage
+- [x] Auto-save après chaque Zone terminée
+- [x] Écran de reprise au retour sur l'app
+- [x] Possibilité de reprendre ou de recommencer
+- [x] Tests unitaires du Persistence Service avec mock
 
 ## Skills à Charger
 - angular-developer
@@ -59,13 +59,13 @@ Schéma de sauvegarde :
 
 ## Zone de Transit & Logs
 ### Tâche en cours :
-- Aucune
+- Aucune — Issue #7 complétée et validée.
 
 ### Compteur de rejets (tâche actuelle) :
 - 0 / 5
 
 ### Dernier retour de Review :
-- Tâche 5 validée : restoreGame() restaure tous les signaux (currentZoneIndex, coins, quizAttempts, zonesCompleted avec copie défensive), réinitialise les signaux de session (narrationEvent, isBlockingChoice, quizActive, quizFeedback, hintText, eliminatedAnswers, isZoneCompleted), active gameStarted, guard sur selectedCharacterId null, export public zonesCompleted, GameShell utilise restoreGame() via getGameSave(), 11 nouveaux tests, 252 tests passants, build OK.
+- Issue #7 entièrement validée : 5 tâches complétées, 252 tests passants, build OK. PR prête.
 
 ### Blocage Actuel :
 - Aucun.
