@@ -110,7 +110,7 @@ Décompose l'issue en tâches atomiques basées sur les acceptance criteria. Cha
 
 [x] Tâche 3 : Créer le composant `QuizPanel` (`src/app/features/game/quiz-panel/`) qui affiche la question du Quiz, le type de Quiz (badge coloré), les 4 réponses comme boutons, et gère l'état visuel (réponse sélectionnée, feedback vert/rouge, message de pénalité). Le composant émet un `output()` `answerSelected` avec l'index de la réponse.
 
-[ ] Tâche 4 : Intégrer `QuizPanel` dans `ZoneExplorer` : le Quiz s'affiche après un choix narratif valide (quand `narrationEvent` est non null et non bloquant). Le Quiz disparaît quand la Zone est terminée ou recommencée. Le `GameShell` affiche le Quiz sous le `ZoneExplorer` ou le `ZoneExplorer` l'intègre directement.
+[x] Tâche 4 : Intégrer `QuizPanel` dans `ZoneExplorer` : le Quiz s'affiche après un choix narratif valide (quand `narrationEvent` est non null et non bloquant). Le Quiz disparaît quand la Zone est terminée ou recommencée. Le `GameShell` affiche le Quiz sous le `ZoneExplorer` ou le `ZoneExplorer` l'intègre directement.
 
 [ ] Tâche 5 : Gérer les états visuels du Quiz : feedback vert pour réponse correcte, feedback rouge pour réponse incorrecte, message "Nouvelle tentative" après 1ère erreur, message "Pénalité ! -1 Pièce" après 2ème erreur avec bouton pour recommencer la Zone. Le type de Quiz s'affiche avec un badge coloré (Maths = bleu, Français = vert, Univers Mario = rouge, Contexte = violet).
 
@@ -124,7 +124,7 @@ Décompose l'issue en tâches atomiques basées sur les acceptance criteria. Cha
 - 0 / 5
 
 ### Dernier retour de Review :
-- Tâche 3 validée : Composant QuizPanel complet (87 lignes TS, 41 lignes HTML, 173 lignes CSS, 235 lignes de tests). Standalone + OnPush, inputs/outputs modernes, 4 badges colorés, feedback vert/rouge, ARIA complet (radiogroup, aria-live, aria-label, aria-checked), 17 tests couvrant rendu, émission, disabled, badges, feedback et accessibilité.
+- Tâche 4 validée : QuizPanel intégré dans ZoneExplorer (23 lignes TS ajoutées, 12 lignes HTML, 87 lignes de tests). Import standalone, signals quizActive/quizFeedback/quizAttempts exposés, onSelectAnswer → submitQuizAnswer, @if conditionnel, inputs liés (quiz, feedback, disabled), output (answerSelected), 7 tests couvrant affichage conditionnel, disparition, appel submitQuizAnswer, état disabled.
 
 ### Blocage Actuel :
 - Aucun.

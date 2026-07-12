@@ -3,6 +3,7 @@ import { GameEngineService } from '../../../core/services/game-engine';
 import { ContentLoaderService } from '../../../core/services/content-loader';
 import type { CharacterPath, Zone } from '../../../core/types';
 import { ZoneExplorer } from './zone-explorer';
+import { QuizPanelComponent } from '../quiz-panel/quiz-panel';
 
 /**
  * Chemin de test avec 2 Zones pour Mario.
@@ -268,6 +269,92 @@ describe('ZoneExplorer', () => {
       const eventIcon = fixture.nativeElement.querySelector('.event-icon');
       expect(eventIcon).toBeTruthy();
       expect(eventIcon.textContent).toContain('⚠️');
+    });
+  });
+
+  describe('QuizPanel', () => {
+    beforeEach(() => {
+      gameEngine.startGame('mario');
+      fixture.detectChanges();
+    });
+
+    it('ne affiche pas le QuizPanel avant qu\'un choix valide ne soit fait', () => {
+      const quizPanel = fixture.nativeElement.querySelector('app-quiz-panel');
+      expect(quizPanel).toBeFalsy();
+    });
+
+    it('affiche le QuizPanel après un choix narratif non bloquant', () => {
+      gameEngine.selectChoice(0);
+      fixture.detectChanges();
+
+      const quizPanel = fixture.nativeElement.querySelector('app-quiz-panel');
+      expect(quizPanel).toBeTruthy();
+    });
+
+    it('ne affiche pas le QuizPanel après un choix bloquant', () => {
+      gameEngine.selectChoice(1);
+      fixture.detectChanges();
+
+      const quizPanel = fixture.nativeElement.querySelector('app-quiz-panel');
+      expect(quizPanel).toBeFalsy();
+    });
+
+    it('le QuizPanel disparaît quand la Zone est terminée', () => {
+      gameEngine.selectChoice(0);
+      fixture.detectChanges();
+
+      expect(fixture.nativeElement.querySelector('app-quiz-panel')).toBeTruthy();
+
+      gameEngine.submitQuizAnswer(1);
+      fixture.detectChanges();
+
+      const quizPanel = fixture.nativeElement.querySelector('app-quiz-panel');
+      expect(quizPanel).toBeFalsy();
+    });
+
+    it('le QuizPanel disparaît quand on recommence la Zone', () => {
+      gameEngine.selectChoice(0);
+      fixture.detectChanges();
+
+      expect(fixture.nativeElement.querySelector('app-quiz-panel')).toBeTruthy();
+
+      gameEngine.restartZone();
+      fixture.detectChanges();
+
+      const quizPanel = fixture.nativeElement.querySelector('app-quiz-panel');
+      expect(quizPanel).toBeFalsy();
+    });
+
+    it('cliquer sur une réponse appelle submitQuizAnswer avec l\'index', () => {
+      gameEngine.selectChoice(0);
+      fixture.detectChanges();
+
+      const spy = vi.spyOn(gameEngine, 'submitQuizAnswer');
+      const quizPanel = fixture.nativeElement.querySelector('app-quiz-panel');
+      expect(quizPanel).toBeTruthy();
+
+      component.onSelectAnswer(2);
+      fixture.detectChanges();
+
+      expect(spy).toHaveBeenCalledWith(2);
+    });
+
+    it('le QuizPanel est disabled quand il y a un feedback', () => {
+      gameEngine.selectChoice(0);
+      fixture.detectChanges();
+
+      const quizPanel = fixture.nativeElement.querySelector('app-quiz-panel');
+      expect(quizPanel).toBeTruthy();
+
+      gameEngine.submitQuizAnswer(3);
+      fixture.detectChanges();
+
+      // Après 1ère erreur, quizActive reste true mais feedback est 'incorrect'
+      // → le QuizPanel reste visible mais les boutons sont disabled
+      const quizPanelAfter = fixture.nativeElement.querySelector('app-quiz-panel');
+      expect(quizPanelAfter).toBeTruthy();
+      const buttons = quizPanelAfter.querySelectorAll('.answer-button');
+      expect(buttons[0].disabled).toBe(true);
     });
   });
 });

@@ -44,4 +44,16 @@
   </div>
   }
   }
+
+  <!-- QuizPanel : s'affiche après un choix narratif valide -->
+  @if (quizActive()) {
+  @if (currentZone()) {
+  <app-quiz-panel
+    [quiz]="currentZone()!.quiz"
+    [feedback]="quizFeedback()"
+    [disabled]="quizFeedback() !== null"
+    (answerSelected)="onSelectAnswer($event)"
+  />
+  }
+  }
 </div>

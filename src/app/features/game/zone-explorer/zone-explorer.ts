@@ -1,19 +1,22 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { GameEngineService } from '../../../core/services/game-engine';
 import type { NarrativeChoice, Zone } from '../../../core/types';
+import { QuizPanelComponent } from '../quiz-panel/quiz-panel';
 
 /**
  * Composant d'exploration d'une Zone.
  *
  * Affiche la narration de la Zone courante avec emojis,
  * les Choix narratifs comme boutons cliquables,
- * et l'événement narratif quand le service le met à jour.
+ * l'événement narratif quand le service le met à jour,
+ * et le QuizPanel quand le Quiz est actif.
  */
 @Component({
   selector: 'app-zone-explorer',
   templateUrl: './zone-explorer.html',
   styleUrl: './zone-explorer.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [QuizPanelComponent],
 })
 export class ZoneExplorer {
   private readonly gameEngine = inject(GameEngineService);
@@ -26,6 +29,15 @@ export class ZoneExplorer {
 
   /** Indique si l'événement actuel provient d'un choix bloquant (pénalité) */
   readonly isBlockingChoice = this.gameEngine.isBlockingChoice;
+
+  /** Indique si le Quiz est actuellement affiché */
+  readonly quizActive = this.gameEngine.quizActive;
+
+  /** Feedback visuel après une réponse au Quiz */
+  readonly quizFeedback = this.gameEngine.quizFeedback;
+
+  /** Nombre de tentatives pour le Quiz courant */
+  readonly quizAttempts = this.gameEngine.quizAttempts;
 
   /** Liste des choix de la Zone courante (ou tableau vide si pas de Zone) */
   readonly choices = computed<NarrativeChoice[]>(() => {
@@ -53,5 +65,14 @@ export class ZoneExplorer {
    */
   onRestartZone(): void {
     this.gameEngine.restartZone();
+  }
+
+  /**
+   * Soumet la réponse du Quiz sélectionnée par le joueur.
+   *
+   * @param index - Index de la réponse dans le Quiz (0-3)
+   */
+  onSelectAnswer(index: number): void {
+    this.gameEngine.submitQuizAnswer(index);
   }
 }
