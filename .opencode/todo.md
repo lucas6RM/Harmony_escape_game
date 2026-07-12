@@ -52,7 +52,7 @@ Schéma de sauvegarde :
 
 ## Tableau d'Avancement
 - [x] Tâche 1 : Étendre l'interface GameSave et le PersistenceService pour gérer l'état complet (zoneCourante, pieces, tentativesQuiz, completes) + tests unitaires
-- [ ] Tâche 2 : Implémenter l'auto-save après chaque Zone terminée (dans GameEngineService ou via un mécanisme d'écoute)
+- [x] Tâche 2 : Implémenter l'auto-save après chaque Zone terminée (dans GameEngineService ou via un mécanisme d'écoute)
 - [ ] Tâche 3 : Créer le composant de reprise (ResumeScreen) avec les boutons "Reprendre" et "Recommencer"
 - [ ] Tâche 4 : Intégrer l'écran de reprise dans le WelcomeScreen (affiché quand une sauvegarde en cours existe)
 - [ ] Tâche 5 : Permettre au GameEngine de charger un état sauvegardé (méthode restoreGame)
@@ -65,7 +65,7 @@ Schéma de sauvegarde :
 - 0 / 5
 
 ### Dernier retour de Review :
-- Tâche 1 validée : build et tests OK, rétrocompatibilité préservée.
+- Tâche 2 validée : injection via inject(), signal zonesCompletedSignal sans doublons, auto-save dans startGame/completeZone/advanceZone, 8 tests ajoutés (223 total), build et tests OK.
 
 ### Blocage Actuel :
 - Aucun.

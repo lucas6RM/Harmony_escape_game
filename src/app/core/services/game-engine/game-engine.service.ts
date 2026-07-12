@@ -1,6 +1,7 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import type { Signal } from '@angular/core';
 import { ContentLoaderService } from '../content-loader';
+import { PersistenceService } from '../persistence';
 import type { CharacterPath, NarrativeChoice, Zone } from '../../types';
 import { HINT_COSTS } from '../../types';
 
@@ -14,6 +15,7 @@ import { HINT_COSTS } from '../../types';
 @Injectable({ providedIn: 'root' })
 export class GameEngineService {
   private readonly contentLoader = inject(ContentLoaderService);
+  private readonly persistenceService = inject(PersistenceService);
 
   // ── État interne ────────────────────────────────────────────────
 
@@ -32,6 +34,7 @@ export class GameEngineService {
 
   private readonly hintTextSignal = signal<string | null>(null);
   private readonly eliminatedAnswersSignal = signal<number[]>([]);
+  private readonly zonesCompletedSignal = signal<number[]>([]);
 
   // ── Accès public (Signals) ──────────────────────────────────────
 
@@ -101,7 +104,9 @@ export class GameEngineService {
     this.isZoneCompletedSignal.set(false);
     this.narrationEventSignal.set(null);
     this.isBlockingChoiceSignal.set(false);
+    this.zonesCompletedSignal.set([]);
     this.gameStartedSignal.set(true);
+    this.saveGameState();
   }
 
   /**
@@ -161,6 +166,7 @@ export class GameEngineService {
       this.quizFeedbackSignal.set(null);
       this.hintTextSignal.set(null);
       this.eliminatedAnswersSignal.set([]);
+      this.saveGameState();
     }
   }
 
@@ -182,9 +188,29 @@ export class GameEngineService {
 
   /**
    * Marque la Zone courante comme terminée (quiz réussi).
+   * Déclenche automatiquement une sauvegarde de la progression.
    */
   completeZone(): void {
     this.isZoneCompletedSignal.set(true);
+    const currentZoneIndex = this.currentZoneIndexSignal();
+    this.zonesCompletedSignal.update(
+      completed => completed.includes(currentZoneIndex)
+        ? completed
+        : [...completed, currentZoneIndex],
+    );
+    this.saveGameState();
+  }
+
+  /**
+   * Sauvegarde l'état actuel du jeu via le PersistenceService.
+   */
+  private saveGameState(): void {
+    this.persistenceService.saveGame({
+      currentZoneIndex: this.currentZoneIndexSignal(),
+      coins: this.coinsSignal(),
+      quizAttempts: this.quizAttemptsSignal(),
+      zonesCompleted: this.zonesCompletedSignal(),
+    });
   }
 
   /**

@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import type { CharacterPath, Zone } from '../../types';
 import { ContentLoaderService } from '../content-loader';
+import { PersistenceService } from '../persistence';
 import { GameEngineService } from './game-engine.service';
 
 /**
@@ -78,17 +79,47 @@ class ContentLoaderServiceMock {
   }
 }
 
+/**
+ * Mock de PersistenceService qui capture les appels à saveGame.
+ */
+class PersistenceServiceMock {
+  savedStates: unknown[] = [];
+
+  saveGame(state: unknown): void {
+    this.savedStates.push(state);
+  }
+
+  getGameSave() {
+    return null;
+  }
+
+  isGameInProgress() {
+    return false;
+  }
+
+  saveCharacter(_characterId: string) {}
+
+  getSavedCharacter() {
+    return null;
+  }
+
+  clearSave() {}
+}
+
 describe('GameEngineService', () => {
   let service: GameEngineService;
+  let persistenceMock: PersistenceServiceMock;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
         GameEngineService,
         { provide: ContentLoaderService, useClass: ContentLoaderServiceMock },
+        { provide: PersistenceService, useClass: PersistenceServiceMock },
       ],
     });
     service = TestBed.inject(GameEngineService);
+    persistenceMock = TestBed.inject(PersistenceService) as unknown as PersistenceServiceMock;
   });
 
   describe('startGame', () => {
@@ -599,6 +630,108 @@ describe('GameEngineService', () => {
         service.selectChoice(0);
         expect(service.hintText()).toBe(null);
         expect(service.eliminatedAnswers()).toEqual([]);
+      });
+    });
+  });
+
+  describe('Auto-save via PersistenceService', () => {
+    beforeEach(() => {
+      persistenceMock.savedStates = [];
+    });
+
+    describe('startGame', () => {
+      it('appelle saveGame avec l\'état initial après startGame', () => {
+        service.startGame('mario');
+        expect(persistenceMock.savedStates).toHaveLength(1);
+        expect(persistenceMock.savedStates[0]).toEqual({
+          currentZoneIndex: 0,
+          coins: 0,
+          quizAttempts: 0,
+          zonesCompleted: [],
+        });
+      });
+    });
+
+    describe('completeZone', () => {
+      beforeEach(() => {
+        service.startGame('mario');
+        persistenceMock.savedStates = []; // reset après startGame
+      });
+
+      it('appelle saveGame avec l\'index de la Zone complétée dans zonesCompleted', () => {
+        service.completeZone();
+        expect(persistenceMock.savedStates).toHaveLength(1);
+        expect(persistenceMock.savedStates[0]).toEqual({
+          currentZoneIndex: 0,
+          coins: 0,
+          quizAttempts: 0,
+          zonesCompleted: [0],
+        });
+      });
+
+      it('n\'ajoute pas l\'index en double si completeZone est appelé deux fois', () => {
+        service.completeZone();
+        service.completeZone();
+        expect(persistenceMock.savedStates).toHaveLength(2);
+        expect(persistenceMock.savedStates[1]).toEqual({
+          currentZoneIndex: 0,
+          coins: 0,
+          quizAttempts: 0,
+          zonesCompleted: [0],
+        });
+      });
+
+      it('sauvegarde les Pièces accumulées', () => {
+        service.addCoins(5);
+        service.completeZone();
+        expect(persistenceMock.savedStates[0]).toMatchObject({
+          coins: 5,
+          zonesCompleted: [0],
+        });
+      });
+    });
+
+    describe('advanceZone', () => {
+      beforeEach(() => {
+        service.startGame('mario');
+        persistenceMock.savedStates = []; // reset après startGame
+      });
+
+      it('appelle saveGame avec le nouvel index de Zone', () => {
+        service.advanceZone();
+        expect(persistenceMock.savedStates).toHaveLength(1);
+        expect(persistenceMock.savedStates[0]).toMatchObject({
+          currentZoneIndex: 1,
+        });
+      });
+
+      it('sauvegarde l\'état après avoir complété puis avancé', () => {
+        service.completeZone(); // Zone 0 complétée
+        persistenceMock.savedStates = []; // reset
+        service.advanceZone(); // avance à Zone 1
+        expect(persistenceMock.savedStates).toHaveLength(1);
+        expect(persistenceMock.savedStates[0]).toMatchObject({
+          currentZoneIndex: 1,
+          zonesCompleted: [0],
+        });
+      });
+    });
+
+    describe('submitQuizAnswer (réponse correcte)', () => {
+      beforeEach(() => {
+        service.startGame('mario');
+        service.selectChoice(0);
+        persistenceMock.savedStates = []; // reset après startGame
+      });
+
+      it('déclenche saveGame via completeZone quand la réponse est correcte', () => {
+        service.submitQuizAnswer(1); // correctIndex de mario_zone_1
+        expect(persistenceMock.savedStates).toHaveLength(1);
+        expect(persistenceMock.savedStates[0]).toMatchObject({
+          currentZoneIndex: 0,
+          coins: 2,
+          zonesCompleted: [0],
+        });
       });
     });
   });
