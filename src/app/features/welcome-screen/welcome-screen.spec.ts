@@ -64,11 +64,21 @@ describe('WelcomeScreen', () => {
     expect(resumeScreen).toBeNull();
   });
 
-  it('ne doit pas afficher le BadgeBonusScreen au démarrage', () => {
-    const compiled = fixture.nativeElement as HTMLElement;
-    const badgeBonusScreen = compiled.querySelector('app-badge-bonus-screen');
-    expect(badgeBonusScreen).toBeNull();
-  });
+    it('ne doit pas afficher le BadgeBonusScreen au démarrage', () => {
+      const compiled = fixture.nativeElement as HTMLElement;
+      const badgeBonusScreen = compiled.querySelector('app-badge-bonus-screen');
+      expect(badgeBonusScreen).toBeNull();
+    });
+
+    it('ne doit pas afficher le BadgeBonusScreen quand aucun Chemin n\'est complété', () => {
+      const compiled = fixture.nativeElement as HTMLElement;
+      const startButton = compiled.querySelector<HTMLButtonElement>('app-hero-screen button[type="button"]');
+      startButton?.click();
+      fixture.detectChanges();
+
+      const badgeBonusScreen = compiled.querySelector('app-badge-bonus-screen');
+      expect(badgeBonusScreen).toBeNull();
+    });
 
   it('doit afficher le CharacterSelector quand on clique "Commencer l\'aventure"', () => {
     const compiled = fixture.nativeElement as HTMLElement;
@@ -296,6 +306,23 @@ describe('WelcomeScreen', () => {
 
       const characterSelector = compiled.querySelector('app-character-selector');
       expect(characterSelector).toBeTruthy();
+    });
+
+    it('doit cacher le HeroScreen quand le BadgeBonusScreen est affiché', () => {
+      const compiled = badgeFixture.nativeElement as HTMLElement;
+
+      // Afficher le CharacterSelector
+      const startButton = compiled.querySelector<HTMLButtonElement>('app-hero-screen button[type="button"]');
+      startButton?.click();
+      badgeFixture.detectChanges();
+
+      // Ouvrir la scène bonus
+      const badgeButton = compiled.querySelector<HTMLButtonElement>('app-character-selector .completion-badge__button');
+      badgeButton?.click();
+      badgeFixture.detectChanges();
+
+      const heroScreen = compiled.querySelector('app-hero-screen');
+      expect(heroScreen).toBeNull();
     });
   });
 });

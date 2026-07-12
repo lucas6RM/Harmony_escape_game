@@ -1202,6 +1202,61 @@ describe('GameEngineService', () => {
       service.returnToCharacterSelect();
       expect(service.currentZone()).toBe(null);
     });
+
+    it('réinitialise isBlockingChoice à false', () => {
+      service.selectChoice(1); // choix bloquant
+      expect(service.isBlockingChoice()).toBe(true);
+      service.returnToCharacterSelect();
+      expect(service.isBlockingChoice()).toBe(false);
+    });
+
+    it('réinitialise quizFeedback à null', () => {
+      service.selectChoice(0);
+      service.submitQuizAnswer(0); // faux → feedback = 'incorrect'
+      expect(service.quizFeedback()).toBe('incorrect');
+      service.returnToCharacterSelect();
+      expect(service.quizFeedback()).toBe(null);
+    });
+
+    it('réinitialise hintText à null', () => {
+      service.selectChoice(0);
+      service.addCoins(3);
+      service.buyHint();
+      expect(service.hintText()).not.toBe(null);
+      service.returnToCharacterSelect();
+      expect(service.hintText()).toBe(null);
+    });
+
+    it('réinitialise eliminatedAnswers à []', () => {
+      service.selectChoice(0);
+      service.addCoins(5);
+      service.buyElimination();
+      expect(service.eliminatedAnswers()).toHaveLength(2);
+      service.returnToCharacterSelect();
+      expect(service.eliminatedAnswers()).toEqual([]);
+    });
+
+    it('réinitialise gameWon à false après une victoire réelle', () => {
+      // Simuler une victoire
+      service.selectChoice(0);
+      service.submitQuizAnswer(1);
+      service.advanceZone();
+      service.selectChoice(0);
+      service.submitQuizAnswer(0);
+      service.advanceZone();
+      service.selectChoice(0);
+      service.submitQuizAnswer(0); // Quiz final réussi
+      expect(service.gameWon()).toBe(true);
+
+      service.returnToCharacterSelect();
+      expect(service.gameWon()).toBe(false);
+    });
+
+    it('réinitialise l\'événement narratif à null', () => {
+      service.selectChoice(0);
+      service.returnToCharacterSelect();
+      expect(service.narrationEvent()).toBe(null);
+    });
   });
 
   describe('addCompletedPath à la victoire', () => {
@@ -1249,6 +1304,54 @@ describe('GameEngineService', () => {
       service.submitQuizAnswer(2); // faux → pénalité
 
       expect(completedPathsMock.getCompletedPaths()).not.toContain('mario');
+    });
+
+    it('appelle addCompletedPath avec le bon characterId (mario)', () => {
+      // Avancer jusqu'à la dernière Zone
+      service.selectChoice(0);
+      service.submitQuizAnswer(1);
+      service.advanceZone();
+
+      service.selectChoice(0);
+      service.submitQuizAnswer(0);
+      service.advanceZone();
+
+      // Zone 3 = Quiz final
+      service.selectChoice(0);
+      service.submitQuizAnswer(0); // correctIndex de mario_zone_3
+
+      const paths = completedPathsMock.getCompletedPaths();
+      expect(paths).toContain('mario');
+      expect(paths).toHaveLength(1);
+    });
+
+    it('ne crée pas de doublon dans les Chemins complétés si le Quiz final est réussi deux fois', () => {
+      // 1ère victoire
+      service.selectChoice(0);
+      service.submitQuizAnswer(1);
+      service.advanceZone();
+      service.selectChoice(0);
+      service.submitQuizAnswer(0);
+      service.advanceZone();
+      service.selectChoice(0);
+      service.submitQuizAnswer(0); // Quiz final réussi
+
+      expect(completedPathsMock.getCompletedPaths()).toContain('mario');
+      expect(completedPathsMock.getCompletedPaths()).toHaveLength(1);
+
+      // Recommencer et gagner de nouveau
+      service.restartGame();
+      service.selectChoice(0);
+      service.submitQuizAnswer(1);
+      service.advanceZone();
+      service.selectChoice(0);
+      service.submitQuizAnswer(0);
+      service.advanceZone();
+      service.selectChoice(0);
+      service.submitQuizAnswer(0); // Quiz final réussi à nouveau
+
+      // Toujours un seul 'mario' (le mock gère les doublons)
+      expect(completedPathsMock.getCompletedPaths()).toEqual(['mario']);
     });
   });
 

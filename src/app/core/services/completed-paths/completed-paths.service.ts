@@ -71,7 +71,7 @@ export class CompletedPathsService {
    * @returns Tableau des identifiants de Personnages ayant terminé leur Chemin
    */
   getCompletedPaths(): string[] {
-    return this.completedPaths().completedCharacterIds;
+    return [...this.completedPaths().completedCharacterIds];
   }
 
   /**

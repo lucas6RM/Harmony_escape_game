@@ -211,6 +211,25 @@ describe('VictoryScreen', () => {
       expect(routerMock.navigatedUrl).toBe('/accueil');
     });
 
+    it('cliquer sur "Choisir un autre personnage" réinitialise gameWon', () => {
+      // Simuler une victoire
+      gameEngine.selectChoice(0);
+      gameEngine.submitQuizAnswer(1);
+      gameEngine.advanceZone();
+      gameEngine.selectChoice(0);
+      gameEngine.submitQuizAnswer(0);
+      gameEngine.advanceZone();
+      gameEngine.selectChoice(0);
+      gameEngine.submitQuizAnswer(0); // Quiz final réussi
+      expect(gameEngine.gameWon()).toBe(true);
+
+      const anotherButton = fixture.nativeElement.querySelector('.action-another');
+      anotherButton.click();
+      fixture.detectChanges();
+
+      expect(gameEngine.gameWon()).toBe(false);
+    });
+
     it('les boutons ont des aria-labels descriptifs', () => {
       const restartButton = fixture.nativeElement.querySelector('.action-restart');
       expect(restartButton.getAttribute('aria-label')).toContain('Recommencer');

@@ -45,6 +45,22 @@ describe('CompletedPathsService', () => {
     vi.unstubAllGlobals();
   });
 
+  describe('getCompletedPaths', () => {
+    it('retourne une copie défensive du tableau', () => {
+      service.addCompletedPath('mario');
+
+      const paths1 = service.getCompletedPaths();
+      const paths2 = service.getCompletedPaths();
+
+      expect(paths1).toEqual(['mario']);
+      expect(paths1).not.toBe(paths2);
+    });
+
+    it('retourne un tableau vide au départ', () => {
+      expect(service.getCompletedPaths()).toEqual([]);
+    });
+  });
+
   describe('addCompletedPath', () => {
     it('ajoute un Personnage au tableau des Chemins complétés', () => {
       service.addCompletedPath('mario');
