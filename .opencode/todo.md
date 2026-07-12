@@ -1,4 +1,4 @@
-# Issue #7 : Sauvegarde auto + Reprise
+# Issue #8 : Zones partagées + Rôles narratifs
 
 ## Spécification
 
@@ -6,26 +6,23 @@
 #1 (PRD: Harmony Escape Game)
 
 ## What to build
-Sauvegarde automatique de la progression dans le local storage et écran de reprise.
+Ajouter les types `SharedZoneContent` et `CharacterRole` au modèle de domaine, puis mettre à jour `shared.json` avec au moins 2 Zones partagées et les rôles narratifs par personnage.
 
 Décisions clés :
-- Auto-save à chaque Zone terminée
-- Écran de reprise au retour sur l'app : "Reprendre l'aventure de [personnage] ?"
-- Persistence Service dédié, mockable
-
-Schéma de sauvegarde :
-{ personnage, zoneCourante, pieces, tentativesQuiz, completes }
+- Zones partagées : communes à tous les Chemins (ex: hall d'entrée, salle finale)
+- Rôles narratifs : chaque Personnage non joué obtient un rôle dans l'histoire du joueur
+- Contenu dans `public/assets/content/shared.json`
 
 ## Acceptance criteria
-- [x] Persistance Service lit/écrit le local storage
-- [x] Auto-save après chaque Zone terminée
-- [x] Écran de reprise au retour sur l'app
-- [x] Possibilité de reprendre ou de recommencer
-- [x] Tests unitaires du Persistence Service avec mock
+- [x] Type `SharedZoneContent` ajouté au modèle de domaine
+- [x] Types `CharacterRole` et `CharacterRoles` ajoutés au modèle de domaine
+- [x] Exports dans `index.ts`
+- [x] `shared.json` contient au moins 2 Zones partagées
+- [x] `shared.json` contient les rôles narratifs pour les 4 personnages
 
 ## Skills à Charger
 - angular-developer
-- tdd
+- domain-modeling
 
 ## Standards du Projet
 - Build : `npm run build`
@@ -36,36 +33,25 @@ Schéma de sauvegarde :
 - Changement de détection : OnPush
 
 ## Architecture existante
-- `CharacterPersistenceService` existe déjà et gère uniquement le `selectedCharacterId` dans le localStorage
-- `GameEngineService` gère l'état du jeu (zone courante, pièces, quiz, etc.)
-- Le schéma de sauvegarde doit être étendu pour inclure: personnage, zoneCourante, pieces, tentativesQuiz, completes
-- Le `GameSave` interface est dans `src/app/core/types/game-save.ts`
-- La clé localStorage est `GAME_SAVE_KEY = 'harmony_escape_game_save'`
-
-## Contexte technique important
-- Le `CharacterPersistenceService` actuel sauvegarde/restaure uniquement le personnage sélectionné
-- Il faut étendre ce service (ou le renommer en `PersistenceService`) pour sauvegarder l'état complet du jeu
-- L'auto-save doit se déclencher quand `GameEngineService.completeZone()` est appelé (ou quand `advanceZone()` est appelé)
-- L'écran de reprise doit apparaître au chargement de l'app (dans `WelcomeScreen`) si une sauvegarde existe avec une partie en cours
-- Le joueur doit pouvoir choisir "Reprendre" (charge l'état sauvegardé dans le GameEngine) ou "Recommencer" (efface la sauvegarde)
-- Le service doit rester mockable via l'interface `LocalStorageAdapter`
+- Types dans `src/app/core/types/`
+- JSON de contenu dans `public/assets/content/`
+- `shared.json` existait déjà avec une Zone `shared_final`
 
 ## Tableau d'Avancement
-- [x] Tâche 1 : Étendre l'interface GameSave et le PersistenceService pour gérer l'état complet (zoneCourante, pieces, tentativesQuiz, completes) + tests unitaires
-- [x] Tâche 2 : Implémenter l'auto-save après chaque Zone terminée (dans GameEngineService ou via un mécanisme d'écoute)
-- [x] Tâche 3 : Créer le composant de reprise (ResumeScreen) avec les boutons "Reprendre" et "Recommencer"
-- [x] Tâche 4 : Intégrer l'écran de reprise dans le WelcomeScreen (affiché quand une sauvegarde en cours existe)
-- [x] Tâche 5 : Permettre au GameEngine de charger un état sauvegardé (méthode restoreGame)
+- [x] Tâche 1 : Ajouter le type `SharedZoneContent` et `CharacterRole` au modèle de domaine, puis mettre à jour `shared.json` avec au moins 2 Zones partagées et les rôles narratifs par personnage
+- [x] Tâche 2 : Étendre le ContentLoaderService pour charger shared.json et résoudre les références de Zones partagées dans les chemins
+- [x] Tâche 3 : Ajouter loadCharacterRoles() au ContentLoaderService pour charger les rôles narratifs des autres personnages
+- [x] Tâche 4 : Tests unitaires du ContentLoaderService couvrant le chargement des Zones partagées, la résolution des références, et les rôles de personnages
 
 ## Zone de Transit & Logs
 ### Tâche en cours :
-- Aucune — Issue #7 complétée et validée.
+- Aucune — Tâche 4 validée.
 
 ### Compteur de rejets (tâche actuelle) :
 - 0 / 5
 
 ### Dernier retour de Review :
-- Issue #7 entièrement validée : 5 tâches complétées, 252 tests passants, build OK. PR prête.
+- Tâche 4 validée : 8 nouveaux tests ajoutés (3 Zones partagées, 3 résolution, 2 rôles), HttpClientMock avec simulation asynchrone pour shared.json, flushResources() via ɵEffectScheduler, correction params: () => 0 dans sharedZonesResource, build OK, 260 tests passants.
 
 ### Blocage Actuel :
 - Aucun.
