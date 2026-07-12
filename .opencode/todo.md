@@ -81,7 +81,7 @@ src/app/
 
 ## Tableau d'Avancement
 - [x] Tâche 1 : Créer le `GameEngineService` (service `providedIn: 'root'`) qui gère l'état du jeu : zone courante, index dans le Chemin, navigation vers la zone suivante/précédente, gestion des choix narratifs (bloquants vs conséquences), et le nombre de Pièces. Utilise Signals pour l'état.
-- [ ] Tâche 2 : Tests unitaires du `GameEngineService` (navigation entre zones, choix bloquants avec pénalité, choix avec conséquence, gain de Pièces)
+- [x] Tâche 2 : Tests unitaires du `GameEngineService` (navigation entre zones, choix bloquants avec pénalité, choix avec conséquence, gain de Pièces)
 - [ ] Tâche 3 : Créer le composant `ZoneExplorer` qui affiche la narration de la Zone courante avec emojis et les Choix narratifs comme boutons cliquables
 - [ ] Tâche 4 : Créer le composant `NarrativeChoice` (bouton de choix individuel avec feedback visuel pour les choix bloquants)
 - [ ] Tâche 5 : Intégrer `ZoneExplorer` dans `GameShell`, remplacer le placeholder
