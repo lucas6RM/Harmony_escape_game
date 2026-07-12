@@ -35,6 +35,7 @@ export class GameEngineService {
   private readonly hintTextSignal = signal<string | null>(null);
   private readonly eliminatedAnswersSignal = signal<number[]>([]);
   private readonly zonesCompletedSignal = signal<number[]>([]);
+  private readonly gameWonSignal = signal<boolean>(false);
 
   // ── Accès public (Signals) ──────────────────────────────────────
 
@@ -85,12 +86,20 @@ export class GameEngineService {
   /** Indices des Zones déjà terminées par le joueur */
   readonly zonesCompleted: Signal<number[]> = this.zonesCompletedSignal;
 
+  /** Indique si le joueur a gagné la partie (Quiz final réussi) */
+  readonly gameWon: Signal<boolean> = this.gameWonSignal;
+
   /** Le Chemin complet du personnage (pour itérer sur les Zones) */
   readonly path: Signal<CharacterPath> = computed(() => {
     if (!this.pathSignal) {
       return { character: 'mario', zones: [] };
     }
     return this.pathSignal();
+  });
+
+  /** Identifiant du personnage en cours de partie */
+  readonly characterId: Signal<string> = computed(() => {
+    return this.pathSignal?.()?.character ?? '';
   });
 
   // ── Méthodes publiques ──────────────────────────────────────────
@@ -108,6 +117,7 @@ export class GameEngineService {
     this.narrationEventSignal.set(null);
     this.isBlockingChoiceSignal.set(false);
     this.zonesCompletedSignal.set([]);
+    this.gameWonSignal.set(false);
     this.gameStartedSignal.set(true);
     this.saveGameState();
   }
@@ -330,6 +340,39 @@ export class GameEngineService {
   }
 
   /**
+   * Retour au menu principal — réinitialise tout l'état du jeu
+   * et efface la sauvegarde.
+   */
+  returnToMenu(): void {
+    this.pathSignal = null;
+    this.currentZoneIndexSignal.set(0);
+    this.coinsSignal.set(0);
+    this.isZoneCompletedSignal.set(false);
+    this.narrationEventSignal.set(null);
+    this.isBlockingChoiceSignal.set(false);
+    this.gameStartedSignal.set(false);
+    this.quizActiveSignal.set(false);
+    this.quizAttemptsSignal.set(0);
+    this.quizFeedbackSignal.set(null);
+    this.hintTextSignal.set(null);
+    this.eliminatedAnswersSignal.set([]);
+    this.zonesCompletedSignal.set([]);
+    this.gameWonSignal.set(false);
+    this.persistenceService.clearSave();
+  }
+
+  /**
+   * Recommence la partie avec le même personnage — réinitialise
+   * la progression mais garde le Chemin chargé.
+   */
+  restartGame(): void {
+    const characterId = this.pathSignal?.()?.character;
+    if (characterId) {
+      this.startGame(characterId);
+    }
+  }
+
+  /**
    * Soumet une réponse au Quiz en cours.
    *
    * - Réponse correcte : +2 Pièces, Zone terminée, Quiz désactivé.
@@ -356,6 +399,12 @@ export class GameEngineService {
       this.completeZone();
       this.quizFeedbackSignal.set('correct');
       this.quizActiveSignal.set(false);
+
+      // Vérifier si c'est le Quiz final → victoire !
+      if (zone.quiz.isFinal) {
+        this.gameWonSignal.set(true);
+      }
+
       return;
     }
 

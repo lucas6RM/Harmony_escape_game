@@ -821,4 +821,159 @@ describe('GameEngineService', () => {
       });
     });
   });
+
+  describe('Fin de partie — Quiz final', () => {
+    beforeEach(() => {
+      service.startGame('mario');
+    });
+
+    it('gameWon() est false au démarrage', () => {
+      expect(service.gameWon()).toBe(false);
+    });
+
+    it('gameWon() reste false après un Quiz non-final réussi', () => {
+      service.selectChoice(0); // Zone 1 (non-final)
+      service.submitQuizAnswer(1); // réponse correcte
+      expect(service.gameWon()).toBe(false);
+    });
+
+    it('gameWon() devient true après le Quiz final réussi', () => {
+      // Avancer jusqu'à la dernière Zone (zone 3, Quiz final)
+      service.selectChoice(0);
+      service.submitQuizAnswer(1); // Zone 1 réussie
+      service.advanceZone();
+
+      service.selectChoice(0);
+      service.submitQuizAnswer(0); // Zone 2 réussie
+      service.advanceZone();
+
+      // Zone 3 = Quiz final (isFinal: true)
+      service.selectChoice(0);
+      service.submitQuizAnswer(0); // correctIndex de mario_zone_3
+      expect(service.gameWon()).toBe(true);
+    });
+
+    it('gameWon() ne devient pas true si le Quiz final échoue', () => {
+      // Avancer jusqu'à la dernière Zone
+      service.selectChoice(0);
+      service.submitQuizAnswer(1);
+      service.advanceZone();
+
+      service.selectChoice(0);
+      service.submitQuizAnswer(0);
+      service.advanceZone();
+
+      // Zone 3 = Quiz final → 2 erreurs
+      service.selectChoice(0);
+      service.submitQuizAnswer(1); // faux
+      service.submitQuizAnswer(2); // faux → pénalité
+      expect(service.gameWon()).toBe(false);
+    });
+
+    it('characterId() retourne l\'identifiant du personnage', () => {
+      expect(service.characterId()).toBe('mario');
+    });
+  });
+
+  describe('returnToMenu', () => {
+    beforeEach(() => {
+      service.startGame('mario');
+    });
+
+    it('réinitialise gameStarted à false', () => {
+      service.returnToMenu();
+      expect(service.gameStarted()).toBe(false);
+    });
+
+    it('réinitialise gameWon à false', () => {
+      expect(service.gameWon()).toBe(false);
+      service.returnToMenu();
+      expect(service.gameWon()).toBe(false);
+    });
+
+    it('réinitialise les Pièces à 0', () => {
+      service.addCoins(10);
+      service.returnToMenu();
+      expect(service.coins()).toBe(0);
+    });
+
+    it('réinitialise l\'index de Zone à 0', () => {
+      service.advanceZone();
+      service.returnToMenu();
+      expect(service.currentZoneIndex()).toBe(0);
+    });
+
+    it('réinitialise les Zones terminées', () => {
+      service.completeZone();
+      service.returnToMenu();
+      expect(service.zonesCompleted()).toEqual([]);
+    });
+
+    it('appelle clearSave() sur le PersistenceService', () => {
+      const clearSpy = vi.spyOn(persistenceMock, 'clearSave');
+      service.returnToMenu();
+      expect(clearSpy).toHaveBeenCalled();
+    });
+
+    it('réinitialise quizActive à false', () => {
+      service.selectChoice(0);
+      expect(service.quizActive()).toBe(true);
+      service.returnToMenu();
+      expect(service.quizActive()).toBe(false);
+    });
+
+    it('réinitialise l\'événement narratif à null', () => {
+      service.selectChoice(0);
+      service.returnToMenu();
+      expect(service.narrationEvent()).toBe(null);
+    });
+
+    it('la Zone courante est null après returnToMenu', () => {
+      service.returnToMenu();
+      expect(service.currentZone()).toBe(null);
+    });
+  });
+
+  describe('restartGame', () => {
+    beforeEach(() => {
+      service.startGame('mario');
+    });
+
+    it('redémarre le jeu avec le même personnage', () => {
+      service.addCoins(10);
+      service.advanceZone();
+      service.restartGame();
+      expect(service.gameStarted()).toBe(true);
+      expect(service.coins()).toBe(0);
+      expect(service.currentZoneIndex()).toBe(0);
+      expect(service.characterId()).toBe('mario');
+    });
+
+    it('réinitialise gameWon à false après une victoire', () => {
+      // Simuler une victoire en réussissant le Quiz final
+      service.selectChoice(0);
+      service.submitQuizAnswer(1); // Zone 1 réussie
+      service.advanceZone();
+
+      service.selectChoice(0);
+      service.submitQuizAnswer(0); // Zone 2 réussie
+      service.advanceZone();
+
+      // Zone 3 = Quiz final (isFinal: true)
+      service.selectChoice(0);
+      service.submitQuizAnswer(0); // correctIndex de mario_zone_3
+      expect(service.gameWon()).toBe(true);
+
+      // Le joueur clique sur "Recommencer"
+      service.restartGame();
+      expect(service.gameWon()).toBe(false);
+    });
+
+    it('ne fait rien si aucun personnage n\'est chargé', () => {
+      // Après returnToMenu, pathSignal est null
+      service.returnToMenu();
+      service.restartGame();
+      expect(service.gameStarted()).toBe(false);
+    });
+  });
 });

@@ -25,19 +25,21 @@ Décisions clés :
 
 ## Tableau d'Avancement
 - [x] Tâche 1 : Implémenter le Quiz final en dernière Zone (plus difficile)
-- [ ] Tâche 2 : Implémenter la scène de victoire narrative après Quiz réussi
+- [x] Tâche 2 : Implémenter la scène de victoire narrative après Quiz réussi
 - [ ] Tâche 3 : Gérer l'échec : recommencer la Zone finale
 - [ ] Tâche 4 : Tests unitaires du Game Engine pour la fin de partie
 
 ## Zone de Transit & Logs
 ### Tâche en cours :
 - Tâche 1 complétée
+- Tâche 2 complétée (bug corrigé)
 
 ### Compteur de rejets (tâche actuelle) :
-- 0 / 5
+- 2 / 5 (résolu)
 
 ### Dernier retour de Review :
-- Aucun.
+- Bug corrigé : `this.gameWonSignal.set(false);` ajouté dans `startGame()`.
+- Test unitaire ajouté : simule une victoire complète puis vérifie que `restartGame()` remet `gameWon` à `false`.
 
 ### Blocage Actuel :
 - Aucun.

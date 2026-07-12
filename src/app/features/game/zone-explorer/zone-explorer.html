@@ -50,6 +50,7 @@
   <div class="success-block" role="alert" aria-live="polite">
     <span class="success-icon" aria-hidden="true">🎉</span>
     <p class="success-text">Bravo ! +2 Pièces 🪙</p>
+    @if (!isFinalQuiz()) {
     <button
       type="button"
       class="advance-button"
@@ -58,6 +59,7 @@
     >
       Zone suivante
     </button>
+    }
   </div>
   }
 
