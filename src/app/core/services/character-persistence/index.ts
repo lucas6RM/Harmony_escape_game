@@ -1,4 +1,5 @@
 /**
- * Barrel export du service CharacterPersistence.
+ * Barrel export rétrocompatible — redirige vers le nouveau dossier `persistence`.
+ * Les composants existants importent toujours depuis ce chemin.
  */
-export { CharacterPersistenceService } from './character-persistence.service';
+export { CharacterPersistenceService, PersistenceService } from '../persistence';

@@ -1,152 +1,71 @@
-# Issue #6 : Système d'Aides
+# Issue #7 : Sauvegarde auto + Reprise
 
 ## Spécification
-Système d'Aides pendant un Quiz : achat d'Indice (3 Pièces) et élimination de 2 fausses réponses (5 Pièces).
+
+## Parent
+#1 (PRD: Harmony Escape Game)
+
+## What to build
+Sauvegarde automatique de la progression dans le local storage et écran de reprise.
 
 Décisions clés :
-- Indice (3 Pièces) : affiche un indice textuel
-- Élimination (5 Pièces) : masque 2 fausses réponses, il reste 2 choix dont la bonne
-- Solde de Pièces affiché en permanence
+- Auto-save à chaque Zone terminée
+- Écran de reprise au retour sur l'app : "Reprendre l'aventure de [personnage] ?"
+- Persistence Service dédié, mockable
+
+Schéma de sauvegarde :
+{ personnage, zoneCourante, pieces, tentativesQuiz, completes }
 
 ## Acceptance criteria
-
-- [x] Bouton "Acheter un Indice" (3 Pièces) disponible pendant un Quiz
-- [x] Bouton "Éliminer 2 réponses" (5 Pièces) disponible pendant un Quiz
-- [x] Solde insuffisant : boutons désactivés
-- [x] Solde de Pièces affiché en permanence
-- [x] Tests unitaires du Game Engine (achat aide, solde)
+- [ ] Persistance Service lit/écrit le local storage
+- [ ] Auto-save après chaque Zone terminée
+- [ ] Écran de reprise au retour sur l'app
+- [ ] Possibilité de reprendre ou de recommencer
+- [ ] Tests unitaires du Persistence Service avec mock
 
 ## Skills à Charger
-- **`angular-developer`** — génération de code Angular
-- **`tdd`** — test-driven development
+- angular-developer
+- tdd
 
-## Standards du Projet & Commandes
+## Standards du Projet
 - Build : `npm run build`
 - Test : `npm run test --watch=false`
-- Lint : `npm run lint`
+- Framework : Angular 21.2 avec Signals
+- Testing : Vitest + jsdom
+- Styling : Tailwind CSS v4
+- Changement de détection : OnPush
 
-## Décisions de Design (héritées des issues précédentes)
-
-| Décision | Choix |
-|----------|-------|
-| State | Signals (`signal()`, `computed()`) |
-| Strategy | `ChangeDetectionStrategy.OnPush` systématique |
-| Injection | `inject()` au lieu du constructeur |
-| Contrôles | Natifs (`@if`, `@for`, `@switch`) |
-| Forms | Réactifs plutôt que template-driven |
-| Accessibilité | WCAG AA obligatoire |
-| Types | `src/app/core/types/` |
-| Services | `src/app/core/services/` |
-
-## Modèle de Domaine (existant)
-
-Types existants dans `src/app/core/types/` :
-- `Quiz` : `{ type: QuizType, question: string, answers: string[], correctIndex: number }`
-- `QuizType` : `'maths' | 'francais' | 'univers-mario' | 'contexte'`
-- `Zone` : `{ id, narration, choices: NarrativeChoice[], quiz: Quiz }`
-- `CharacterPath` : `{ character, zones: Zone[] }`
-
-## Services existants
-
-- `GameEngineService` : gère l'état du jeu. Signaux : `currentZone`, `coins`, `isZoneCompleted`, `narrationEvent`, `isBlockingChoice`, `gameStarted`, `quizActive`, `quizAttempts`, `quizFeedback`, `path`. Méthodes : `startGame`, `selectChoice`, `advanceZone`, `restartZone`, `completeZone`, `addCoins`, `clearEvent`, `submitQuizAnswer`.
-- `ContentLoaderService` : charge le `CharacterPath` depuis JSON via HTTP
-- `CharacterPersistenceService` : gère le localStorage du personnage choisi
-
-## Composants existants
-
-- `GameShell` : conteneur principal, affiche le compteur de Pièces (`coins()`) et le `ZoneExplorer`
-- `ZoneExplorer` : affiche la narration, les choix narratifs, et le `QuizPanel` quand le Quiz est actif
-- `QuizPanel` : affiche la question, le badge de type, les 4 réponses, le feedback. Émet `answerSelected`
-
-## Structure du projet
-
-```
-src/app/
-├── core/
-│   ├── services/
-│   │   ├── character-persistence/
-│   │   ├── content-loader/
-│   │   └── game-engine/
-│   └── types/
-│       ├── character-path.ts
-│       ├── character.ts
-│       ├── game-save.ts
-│       ├── index.ts
-│       ├── narrative-choice.ts
-│       ├── quiz.ts
-│       └── zone.ts
-└── features/
-    ├── character-selector/
-    ├── game/
-    │   ├── game-shell/
-    │   ├── narrative-choice/
-    │   ├── quiz-panel/
-    │   └── zone-explorer/
-    ├── hero-screen/
-    └── welcome-screen/
-```
+## Architecture existante
+- `CharacterPersistenceService` existe déjà et gère uniquement le `selectedCharacterId` dans le localStorage
+- `GameEngineService` gère l'état du jeu (zone courante, pièces, quiz, etc.)
+- Le schéma de sauvegarde doit être étendu pour inclure: personnage, zoneCourante, pieces, tentativesQuiz, completes
+- Le `GameSave` interface est dans `src/app/core/types/game-save.ts`
+- La clé localStorage est `GAME_SAVE_KEY = 'harmony_escape_game_save'`
 
 ## Contexte technique important
-
-Le solde de Pièces est DÉJÀ affiché en permanence dans `game-shell.html` via `{{ coins() }}`. 
-Le `QuizPanel` existe déjà et affiche les 4 réponses. Il faut lui ajouter :
-1. Un signal `eliminatedAnswers` (indices masqués par l'élimination)
-2. Un signal `hintText` (texte de l'indice acheté)
-3. Les boutons d'achat d'aide
-
-Le `GameEngineService` doit gérer :
-- `buyHint()` : coûte 3 Pièces, retourne un indice textuel (on peut utiliser une partie de la bonne réponse comme indice)
-- `buyElimination()` : coûte 5 Pièces, retourne les 2 indices de fausses réponses à masquer
-- Les deux méthodes ne fonctionnent que si `quizActive()` est true ET si le solde est suffisant
-- Après achat, le solde est décrété
+- Le `CharacterPersistenceService` actuel sauvegarde/restaure uniquement le personnage sélectionné
+- Il faut étendre ce service (ou le renommer en `PersistenceService`) pour sauvegarder l'état complet du jeu
+- L'auto-save doit se déclencher quand `GameEngineService.completeZone()` est appelé (ou quand `advanceZone()` est appelé)
+- L'écran de reprise doit apparaître au chargement de l'app (dans `WelcomeScreen`) si une sauvegarde existe avec une partie en cours
+- Le joueur doit pouvoir choisir "Reprendre" (charge l'état sauvegardé dans le GameEngine) ou "Recommencer" (efface la sauvegarde)
+- Le service doit rester mockable via l'interface `LocalStorageAdapter`
 
 ## Tableau d'Avancement
-
-[x] Tâche 1 : Ajouter les types et méthodes d'Aide au `GameEngineService`
-  - Créer le type `HintType` dans `src/app/core/types/quiz.ts` (ou un nouveau fichier `aide.ts`)
-  - Ajouter les signaux `hintText` (Signal&lt;string | null&gt;) et `eliminatedAnswers` (Signal&lt;number[]&gt;) au GameEngineService
-  - Ajouter `buyHint()`: coûte 3 Pièces, affiche un indice textuel. Ne fonctionne que si quizActive=true et coins >= 3
-  - Ajouter `buyElimination()`: coûte 5 Pièces, retourne les 2 indices de fausses réponses à masquer. Ne fonctionne que si quizActive=true et coins >= 5
-  - Réinitialiser hint et eliminatedAnswers dans `restartZone()`, `advanceZone()` et quand le Quiz est activé (`selectChoice` choix valide)
-  - Exporter les nouveaux types depuis `index.ts`
-
-[x] Tâche 2 : Tests unitaires du `GameEngineService` pour les Aides
-  - buyHint avec solde suffisant : coins diminués de 3, hintText non null
-  - buyHint avec solde insuffisant : rien ne change
-  - buyHint quand quiz non actif : rien ne change
-  - buyElimination avec solde suffisant : coins diminués de 5, eliminatedAnswers contient 2 indices
-  - buyElimination avec solde insuffisant : rien ne change
-  - buyElimination quand quiz non actif : rien ne change
-  - eliminatedAnswers ne contient jamais le correctIndex
-  - restartZone/advanceZone réinitialisent hint et eliminatedAnswers
-
-[x] Tâche 3 : Intégrer les boutons d'Aide dans `QuizPanel`
-  - Ajouter les inputs `hintText`, `eliminatedAnswers`, `coins`, `canBuyHint`, `canBuyElimination`
-  - Ajouter les outputs `hintRequested`, `eliminationRequested`
-  - Afficher le texte de l'indice quand `hintText` est non null (zone aria-live="polite")
-  - Masquer/griser les réponses dont l'index est dans `eliminatedAnswers` (display: none ou opacité réduite)
-  - Bouton "Acheter un Indice (3 🪙)" activé uniquement si `canBuyHint`
-  - Bouton "Éliminer 2 réponses (5 🪙)" activé uniquement si `canBuyElimination`
-  - Les boutons d'aide sont visibles uniquement quand le quiz n'est pas désactivé
-
-[x] Tâche 4 : Relier `ZoneExplorer` et `GameEngineService` aux Aides
-  - Exposer `hintText`, `eliminatedAnswers`, `coins` depuis `ZoneExplorer`
-  - Ajouter `onBuyHint()` et `onBuyElimination()` appelant le GameEngineService
-  - Passer les inputs/outputs au `QuizPanel` dans le template de `ZoneExplorer`
-  - `canBuyHint` = quizActive() && coins() >= 3 && !hintText()
-  - `canBuyElimination` = quizActive() && coins() >= 5 && eliminatedAnswers().length === 0
-
-[x] Tâche 5 : Vérifier build et tests passent
+- [x] Tâche 1 : Étendre l'interface GameSave et le PersistenceService pour gérer l'état complet (zoneCourante, pieces, tentativesQuiz, completes) + tests unitaires
+- [ ] Tâche 2 : Implémenter l'auto-save après chaque Zone terminée (dans GameEngineService ou via un mécanisme d'écoute)
+- [ ] Tâche 3 : Créer le composant de reprise (ResumeScreen) avec les boutons "Reprendre" et "Recommencer"
+- [ ] Tâche 4 : Intégrer l'écran de reprise dans le WelcomeScreen (affiché quand une sauvegarde en cours existe)
+- [ ] Tâche 5 : Permettre au GameEngine de charger un état sauvegardé (méthode restoreGame)
 
 ## Zone de Transit & Logs
 ### Tâche en cours :
-- Tâche 5 (complétée)
+- Aucune
 
 ### Compteur de rejets (tâche actuelle) :
 - 0 / 5
 
 ### Dernier retour de Review :
-- Issue #6 complétée : toutes les tâches validées, build et tests OK.
+- Tâche 1 validée : build et tests OK, rétrocompatibilité préservée.
 
 ### Blocage Actuel :
 - Aucun.
