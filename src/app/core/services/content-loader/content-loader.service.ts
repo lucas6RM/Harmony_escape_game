@@ -30,8 +30,8 @@ export class ContentLoaderService {
    * Zones partagées chargées depuis `shared.json`.
    * Chargées une seule fois au démarrage du service.
    */
-  private readonly sharedZonesResource = resource<SharedZoneContent, void>({
-    params: () => undefined,
+  private readonly sharedZonesResource = resource<SharedZoneContent, number>({
+    params: () => 0,
     loader: async () => {
       return firstValueFrom(
         this.http.get<SharedZoneContent>('assets/content/shared.json')

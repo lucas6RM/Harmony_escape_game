@@ -41,16 +41,17 @@ Décisions clés :
 - [x] Tâche 1 : Ajouter le type `SharedZoneContent` et `CharacterRole` au modèle de domaine, puis mettre à jour `shared.json` avec au moins 2 Zones partagées et les rôles narratifs par personnage
 - [x] Tâche 2 : Étendre le ContentLoaderService pour charger shared.json et résoudre les références de Zones partagées dans les chemins
 - [x] Tâche 3 : Ajouter loadCharacterRoles() au ContentLoaderService pour charger les rôles narratifs des autres personnages
+- [x] Tâche 4 : Tests unitaires du ContentLoaderService couvrant le chargement des Zones partagées, la résolution des références, et les rôles de personnages
 
 ## Zone de Transit & Logs
 ### Tâche en cours :
-- Aucune — Tâche 3 validée.
+- Aucune — Tâche 4 validée.
 
 ### Compteur de rejets (tâche actuelle) :
 - 0 / 5
 
 ### Dernier retour de Review :
-- Tâche 3 validée : SharedZoneContent étendu avec characterRoles: CharacterRoles[], defaultValue mis à jour, loadCharacterRoles() retourne Signal<CharacterRole[]> via computed() utilisant sharedZonesResource existant, tableau vide retourné si personnage introuvable, JSDoc en français, build OK, 252 tests passants.
+- Tâche 4 validée : 8 nouveaux tests ajoutés (3 Zones partagées, 3 résolution, 2 rôles), HttpClientMock avec simulation asynchrone pour shared.json, flushResources() via ɵEffectScheduler, correction params: () => 0 dans sharedZonesResource, build OK, 260 tests passants.
 
 ### Blocage Actuel :
 - Aucun.
