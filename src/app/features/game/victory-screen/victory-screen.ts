@@ -53,4 +53,10 @@ export class VictoryScreen {
   protected onRestartGame(): void {
     this.gameEngine.restartGame();
   }
+
+  /** Retour à la sélection de personnage sans effacer les Chemins complétés */
+  protected onSelectAnotherCharacter(): void {
+    this.gameEngine.returnToCharacterSelect();
+    this.router.navigate(['/accueil']);
+  }
 }

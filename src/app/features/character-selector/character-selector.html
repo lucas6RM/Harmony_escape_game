@@ -20,6 +20,28 @@
   </div>
 
   <div class="selector-content">
+    <!-- Badge de complétion (quand les 4 Chemins sont terminés) -->
+    @if (allCompleted()) {
+    <div class="completion-badge" role="alert" aria-label="Badge de complétion débloqué">
+      <div class="completion-badge__icon" aria-hidden="true">🏆</div>
+      <h2 class="completion-badge__title">
+        <span aria-hidden="true">🏆</span>
+        Badge de Complétion Débloqué !
+        <span aria-hidden="true">🏆</span>
+      </h2>
+      <p class="completion-badge__message">
+        Tu as terminé les 4 Chemins ! Tu es un véritable héros du palais d'Harmony !
+      </p>
+      <button
+        type="button"
+        class="completion-badge__button"
+        (click)="onBadgeClicked()"
+      >
+        Voir la scène bonus
+      </button>
+    </div>
+    }
+
     <!-- Titre -->
     <header class="selector-header">
       <h1 class="selector-title">
@@ -56,6 +78,11 @@
           <span class="character-summary" [attr.id]="'desc-' + character.id">
             {{ character.summary }}
           </span>
+          @if (isPathCompleted(character.id)) {
+          <span class="completed-indicator" aria-label="Chemin complété">
+            ⭐ Complété !
+          </span>
+          }
         </button>
       }
     </div>

@@ -1,6 +1,7 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import type { Signal } from '@angular/core';
 import { ContentLoaderService } from '../content-loader';
+import { CompletedPathsService } from '../completed-paths/completed-paths.service';
 import { PersistenceService } from '../persistence';
 import type { CharacterPath, GameSave, NarrativeChoice, Zone } from '../../types';
 import { HINT_COSTS } from '../../types';
@@ -16,6 +17,7 @@ import { HINT_COSTS } from '../../types';
 export class GameEngineService {
   private readonly contentLoader = inject(ContentLoaderService);
   private readonly persistenceService = inject(PersistenceService);
+  private readonly completedPathsService = inject(CompletedPathsService);
 
   // ── État interne ────────────────────────────────────────────────
 
@@ -88,6 +90,11 @@ export class GameEngineService {
 
   /** Indique si le joueur a gagné la partie (Quiz final réussi) */
   readonly gameWon: Signal<boolean> = this.gameWonSignal;
+
+  /** Indique si tous les Chemins (4 personnages) sont complétés */
+  readonly allPathsCompleted: Signal<boolean> = computed(
+    () => this.completedPathsService.getAllCompleted(),
+  );
 
   /** Le Chemin complet du personnage (pour itérer sur les Zones) */
   readonly path: Signal<CharacterPath> = computed(() => {
@@ -362,6 +369,32 @@ export class GameEngineService {
   }
 
   /**
+   * Retour à la sélection de personnage — réinitialise l'état du jeu
+   * sans effacer les Chemins complétés.
+   *
+   * Utilisé après une victoire : le joueur retourne à la sélection
+   * pour choisir un autre personnage, mais ses Chemins terminés
+   * restent enregistrés.
+   */
+  returnToCharacterSelect(): void {
+    this.pathSignal = null;
+    this.currentZoneIndexSignal.set(0);
+    this.coinsSignal.set(0);
+    this.isZoneCompletedSignal.set(false);
+    this.narrationEventSignal.set(null);
+    this.isBlockingChoiceSignal.set(false);
+    this.gameStartedSignal.set(false);
+    this.quizActiveSignal.set(false);
+    this.quizAttemptsSignal.set(0);
+    this.quizFeedbackSignal.set(null);
+    this.hintTextSignal.set(null);
+    this.eliminatedAnswersSignal.set([]);
+    this.zonesCompletedSignal.set([]);
+    this.gameWonSignal.set(false);
+    this.persistenceService.clearSave();
+  }
+
+  /**
    * Recommence la partie avec le même personnage — réinitialise
    * la progression mais garde le Chemin chargé.
    */
@@ -403,6 +436,7 @@ export class GameEngineService {
       // Vérifier si c'est le Quiz final → victoire !
       if (zone.quiz.isFinal) {
         this.gameWonSignal.set(true);
+        this.completedPathsService.addCompletedPath(this.characterId());
       }
 
       return;

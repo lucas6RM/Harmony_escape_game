@@ -174,3 +174,106 @@
   line-height: 1.6;
   color: #cbd5e1;
 }
+
+/* ── Indicateur "Complété" sur la carte ───────────────── */
+
+.completed-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.75rem;
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.2), rgba(245, 158, 11, 0.25));
+  border: 1px solid rgba(251, 191, 36, 0.5);
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #fbbf24;
+  letter-spacing: 0.03em;
+  animation: badge-glow 2s ease-in-out infinite;
+}
+
+@keyframes badge-glow {
+  0%, 100% { box-shadow: 0 0 6px rgba(251, 191, 36, 0.3); }
+  50%      { box-shadow: 0 0 14px rgba(251, 191, 36, 0.6); }
+}
+
+/* ── Badge de complétion (4 Chemins terminés) ─────────── */
+
+.completion-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.5rem 2rem;
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.12), rgba(245, 158, 11, 0.18));
+  border: 2px solid #fbbf24;
+  border-radius: 1.25rem;
+  text-align: center;
+  animation: badge-shimmer 3s ease-in-out infinite;
+  box-shadow: 0 0 30px rgba(251, 191, 36, 0.25), inset 0 0 20px rgba(251, 191, 36, 0.08);
+}
+
+@keyframes badge-shimmer {
+  0%, 100% {
+    border-color: #fbbf24;
+    box-shadow: 0 0 30px rgba(251, 191, 36, 0.25), inset 0 0 20px rgba(251, 191, 36, 0.08);
+  }
+  50% {
+    border-color: #fde68a;
+    box-shadow: 0 0 40px rgba(253, 230, 138, 0.4), inset 0 0 30px rgba(253, 230, 138, 0.12);
+  }
+}
+
+.completion-badge__icon {
+  font-size: 3rem;
+  line-height: 1;
+  animation: float 3s ease-in-out infinite;
+}
+
+.completion-badge__title {
+  font-size: clamp(1.25rem, 3vw, 1.6rem);
+  font-weight: 800;
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 25%, #fde68a 50%, #f59e0b 75%, #fbbf24 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 4s ease-in-out infinite;
+  margin: 0;
+}
+
+.completion-badge__message {
+  font-size: clamp(0.9rem, 2vw, 1.05rem);
+  color: #fde68a;
+  font-weight: 500;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.completion-badge__button {
+  padding: 0.6rem 1.5rem;
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  border: none;
+  border-radius: 9999px;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  letter-spacing: 0.02em;
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+}
+
+.completion-badge__button:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+}
+
+.completion-badge__button:focus-visible {
+  outline: 3px solid #a78bfa;
+  outline-offset: 3px;
+}
+
+.completion-badge__button:active {
+  transform: scale(0.97);
+}

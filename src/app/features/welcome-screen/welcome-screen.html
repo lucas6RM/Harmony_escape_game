@@ -4,8 +4,13 @@
     (resume)="onResume()"
     (newGame)="onNewGame()"
   />
+} @else if (showBadgeBonus()) {
+  <app-badge-bonus-screen (close)="onBadgeBonusClose()" />
 } @else if (!showSelector()) {
   <app-hero-screen (startGame)="onStartGame()" />
 } @else {
-  <app-character-selector (characterSelected)="onCharacterSelected($event)" />
+  <app-character-selector
+    (characterSelected)="onCharacterSelected($event)"
+    (badgeClicked)="onBadgeClicked()"
+  />
 }

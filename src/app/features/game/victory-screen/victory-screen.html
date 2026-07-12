@@ -43,6 +43,15 @@
     </button>
     <button
       type="button"
+      class="action-button action-another"
+      aria-label="Choisir un autre personnage"
+      (click)="onSelectAnotherCharacter()"
+    >
+      <span aria-hidden="true">🦸</span>
+      <span>Choisir un autre personnage</span>
+    </button>
+    <button
+      type="button"
       class="action-button action-menu"
       aria-label="Retourner au menu principal"
       (click)="onReturnToMenu()"

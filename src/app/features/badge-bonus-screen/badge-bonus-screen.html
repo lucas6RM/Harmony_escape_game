@@ -1,0 +1,91 @@
+<div
+  class="bonus-screen"
+  role="main"
+  aria-label="Scène bonus — Le Retour d'Harmony"
+>
+  <!-- Confettis décoratifs -->
+  <div class="confetti" aria-hidden="true">
+    <span class="confetti--1">🌟</span>
+    <span class="confetti--2">⭐</span>
+    <span class="confetti--3">✨</span>
+    <span class="confetti--4">🌟</span>
+    <span class="confetti--5">⭐</span>
+    <span class="confetti--6">✨</span>
+    <span class="confetti--7">🌟</span>
+    <span class="confetti--8">⭐</span>
+    <span class="confetti--9">✨</span>
+    <span class="confetti--10">🌟</span>
+    <span class="confetti--11">⭐</span>
+    <span class="confetti--12">✨</span>
+    <span class="confetti--13">🌟</span>
+    <span class="confetti--14">⭐</span>
+    <span class="confetti--15">✨</span>
+    <span class="confetti--16">🌟</span>
+  </div>
+
+  <div class="bonus-content">
+    <!-- Titre -->
+    <header class="bonus-header">
+      <h1 class="bonus-title">
+        <span aria-hidden="true">🌟</span>
+        Scène Bonus — Le Retour d'Harmony
+        <span aria-hidden="true">🌟</span>
+      </h1>
+    </header>
+
+    <!-- Narration -->
+    <section class="bonus-narration" aria-label="Narration de la scène bonus">
+      <p class="narration-text">
+        Les quatre héros se réunissent enfin dans la grande salle du palais.
+        L'atmosphère est électrique !
+      </p>
+      <p class="narration-text">
+        Harmony, libérée des griffes de Bowser Junior, sourit à chacun d'entre vous.
+        « Merci d'être venus à mon secours ! Votre courage et votre intelligence
+        ont sauvé le palais ! »
+      </p>
+      <p class="narration-text">
+        Luma, touché par cette belle démonstration d'amitié, fait pleuvoir
+        des étoiles scintillantes sur toute l'assemblée. Le palais entier
+        vibre de joie et de gratitude !
+      </p>
+    </section>
+
+    <!-- Les 4 Personnages alignés -->
+    <section class="bonus-characters" aria-label="Les quatre héros réunis">
+      @for (character of characters; track character.id) {
+        <div
+          class="character-showcase"
+          [style.--char-color]="character.color"
+        >
+          <span class="character-showcase__emoji" aria-hidden="true">
+            {{ character.emoji }}
+          </span>
+          <span class="character-showcase__name">{{ character.name }}</span>
+        </div>
+      }
+    </section>
+
+    <!-- Message final -->
+    <section class="bonus-celebration" aria-label="Message de célébration">
+      <p class="celebration-text">
+        Tu as terminé les 4 Chemins et prouvé que tu es un véritable héros
+        du palais d'Harmony !
+      </p>
+      <div class="celebration-stars" aria-hidden="true">
+        ⭐ ⭐ ⭐ ⭐ ⭐
+      </div>
+    </section>
+
+    <!-- Bouton retour -->
+    <footer class="bonus-footer">
+      <button
+        type="button"
+        class="btn-back"
+        (click)="onClose()"
+      >
+        Retour à la sélection
+      </button>
+    </footer>
+  </div>
+</div>

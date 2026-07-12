@@ -114,6 +114,11 @@
   color: white;
 }
 
+.action-another {
+  background: linear-gradient(135deg, #7B68EE, #5d4ed8);
+  color: white;
+}
+
 .action-menu {
   background: linear-gradient(135deg, #E52521, #c41e1a);
   color: white;
