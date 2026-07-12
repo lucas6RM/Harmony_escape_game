@@ -1,34 +1,23 @@
-# Issue #2 : Squelette Angular + Content Loader
+# Issue #3 : Écran d'accueil + Sélection du Personnage
 
 ## Spécification
-Mettre en place le squelette Angular de l'application et le service Content Loader qui charge le contenu du jeu depuis des fichiers JSON.
+Écran d'accueil immersif dans l'univers Mario Galaxy et sélection du Personnage parmi 4 héros (Mario, Luigi, Peach, Daisy).
 
 Décisions clés :
-- Application Angular avec standalone components et signals
-- Structure JSON : un fichier par personnage (mario.json, luigi.json, peach.json, daisy.json) + shared.json pour les Zones partagées (ADR-0001)
-- Schéma JSON par Zone : narration, choix narratifs (avec conséquences/blocages), Quiz avec 4 réponses
-- Content Loader Service mockable pour les tests
+- Interface textuelle + emojis (pas d'images)
+- Résumé du personnage et son objectif avant de commencer
+- Persistance du personnage choisi dans le local storage
 
-Schéma JSON d'une Zone :
-```json
-{
-  "id": "zone_id",
-  "narration": "texte de la zone",
-  "choices": [
-    { "text": "je saute", "nextNarrationId": "n1", "blocking": false },
-    { "text": "je rentre par la porte", "nextNarrationId": "n2", "blocking": true, "penalty": "recommencer la zone" }
-  ],
-  "quiz": {
-    "type": "maths",
-    "question": "...",
-    "answers": ["A", "B", "C", "D"],
-    "correctIndex": 0
-  }
-}
-```
+## Acceptance criteria
+
+- [ ] Écran d'accueil avec ambiance Mario Galaxy (texte + emojis)
+- [ ] Les 4 personnages sont affichés avec un résumé
+- [ ] Le joueur peut choisir un personnage
+- [ ] Le choix est sauvegardé dans le local storage
+- [ ] Tests d'intégration du composant de sélection
 
 ## Skills à Charger
-- **`domain-modeling`** — pour affiner le modèle de domaine
+- **`angular-developer`** — génération de code Angular
 - **`tdd`** — test-driven development
 
 ## Standards du Projet & Commandes
@@ -36,60 +25,45 @@ Schéma JSON d'une Zone :
 - Test : `npm run test --watch=false`
 - Lint : `npm run lint`
 
-## Décisions de Design
+## Décisions de Design (héritées de l'issue #2)
 
 | Décision | Choix |
 |----------|-------|
-| Placement des types | `src/app/core/types/` |
-| Placement du service | `src/app/core/services/content-loader/` |
-| Placement des JSON | `public/assets/content/` |
-| Injection du contenu | `provideHttpClient` + `ContentLoaderService` |
 | State | Signals (`signal()`, `computed()`) |
 | Strategy | `ChangeDetectionStrategy.OnPush` systématique |
+| Injection | `inject()` au lieu du constructeur |
+| Contrôles | Natifs (`@if`, `@for`, `@switch`) |
+| Forms | Réactifs plutôt que template-driven |
+| Accessibilité | WCAG AA obligatoire |
+| Types | `src/app/core/types/` |
+| Services | `src/app/core/services/` |
 
-## Modèle de Domaine
+## Modèle de Domaine Additionnel
 
 ```typescript
-// Type de Quiz
-export type QuizType = 'maths' | 'francais' | 'univers-mario' | 'contexte';
-
-// Choix narratif
-export interface NarrativeChoice {
-  text: string;
-  nextNarrationId: string;
-  blocking: boolean;
-  penalty?: string;
+// Personnage jouable
+export interface Character {
+  id: 'mario' | 'luigi' | 'peach' | 'daisy';
+  name: string;
+  emoji: string;
+  summary: string;       // court résumé affiché à l'écran de sélection
+  color: string;         // couleur thématique (ex: "#E52521" pour Mario)
 }
 
-// Quiz
-export interface Quiz {
-  type: QuizType;
-  question: string;
-  answers: string[]; // toujours 4 réponses
-  correctIndex: number; // 0-3
-}
-
-// Zone
-export interface Zone {
-  id: string;
-  narration: string;
-  choices: NarrativeChoice[];
-  quiz: Quiz;
-}
-
-// Chemin (un personnage)
-export interface CharacterPath {
-  character: 'mario' | 'luigi' | 'peach' | 'daisy';
-  zones: Zone[];
+// État de la persistance
+export interface GameSave {
+  selectedCharacterId: 'mario' | 'luigi' | 'peach' | 'daisy' | null;
 }
 ```
 
 ## Tableau d'Avancement
-- [x] Tâche 1 : Créer les types TypeScript (Zone, NarrativeChoice, Quiz, QuizType, CharacterPath) dans `src/app/core/types/`
-- [x] Tâche 2 : Créer les fichiers JSON placeholder (`mario.json`, `luigi.json`, `peach.json`, `daisy.json`, `shared.json`) dans `public/assets/content/`
-- [x] Tâche 3 : Créer `ContentLoaderService` avec méthode `loadPath(character: string)` qui retourne un signal `CharacterPath`
-- [x] Tâche 4 : Tests unitaires du ContentLoaderService avec JSON mocké
-- [x] Tâche 5 : Vérifier build et tests passent
+- [x] Tâche 1 : Créer le type `Character` dans `src/app/core/types/` + tableau des 4 personnages avec leurs données (nom, emoji, résumé, couleur)
+- [x] Tâche 2 : Créer `CharacterPersistenceService` (sauvegarder/restaurer le personnage choisi dans le localStorage)
+- [x] Tâche 3 : Créer le composant `HeroScreen` (écran d'accueil immersif Mario Galaxy avec titre, emojis, texte d'intro)
+- [x] Tâche 4 : Créer le composant `CharacterSelector` (grille des 4 personnages cliquables avec résumé et emoji)
+- [x] Tâche 5 : Configurer le routage : `/accueil` → HeroScreen + CharacterSelector, puis navigation vers le jeu après sélection
+- [x] Tâche 6 : Tests d'intégration du composant `CharacterSelector` (sélection, persistance localStorage, navigation)
+- [x] Tâche 7 : Vérifier build et tests passent
 
 ## Zone de Transit & Logs
 ### Tâche en cours :
@@ -99,7 +73,7 @@ export interface CharacterPath {
 - 0 / 5
 
 ### Dernier retour de Review :
-- VALIDÉ — Revue finale complète le 11 juillet 2025. Build OK, 6 tests OK, 0 erreur TypeScript.
+- VALIDÉ — Build et tests OK
 
 ### Blocage Actuel :
 - Aucun.

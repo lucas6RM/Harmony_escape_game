@@ -1,0 +1,63 @@
+<div
+  class="selector-screen"
+  role="main"
+  aria-label="Sélection du personnage"
+>
+  <!-- Étoiles décoratives en arrière-plan -->
+  <div class="stars" aria-hidden="true">
+    <span class="star star--1">✦</span>
+    <span class="star star--2">✧</span>
+    <span class="star star--3">✦</span>
+    <span class="star star--4">✧</span>
+    <span class="star star--5">✦</span>
+    <span class="star star--6">✧</span>
+    <span class="star star--7">✦</span>
+    <span class="star star--8">✧</span>
+    <span class="star star--9">✦</span>
+    <span class="star star--10">✧</span>
+    <span class="star star--11">✦</span>
+    <span class="star star--12">✧</span>
+  </div>
+
+  <div class="selector-content">
+    <!-- Titre -->
+    <header class="selector-header">
+      <h1 class="selector-title">
+        <span aria-hidden="true">⭐</span>
+        Choisis ton héros
+        <span aria-hidden="true">⭐</span>
+      </h1>
+      <p class="selector-subtitle">
+        Chaque héros emprunte un Chemin unique pour sauver Harmony !
+      </p>
+    </header>
+
+    <!-- Grille des personnages -->
+    <div
+      class="character-grid"
+      role="listbox"
+      aria-label="Liste des personnages jouables"
+    >
+      @for (character of characters; track character.id; let index = $index) {
+        <button
+          type="button"
+          role="option"
+          [attr.id]="'character-' + character.id"
+          [attr.aria-label]="'Choisir ' + character.name"
+          [attr.aria-describedby]="'desc-' + character.id"
+          class="character-card"
+          [style.--card-color]="character.color"
+          (click)="onSelectCharacter(character.id)"
+        >
+          <span class="character-emoji" aria-hidden="true">
+            {{ character.emoji }}
+          </span>
+          <span class="character-name">{{ character.name }}</span>
+          <span class="character-summary" [attr.id]="'desc-' + character.id">
+            {{ character.summary }}
+          </span>
+        </button>
+      }
+    </div>
+  </div>
+</div>
