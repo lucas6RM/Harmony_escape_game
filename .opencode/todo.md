@@ -1,22 +1,20 @@
-# Issue #5 : Système de Quiz
+# Issue #6 : Système d'Aides
 
 ## Spécification
-Système de Quiz en fin de Zone : 4 réponses, 2 chances, économie de Pièces.
+Système d'Aides pendant un Quiz : achat d'Indice (3 Pièces) et élimination de 2 fausses réponses (5 Pièces).
 
 Décisions clés :
-- 4 réponses par Quiz
-- 2 chances : 1ère erreur = nouvelle tentative, 2ème erreur = -1 Pièce + recommencer la Zone
-- +2 Pièces par Quiz réussi
-- 4 Types de Quiz : Maths (CM1), Français (CM1), Univers Mario, Contexte (références aux Zones passées)
+- Indice (3 Pièces) : affiche un indice textuel
+- Élimination (5 Pièces) : masque 2 fausses réponses, il reste 2 choix dont la bonne
+- Solde de Pièces affiché en permanence
 
 ## Acceptance criteria
 
-- [ ] Quiz affiché avec 4 réponses en fin de Zone
-- [ ] 1ère erreur : nouvelle tentative sans pénalité
-- [ ] 2ème erreur : -1 Pièce + recommencer la Zone
-- [ ] Réponse correcte : +2 Pièces + Zone suivante
-- [ ] Les 4 Types de Quiz fonctionnent
-- [ ] Tests unitaires du Game Engine (Quiz réussi/échoué, pièces)
+- [ ] Bouton "Acheter un Indice" (3 Pièces) disponible pendant un Quiz
+- [ ] Bouton "Éliminer 2 réponses" (5 Pièces) disponible pendant un Quiz
+- [ ] Solde insuffisant : boutons désactivés
+- [ ] Solde de Pièces affiché en permanence
+- [ ] Tests unitaires du Game Engine (achat aide, solde)
 
 ## Skills à Charger
 - **`angular-developer`** — génération de code Angular
@@ -42,8 +40,7 @@ Décisions clés :
 
 ## Modèle de Domaine (existant)
 
-Les types suivants existent déjà dans `src/app/core/types/` :
-
+Types existants dans `src/app/core/types/` :
 - `Quiz` : `{ type: QuizType, question: string, answers: string[], correctIndex: number }`
 - `QuizType` : `'maths' | 'francais' | 'univers-mario' | 'contexte'`
 - `Zone` : `{ id, narration, choices: NarrativeChoice[], quiz: Quiz }`
@@ -51,11 +48,17 @@ Les types suivants existent déjà dans `src/app/core/types/` :
 
 ## Services existants
 
-- `GameEngineService` : gère l'état du jeu (zone courante, progression, pièces, événements narratifs). Déjà implémenté avec `startGame`, `selectChoice`, `advanceZone`, `restartZone`, `completeZone`, `addCoins`, `clearEvent`.
+- `GameEngineService` : gère l'état du jeu. Signaux : `currentZone`, `coins`, `isZoneCompleted`, `narrationEvent`, `isBlockingChoice`, `gameStarted`, `quizActive`, `quizAttempts`, `quizFeedback`, `path`. Méthodes : `startGame`, `selectChoice`, `advanceZone`, `restartZone`, `completeZone`, `addCoins`, `clearEvent`, `submitQuizAnswer`.
 - `ContentLoaderService` : charge le `CharacterPath` depuis JSON via HTTP
 - `CharacterPersistenceService` : gère le localStorage du personnage choisi
 
-## Structure du projet existante
+## Composants existants
+
+- `GameShell` : conteneur principal, affiche le compteur de Pièces (`coins()`) et le `ZoneExplorer`
+- `ZoneExplorer` : affiche la narration, les choix narratifs, et le `QuizPanel` quand le Quiz est actif
+- `QuizPanel` : affiche la question, le badge de type, les 4 réponses, le feedback. Émet `answerSelected`
+
+## Structure du projet
 
 ```
 src/app/
@@ -77,6 +80,7 @@ src/app/
     ├── game/
     │   ├── game-shell/
     │   ├── narrative-choice/
+    │   ├── quiz-panel/
     │   └── zone-explorer/
     ├── hero-screen/
     └── welcome-screen/
@@ -84,47 +88,65 @@ src/app/
 
 ## Contexte technique important
 
-Le `GameEngineService` existe déjà et gère :
-- `currentZone` (Signal<Zone | null>)
-- `coins` (Signal<number>)
-- `isZoneCompleted` (Signal<boolean>)
-- `narrationEvent` (Signal<string | null>)
-- `isBlockingChoice` (Signal<boolean>)
-- `gameStarted` (Signal<boolean>)
-- `path` (Signal<CharacterPath>)
-- Méthodes: `startGame`, `selectChoice`, `advanceZone`, `restartZone`, `completeZone`, `addCoins`, `clearEvent`
+Le solde de Pièces est DÉJÀ affiché en permanence dans `game-shell.html` via `{{ coins() }}`. 
+Le `QuizPanel` existe déjà et affiche les 4 réponses. Il faut lui ajouter :
+1. Un signal `eliminatedAnswers` (indices masqués par l'élimination)
+2. Un signal `hintText` (texte de l'indice acheté)
+3. Les boutons d'achat d'aide
 
-Le `ZoneExplorer` affiche la narration et les choix narratifs. Il n'affiche PAS encore le Quiz.
-Le `GameShell` est le conteneur principal affichant le compteur de Pièces et le `ZoneExplorer`.
-
-Le type `Quiz` existe déjà dans `src/app/core/types/quiz.ts` avec `type`, `question`, `answers`, `correctIndex`.
-
-## Tâches à implémenter
-
-Décompose l'issue en tâches atomiques basées sur les acceptance criteria. Chaque tâche doit être testable indépendamment.
+Le `GameEngineService` doit gérer :
+- `buyHint()` : coûte 3 Pièces, retourne un indice textuel (on peut utiliser une partie de la bonne réponse comme indice)
+- `buyElimination()` : coûte 5 Pièces, retourne les 2 indices de fausses réponses à masquer
+- Les deux méthodes ne fonctionnent que si `quizActive()` est true ET si le solde est suffisant
+- Après achat, le solde est décrété
 
 ## Tableau d'Avancement
-[x] Tâche 1 : Ajouter la gestion du Quiz au `GameEngineService` : état du Quiz en cours (signal `quizActive`, `quizAttempts`), méthode `submitQuizAnswer(index)` qui gère les 2 chances (1ère erreur = nouvelle tentative, 2ème erreur = -1 Pièce + recommencer la Zone), réponse correcte = +2 Pièces + marquer Zone terminée + avancer automatiquement. Le Quiz ne s'affiche qu'après que le joueur a fait un choix narratif valide (narrationEvent non null et non bloquant).
 
-[x] Tâche 2 : Tests unitaires du `GameEngineService` pour le Quiz : Quiz réussi du 1er coup (+2 pièces, zone terminée, avance), Quiz réussi au 2ème coup (+2 pièces, zone terminée, avance), Quiz échoué après 2 tentatives (-1 pièce, zone recommencée), Quiz non accessible tant qu'aucun choix valide n'est fait, Compteur de tentatives réinitialisé entre les zones.
+[x] Tâche 1 : Ajouter les types et méthodes d'Aide au `GameEngineService`
+  - Créer le type `HintType` dans `src/app/core/types/quiz.ts` (ou un nouveau fichier `aide.ts`)
+  - Ajouter les signaux `hintText` (Signal&lt;string | null&gt;) et `eliminatedAnswers` (Signal&lt;number[]&gt;) au GameEngineService
+  - Ajouter `buyHint()`: coûte 3 Pièces, affiche un indice textuel. Ne fonctionne que si quizActive=true et coins >= 3
+  - Ajouter `buyElimination()`: coûte 5 Pièces, retourne les 2 indices de fausses réponses à masquer. Ne fonctionne que si quizActive=true et coins >= 5
+  - Réinitialiser hint et eliminatedAnswers dans `restartZone()`, `advanceZone()` et quand le Quiz est activé (`selectChoice` choix valide)
+  - Exporter les nouveaux types depuis `index.ts`
 
-[x] Tâche 3 : Créer le composant `QuizPanel` (`src/app/features/game/quiz-panel/`) qui affiche la question du Quiz, le type de Quiz (badge coloré), les 4 réponses comme boutons, et gère l'état visuel (réponse sélectionnée, feedback vert/rouge, message de pénalité). Le composant émet un `output()` `answerSelected` avec l'index de la réponse.
+[ ] Tâche 2 : Tests unitaires du `GameEngineService` pour les Aides
+  - buyHint avec solde suffisant : coins diminués de 3, hintText non null
+  - buyHint avec solde insuffisant : rien ne change
+  - buyHint quand quiz non actif : rien ne change
+  - buyElimination avec solde suffisant : coins diminués de 5, eliminatedAnswers contient 2 indices
+  - buyElimination avec solde insuffisant : rien ne change
+  - buyElimination quand quiz non actif : rien ne change
+  - eliminatedAnswers ne contient jamais le correctIndex
+  - restartZone/advanceZone réinitialisent hint et eliminatedAnswers
 
-[x] Tâche 4 : Intégrer `QuizPanel` dans `ZoneExplorer` : le Quiz s'affiche après un choix narratif valide (quand `narrationEvent` est non null et non bloquant). Le Quiz disparaît quand la Zone est terminée ou recommencée. Le `GameShell` affiche le Quiz sous le `ZoneExplorer` ou le `ZoneExplorer` l'intègre directement.
+[ ] Tâche 3 : Intégrer les boutons d'Aide dans `QuizPanel`
+  - Ajouter les inputs `hintText`, `eliminatedAnswers`, `coins`, `canBuyHint`, `canBuyElimination`
+  - Ajouter les outputs `hintRequested`, `eliminationRequested`
+  - Afficher le texte de l'indice quand `hintText` est non null (zone aria-live="polite")
+  - Masquer/griser les réponses dont l'index est dans `eliminatedAnswers` (display: none ou opacité réduite)
+  - Bouton "Acheter un Indice (3 🪙)" activé uniquement si `canBuyHint`
+  - Bouton "Éliminer 2 réponses (5 🪙)" activé uniquement si `canBuyElimination`
+  - Les boutons d'aide sont visibles uniquement quand le quiz n'est pas désactivé
 
-[x] Tâche 5 : Gérer les états visuels du Quiz : feedback vert pour réponse correcte, feedback rouge pour réponse incorrecte, message "Nouvelle tentative" après 1ère erreur, message "Pénalité ! -1 Pièce" après 2ème erreur avec bouton pour recommencer la Zone. Le type de Quiz s'affiche avec un badge coloré (Maths = bleu, Français = vert, Univers Mario = rouge, Contexte = violet).
+[ ] Tâche 4 : Relier `ZoneExplorer` et `GameEngineService` aux Aides
+  - Exposer `hintText`, `eliminatedAnswers`, `coins` depuis `ZoneExplorer`
+  - Ajouter `onBuyHint()` et `onBuyElimination()` appelant le GameEngineService
+  - Passer les inputs/outputs au `QuizPanel` dans le template de `ZoneExplorer`
+  - `canBuyHint` = quizActive() && coins() >= 3 && !hintText()
+  - `canBuyElimination` = quizActive() && coins() >= 5 && eliminatedAnswers().length === 0
 
-[x] Tâche 6 : Vérifier build et tests passent
+[ ] Tâche 5 : Vérifier build et tests passent
 
 ## Zone de Transit & Logs
 ### Tâche en cours :
-- Tâche 6
+- Tâche 1
 
 ### Compteur de rejets (tâche actuelle) :
 - 0 / 5
 
 ### Dernier retour de Review :
-- Tâche 6 validée : Build réussi (0 erreur), 11 fichiers de tests passés avec 176 tests au vert. Le lint n'est pas configuré dans ce projet (pas de script `lint` dans package.json).
+- Corrections validées : réinitialisation dans selectChoice() et import mort supprimés.
 
 ### Blocage Actuel :
 - Aucun.

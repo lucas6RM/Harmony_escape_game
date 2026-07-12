@@ -27,3 +27,18 @@ export interface Quiz {
   /** Index de la réponse correcte (0-3) */
   correctIndex: number;
 }
+
+/**
+ * Type d'Aide disponible pendant un Quiz.
+ * - `indice` : affiche un indice textuel (coûte 3 Pièces)
+ * - `elimination` : masque 2 fausses réponses (coûte 5 Pièces)
+ */
+export type HintType = 'indice' | 'elimination';
+
+/**
+ * Coût en Pièces de chaque type d'Aide.
+ */
+export const HINT_COSTS: Record<HintType, number> = {
+  indice: 3,
+  elimination: 5,
+};
