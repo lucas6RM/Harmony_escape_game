@@ -195,9 +195,28 @@ describe('VictoryScreen', () => {
       expect(routerMock.navigatedUrl).toBe('/accueil');
     });
 
+    it('affiche le bouton "Choisir un autre personnage"', () => {
+      const anotherButton = fixture.nativeElement.querySelector('.action-another');
+      expect(anotherButton).toBeTruthy();
+      expect(anotherButton.textContent).toContain('Choisir un autre personnage');
+    });
+
+    it('cliquer sur "Choisir un autre personnage" appelle returnToCharacterSelect() et navigue vers /accueil', () => {
+      const spy = vi.spyOn(gameEngine, 'returnToCharacterSelect');
+      const anotherButton = fixture.nativeElement.querySelector('.action-another');
+      anotherButton.click();
+      fixture.detectChanges();
+
+      expect(spy).toHaveBeenCalled();
+      expect(routerMock.navigatedUrl).toBe('/accueil');
+    });
+
     it('les boutons ont des aria-labels descriptifs', () => {
       const restartButton = fixture.nativeElement.querySelector('.action-restart');
       expect(restartButton.getAttribute('aria-label')).toContain('Recommencer');
+
+      const anotherButton = fixture.nativeElement.querySelector('.action-another');
+      expect(anotherButton.getAttribute('aria-label')).toContain('Choisir un autre personnage');
 
       const menuButton = fixture.nativeElement.querySelector('.action-menu');
       expect(menuButton.getAttribute('aria-label')).toContain('Retourner au menu');
