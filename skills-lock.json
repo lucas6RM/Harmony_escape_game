@@ -7,6 +7,12 @@
       "skillPath": "skills/engineering/domain-modeling/SKILL.md",
       "computedHash": "67343881f5def98487d56243155716110afbcbf22ec92421c882d532b941cb17"
     },
+    "eslint-prettier-config": {
+      "source": "patricio0312rev/skills",
+      "sourceType": "github",
+      "skillPath": "foundation/eslint-prettier-config/SKILL.md",
+      "computedHash": "dd1365afc6c06f6c8555d0624669e70c6873057da70a92b045e948329dc1b906"
+    },
     "grill-me": {
       "source": "mattpocock/skills",
       "sourceType": "github",

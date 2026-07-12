@@ -1,0 +1,41 @@
+<div class="quiz-panel" role="region" aria-label="Quiz">
+  <!-- ── Badge du type de Quiz ──────────────────────────────────── -->
+  <span class="quiz-badge {{ getBadgeClass() }}" aria-hidden="true">
+    {{ typeLabel() }}
+  </span>
+
+  <!-- ── Question ───────────────────────────────────────────────── -->
+  <h2 class="quiz-question">{{ quiz().question }}</h2>
+
+  <!-- ── Zone de feedback (aria-live pour lecteurs d'écran) ────── -->
+  <div
+    class="quiz-feedback"
+    aria-live="polite"
+    aria-atomic="true"
+    role="status"
+  >
+    @if (feedback() === 'correct') {
+    <span class="feedback-text feedback-correct">🎉 Bonne réponse ! +2 Pièces</span>
+    } @else if (feedback() === 'incorrect') {
+    <span class="feedback-text feedback-incorrect">❌ Mauvaise réponse !</span>
+    }
+  </div>
+
+  <!-- ── Boutons de réponse ────────────────────────────────────── -->
+  <div class="quiz-answers" role="radiogroup" aria-label="Réponses possibles">
+    @for (answer of quiz().answers; track $index) {
+    <button
+      type="button"
+      class="answer-button {{ getAnswerButtonClass($index) }}"
+      [disabled]="disabled()"
+      [attr.aria-label]="'Réponse ' + ($index + 1) + ': ' + answer"
+      [attr.aria-checked]="feedback() === 'correct' && $index === quiz().correctIndex"
+      role="radio"
+      (click)="onAnswerClick($index)"
+    >
+      <span class="answer-letter">{{ $index + 1 }}</span>
+      <span class="answer-text">{{ answer }}</span>
+    </button>
+    }
+  </div>
+</div>

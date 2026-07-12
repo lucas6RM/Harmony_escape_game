@@ -85,13 +85,13 @@ src/app/
 ## Contexte technique important
 
 Le `GameEngineService` existe déjà et gère :
-- `currentZone` (Signal&lt;Zone | null&gt;)
-- `coins` (Signal&lt;number&gt;)
-- `isZoneCompleted` (Signal&lt;boolean&gt;)
-- `narrationEvent` (Signal&lt;string | null&gt;)
-- `isBlockingChoice` (Signal&lt;boolean&gt;)
-- `gameStarted` (Signal&lt;boolean&gt;)
-- `path` (Signal&lt;CharacterPath&gt;)
+- `currentZone` (Signal<Zone | null>)
+- `coins` (Signal<number>)
+- `isZoneCompleted` (Signal<boolean>)
+- `narrationEvent` (Signal<string | null>)
+- `isBlockingChoice` (Signal<boolean>)
+- `gameStarted` (Signal<boolean>)
+- `path` (Signal<CharacterPath>)
 - Méthodes: `startGame`, `selectChoice`, `advanceZone`, `restartZone`, `completeZone`, `addCoins`, `clearEvent`
 
 Le `ZoneExplorer` affiche la narration et les choix narratifs. Il n'affiche PAS encore le Quiz.
@@ -108,7 +108,7 @@ Décompose l'issue en tâches atomiques basées sur les acceptance criteria. Cha
 
 [x] Tâche 2 : Tests unitaires du `GameEngineService` pour le Quiz : Quiz réussi du 1er coup (+2 pièces, zone terminée, avance), Quiz réussi au 2ème coup (+2 pièces, zone terminée, avance), Quiz échoué après 2 tentatives (-1 pièce, zone recommencée), Quiz non accessible tant qu'aucun choix valide n'est fait, Compteur de tentatives réinitialisé entre les zones.
 
-[ ] Tâche 3 : Créer le composant `QuizPanel` (`src/app/features/game/quiz-panel/`) qui affiche la question du Quiz, le type de Quiz (badge coloré), les 4 réponses comme boutons, et gère l'état visuel (réponse sélectionnée, feedback vert/rouge, message de pénalité). Le composant émet un `output()` `answerSelected` avec l'index de la réponse.
+[x] Tâche 3 : Créer le composant `QuizPanel` (`src/app/features/game/quiz-panel/`) qui affiche la question du Quiz, le type de Quiz (badge coloré), les 4 réponses comme boutons, et gère l'état visuel (réponse sélectionnée, feedback vert/rouge, message de pénalité). Le composant émet un `output()` `answerSelected` avec l'index de la réponse.
 
 [ ] Tâche 4 : Intégrer `QuizPanel` dans `ZoneExplorer` : le Quiz s'affiche après un choix narratif valide (quand `narrationEvent` est non null et non bloquant). Le Quiz disparaît quand la Zone est terminée ou recommencée. Le `GameShell` affiche le Quiz sous le `ZoneExplorer` ou le `ZoneExplorer` l'intègre directement.
 
@@ -118,13 +118,13 @@ Décompose l'issue en tâches atomiques basées sur les acceptance criteria. Cha
 
 ## Zone de Transit & Logs
 ### Tâche en cours :
-- Tâche 3
+- Tâche 4
 
 ### Compteur de rejets (tâche actuelle) :
 - 0 / 5
 
 ### Dernier retour de Review :
-- Tâche 2 validée : 181 lignes de tests ajoutées, tous les cas couverts (quiz inactif au démarrage, activation après choix valide, succès 1er/2ème coup, échec après 2 tentatives, submit sans quiz actif, reset par restartZone/advanceZone).
+- Tâche 3 validée : Composant QuizPanel complet (87 lignes TS, 41 lignes HTML, 173 lignes CSS, 235 lignes de tests). Standalone + OnPush, inputs/outputs modernes, 4 badges colorés, feedback vert/rouge, ARIA complet (radiogroup, aria-live, aria-label, aria-checked), 17 tests couvrant rendu, émission, disabled, badges, feedback et accessibilité.
 
 ### Blocage Actuel :
 - Aucun.
