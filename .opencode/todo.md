@@ -86,11 +86,11 @@ src/app/
 - [x] Tâche 4 : Créer le composant `NarrativeChoice` (bouton de choix individuel avec feedback visuel pour les choix bloquants)
 - [x] Tâche 5 : Intégrer `ZoneExplorer` dans `GameShell`, remplacer le placeholder
 - [x] Tâche 6 : Gérer l'affichage des événements de pénalité (choix bloquant) avec un message et un bouton pour recommencer la Zone
-- [ ] Tâche 7 : Vérifier build et tests passent
+- [x] Tâche 7 : Vérifier build et tests passent
 
 ## Zone de Transit & Logs
 ### Tâche en cours :
-- Tâche 6 terminée
+- Tâche 7 terminée
 
 ### Compteur de rejets (tâche actuelle) :
 - 0 / 5
