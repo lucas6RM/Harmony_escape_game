@@ -112,19 +112,18 @@ Décompose l'issue en tâches atomiques basées sur les acceptance criteria. Cha
 
 [x] Tâche 4 : Intégrer `QuizPanel` dans `ZoneExplorer` : le Quiz s'affiche après un choix narratif valide (quand `narrationEvent` est non null et non bloquant). Le Quiz disparaît quand la Zone est terminée ou recommencée. Le `GameShell` affiche le Quiz sous le `ZoneExplorer` ou le `ZoneExplorer` l'intègre directement.
 
-[ ] Tâche 5 : Gérer les états visuels du Quiz : feedback vert pour réponse correcte, feedback rouge pour réponse incorrecte, message "Nouvelle tentative" après 1ère erreur, message "Pénalité ! -1 Pièce" après 2ème erreur avec bouton pour recommencer la Zone. Le type de Quiz s'affiche avec un badge coloré (Maths = bleu, Français = vert, Univers Mario = rouge, Contexte = violet).
+[x] Tâche 5 : Gérer les états visuels du Quiz : feedback vert pour réponse correcte, feedback rouge pour réponse incorrecte, message "Nouvelle tentative" après 1ère erreur, message "Pénalité ! -1 Pièce" après 2ème erreur avec bouton pour recommencer la Zone. Le type de Quiz s'affiche avec un badge coloré (Maths = bleu, Français = vert, Univers Mario = rouge, Contexte = violet).
 
 [ ] Tâche 6 : Vérifier build et tests passent
 
 ## Zone de Transit & Logs
 ### Tâche en cours :
-- Tâche 4
+- Tâche 5
 
 ### Compteur de rejets (tâche actuelle) :
 - 0 / 5
 
 ### Dernier retour de Review :
-- Tâche 4 validée : QuizPanel intégré dans ZoneExplorer (23 lignes TS ajoutées, 12 lignes HTML, 87 lignes de tests). Import standalone, signals quizActive/quizFeedback/quizAttempts exposés, onSelectAnswer → submitQuizAnswer, @if conditionnel, inputs liés (quiz, feedback, disabled), output (answerSelected), 7 tests couvrant affichage conditionnel, disparition, appel submitQuizAnswer, état disabled.
-
+- Tâche 5 validée : États visuels du Quiz ajoutés dans ZoneExplorer (10 lignes TS, 24 lignes HTML, 98 lignes CSS, 169 lignes de tests). Bloc succès (vert, "Bravo ! +2 Pièces", bouton "Zone suivante" appelant advanceZone), bloc nouvelle tentative (orange, condition feedback=incorrect ET attempts<2 ET quizActive), accessibilité WCAG AA (role=alert, aria-live=polite, aria-label), 13 tests couvrant affichage conditionnel, contenu, accessibilité, interaction, disparition après 2ème erreur, apparition bloc pénalité.
 ### Blocage Actuel :
 - Aucun.

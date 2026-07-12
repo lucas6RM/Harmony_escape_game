@@ -39,6 +39,9 @@ export class ZoneExplorer {
   /** Nombre de tentatives pour le Quiz courant */
   readonly quizAttempts = this.gameEngine.quizAttempts;
 
+  /** Indique si la Zone courante est terminée (quiz réussi) */
+  readonly isZoneCompleted = this.gameEngine.isZoneCompleted;
+
   /** Liste des choix de la Zone courante (ou tableau vide si pas de Zone) */
   readonly choices = computed<NarrativeChoice[]>(() => {
     const zone = this.currentZone();
@@ -74,5 +77,12 @@ export class ZoneExplorer {
    */
   onSelectAnswer(index: number): void {
     this.gameEngine.submitQuizAnswer(index);
+  }
+
+  /**
+   * Passe à la Zone suivante après un quiz réussi.
+   */
+  onAdvanceZone(): void {
+    this.gameEngine.advanceZone();
   }
 }
