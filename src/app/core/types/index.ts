@@ -14,3 +14,5 @@ export type { Zone } from './zone';
 export type { CharacterPath } from './character-path';
 export type { GameSave } from './game-save';
 export { GAME_SAVE_KEY } from './game-save';
+export type { SharedZoneContent } from './shared-zone';
+export type { CharacterRole, CharacterRoles } from './character-role';

@@ -1,6 +1,20 @@
 {
   "sharedZones": [
     {
+      "id": "shared_hall",
+      "narration": "Tu entres dans le grand hall du palais d'Harmony. Des étoiles flottent au plafond et des portraits de Luma t'observent. Deux couloirs s'offrent à toi : l'un brille d'une lumière dorée, l'autre est plongé dans une pénombre mystérieuse.",
+      "choices": [
+        { "text": "Prendre le couloir doré", "nextNarrationId": "shared_hall_gold", "blocking": false },
+        { "text": "Explorer le couloir sombre", "nextNarrationId": "shared_hall_dark", "blocking": true, "penalty": "recommencer la zone" }
+      ],
+      "quiz": {
+        "type": "univers_mario",
+        "question": "Dans Super Mario Galaxy, quel objet Mario utilise-t pour se déplacer entre les galaxies ?",
+        "answers": ["Le Galaxion", "La Fusée à Champignon", "Le Toadster", "Le Power Star"],
+        "correctIndex": 1
+      }
+    },
+    {
       "id": "shared_final",
       "narration": "Tu arrives enfin dans la chambre où Harmony est retenue. Bowser Junior est là, endormi sur un trône de jeux vidéo.",
       "choices": [
@@ -13,6 +27,88 @@
         "answers": ["7", "8", "9", "6"],
         "correctIndex": 1
       }
+    }
+  ],
+  "characterRoles": [
+    {
+      "forCharacter": "mario",
+      "roles": [
+        {
+          "characterId": "luigi",
+          "roleTitle": "L'Explorateur nerveux",
+          "description": "Luigi explore les passages secrets à ta place, même s'il tremble un peu. Ses découvertes t'aident à avancer."
+        },
+        {
+          "characterId": "peach",
+          "roleTitle": "La Stratège bienveillante",
+          "description": "Peach analyse chaque situation avec calme et te propose les meilleures solutions."
+        },
+        {
+          "characterId": "daisy",
+          "roleTitle": "L'Aventurière impulsive",
+          "description": "Daisy fonce tête baissée et ouvre des passages inattendus grâce à son énergie débordante."
+        }
+      ]
+    },
+    {
+      "forCharacter": "luigi",
+      "roles": [
+        {
+          "characterId": "mario",
+          "roleTitle": "Le Leader courageux",
+          "description": "Mario prend les devants et affronte les dangers pour te laisser explorer en sécurité."
+        },
+        {
+          "characterId": "peach",
+          "roleTitle": "La Conseillère sage",
+          "description": "Peach te donne des conseils précieux à chaque carrefour difficile."
+        },
+        {
+          "characterId": "daisy",
+          "roleTitle": "L'Éclat joyeux",
+          "description": "Daisy apporte bonne humeur et énergie à l'équipe, relevant le moral quand les choses se corsent."
+        }
+      ]
+    },
+    {
+      "forCharacter": "peach",
+      "roles": [
+        {
+          "characterId": "mario",
+          "roleTitle": "Le Protecteur fidèle",
+          "description": "Mario veille sur toi et t'accompagne dans les passages les plus périlleux."
+        },
+        {
+          "characterId": "luigi",
+          "roleTitle": "L'Aide discret",
+          "description": "Luigi travaille en coulisses et trouve des raccourcis que personne n'aurait imaginés."
+        },
+        {
+          "characterId": "daisy",
+          "roleTitle": "La Compagne énergique",
+          "description": "Daisy te motive et te pousse à relever chaque défi avec enthousiasme."
+        }
+      ]
+    },
+    {
+      "forCharacter": "daisy",
+      "roles": [
+        {
+          "characterId": "mario",
+          "roleTitle": "Le Guide expérimenté",
+          "description": "Mario connaît bien le palais et te montre les bons chemins à emprunter."
+        },
+        {
+          "characterId": "luigi",
+          "roleTitle": "Le Soutien bienveillant",
+          "description": "Luigi est toujours là pour t'aider quand tu bloques, avec patience et gentillesse."
+        },
+        {
+          "characterId": "peach",
+          "roleTitle": "La Reine protectrice",
+          "description": "Peach utilise sa sagesse royale pour te guider et te protéger des pièges."
+        }
+      ]
     }
   ]
 }
