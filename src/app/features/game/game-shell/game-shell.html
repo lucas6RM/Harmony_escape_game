@@ -1,3 +1,20 @@
 <div class="game-shell" role="main" aria-label="Jeu en cours">
-  <p>Le jeu va démarrer ici !</p>
+  <!-- Indicateur de Pièces -->
+  <div class="coins-display" role="status" aria-live="polite" aria-label="Pièces accumulées">
+    <span class="coins-icon" aria-hidden="true">🪙</span>
+    <span class="coins-count">{{ coins() }}</span>
+  </div>
+
+  <!-- Indicateur de chargement pendant le chargement du Chemin -->
+  @if (loading()) {
+  <div class="loading-state" role="status" aria-label="Chargement du Chemin en cours">
+    <span class="loading-spinner" aria-hidden="true">✨</span>
+    <p>Chargement du Chemin...</p>
+  </div>
+  }
+
+  <!-- Exploration de la Zone -->
+  @if (gameStarted()) {
+  <app-zone-explorer />
+  }
 </div>

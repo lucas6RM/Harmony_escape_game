@@ -84,13 +84,13 @@ src/app/
 - [x] Tâche 2 : Tests unitaires du `GameEngineService` (navigation entre zones, choix bloquants avec pénalité, choix avec conséquence, gain de Pièces)
 - [x] Tâche 3 : Créer le composant `ZoneExplorer` qui affiche la narration de la Zone courante avec emojis et les Choix narratifs comme boutons cliquables
 - [x] Tâche 4 : Créer le composant `NarrativeChoice` (bouton de choix individuel avec feedback visuel pour les choix bloquants)
-- [ ] Tâche 5 : Intégrer `ZoneExplorer` dans `GameShell`, remplacer le placeholder
+- [x] Tâche 5 : Intégrer `ZoneExplorer` dans `GameShell`, remplacer le placeholder
 - [ ] Tâche 6 : Gérer l'affichage des événements de pénalité (choix bloquant) avec un message et un bouton pour recommencer la Zone
 - [ ] Tâche 7 : Vérifier build et tests passent
 
 ## Zone de Transit & Logs
 ### Tâche en cours :
-- Tâche 1 terminée
+- Tâche 5 terminée
 
 ### Compteur de rejets (tâche actuelle) :
 - 0 / 5

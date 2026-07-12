@@ -4,10 +4,82 @@
 
 .game-shell {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
   min-height: 100vh;
   background: radial-gradient(ellipse at center, #1a1040 0%, #0a0a2e 50%, #000010 100%);
   color: #e2e8f0;
   font-size: 1.25rem;
+  padding: 1rem;
+  gap: 1.5rem;
+}
+
+/* ── Affichage des Pièces ─────────────────────────────────────── */
+
+.coins-display {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #fde68a;
+  background: rgba(251, 191, 36, 0.1);
+  border: 1px solid rgba(251, 191, 36, 0.3);
+  border-radius: 0.75rem;
+  padding: 0.5rem 1rem;
+}
+
+.coins-icon {
+  font-size: 1.5rem;
+}
+
+.coins-count {
+  min-width: 2ch;
+  text-align: center;
+}
+
+/* ── État de chargement ────────────────────────────────────────── */
+
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+  animation: fadeIn 0.3s ease;
+}
+
+.loading-spinner {
+  font-size: 2.5rem;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.loading-state p {
+  margin: 0;
+  font-size: 1.125rem;
+  color: #94a3b8;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.6;
+    transform: scale(1.1);
+  }
 }
