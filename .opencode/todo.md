@@ -129,7 +129,7 @@ Le `GameEngineService` doit gérer :
   - Bouton "Éliminer 2 réponses (5 🪙)" activé uniquement si `canBuyElimination`
   - Les boutons d'aide sont visibles uniquement quand le quiz n'est pas désactivé
 
-[ ] Tâche 4 : Relier `ZoneExplorer` et `GameEngineService` aux Aides
+[x] Tâche 4 : Relier `ZoneExplorer` et `GameEngineService` aux Aides
   - Exposer `hintText`, `eliminatedAnswers`, `coins` depuis `ZoneExplorer`
   - Ajouter `onBuyHint()` et `onBuyElimination()` appelant le GameEngineService
   - Passer les inputs/outputs au `QuizPanel` dans le template de `ZoneExplorer`
@@ -140,13 +140,13 @@ Le `GameEngineService` doit gérer :
 
 ## Zone de Transit & Logs
 ### Tâche en cours :
-- Tâche 3
+- Tâche 4
 
 ### Compteur de rejets (tâche actuelle) :
 - 0 / 5
 
 ### Dernier retour de Review :
-- Tâche 3 validée : inputs/outputs, accessibilité, styles, tests conformes.
+- Tâche 4 validée : bindings ZoneExplorer conformes, computed corrects, template conforme.
 
 ### Blocage Actuel :
 - Aucun.

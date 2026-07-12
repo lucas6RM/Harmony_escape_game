@@ -42,6 +42,25 @@ export class ZoneExplorer {
   /** Indique si la Zone courante est terminée (quiz réussi) */
   readonly isZoneCompleted = this.gameEngine.isZoneCompleted;
 
+  /** Solde de Pièces du joueur */
+  readonly coins = this.gameEngine.coins;
+
+  /** Texte de l'indice acheté (ou null) */
+  readonly hintText = this.gameEngine.hintText;
+
+  /** Indices des réponses éliminées */
+  readonly eliminatedAnswers = this.gameEngine.eliminatedAnswers;
+
+  /** true si le joueur peut acheter un Indice (quiz actif, solde >= 3, pas déjà acheté) */
+  readonly canBuyHint = computed(() => {
+    return this.quizActive() && this.coins() >= 3 && this.hintText() === null;
+  });
+
+  /** true si le joueur peut acheter l'Élimination (quiz actif, solde >= 5, pas déjà acheté) */
+  readonly canBuyElimination = computed(() => {
+    return this.quizActive() && this.coins() >= 5 && this.eliminatedAnswers().length === 0;
+  });
+
   /** Liste des choix de la Zone courante (ou tableau vide si pas de Zone) */
   readonly choices = computed<NarrativeChoice[]>(() => {
     const zone = this.currentZone();
@@ -84,5 +103,19 @@ export class ZoneExplorer {
    */
   onAdvanceZone(): void {
     this.gameEngine.advanceZone();
+  }
+
+  /**
+   * Achète un Indice via le GameEngineService.
+   */
+  onBuyHint(): void {
+    this.gameEngine.buyHint();
+  }
+
+  /**
+   * Achète l'élimination de 2 réponses via le GameEngineService.
+   */
+  onBuyElimination(): void {
+    this.gameEngine.buyElimination();
   }
 }
