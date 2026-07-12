@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, computed, inject, resource } from '@angular/core';
 import type { Signal } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
-import type { CharacterPath, RawCharacterPath, SharedZoneContent, Zone } from '../../types';
+import type { CharacterPath, CharacterRole, RawCharacterPath, SharedZoneContent, Zone } from '../../types';
 
 /**
  * Valeur par défaut renvoyée quand le chargement d'un Chemin échoue.
@@ -37,7 +37,7 @@ export class ContentLoaderService {
         this.http.get<SharedZoneContent>('assets/content/shared.json')
       );
     },
-    defaultValue: { sharedZones: [] },
+    defaultValue: { sharedZones: [], characterRoles: [] },
   });
 
   /**
@@ -122,6 +122,25 @@ export class ContentLoaderService {
       }
 
       return this.resolvePath(rawPath);
+    });
+  }
+
+  /**
+   * Retourne les rôles narratifs des 3 autres personnages pour un personnage donné.
+   *
+   * Les données proviennent de `shared.json` (déjà chargé via `sharedZonesResource`).
+   *
+   * @param characterId — Identifiant du personnage joué (`mario`, `luigi`, `peach`, `daisy`)
+   * @returns Signal contenant le tableau de `CharacterRole` pour ce personnage,
+   *          ou un tableau vide si le personnage n'est pas trouvé
+   */
+  loadCharacterRoles(characterId: string): Signal<CharacterRole[]> {
+    return computed<CharacterRole[]>(() => {
+      const content = this.sharedZonesResource.value();
+      const entry = content.characterRoles.find(
+        (cr) => cr.forCharacter === characterId
+      );
+      return entry?.roles ?? [];
     });
   }
 }
