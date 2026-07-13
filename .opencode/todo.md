@@ -1,51 +1,102 @@
-# Issue #24 : Migration vers l'arbre de décision et nouvelle économie
+# Issue #20 : Chemin de Mario
 
 ## Spécification
-PRD : Migration vers l'arbre de décision et nouvelle économie
+Créer le fichier `mario.json` contenant le Chemin complet de Mario sous forme d'arbre de décision.
 
-Le jeu implémente un modèle linéaire : les Zones sont un tableau ordonné, chaque Zone contient un seul Quiz, les coûts des Aides ne correspondent pas à l'économie définie, et le système de retry offre deux chances gratuites. Le modèle de domaine (CONTEXT.md, PRD, ADR-0001) a été affiné pour supporter un arbre de décision avec 8-12 Zones par personnage (3-6 vues par partie), 2-3 Quiz par Zone, et une économie rééquilibrée. Le code et le modèle sont en contradiction.
+## Structure du fichier
+Le fichier doit être placé dans `src/assets/content/mario.json` (le ContentLoaderService charge depuis `assets/content/`).
 
-Migrer le moteur de jeu vers un modèle d'arbre de décision où chaque Choix narratif pointe vers une Zone suivante via `nextZoneId`. Chaque Zone contient 2-3 Quiz. L'économie est rééquilibrée : pas de retry gratuit, -1 Pièce à chaque erreur, trois Aides (Indice=1, Éliminer=2, Saut=2), Pièces clamped à 0. La sauvegarde utilise des IDs de Zone au lieu d'indices numériques.
+```json
+{
+  "character": "mario",
+  "startZoneId": "mario-entree",
+  "zones": {
+    "mario-entree": { ... },
+    "mario-jardin-des-etoiles": { ... },
+    ...
+  }
+}
+```
 
-## Skills à Charger
-- angular-developer
-- tdd
+## Arbre de décision
+```
+[mario-entree]
+  ├─(jardin)──► [mario-jardin-des-etoiles]
+  │               ├─(escalier)──► [mario-tour-de-luma] ──► [mario-observatoire] ──► [mario-chambre-harmony]
+  │               └─(porte)──► [mario-salle-des-galaxies] ──► [mario-chambre-harmony]
+  └─(couloir)──► [mario-chemin-des-meteores]
+                    ├─(tunnel)──► [mario-sous-sol] ──► [mario-cuisine-cosmique] ──► [mario-chambre-harmony]
+                    └─(pont)──► [mario-salle-des-galaxies] ──► [mario-chambre-harmony]
+```
+
+## Zones (9 au total)
+1. **mario-entree** — Le hall d'accueil. Bowser Junior a laissé une trace.
+2. **mario-jardin-des-etoiles** — Jardin flottant avec plantes galactiques
+3. **mario-tour-de-luma** — Chambre de Luma, objets volants
+4. **mario-observatoire** — Vue sur les étoiles, télescopes
+5. **mario-salle-des-galaxies** — Mini-galaxies en rotation
+6. **mario-chemin-des-meteores** — Couloir dangereux, roches flottantes
+7. **mario-sous-sol** — Tunnels secrets
+8. **mario-cuisine-cosmique** — Ingrédients spatiaux
+9. **mario-chambre-harmony** — Zone finale, Harmony retenue
+
+## Types TypeScript attendus (dans src/app/core/types/)
+
+### Zone
+```typescript
+interface Zone {
+  id: string;
+  narration: string;
+  choices: NarrativeChoice[];
+  quizzes: Quiz[];
+}
+```
+
+### NarrativeChoice
+```typescript
+interface NarrativeChoice {
+  text: string;
+  nextZoneId: string;
+}
+```
+
+### Quiz
+```typescript
+interface Quiz {
+  type: 'maths' | 'francais' | 'univers-mario' | 'contexte';
+  question: string;
+  answers: string[];
+  correctIndex: number;
+  hintText?: string;
+  isFinal?: boolean;
+}
+```
+
+## Règles par Zone
+- **Narration** : texte immersif, ton adapté à des enfants de 10 ans
+- **Quiz** : 2 à 3 Quiz par Zone (sauf la Zone finale qui en a 1 difficile avec `isFinal: true`)
+- **Choix narratifs** : au moins 2 choix par Zone (sauf les Zones terminales comme `mario-chambre-harmony` qui n'a pas de choix)
+- **Types de Quiz** : répartir entre Maths (CM1), Français (CM1), Univers Mario, Contexte
+
+## Parcours possibles
+- Court : Entrée → Jardin → Salle des galaxies → Chambre (4 Zones)
+- Moyen : Entrée → Jardin → Tour → Observatoire → Chambre (5 Zones)
+- Long : Entrée → Chemin des météores → Sous-sol → Cuisine → Chambre (5 Zones)
 
 ## Standards du Projet & Commandes
 - Build : `npm run build`
 - Test : `npm run test --watch=false`
 - Lint : `npm run lint`
 
-## Tableau d'Avancement
-### Phase 1 — Types
-- [x] Tâche 1 : Migrer les types (Zone.quiz → quizzes[], NarrativeChoice.nextNarrationId → nextZoneId, supprimer blocking/penalty, RawCharacterPath array → object with startZoneId, CharacterPath tree structure, GameSave currentZoneIndex → currentZoneId + quizIndex, HINT_COSTS nouveaux coûts, Quiz hintText optionnel)
-- [x] Tâche 2 : Supprimer les types obsolètes (SharedZoneContent, RawZone shared reference, CharacterRole, CharacterRoles) et supprimer shared-zone.ts + character-role.ts
-
-### Phase 2 — Content Loader
-- [x] Tâche 3 : Migrer le ContentLoaderService (supprimer sharedZonesResource, resolveZone, resolvePath, loadCharacterRoles ; charger tree JSON, résoudre Zone par ID)
-
-### Phase 3 — Game Engine signaux
-- [x] Tâche 4 : Ajouter les nouveaux signaux du GameEngineService (currentZoneId string, currentQuizIndex number, currentQuiz computed, quizzesRemaining computed) et supprimer les anciens (currentZoneIndex, narrationEvent, isBlockingChoice, quizAttempts, zonesCompleted)
-
-### Phase 4 — Game Engine méthodes économie
-- [x] Tâche 5 : Implémenter la nouvelle économie dans le GameEngineService (submitQuizAnswer sans free retry, -1 Pièce à chaque erreur, replay Quiz seulement ; buyHint coût 1 par Quiz ; buyElimination coût 2 par Quiz ; skipQuiz coût 2 ; addCoins clampé à 0)
-
-### Phase 5 — Game Engine navigation arbre
-- [x] Tâche 6 : Implémenter la navigation arbre dans le GameEngineService (selectChoice navigue via nextZoneId, quizIndex progression, Zone complète quand quizIndex >= quizzes.length, restartZone reset Quiz seulement, gameWon au dernier Quiz final)
-
-### Phase 6 — Persistence
-- [x] Tâche 7 : Migrer le PersistenceService (nouveau schéma save {selectedCharacterId, currentZoneId, quizIndex, coins, completedPaths}, validateur pour currentZoneId string, restoreGame par currentZoneId + quizIndex)
-
-### Phase 7 — Tests
-- [x] Tâche 8 : Mettre à jour les mocks de test (MOCK_MARIO_PATH tree structure avec multiples Quiz par Zone) et réécrire les tests existants (no free retry, nouveaux coûts, navigation par ID, nouveau schéma save)
-- [x] Tâche 9 : Ajouter les nouveaux tests (skipQuiz, multiples Quiz par Zone, quizIndex progression, coin clamping, tree navigation via nextZoneId)
-
 ## Zone de Transit & Logs
 ### Tâche en cours :
-- Tâche 9 : Ajouter les nouveaux tests
+- [x] Créer le fichier mario.json avec les 9 Zones du Chemin de Mario
 
 ### Compteur de rejets (tâche actuelle) :
 - 0 / 5
 
 ### Dernier retour de Review :
-**VALIDÉ** — Tâches 8 et 9 validées. Tous les tests passent (337/337), le build passe. Les mocks utilisent le format tree, tous les scénarios couverts (no free retry, nouveaux coûts, navigation par ID, skipQuiz, quizIndex progression, coin clamping, quizzesRemaining, currentQuiz, nouveau schéma save, ContentLoader sans shared zones).
+- Validé : JSON valide, 9 zones conformes, arbre de décision correct, quiz bien répartis (maths:5, francais:4, univers-mario:5, contexte:8), narrations adaptées, build OK, 337 tests passés.
+
+### Blocage Actuel :
+- Aucun.

@@ -1,0 +1,276 @@
+{
+  "character": "mario",
+  "startZoneId": "mario-entree",
+  "zones": {
+    "mario-entree": {
+      "id": "mario-entree",
+      "narration": "Mario se tient devant l'immense portail du palais d'Harmony. L'air vibre d'énergie cosmique et des étoiles scintillent dans le plafond transparent. Luma, le petit compagnon de Harmony, vole vers Mario en tremblant : « Mario ! Bowser Junior est passé par là… il a enlevé Harmony ! Regarde, il a laissé des traces de ses pneus de scooter partout ! » Mario observe le hall majestueux : à sa gauche, un passage lumineux mène vers un jardin rempli de plantes qui flottent dans les airs. Devant lui, un long couloir sombre s'étend, parsemé de roches qui tournent lentement. « Il faut que je retrouve Harmony vite ! » se dit Mario en serrant ses poings.",
+      "choices": [
+        {
+          "text": "Prendre le passage lumineux vers le jardin flottant",
+          "nextZoneId": "mario-jardin-des-etoiles"
+        },
+        {
+          "text": "S'aventurer dans le couloir sombre aux roches flottantes",
+          "nextZoneId": "mario-chemin-des-meteores"
+        }
+      ],
+      "quizzes": [
+        {
+          "type": "univers-mario",
+          "question": "Quel est le nom du petit compagnon étoile de Princess Peach dans Super Mario Galaxy ?",
+          "answers": ["Luma", "Toad", "Yoshi", "Starman"],
+          "correctIndex": 0,
+          "hintText": "C'est un petit astéroïde mignon qui peut se transformer en différents objets !"
+        },
+        {
+          "type": "maths",
+          "question": "Mario saute 3 fois plus haut qu'un Goomba. Si un Goomba mesure 40 cm, quelle hauteur Mario atteint-il en sautant ?",
+          "answers": ["80 cm", "120 cm", "160 cm", "200 cm"],
+          "correctIndex": 1,
+          "hintText": "Multiplie 40 par 3 !"
+        },
+        {
+          "type": "contexte",
+          "question": "Qui a enlevé Harmony selon Luma ?",
+          "answers": ["King Bowser", "Bowser Junior", "Wario", "Dry Bowser"],
+          "correctIndex": 1,
+          "hintText": "Luma a mentionné les traces de scooter laissées dans le hall…"
+        }
+      ]
+    },
+    "mario-jardin-des-etoiles": {
+      "id": "mario-jardin-des-etoiles",
+      "narration": "Mario pénètre dans un jardin extraordinaire ! Des fleurs géantes flottent dans les airs comme des ballons, et des plantes en forme d'étoiles tournent doucement autour de lui. L'odeur de confiture d'étoile emplit l'air. « C'est le Jardin des Étoiles ! » s'exclame Luma. « Harmony adorait venir ici pour cueillir des pétales lumineux. » Mario remarque un escalier en spirale qui monte vers une tour scintillante au loin. À côté, une grande porte en forme de galaxie est entrebâillée et laisse filtrer une lumière bleue. Des pétales d'étoiles jonchent le sol, et certains semblent avoir été piétinés récemment… Bowser Junior est peut-être passé par ici !",
+      "choices": [
+        {
+          "text": "Monter l'escalier en spirale vers la tour scintillante",
+          "nextZoneId": "mario-tour-de-luma"
+        },
+        {
+          "text": "Ouvrir la grande porte en forme de galaxie",
+          "nextZoneId": "mario-salle-des-galaxies"
+        }
+      ],
+      "quizzes": [
+        {
+          "type": "francais",
+          "question": "Dans la phrase « Les fleurs géantes flottent dans les airs », quel est le verbe conjugué ?",
+          "answers": ["fleurs", "géantes", "flottent", "airs"],
+          "correctIndex": 2,
+          "hintText": "Le verbe est l'action que le sujet effectue. Ici, que font les fleurs ?"
+        },
+        {
+          "type": "contexte",
+          "question": "Quelle odeur remplit l'air du Jardin des Étoiles ?",
+          "answers": ["De la confiture d'étoile", "Du champignon magique", "De la fleur de feu", "Du sucre en poudre"],
+          "correctIndex": 0,
+          "hintText": "Recherche dans la narration de cette Zone…"
+        }
+      ]
+    },
+    "mario-tour-de-luma": {
+      "id": "mario-tour-de-luma",
+      "narration": "Mario grimpe l'escalier en spirale et arrive dans la chambre de Luma. C'est une pièce ronde remplie d'objets qui flottent partout : des coussins, des livres, des étoiles filantes en verre. Au centre, un lit en forme de lune croissante. « C'est ici que Luma dormait avant que Harmony ne soit enlevée », explique Luma tristement. Mario remarque que certains objets semblent avoir été déplacés dans la précipitation. Une fenêtre circulaire donne sur un observatoire immense rempli de télescopes pointés vers les étoiles. Luma dit : « Peut-être que depuis l'observatoire, je pourrais voir où Bowser Junior a emmené Harmony… »",
+      "choices": [
+        {
+          "text": "Traverser la fenêtre vers l'observatoire rempli de télescopes",
+          "nextZoneId": "mario-observatoire"
+        }
+      ],
+      "quizzes": [
+        {
+          "type": "maths",
+          "question": "Luma a 15 étoiles filantes en verre dans sa chambre. Il en donne 4 à Mario et 3 à Peach. Combien d'étoiles filantes Luma a-t-il encore ?",
+          "answers": ["6", "7", "8", "9"],
+          "correctIndex": 2,
+          "hintText": "15 - 4 - 3 = ?"
+        },
+        {
+          "type": "univers-mario",
+          "question": "Dans Super Mario Galaxy, quel objet Luma peut-il mordre pour créer un pont ?",
+          "answers": ["Une étoile", "Un champignon", "Un bloc question", "Un Goober"],
+          "correctIndex": 3,
+          "hintText": "C'est un petit astéroïde amical qu'on rencontre dans les galaxies !"
+        },
+        {
+          "type": "contexte",
+          "question": "Quel objet ne flottait PAS dans la chambre de Luma ?",
+          "answers": ["Des coussins", "Des livres", "Des casquettes rouges", "Des étoiles filantes en verre"],
+          "correctIndex": 2,
+          "hintText": "Relis bien la narration de la Tour de Luma…"
+        }
+      ]
+    },
+    "mario-observatoire": {
+      "id": "mario-observatoire",
+      "narration": "Mario entre dans l'observatoire du palais. Des télescopes géants pointent vers le plafond transparent qui révèle un ciel rempli de milliers d'étoiles. Luma se glisse dans un télescope et ajuste les lentilles. « Regarde Mario ! » crie-t-il. « Je vois une lueur rouge vers la Chambre d'Harmony… c'est le scooter de Bowser Junior ! Il l'a emmenée tout au fond du palais ! » Mario voit effectivement une traînée rougeâtre dans le ciel étoilé. Le cœur serré, il comprend qu'il n'y a plus qu'une seule direction : la Chambre d'Harmony, où le petit prince Koopa a dû enfermer sa meilleure amie. « On y va Luma, on va la sauver ! »",
+      "choices": [
+        {
+          "text": "Courir vers la Chambre d'Harmony pour la sauver",
+          "nextZoneId": "mario-chambre-harmony"
+        }
+      ],
+      "quizzes": [
+        {
+          "type": "francais",
+          "question": "Quel est le contraire du mot « transparent » ?",
+          "answers": ["Brillant", "Opaque", "Lumineux", "Clair"],
+          "correctIndex": 1,
+          "hintText": "Quelque chose de transparent laisse passer la lumière. Son contraire, c'est ce qui la bloque."
+        },
+        {
+          "type": "contexte",
+          "question": "Quelle couleur de lueur Luma voit-il à travers le télescope ?",
+          "answers": ["Bleue", "Verte", "Rouge", "Jaune"],
+          "correctIndex": 2,
+          "hintText": "C'est la couleur associée au scooter de Bowser Junior…"
+        }
+      ]
+    },
+    "mario-salle-des-galaxies": {
+      "id": "mario-salle-des-galaxies",
+      "narration": "Mario franchit la porte et se retrouve dans une salle époustouflante ! Des mini-galaxies entières tournent lentement dans l'air comme des boules à neige cosmiques. Chaque galaxie contient des planètes minuscules qui orbitent autour d'un soleil miniature. « C'est la Salle des Galaxies ! » s'émerveille Mario. « Harmony utilisait cette salle pour étudier les constellations. » En regardant de plus près, Mario remarque des empreintes de pneus de scooter sur le sol brillant. Elles pointent vers une porte massive au fond de la salle… la Chambre d'Harmony ! « Bowser Junior est passé par ici et il n'y a pas longtemps ! »",
+      "choices": [
+        {
+          "text": "Suivre les empreintes de pneus vers la porte massive",
+          "nextZoneId": "mario-chambre-harmony"
+        }
+      ],
+      "quizzes": [
+        {
+          "type": "maths",
+          "question": "Il y a 7 mini-galaxies dans la salle. Chaque galaxie contient 8 planètes. Combien de planètes y a-t-il au total ?",
+          "answers": ["48", "54", "56", "63"],
+          "correctIndex": 2,
+          "hintText": "Multiplie 7 par 8 !"
+        },
+        {
+          "type": "univers-mario",
+          "question": "Dans Super Mario Galaxy, quel est le nom de la galaxie où Mario affronte pour la première fois un boss ?",
+          "answers": ["Galaxie Goober", "Galaxie du Champignon", "Galaxie du Sumo", "Galaxie de la Bombe"],
+          "correctIndex": 0,
+          "hintText": "C'est la première galaxie du jeu avec un petit astéroïde boss !"
+        },
+        {
+          "type": "contexte",
+          "question": "Quelles traces Mario a-t-il remarquées sur le sol de la Salle des Galaxies ?",
+          "answers": ["Des empreintes de pas", "Des empreintes de pneus de scooter", "Des traces de feu", "Des empreintes de pattes de Koopa"],
+          "correctIndex": 1,
+          "hintText": "Relis la narration de cette Zone…"
+        }
+      ]
+    },
+    "mario-chemin-des-meteores": {
+      "id": "mario-chemin-des-meteores",
+      "narration": "Mario entre dans un couloir dangereux ! Des roches de toutes tailles flottent dans les airs et tournent lentement, comme des météores miniatures. « Attention Mario, fais attention ! » avertit Luma en volant juste au-dessus de sa tête. Mario doit sauter entre les roches pour avancer. Le couloir est sombre, mais des cristaux lumineux accrochés aux murs éclairent le chemin. Au bout du couloir, Mario voit deux passages : un tunnel étroit qui descend vers le sous-sol du palais, et un pont en verre qui traverse un vide rempli d'étoiles. Des traces de scooter sont visibles sur les deux passages… Bowser Junior a dû choisir l'un des deux !",
+      "choices": [
+        {
+          "text": "Descendre par le tunnel étroit vers le sous-sol",
+          "nextZoneId": "mario-sous-sol"
+        },
+        {
+          "text": "Traverser le pont en verre rempli d'étoiles",
+          "nextZoneId": "mario-salle-des-galaxies"
+        }
+      ],
+      "quizzes": [
+        {
+          "type": "maths",
+          "question": "Mario doit sauter par-dessus 3 rangées de météores. Chaque rangée contient 6 roches. Combien de roches doit-il éviter au total ?",
+          "answers": ["12", "15", "18", "20"],
+          "correctIndex": 2,
+          "hintText": "Multiplie 3 par 6 !"
+        },
+        {
+          "type": "francais",
+          "question": "Dans la phrase « Les roches flottent et tournent lentement », quel est le groupe sujet ?",
+          "answers": ["flottent et tournent", "Les roches", "lentement", "roches flottent"],
+          "correctIndex": 1,
+          "hintText": "Le groupe sujet est ce qui effectue l'action. Qui flotte et tourne ?"
+        },
+        {
+          "type": "univers-mario",
+          "question": "Quel ennemi de Super Mario Galaxy ressemble à un astéroïde avec des yeux et des bras ?",
+          "answers": ["Un Goomba", "Un Goober", "Un Bob-omb", "Un Thwomp"],
+          "correctIndex": 1,
+          "hintText": "Son nom commence par « Goo » et c'est un petit astéroïde vivant !"
+        }
+      ]
+    },
+    "mario-sous-sol": {
+      "id": "mario-sous-sol",
+      "narration": "Mario descend dans un tunnel secret du palais. Les murs sont couverts de conduits lumineux qui ressemblent à des veines d'étoiles. L'air est frais et on entend un bourdonnement lointain. « On est dans le sous-sol du palais ! » murmure Luma. « C'est par ici que passent les tuyaux qui alimentent le palais en énergie stellaire. » Mario avance prudemment et arrive devant une grande porte ouverte. Une odeur délicieuse de confiture d'étoile et de champignons grillés s'en échappe. « C'est la Cuisine Cosmique ! » s'exclame Mario. À travers l'ouverture, il voit des ingrédients spatiaux qui flottent au-dessus d'un immense comptoir. Des traces de scooter mènent de l'autre côté de la cuisine…",
+      "choices": [
+        {
+          "text": "Entrer dans la Cuisine Cosmique et suivre les traces",
+          "nextZoneId": "mario-cuisine-cosmique"
+        }
+      ],
+      "quizzes": [
+        {
+          "type": "francais",
+          "question": "Quel est le pluriel du mot « un tuyau » ?",
+          "answers": ["des tuyaus", "des tuyaux", "des tuyau", "des tuyauxs"],
+          "correctIndex": 1,
+          "hintText": "Les mots en « -au » prennent généralement un « x » au pluriel."
+        },
+        {
+          "type": "contexte",
+          "question": "Quel alimentait le palais selon Luma dans le sous-sol ?",
+          "answers": ["De l'eau", "De l'énergie stellaire", "Du feu", "De l'électricité"],
+          "correctIndex": 1,
+          "hintText": "Luma a parlé des tuyaux dans le sous-sol…"
+        }
+      ]
+    },
+    "mario-cuisine-cosmique": {
+      "id": "mario-cuisine-cosmique",
+      "narration": "Mario entre dans la Cuisine Cosmique et ses yeux s'agrandissent ! Des champignons Power-Up flottent au-dessus d'un comptoir immense, des confitures d'étoiles sont alignées dans des bocaux scintillants, et des fruits galactiques tournent dans les airs comme des planètes. « C'est incroyable ! » s'exclame Mario. Harmony devait adorer cette cuisine. Sur le comptoir, Mario remarque une note écrite à la hâte : « MARIO — Si tu lis ça, c'est que Bowser Junior est passé. Je l'ai suivi vers ma chambre. VITE ! — Harmony ». Le cœur battant, Mario voit les traces de scooter qui mènent vers une porte dorée au fond de la cuisine. C'est la Chambre d'Harmony !",
+      "choices": [
+        {
+          "text": "Courir vers la porte dorée de la Chambre d'Harmony",
+          "nextZoneId": "mario-chambre-harmony"
+        }
+      ],
+      "quizzes": [
+        {
+          "type": "maths",
+          "question": "Il y a 24 bocaux de confiture d'étoile sur les étagères. Mario en prend 7 et Luma en prend 5. Combien de bocaux restent-il ?",
+          "answers": ["10", "11", "12", "13"],
+          "correctIndex": 2,
+          "hintText": "24 - 7 - 5 = ?"
+        },
+        {
+          "type": "contexte",
+          "question": "Qui a écrit la note trouvée sur le comptoir de la Cuisine Cosmique ?",
+          "answers": ["Luma", "Peach", "Harmony", "Luigi"],
+          "correctIndex": 2,
+          "hintText": "La note commence par « MARIO — Si tu lis ça… » et est signée…"
+        },
+        {
+          "type": "univers-mario",
+          "question": "Quel Power-Up permet à Mario de se transformer en géant dans les jeux Super Mario ?",
+          "answers": ["La Fleur de Feu", "Le Super Champignon", "La Fleur Étoile", "Le Champignon Taille"],
+          "correctIndex": 3,
+          "hintText": "Ce champignon fait grandir Mario, contrairement au Super Champignon qui le fait juste passer de Mini à Super."
+        }
+      ]
+    },
+    "mario-chambre-harmony": {
+      "id": "mario-chambre-harmony",
+      "narration": "Mario pousse la porte dorée et se fige. Harmony est là, retenue par un filet d'énergie violette au centre de la pièce. Bowser Junior est assis sur un trône de jeux vidéo, en train de rire. « Eh bien eh bien, regarde qui est là ! Mario, tu es trop tard ! Harmony va rester ici pour toujours ! » Harmony crie : « Mario ! Ne t'inquiète pas, je suis forte ! » Mario sourit avec détermination. « Bowser Junior, tu vas la laisser partir MAINTENANT ! » Luma se cache derrière Mario, prêt à aider. Le petit prince Koopa se lève et lance un dernier défi à Mario : « Si tu veux libérer Harmony, tu vas devoir prouver que tu es vraiment le héros qu'elle croit ! » C'est le moment de montrer de quoi Mario est capable !",
+      "choices": [],
+      "quizzes": [
+        {
+          "type": "contexte",
+          "question": "Mario est arrivé à la Chambre d'Harmony. Parmi les Zones suivantes, laquelle Mario a-t-il pu traverser S'il est passé par le Chemin le plus long (Entrée → Chemin des météores → Sous-sol → Cuisine → Chambre) ?",
+          "answers": ["Le Jardin des Étoiles", "La Tour de Luma", "La Cuisine Cosmique", "L'Observatoire"],
+          "correctIndex": 2,
+          "hintText": "Le chemin le plus long passe par le Chemin des météores, puis le sous-sol, puis…",
+          "isFinal": true
+        }
+      ]
+    }
+  }
+}
