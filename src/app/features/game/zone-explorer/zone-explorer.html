@@ -13,8 +13,7 @@
     <button
       type="button"
       class="choice-button"
-      [class.choice-blocking]="choice.blocking"
-      [attr.aria-label]="'Choix ' + (i + 1) + ': ' + choice.text + (choice.blocking ? ' (chemin risqué)' : '')"
+      [attr.aria-label]="'Choix ' + (i + 1) + ': ' + choice.text"
       (click)="onSelectChoice(i)"
     >
       {{ choice.text }}
@@ -23,29 +22,23 @@
   </div>
   }
 
-  <!-- Événement narratif -->
-  @if (narrationEvent()) {
-  @if (isBlockingChoice()) {
+  <!-- Feedback pénalité : Quiz raté -->
+  @if (quizFeedback() === 'incorrect') {
   <div class="event-block event-penalty" role="alert">
     <span class="event-icon" aria-hidden="true">⚠️</span>
-    <p class="event-text">{{ narrationEvent() }}</p>
+    <p class="event-text">Pénalité ! -1 Pièce. Recommence ce Quiz.</p>
     <button
       type="button"
       class="restart-button"
-      aria-label="Recommencer la Zone après pénalité"
+      aria-label="Recommencer le Quiz après pénalité"
       (click)="onRestartZone()"
     >
-      Recommencer la Zone
+      Recommencer le Quiz
     </button>
   </div>
-  } @else {
-  <div class="event-block" role="alert" aria-live="polite">
-    <p class="event-text">{{ narrationEvent() }}</p>
-  </div>
-  }
   }
 
-  <!-- Message de succès : Zone terminée -->
+  <!-- Message de succès : Quiz réussi -->
   @if (isZoneCompleted()) {
   <div class="success-block" role="alert" aria-live="polite">
     <span class="success-icon" aria-hidden="true">🎉</span>
@@ -54,37 +47,31 @@
     <button
       type="button"
       class="advance-button"
-      aria-label="Passer à la Zone suivante"
+      aria-label="Passer au Quiz suivant"
       (click)="onAdvanceZone()"
     >
-      Zone suivante
+      Quiz suivant
     </button>
     }
   </div>
   }
 
-  <!-- Message « Nouvelle tentative » après 1ère erreur au Quiz -->
-  @if (quizFeedback() === 'incorrect' && quizAttempts() < 2 && quizActive()) {
-  <div class="retry-block" role="alert" aria-live="polite">
-    <span class="retry-icon" aria-hidden="true">🔄</span>
-    <p class="retry-text">Nouvelle tentative ! Choisis une autre réponse.</p>
-  </div>
-  }
-
-  <!-- QuizPanel : s'affiche après un choix narratif valide -->
+  <!-- QuizPanel : s'affiche quand le Quiz est actif -->
   @if (quizActive()) {
-  @if (currentZone()) {
+  @if (currentQuiz()) {
   <app-quiz-panel
-    [quiz]="currentZone()!.quiz"
+    [quiz]="currentQuiz()!"
     [feedback]="quizFeedback()"
     [disabled]="quizFeedback() !== null"
     [hintText]="hintText()"
     [eliminatedAnswers]="eliminatedAnswers()"
     [canBuyHint]="canBuyHint()"
     [canBuyElimination]="canBuyElimination()"
+    [canSkipQuiz]="canSkipQuiz()"
     (answerSelected)="onSelectAnswer($event)"
     (hintRequested)="onBuyHint()"
     (eliminationRequested)="onBuyElimination()"
+    (skipRequested)="onSkipQuiz()"
   />
   }
   }

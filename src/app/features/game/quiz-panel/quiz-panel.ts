@@ -7,7 +7,7 @@ import type { Quiz, QuizType } from '../../../core/types';
  *
  * Affiche le type de Quiz (badge coloré), la question, et les 4 réponses
  * sous forme de boutons cliquables. Gère le feedback visuel (vert/rouge)
- * après une réponse. Supporte également les Aides (Indice et Élimination).
+ * après une réponse. Supporte également les Aides (Indice, Élimination et Saut).
  *
  * Le parent contrôle la logique : ce composant émet simplement l'index
  * de la réponse cliquée via `answerSelected`.
@@ -46,11 +46,17 @@ export class QuizPanelComponent {
   /** true si le joueur peut acheter l'Élimination */
   readonly canBuyElimination = input(false);
 
+  /** true si le joueur peut sauter le Quiz */
+  readonly canSkipQuiz = input(false);
+
   /** Émis quand le joueur clique sur "Acheter un Indice" */
   readonly hintRequested = output<void>();
 
   /** Émis quand le joueur clique sur "Éliminer 2 réponses" */
   readonly eliminationRequested = output<void>();
+
+  /** Émis quand le joueur clique sur "Sauter le Quiz" */
+  readonly skipRequested = output<void>();
 
   /** Label du type de Quiz affiché dans le badge */
   protected readonly typeLabel = computed(() => {
@@ -124,6 +130,13 @@ export class QuizPanelComponent {
   onBuyElimination(): void {
     if (this.canBuyElimination()) {
       this.eliminationRequested.emit();
+    }
+  }
+
+  /** Traite le clic sur "Sauter le Quiz" */
+  onSkipQuiz(): void {
+    if (this.canSkipQuiz()) {
+      this.skipRequested.emit();
     }
   }
 }
