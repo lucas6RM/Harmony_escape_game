@@ -47,8 +47,12 @@ Les issues doivent être traitées dans l'ordre des dépendances :
 | #8 Zones partagées + Personnages croisés | #4 |
 | #9 Fin de partie + Quiz final | #5 |
 | #10 Rejouabilité + Badge | #9 |
+| #20 Contenu JSON Mario | None (indépendant) |
+| #21 Contenu JSON Luigi | None (indépendant) |
+| #22 Contenu JSON Peach | None (indépendant) |
+| #23 Contenu JSON Daisy | None (indépendant) |
 
-Les issues sans blocage mutuel peuvent être traitées en parallèle.
+Les issues sans blocage mutuel peuvent être traitées en parallèle. Les issues de contenu (#20-23) sont indépendantes les unes des autres et peuvent être réalisées simultanément.
 
 ## Règles pour l'agent
 

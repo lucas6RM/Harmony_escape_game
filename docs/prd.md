@@ -17,19 +17,19 @@ Un jeu d'escape game textuel sous forme de quiz pour enfants de 10 ans, dans l'u
 5. En tant que joueur, je veux faire des choix narratifs pendant l'exploration, pour me sentir acteur de l'histoire
 6. En tant que joueur, je veux que certains choix mènent à des événements différents, pour que mes décisions aient du sens
 7. En tant que joueur, je veux être pénalisé si je fais un mauvais choix bloquant, pour comprendre les conséquences
-8. En tant que joueur, je veux répondre à un Quiz à 4 réponses en fin de Zone, pour progresser dans l'aventure
+8. En tant que joueur, je veux répondre à 2-3 Quiz par Zone à 4 réponses, pour progresser dans l'aventure
 9. En tant que joueur, je veux répondre à des Quiz de différents types (Maths, Français, Univers Mario, Contexte), pour varier les défis
 10. En tant que joueur, je veux gagner 2 Pièces en répondant correctement à un Quiz, pour avoir des ressources
-11. En tant que joueur, je veux avoir deux chances de répondre à un Quiz, pour ne pas être trop frustré
-12. En tant que joueur, je veux perdre 1 Pièce à ma deuxième erreur sur un Quiz, pour que les erreurs aient une conséquence
-13. En tant que joueur, je veux pouvoir acheter un Indice pour 3 Pièces pendant un Quiz, pour avoir une chance de réussir
-14. En tant que joueur, je veux pouvoir éliminer 2 fausses réponses pour 5 Pièces pendant un Quiz, pour augmenter mes chances
+11. En tant que joueur, je veux perdre 1 Pièce à chaque erreur sur un Quiz et devoir rejouer, pour que les erreurs aient une conséquence
+12. En tant que joueur, je veux pouvoir acheter un Indice pour 1 Pièce pendant un Quiz, pour avoir une chance de réussir
+13. En tant que joueur, je veux pouvoir éliminer 2 fausses réponses pour 2 Pièces pendant un Quiz, pour augmenter mes chances
+14. En tant que joueur, je veux pouvoir sauter un Quiz pour 2 Pièces si je n'ai pas assez de Pièces pour les autres Aides, pour continuer à avancer
 15. En tant que joueur, je veux voir mon solde de Pièces affiché en permanence, pour gérer mes ressources
 16. En tant que joueur, je veux que ma progression soit sauvegardée automatiquement, pour ne rien perdre
 17. En tant que joueur, je veux pouvoir reprendre mon Chemin là où je l'ai laissé, pour jouer à mon rythme
-18. En tant que joueur, je veux traverser des Zones partagées avec d'autres personnages, pour sentir que les chemins sont connectés
-19. En tant que joueur, je veux rencontrer les autres personnages dans mon histoire, pour une immersion narrative
-20. En tant que joueur, je veux que les autres personnages aient des rôles différents selon mon personnage choisi, pour que chaque Chemin soit unique
+18. En tant que joueur, je veux que mes choix narratifs mènent à différentes Zones, pour que mes décisions aient du sens
+19. En tant que joueur, je veux parcourir entre 3 et 6 Zones selon mes choix, pour une expérience replayable
+20. En tant que joueur, je veux que chaque personnage ait un arbre de Zones unique avec des lieux différents, pour que chaque Chemin soit distinct
 21. En tant que joueur, je veux affronter un Quiz final pour libérer Harmony, pour un climax satisfaisant
 22. En tant que joueur, je veux voir une scène de victoire après le Quiz final, pour être récompensé
 23. En tant que joueur, je veux pouvoir rejouer avec un autre personnage après avoir terminé un Chemin, pour découvrir d'autres histoires
@@ -47,9 +47,10 @@ Un jeu d'escape game textuel sous forme de quiz pour enfants de 10 ans, dans l'u
 - **Game Engine Service** : Service central qui orchestre le jeu (Zones, Quiz, Pièces, Aides, progression). C'est la seam principale de test.
 - **Persistence Service** : Service dédié à la lecture/écriture du local storage. Mockable derrière une interface pour les tests.
 - **Content Loader Service** : Service qui charge les fichiers JSON du contenu. Mockable pour injecter du contenu de test.
-- **Structure JSON** : Un fichier par personnage (`mario.json`, `luigi.json`, `peach.json`, `daisy.json`) + `shared.json` pour les Zones partagées (ADR-0001)
-- **Schéma JSON** : Chaque Zone contient un tableau de narrations avec choix, suivi d'un Quiz avec 4 réponses. Les choix peuvent avoir des conséquences (blocage, événement alternatif).
-- **Schéma de sauvegarde** : `{ personnage: "mario", zoneCourante: 3, pieces: 4, tentativesQuiz: 1, complètes: ["mario", "luigi"] }`
+- **Structure JSON** : Un fichier par personnage (`mario.json`, `luigi.json`, `peach.json`, `daisy.json`). Chaque fichier contient un objet indexé par ID de Zone avec un `startZoneId`. Plus de `shared.json` (ADR-0001 mis à jour).
+- **Schéma JSON** : Chaque Zone contient une narration, 2 à 3 Quiz avec 4 réponses, et des choix narratifs pointant vers des `nextZoneId` (arbre de décision).
+- **Schéma de sauvegarde** : `{ personnage: "mario", zoneCourante: "mario-jardin", pieces: 4, quizIndex: 1, completedPaths: ["mario", "luigi"] }`
+- **Économie** : +2 Pièces par Quiz réussi, -1 à l'échec (rejouer), -2 pour sauter un Quiz, -1 pour un Indice, -2 pour éliminer 2 fausses réponses
 - **Gestion d'état** : Signals pour l'état du jeu (zone courante, solde de pièces, tentatives restantes). Pas de zone nécessaire pour l'instant.
 - **Types de Quiz** : Maths (problèmes CM1), Français (niveau CM1), Univers Mario (connaissances), Contexte (références aux Zones passées)
 
@@ -93,3 +94,8 @@ Un jeu d'escape game textuel sous forme de quiz pour enfants de 10 ans, dans l'u
 | 8 | 8. Zones partagées + Personnages croisés | ✅ Complétée | [#17](https://github.com/lucas6RM/Harmony_escape_game/pull/17) |
 | 9 | 9. Fin de partie + Quiz final | ✅ Complétée | [#18](https://github.com/lucas6RM/Harmony_escape_game/pull/18) |
 | 10 | 10. Rejouabilité + Badge de complétion | ✅ Complétée | [#19](https://github.com/lucas6RM/Harmony_escape_game/pull/19) |
+| 20 | Contenu JSON : Chemin de Mario | 🔜 À faire | — |
+| 21 | Contenu JSON : Chemin de Luigi | 🔜 À faire | — |
+| 22 | Contenu JSON : Chemin de Peach | 🔜 À faire | — |
+| 23 | Contenu JSON : Chemin de Daisy | 🔜 À faire | — |
+| 24 | PRD : Migration arbre + économie | ✅ Publié | — |
