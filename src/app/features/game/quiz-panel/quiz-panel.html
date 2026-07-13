@@ -24,7 +24,7 @@
     @if (feedback() === 'correct') {
     <span class="feedback-text feedback-correct">🎉 Bonne réponse ! +2 Pièces</span>
     } @else if (feedback() === 'incorrect') {
-    <span class="feedback-text feedback-incorrect">❌ Mauvaise réponse !</span>
+    <span class="feedback-text feedback-incorrect">❌ Mauvaise réponse ! -1 Pièce</span>
     }
   </div>
 
@@ -43,21 +43,31 @@
       type="button"
       class="help-button help-hint"
       [disabled]="!canBuyHint()"
-      [attr.aria-label]="'Acheter un Indice pour 3 pièces'"
+      [attr.aria-label]="'Acheter un Indice pour 1 pièce'"
       (click)="onBuyHint()"
     >
       <span aria-hidden="true">💡</span>
-      <span>Indice (3 🪙)</span>
+      <span>Indice (1 🪙)</span>
     </button>
     <button
       type="button"
       class="help-button help-elimination"
       [disabled]="!canBuyElimination()"
-      [attr.aria-label]="'Éliminer 2 réponses pour 5 pièces'"
+      [attr.aria-label]="'Éliminer 2 réponses pour 2 pièces'"
       (click)="onBuyElimination()"
     >
       <span aria-hidden="true">✨</span>
-      <span>Éliminer 2 (5 🪙)</span>
+      <span>Éliminer 2 (2 🪙)</span>
+    </button>
+    <button
+      type="button"
+      class="help-button help-skip"
+      [disabled]="!canSkipQuiz()"
+      [attr.aria-label]="'Sauter ce Quiz pour 2 pièces'"
+      (click)="onSkipQuiz()"
+    >
+      <span aria-hidden="true">⏭️</span>
+      <span>Sauter (2 🪙)</span>
     </button>
   </div>
   }

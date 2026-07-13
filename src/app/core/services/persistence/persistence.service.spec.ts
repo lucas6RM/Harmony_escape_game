@@ -96,10 +96,10 @@ describe('PersistenceService', () => {
       service.saveCharacter('mario');
 
       const parsed = JSON.parse(mockStorage.getItem('harmony_escape_game_save')!);
-      expect(parsed.currentZoneIndex).toBe(0);
+      expect(parsed.currentZoneId).toBe('');
+      expect(parsed.quizIndex).toBe(0);
       expect(parsed.coins).toBe(0);
-      expect(parsed.quizAttempts).toBe(0);
-      expect(parsed.zonesCompleted).toEqual([]);
+      expect(parsed.completedPaths).toEqual([]);
     });
   });
 
@@ -154,78 +154,72 @@ describe('PersistenceService', () => {
   });
 
   // -----------------------------------------------------------------------
-  // Nouvelles méthodes — état complet du jeu
+  // Nouvelles méthodes — état complet du jeu (nouveau schéma save)
   // -----------------------------------------------------------------------
 
   describe('saveGame', () => {
     it('sauvegarde tous les champs de progression', () => {
       service.saveCharacter('luigi');
       service.saveGame({
-        currentZoneIndex: 3,
+        currentZoneId: 'luigi-zone-3',
+        quizIndex: 1,
         coins: 15,
-        quizAttempts: 2,
-        zonesCompleted: [0, 1, 2],
       });
 
       const save = service.getGameSave();
       expect(save).toBeTruthy();
       expect(save!.selectedCharacterId).toBe('luigi');
-      expect(save!.currentZoneIndex).toBe(3);
+      expect(save!.currentZoneId).toBe('luigi-zone-3');
+      expect(save!.quizIndex).toBe(1);
       expect(save!.coins).toBe(15);
-      expect(save!.quizAttempts).toBe(2);
-      expect(save!.zonesCompleted).toEqual([0, 1, 2]);
+      expect(save!.completedPaths).toEqual([]);
     });
 
     it('fusionne avec la sauvegarde existante en conservant le personnage', () => {
       service.saveCharacter('peach');
       service.saveGame({
-        currentZoneIndex: 1,
+        currentZoneId: 'peach-zone-1',
+        quizIndex: 0,
         coins: 5,
-        quizAttempts: 0,
-        zonesCompleted: [0],
       });
 
       const save = service.getGameSave();
       expect(save!.selectedCharacterId).toBe('peach');
-      expect(save!.currentZoneIndex).toBe(1);
+      expect(save!.currentZoneId).toBe('peach-zone-1');
     });
 
     it('met à jour uniquement les champs de progression sans toucher au personnage', () => {
       service.saveCharacter('daisy');
       service.saveGame({
-        currentZoneIndex: 0,
+        currentZoneId: 'daisy-zone-1',
+        quizIndex: 0,
         coins: 0,
-        quizAttempts: 1,
-        zonesCompleted: [],
       });
 
       service.saveGame({
-        currentZoneIndex: 2,
+        currentZoneId: 'daisy-zone-2',
+        quizIndex: 1,
         coins: 10,
-        quizAttempts: 0,
-        zonesCompleted: [0, 1],
       });
 
       const save = service.getGameSave();
       expect(save!.selectedCharacterId).toBe('daisy');
-      expect(save!.currentZoneIndex).toBe(2);
+      expect(save!.currentZoneId).toBe('daisy-zone-2');
       expect(save!.coins).toBe(10);
-      expect(save!.quizAttempts).toBe(0);
-      expect(save!.zonesCompleted).toEqual([0, 1]);
+      expect(save!.quizIndex).toBe(1);
     });
 
     it('fonctionne même sans personnage préalablement sauvegardé', () => {
       service.saveGame({
-        currentZoneIndex: 0,
+        currentZoneId: '',
+        quizIndex: 0,
         coins: 0,
-        quizAttempts: 0,
-        zonesCompleted: [],
       });
 
       const save = service.getGameSave();
       expect(save).toBeTruthy();
       expect(save!.selectedCharacterId).toBeNull();
-      expect(save!.currentZoneIndex).toBe(0);
+      expect(save!.currentZoneId).toBe('');
     });
   });
 
@@ -237,19 +231,17 @@ describe('PersistenceService', () => {
     it('retourne la sauvegarde complète après saveGame', () => {
       service.saveCharacter('mario');
       service.saveGame({
-        currentZoneIndex: 2,
+        currentZoneId: 'mario-zone-2',
+        quizIndex: 1,
         coins: 8,
-        quizAttempts: 1,
-        zonesCompleted: [0, 1],
       });
 
       const save = service.getGameSave();
       expect(save).toBeTruthy();
       expect(save!.selectedCharacterId).toBe('mario');
-      expect(save!.currentZoneIndex).toBe(2);
+      expect(save!.currentZoneId).toBe('mario-zone-2');
+      expect(save!.quizIndex).toBe(1);
       expect(save!.coins).toBe(8);
-      expect(save!.quizAttempts).toBe(1);
-      expect(save!.zonesCompleted).toEqual([0, 1]);
     });
 
     it('retourne null quand le contenu du localStorage est corrompu', () => {
@@ -267,15 +259,15 @@ describe('PersistenceService', () => {
       expect(service.getGameSave()).toBeNull();
     });
 
-    it('retourne null quand currentZoneIndex est négatif', () => {
+    it('retourne null quand quizIndex est négatif', () => {
       mockStorage.setItem(
         'harmony_escape_game_save',
         JSON.stringify({
           selectedCharacterId: 'mario',
-          currentZoneIndex: -1,
+          currentZoneId: 'mario-zone-1',
+          quizIndex: -1,
           coins: 0,
-          quizAttempts: 0,
-          zonesCompleted: [],
+          completedPaths: [],
         })
       );
 
@@ -287,25 +279,25 @@ describe('PersistenceService', () => {
         'harmony_escape_game_save',
         JSON.stringify({
           selectedCharacterId: 'mario',
-          currentZoneIndex: 0,
+          currentZoneId: 'mario-zone-1',
+          quizIndex: 0,
           coins: -5,
-          quizAttempts: 0,
-          zonesCompleted: [],
+          completedPaths: [],
         })
       );
 
       expect(service.getGameSave()).toBeNull();
     });
 
-    it('retourne null quand zonesCompleted n\'est pas un tableau', () => {
+    it('retourne null quand completedPaths n\'est pas un tableau', () => {
       mockStorage.setItem(
         'harmony_escape_game_save',
         JSON.stringify({
           selectedCharacterId: 'mario',
-          currentZoneIndex: 0,
+          currentZoneId: 'mario-zone-1',
+          quizIndex: 0,
           coins: 0,
-          quizAttempts: 0,
-          zonesCompleted: 'pas un tableau',
+          completedPaths: 'pas un tableau',
         })
       );
 
@@ -317,10 +309,25 @@ describe('PersistenceService', () => {
         'harmony_escape_game_save',
         JSON.stringify({
           selectedCharacterId: 'bowser',
-          currentZoneIndex: 0,
+          currentZoneId: 'mario-zone-1',
+          quizIndex: 0,
           coins: 0,
-          quizAttempts: 0,
-          zonesCompleted: [],
+          completedPaths: [],
+        })
+      );
+
+      expect(service.getGameSave()).toBeNull();
+    });
+
+    it('retourne null quand currentZoneId n\'est pas une string', () => {
+      mockStorage.setItem(
+        'harmony_escape_game_save',
+        JSON.stringify({
+          selectedCharacterId: 'mario',
+          currentZoneId: 123,
+          quizIndex: 0,
+          coins: 0,
+          completedPaths: [],
         })
       );
 
@@ -342,10 +349,9 @@ describe('PersistenceService', () => {
     it('retourne true après un saveGame avec personnage', () => {
       service.saveCharacter('luigi');
       service.saveGame({
-        currentZoneIndex: 2,
+        currentZoneId: 'luigi-zone-2',
+        quizIndex: 1,
         coins: 10,
-        quizAttempts: 0,
-        zonesCompleted: [0, 1],
       });
 
       expect(service.isGameInProgress()).toBe(true);

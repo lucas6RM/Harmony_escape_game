@@ -1,13 +1,8 @@
 <button
   type="button"
   class="choice-button"
-  [class.choice-blocking]="blocking()"
   [attr.aria-label]="getAriaLabel()"
   (click)="onClick()"
 >
-  @if (blocking()) {
-  <span class="choice-warning" aria-hidden="true">⚠️</span>
-  }
-
   <span class="choice-text">{{ text() }}</span>
 </button>

@@ -8,7 +8,7 @@ import { QuizPanelComponent } from '../quiz-panel/quiz-panel';
  *
  * Affiche la narration de la Zone courante avec emojis,
  * les Choix narratifs comme boutons cliquables,
- * l'événement narratif quand le service le met à jour,
+ * le feedback de pénalité quand le Quiz est raté,
  * et le QuizPanel quand le Quiz est actif.
  */
 @Component({
@@ -24,20 +24,14 @@ export class ZoneExplorer {
   /** La Zone courante exposée par le service */
   readonly currentZone = this.gameEngine.currentZone;
 
-  /** Événement narratif exposé par le service */
-  readonly narrationEvent = this.gameEngine.narrationEvent;
-
-  /** Indique si l'événement actuel provient d'un choix bloquant (pénalité) */
-  readonly isBlockingChoice = this.gameEngine.isBlockingChoice;
+  /** Le Quiz courant exposé par le service */
+  readonly currentQuiz = this.gameEngine.currentQuiz;
 
   /** Indique si le Quiz est actuellement affiché */
   readonly quizActive = this.gameEngine.quizActive;
 
   /** Feedback visuel après une réponse au Quiz */
   readonly quizFeedback = this.gameEngine.quizFeedback;
-
-  /** Nombre de tentatives pour le Quiz courant */
-  readonly quizAttempts = this.gameEngine.quizAttempts;
 
   /** Indique si la Zone courante est terminée (quiz réussi) */
   readonly isZoneCompleted = this.gameEngine.isZoneCompleted;
@@ -51,20 +45,28 @@ export class ZoneExplorer {
   /** Indices des réponses éliminées */
   readonly eliminatedAnswers = this.gameEngine.eliminatedAnswers;
 
-  /** true si le joueur peut acheter un Indice (quiz actif, solde >= 3, pas déjà acheté) */
+  /** Nombre de Quiz restants dans la Zone courante */
+  readonly quizzesRemaining = this.gameEngine.quizzesRemaining;
+
+  /** true si le joueur peut acheter un Indice (quiz actif, solde >= 1, pas déjà acheté) */
   readonly canBuyHint = computed(() => {
-    return this.quizActive() && this.coins() >= 3 && this.hintText() === null;
+    return this.quizActive() && this.coins() >= 1 && this.hintText() === null;
   });
 
-  /** true si le joueur peut acheter l'Élimination (quiz actif, solde >= 5, pas déjà acheté) */
+  /** true si le joueur peut acheter l'Élimination (quiz actif, solde >= 2, pas déjà acheté) */
   readonly canBuyElimination = computed(() => {
-    return this.quizActive() && this.coins() >= 5 && this.eliminatedAnswers().length === 0;
+    return this.quizActive() && this.coins() >= 2 && this.eliminatedAnswers().length === 0;
+  });
+
+  /** true si le joueur peut sauter le Quiz (quiz actif, solde >= 2) */
+  readonly canSkipQuiz = computed(() => {
+    return this.quizActive() && this.coins() >= 2;
   });
 
   /** true si le Quiz de la Zone courante est le Quiz final */
   readonly isFinalQuiz = computed(() => {
-    const zone = this.currentZone();
-    return zone?.quiz.isFinal ?? false;
+    const quiz = this.currentQuiz();
+    return quiz?.isFinal ?? false;
   });
 
   /** Liste des choix de la Zone courante (ou tableau vide si pas de Zone) */
@@ -89,7 +91,7 @@ export class ZoneExplorer {
   }
 
   /**
-   * Recommence la Zone courante après une pénalité de choix bloquant.
+   * Recommence la Zone courante après une pénalité de Quiz raté.
    */
   onRestartZone(): void {
     this.gameEngine.restartZone();
@@ -105,10 +107,10 @@ export class ZoneExplorer {
   }
 
   /**
-   * Passe à la Zone suivante après un quiz réussi.
+   * Passe au Quiz/Zone suivante après un quiz réussi.
    */
   onAdvanceZone(): void {
-    this.gameEngine.advanceZone();
+    this.gameEngine.advanceQuiz();
   }
 
   /**
@@ -123,5 +125,12 @@ export class ZoneExplorer {
    */
   onBuyElimination(): void {
     this.gameEngine.buyElimination();
+  }
+
+  /**
+   * Saute le Quiz courant via le GameEngineService.
+   */
+  onSkipQuiz(): void {
+    this.gameEngine.skipQuiz();
   }
 }

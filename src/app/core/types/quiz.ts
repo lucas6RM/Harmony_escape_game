@@ -11,8 +11,8 @@ export type QuizType = 'maths' | 'francais' | 'univers-mario' | 'contexte';
 /**
  * Quiz posé à la fin d'une Zone.
  *
- * Le joueur choisit parmi 4 réponses. Un Quiz correct rapporte des Pièces
- * et avance le joueur. Un Quiz incorrect peut pénaliser ou forcer de rejouer.
+ * Le joueur choisit parmi 4 réponses. Un Quiz correct rapporte +2 Pièces
+ * et avance le joueur. Un Quiz incorrect coûte -1 Pièce et force de rejouer.
  */
 export interface Quiz {
   /** Type de Quiz */
@@ -27,21 +27,26 @@ export interface Quiz {
   /** Index de la réponse correcte (0-3) */
   correctIndex: number;
 
+  /** Texte de l'indice affiché quand le joueur achète une Aide "Indice" */
+  hintText?: string;
+
   /** true si c'est le Quiz final de la dernière Zone (plus difficile) */
   isFinal?: boolean;
 }
 
 /**
  * Type d'Aide disponible pendant un Quiz.
- * - `indice` : affiche un indice textuel (coûte 3 Pièces)
- * - `elimination` : masque 2 fausses réponses (coûte 5 Pièces)
+ * - `indice` : affiche un indice textuel (coûte 1 Pièce)
+ * - `elimination` : masque 2 fausses réponses (coûte 2 Pièces)
+ * - `skipQuiz` : saute le Quiz et avance (coûte 2 Pièces, sans récompense)
  */
-export type HintType = 'indice' | 'elimination';
+export type HintType = 'indice' | 'elimination' | 'skipQuiz';
 
 /**
  * Coût en Pièces de chaque type d'Aide.
  */
 export const HINT_COSTS: Record<HintType, number> = {
-  indice: 3,
-  elimination: 5,
+  indice: 1,
+  elimination: 2,
+  skipQuiz: 2,
 };

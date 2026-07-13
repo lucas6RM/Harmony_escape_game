@@ -5,7 +5,7 @@ import type { Quiz } from './quiz';
  * Zone du palais ou du jeu que le personnage traverse.
  *
  * Chaque Zone contient une exploration avec des choix narratifs,
- * puis se termine par un Quiz.
+ * puis se termine par une série de 2 à 3 Quizzes.
  */
 export interface Zone {
   /** Identifiant unique de la Zone */
@@ -17,6 +17,6 @@ export interface Zone {
   /** Choix narratifs proposés au joueur */
   choices: NarrativeChoice[];
 
-  /** Quiz de fin de Zone */
-  quiz: Quiz;
+  /** Quizzes de fin de Zone (2 à 3 par Zone) */
+  quizzes: Quiz[];
 }

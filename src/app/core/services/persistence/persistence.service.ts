@@ -54,10 +54,10 @@ export class PersistenceService {
   saveCharacter(characterId: CharacterId): void {
     const save: GameSave = {
       selectedCharacterId: characterId,
-      currentZoneIndex: 0,
+      currentZoneId: '',
+      quizIndex: 0,
       coins: 0,
-      quizAttempts: 0,
-      zonesCompleted: [],
+      completedPaths: [],
     };
     this.storage.setItem(GAME_SAVE_KEY, JSON.stringify(save));
   }
@@ -98,18 +98,17 @@ export class PersistenceService {
    * @param state - État de progression à sauvegarder
    */
   saveGame(state: {
-    currentZoneIndex: number;
+    currentZoneId: string;
+    quizIndex: number;
     coins: number;
-    quizAttempts: number;
-    zonesCompleted: number[];
   }): void {
     const existing = this.getGameSave();
     const merged: GameSave = {
       selectedCharacterId: existing?.selectedCharacterId ?? null,
-      currentZoneIndex: state.currentZoneIndex,
+      currentZoneId: state.currentZoneId,
+      quizIndex: state.quizIndex,
       coins: state.coins,
-      quizAttempts: state.quizAttempts,
-      zonesCompleted: state.zonesCompleted,
+      completedPaths: existing?.completedPaths ?? [],
     };
     this.storage.setItem(GAME_SAVE_KEY, JSON.stringify(merged));
   }
@@ -182,8 +181,13 @@ export class PersistenceService {
       return false;
     }
 
-    // currentZoneIndex doit être un nombre >= 0
-    if (typeof obj['currentZoneIndex'] !== 'number' || obj['currentZoneIndex'] < 0) {
+    // currentZoneId doit être une string
+    if (typeof obj['currentZoneId'] !== 'string') {
+      return false;
+    }
+
+    // quizIndex doit être un nombre >= 0
+    if (typeof obj['quizIndex'] !== 'number' || obj['quizIndex'] < 0) {
       return false;
     }
 
@@ -192,13 +196,8 @@ export class PersistenceService {
       return false;
     }
 
-    // quizAttempts doit être un nombre >= 0
-    if (typeof obj['quizAttempts'] !== 'number' || obj['quizAttempts'] < 0) {
-      return false;
-    }
-
-    // zonesCompleted doit être un tableau
-    if (!Array.isArray(obj['zonesCompleted'])) {
+    // completedPaths doit être un tableau
+    if (!Array.isArray(obj['completedPaths'])) {
       return false;
     }
 

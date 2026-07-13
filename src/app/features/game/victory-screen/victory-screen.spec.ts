@@ -1,77 +1,92 @@
+import { HttpClient } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
+import { Observable, of } from 'rxjs';
 import { GameEngineService } from '../../../core/services/game-engine';
 import { ContentLoaderService } from '../../../core/services/content-loader';
-import type { CharacterPath, Zone } from '../../../core/types';
+import type { RawCharacterPath } from '../../../core/types';
 import { VictoryScreen } from './victory-screen';
 
 /**
- * Chemin de test avec 3 Zones pour Mario (la dernière a un Quiz final).
+ * Chemin brut de test avec 3 Zones pour Mario (structure tree).
+ * La dernière Zone contient un Quiz final.
  */
-const MOCK_MARIO_PATH: CharacterPath = {
+const MOCK_RAW_MARIO_PATH: RawCharacterPath = {
   character: 'mario',
-  zones: [
-    {
-      id: 'mario_zone_1',
+  startZoneId: 'mario-zone-1',
+  zones: {
+    'mario-zone-1': {
+      id: 'mario-zone-1',
       narration: "Tu arrives devant le palais d'Harmony.",
-      choices: [
+      quizzes: [
         {
-          text: "Entrer par le grand portail",
-          nextNarrationId: 'mario_n1_portal',
-          blocking: false,
+          type: 'maths',
+          question: 'Combien font 245 + 378 ?',
+          answers: ['613', '623', '618', '603'],
+          correctIndex: 1,
         },
       ],
-      quiz: {
-        type: 'maths',
-        question: 'Combien font 245 + 378 ?',
-        answers: ['613', '623', '618', '603'],
-        correctIndex: 1,
-      },
+      choices: [
+        { text: "Entrer par le grand portail", nextZoneId: 'mario-zone-2' },
+      ],
     },
-    {
-      id: 'mario_zone_2',
+    'mario-zone-2': {
+      id: 'mario-zone-2',
       narration: "Tu traverses le hall principal.",
-      choices: [
+      quizzes: [
         {
-          text: "Attraper une étoile",
-          nextNarrationId: 'mario_n2_star',
-          blocking: false,
+          type: 'univers-mario',
+          question: 'Qui est le frère de Mario ?',
+          answers: ['Luigi', 'Wario', 'Toad', 'Yoshi'],
+          correctIndex: 0,
         },
       ],
-      quiz: {
-        type: 'univers-mario',
-        question: 'Qui est le frère de Mario ?',
-        answers: ['Luigi', 'Wario', 'Toad', 'Yoshi'],
-        correctIndex: 0,
-      },
+      choices: [
+        { text: "Attraper une étoile", nextZoneId: 'mario-zone-3' },
+      ],
     },
-    {
-      id: 'mario_zone_3',
+    'mario-zone-3': {
+      id: 'mario-zone-3',
       narration: "Tu arrives dans la chambre d'Harmony.",
-      choices: [
+      quizzes: [
         {
-          text: "Confronter Bowser Junior",
-          nextNarrationId: 'mario_n3_final',
-          blocking: false,
+          type: 'contexte',
+          question: 'Qui t\'a attendu à l\'entrée du palais ?',
+          answers: ['Luma', 'Toad', 'Yoshi', 'Peach'],
+          correctIndex: 0,
+          isFinal: true,
         },
       ],
-      quiz: {
-        type: 'contexte',
-        question: 'Qui t\'a attendu à l\'entrée du palais ?',
-        answers: ['Luma', 'Toad', 'Yoshi', 'Peach'],
-        correctIndex: 0,
-        isFinal: true,
-      },
+      choices: [
+        { text: "Confronter Bowser Junior", nextZoneId: 'mario-zone-3' },
+      ],
     },
-  ] as Zone[],
+  },
 };
+
+class HttpClientMock {
+  get<T>(url: string): Observable<T> {
+    // Extrait le nom du personnage depuis l'URL (ex: "assets/content/luigi.json")
+    const match = url.match(/\/(mario|luigi|peach|daisy)\.json/);
+    const character = match ? match[1] : 'mario';
+    const path: RawCharacterPath = {
+      ...MOCK_RAW_MARIO_PATH,
+      character: character as 'mario' | 'luigi' | 'peach' | 'daisy',
+    };
+    return of(path as unknown as T);
+  }
+}
 
 class ContentLoaderServiceMock {
   loadPath(character: string) {
-    return () => ({
-      character: character as 'mario' | 'luigi' | 'peach' | 'daisy',
-      zones: MOCK_MARIO_PATH.zones,
-    });
+    return {
+      signal: () => ({
+        character: character as 'mario' | 'luigi' | 'peach' | 'daisy',
+        startZoneId: MOCK_RAW_MARIO_PATH.startZoneId,
+        zones: MOCK_RAW_MARIO_PATH.zones,
+      }),
+      isLoading: () => false,
+    };
   }
 }
 
@@ -105,6 +120,7 @@ describe('VictoryScreen', () => {
       imports: [VictoryScreen],
       providers: [
         GameEngineService,
+        { provide: HttpClient, useClass: HttpClientMock },
         { provide: ContentLoaderService, useClass: ContentLoaderServiceMock },
         { provide: Router, useClass: RouterMock },
         { provide: 'PersistenceService', useValue: new PersistenceServiceMock() },
@@ -213,13 +229,8 @@ describe('VictoryScreen', () => {
 
     it('cliquer sur "Choisir un autre personnage" réinitialise gameWon', () => {
       // Simuler une victoire
-      gameEngine.selectChoice(0);
-      gameEngine.submitQuizAnswer(1);
-      gameEngine.advanceZone();
-      gameEngine.selectChoice(0);
-      gameEngine.submitQuizAnswer(0);
-      gameEngine.advanceZone();
-      gameEngine.selectChoice(0);
+      gameEngine.navigateToZone('mario-zone-3');
+      (gameEngine as any).quizActiveSignal.set(true);
       gameEngine.submitQuizAnswer(0); // Quiz final réussi
       expect(gameEngine.gameWon()).toBe(true);
 
