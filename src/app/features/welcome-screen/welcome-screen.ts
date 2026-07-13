@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
+import { GameEngineService } from '../../core/services/game-engine';
 import { PersistenceService } from '../../core/services/persistence';
 import { BadgeBonusScreen } from '../badge-bonus-screen/badge-bonus-screen';
 import { CharacterSelector } from '../character-selector/character-selector';
@@ -25,6 +26,7 @@ import { ResumeScreen } from '../resume-screen/resume-screen';
 })
 export class WelcomeScreen {
   private readonly router = inject(Router);
+  private readonly gameEngine = inject(GameEngineService);
   private readonly persistence = inject(PersistenceService);
 
   /** `true` quand une sauvegarde en cours est détectée → on affiche le ResumeScreen */
@@ -56,6 +58,7 @@ export class WelcomeScreen {
 
   /** L'utilisateur choisit de recommencer → on efface la sauvegarde et on affiche le HeroScreen */
   protected onNewGame(): void {
+    this.gameEngine.returnToMenu();
     this.persistence.clearSave();
     this.showResume.set(false);
   }

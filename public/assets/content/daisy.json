@@ -12,7 +12,8 @@
         "type": "contexte",
         "question": "Qui a capturé Harmony ?",
         "answers": ["Bowser", "Bowser Junior", "Kamek", "Dry Bones"],
-        "correctIndex": 1
+        "correctIndex": 1,
+        "isFinal": true
       }
     }
   ]

@@ -12,7 +12,8 @@
         "type": "francais",
         "question": "Quel est le pluriel de « cheval » ?",
         "answers": ["chevals", "chevaux", "chevaus", "chevauxs"],
-        "correctIndex": 1
+        "correctIndex": 1,
+        "isFinal": true
       }
     }
   ]

@@ -12,7 +12,8 @@
         "type": "maths",
         "question": "Combien font 245 + 378 ?",
         "answers": ["613", "623", "618", "603"],
-        "correctIndex": 1
+        "correctIndex": 1,
+        "isFinal": true
       }
     }
   ]

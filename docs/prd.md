@@ -77,3 +77,19 @@ Un jeu d'escape game textuel sous forme de quiz pour enfants de 10 ans, dans l'u
 - Les Quiz doivent être équilibrés : pas trop faciles (ennuyeux), pas trop difficiles (frustrant)
 - L'interface doit être responsive pour mobile et desktop
 - Les emojis doivent être utilisés de manière cohérente avec l'univers Mario
+
+---
+
+## Suivi des Issues
+
+| # | Issue | Statut | PR |
+|---|-------|--------|----|
+| 2 | 1. Squelette Angular + Content Loader | ✅ Complétée | [#11](https://github.com/lucas6RM/Harmony_escape_game/pull/11) |
+| 3 | 3. Écran d'accueil + Sélection du Personnage | ✅ Complétée | [#12](https://github.com/lucas6RM/Harmony_escape_game/pull/12) |
+| 4 | 4. Exploration d'une Zone + Choix narratifs | ✅ Complétée | [#13](https://github.com/lucas6RM/Harmony_escape_game/pull/13) |
+| 5 | 5. Système de Quiz | ✅ Complétée | [#14](https://github.com/lucas6RM/Harmony_escape_game/pull/14) |
+| 6 | 6. Système d'Aides | ✅ Complétée | [#15](https://github.com/lucas6RM/Harmony_escape_game/pull/15) |
+| 7 | 7. Sauvegarde auto + Reprise | ✅ Complétée | [#16](https://github.com/lucas6RM/Harmony_escape_game/pull/16) |
+| 8 | 8. Zones partagées + Personnages croisés | ✅ Complétée | [#17](https://github.com/lucas6RM/Harmony_escape_game/pull/17) |
+| 9 | 9. Fin de partie + Quiz final | ✅ Complétée | [#18](https://github.com/lucas6RM/Harmony_escape_game/pull/18) |
+| 10 | 10. Rejouabilité + Badge de complétion | ✅ Complétée | [#19](https://github.com/lucas6RM/Harmony_escape_game/pull/19) |

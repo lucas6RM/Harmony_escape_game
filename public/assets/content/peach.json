@@ -12,7 +12,8 @@
         "type": "univers-mario",
         "question": "Quel est le nom du fils de Bowser ?",
         "answers": ["Bowser Jr", "Baby Bowser", "Junior Koopa", "Bowser Jr"],
-        "correctIndex": 0
+        "correctIndex": 0,
+        "isFinal": true
       }
     }
   ]

@@ -1,9 +1,9 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import type { Signal } from '@angular/core';
-import { ContentLoaderService } from '../content-loader';
+import { HttpClient } from '@angular/common/http';
 import { CompletedPathsService } from '../completed-paths/completed-paths.service';
 import { PersistenceService } from '../persistence';
-import type { CharacterPath, GameSave, NarrativeChoice, Zone } from '../../types';
+import type { CharacterPath, GameSave, NarrativeChoice, RawCharacterPath, Zone } from '../../types';
 import { HINT_COSTS } from '../../types';
 
 /**
@@ -15,13 +15,14 @@ import { HINT_COSTS } from '../../types';
  */
 @Injectable({ providedIn: 'root' })
 export class GameEngineService {
-  private readonly contentLoader = inject(ContentLoaderService);
+  private readonly http = inject(HttpClient);
   private readonly persistenceService = inject(PersistenceService);
   private readonly completedPathsService = inject(CompletedPathsService);
 
   // ── État interne ────────────────────────────────────────────────
 
-  private pathSignal: Signal<CharacterPath> | null = null;
+  private readonly pathDataSignal = signal<CharacterPath>({ character: 'mario', zones: [] });
+  private readonly pathLoadingSignal = signal<boolean>(false);
 
   private readonly currentZoneIndexSignal = signal<number>(0);
   private readonly coinsSignal = signal<number>(0);
@@ -46,10 +47,10 @@ export class GameEngineService {
 
   /** La Zone courante (ou `null` si le jeu n'est pas démarré) */
   readonly currentZone: Signal<Zone | null> = computed(() => {
-    if (!this.pathSignal) {
+    const path = this.pathDataSignal();
+    if (!path || path.zones.length === 0) {
       return null;
     }
-    const path = this.pathSignal();
     const index = this.currentZoneIndexSignal();
     const zone = path.zones[index];
     return zone ?? null;
@@ -91,23 +92,19 @@ export class GameEngineService {
   /** Indique si le joueur a gagné la partie (Quiz final réussi) */
   readonly gameWon: Signal<boolean> = this.gameWonSignal;
 
+  /** Indique si le Chemin est encore en cours de chargement asynchrone */
+  readonly pathLoading: Signal<boolean> = this.pathLoadingSignal;
+
   /** Indique si tous les Chemins (4 personnages) sont complétés */
   readonly allPathsCompleted: Signal<boolean> = computed(
     () => this.completedPathsService.getAllCompleted(),
   );
 
   /** Le Chemin complet du personnage (pour itérer sur les Zones) */
-  readonly path: Signal<CharacterPath> = computed(() => {
-    if (!this.pathSignal) {
-      return { character: 'mario', zones: [] };
-    }
-    return this.pathSignal();
-  });
+  readonly path: Signal<CharacterPath> = this.pathDataSignal;
 
   /** Identifiant du personnage en cours de partie */
-  readonly characterId: Signal<string> = computed(() => {
-    return this.pathSignal?.()?.character ?? '';
-  });
+  readonly characterId: Signal<string> = computed(() => this.pathDataSignal().character);
 
   // ── Méthodes publiques ──────────────────────────────────────────
 
@@ -117,7 +114,7 @@ export class GameEngineService {
    * @param characterId - Identifiant du Personnage (`mario`, `luigi`, `peach`, `daisy`)
    */
   startGame(characterId: string): void {
-    this.pathSignal = this.contentLoader.loadPath(characterId);
+    this.pathLoadingSignal.set(true);
     this.currentZoneIndexSignal.set(0);
     this.coinsSignal.set(0);
     this.isZoneCompletedSignal.set(false);
@@ -126,7 +123,24 @@ export class GameEngineService {
     this.zonesCompletedSignal.set([]);
     this.gameWonSignal.set(false);
     this.gameStartedSignal.set(true);
+    this.loadPathFromHttp(characterId);
     this.saveGameState();
+  }
+
+  private loadPathFromHttp(characterId: string): void {
+    this.http.get<RawCharacterPath>(`assets/content/${characterId}.json`).subscribe({
+      next: (rawPath) => {
+        this.pathDataSignal.set({
+          character: rawPath.character,
+          zones: rawPath.zones as Zone[],
+        });
+        this.pathLoadingSignal.set(false);
+      },
+      error: () => {
+        this.pathDataSignal.set({ character: characterId as 'mario' | 'luigi' | 'peach' | 'daisy', zones: [] });
+        this.pathLoadingSignal.set(false);
+      },
+    });
   }
 
   /**
@@ -143,7 +157,7 @@ export class GameEngineService {
       return;
     }
 
-    this.pathSignal = this.contentLoader.loadPath(gameSave.selectedCharacterId);
+    this.pathLoadingSignal.set(true);
     this.currentZoneIndexSignal.set(gameSave.currentZoneIndex);
     this.coinsSignal.set(gameSave.coins);
     this.quizAttemptsSignal.set(gameSave.quizAttempts);
@@ -156,6 +170,7 @@ export class GameEngineService {
     this.hintTextSignal.set(null);
     this.eliminatedAnswersSignal.set([]);
     this.gameStartedSignal.set(true);
+    this.loadPathFromHttp(gameSave.selectedCharacterId);
   }
 
   /**
@@ -202,7 +217,7 @@ export class GameEngineService {
    * Si le joueur est déjà à la dernière Zone, aucune action n'est effectuée.
    */
   advanceZone(): void {
-    const path = this.pathSignal?.() ?? { zones: [] };
+    const path = this.pathDataSignal();
     const currentIndex = this.currentZoneIndexSignal();
 
     if (currentIndex < path.zones.length - 1) {
@@ -351,7 +366,8 @@ export class GameEngineService {
    * et efface la sauvegarde.
    */
   returnToMenu(): void {
-    this.pathSignal = null;
+    this.pathDataSignal.set({ character: 'mario', zones: [] });
+    this.pathLoadingSignal.set(false);
     this.currentZoneIndexSignal.set(0);
     this.coinsSignal.set(0);
     this.isZoneCompletedSignal.set(false);
@@ -377,7 +393,8 @@ export class GameEngineService {
    * restent enregistrés.
    */
   returnToCharacterSelect(): void {
-    this.pathSignal = null;
+    this.pathDataSignal.set({ character: 'mario', zones: [] });
+    this.pathLoadingSignal.set(false);
     this.currentZoneIndexSignal.set(0);
     this.coinsSignal.set(0);
     this.isZoneCompletedSignal.set(false);
@@ -399,7 +416,7 @@ export class GameEngineService {
    * la progression mais garde le Chemin chargé.
    */
   restartGame(): void {
-    const characterId = this.pathSignal?.()?.character;
+    const characterId = this.pathDataSignal().character;
     if (characterId) {
       this.startGame(characterId);
     }

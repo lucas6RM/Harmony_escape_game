@@ -99,7 +99,7 @@ export class ContentLoaderService {
    * @returns Signal contenant le `CharacterPath` chargé (Zones partagées résolues),
    *          ou une valeur par défaut en cas d'erreur
    */
-  loadPath(character: string): Signal<CharacterPath> {
+  loadPath(character: string): { signal: Signal<CharacterPath>, isLoading: Signal<boolean> } {
     const pathResource = resource<RawCharacterPath, string>({
       params: () => character,
       loader: async ({ params }) => {
@@ -112,7 +112,7 @@ export class ContentLoaderService {
 
     // Le signal final combine le chemin brut avec les Zones partagées
     // pour résoudre les références à chaque mise à jour
-    return computed<CharacterPath>(() => {
+    const pathSignal = computed<CharacterPath>(() => {
       const rawPath = pathResource.value();
 
       // Si le chemin n'est pas encore chargé (valeur par défaut vide),
@@ -123,6 +123,11 @@ export class ContentLoaderService {
 
       return this.resolvePath(rawPath);
     });
+
+    return {
+      signal: pathSignal,
+      isLoading: pathResource.isLoading,
+    };
   }
 
   /**

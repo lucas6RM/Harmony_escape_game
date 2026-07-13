@@ -26,14 +26,27 @@ export class GameShell implements OnInit {
   readonly gameStarted = this.gameEngine.gameStarted;
 
   /** Indique si le Chemin est encore en cours de chargement */
-  readonly loading = computed(() => !this.gameStarted());
+  readonly loading = computed(() => !this.gameStarted() || this.gameEngine.pathLoading());
 
   /** Indique si le joueur a gagné la partie */
   readonly gameWon = this.gameEngine.gameWon;
 
   ngOnInit(): void {
     const gameSave = this.persistence.getGameSave();
-    if (gameSave) {
+    if (!gameSave?.selectedCharacterId) {
+      return;
+    }
+
+    const currentCharacterId = this.gameEngine.characterId();
+    const saveCharacterId = gameSave.selectedCharacterId;
+
+    if (this.gameStarted() && currentCharacterId === saveCharacterId) {
+      return;
+    }
+
+    if (currentCharacterId !== saveCharacterId) {
+      this.gameEngine.startGame(saveCharacterId);
+    } else {
       this.gameEngine.restoreGame(gameSave);
     }
   }
