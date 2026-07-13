@@ -219,7 +219,7 @@ describe('GameEngineService', () => {
       expect(service.isZoneCompleted()).toBe(false);
     });
 
-    it('quizActive est false après startGame', () => {
+    it('quizActive est false après startGame (quiz affiché après un choix)', () => {
       service.startGame('mario');
       expect(service.quizActive()).toBe(false);
     });
@@ -251,9 +251,9 @@ describe('GameEngineService', () => {
       expect(service.isZoneCompleted()).toBe(false);
     });
 
-    it('reset quizActive à false dans la nouvelle Zone', () => {
+    it('active quizActive après selectChoice (quiz affiché après un choix)', () => {
       service.selectChoice(0);
-      expect(service.quizActive()).toBe(false);
+      expect(service.quizActive()).toBe(true);
     });
 
     it('ne fait rien si l\'index est hors limites', () => {
@@ -271,9 +271,9 @@ describe('GameEngineService', () => {
       service.startGame('mario');
     });
 
-    it('reset quizActive à false', () => {
+    it('réactive quizActive pour rejouer le Quiz', () => {
       service.restartZone();
-      expect(service.quizActive()).toBe(false);
+      expect(service.quizActive()).toBe(true);
     });
 
     it('reset quizFeedback à null', () => {
@@ -350,7 +350,7 @@ describe('GameEngineService', () => {
   // ──────────────────────────────────────────────────────────────
 
   describe('Quiz — état initial', () => {
-    it('quizActive() est false après startGame', () => {
+    it('quizActive() est false après startGame (quiz affiché après un choix)', () => {
       service.startGame('mario');
       expect(service.quizActive()).toBe(false);
     });
@@ -420,6 +420,7 @@ describe('GameEngineService', () => {
 
     it('submitQuizAnswer sans quiz actif ne fait rien', () => {
       service.startGame('mario');
+      (service as any).quizActiveSignal.set(false);
       service.submitQuizAnswer(0);
       expect(service.quizActive()).toBe(false);
       expect(service.quizFeedback()).toBe(null);
@@ -592,7 +593,7 @@ describe('GameEngineService', () => {
       expect(service.coins()).toBe(2); // 4 - 2 = 2, pas de +2
     });
 
-    it('reset quizActive et feedback', () => {
+    it('avance au quiz suivant et reset feedback', () => {
       service.addCoins(2);
       service.skipQuiz();
       expect(service.quizActive()).toBe(false);

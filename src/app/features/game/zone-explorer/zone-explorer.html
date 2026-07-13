@@ -6,8 +6,8 @@
   </div>
   }
 
-  <!-- Choix narratifs -->
-  @if (choices().length > 0) {
+  <!-- Choix narratifs (masqués pendant le Quiz et le feedback de succès) -->
+  @if (choices().length > 0 && !quizActive() && !isZoneCompleted()) {
   <div class="choices-container" role="group" aria-label="Choix narratifs">
     @for (choice of choices(); track choice.text; let i = $index) {
     <button
