@@ -128,11 +128,15 @@ export class GameEngineService {
     this.isZoneCompletedSignal.set(false);
     this.gameWonSignal.set(false);
     this.gameStartedSignal.set(true);
+    this.quizActiveSignal.set(false);
+    this.quizFeedbackSignal.set(null);
+    this.hintTextSignal.set(null);
+    this.eliminatedAnswersSignal.set([]);
     this.loadPathFromHttp(characterId);
     this.saveGameState();
   }
 
-  private loadPathFromHttp(characterId: string): void {
+  private loadPathFromHttp(characterId: string, overrideZoneId?: string): void {
     this.http.get<RawCharacterPath>(`assets/content/${characterId}.json`).subscribe({
       next: (rawPath) => {
         const resolvedZones: { [zoneId: string]: Zone } = {};
@@ -144,7 +148,11 @@ export class GameEngineService {
           startZoneId: rawPath.startZoneId,
           zones: resolvedZones,
         });
-        this.currentZoneIdSignal.set(rawPath.startZoneId);
+        if (overrideZoneId) {
+          this.currentZoneIdSignal.set(overrideZoneId);
+        } else {
+          this.currentZoneIdSignal.set(rawPath.startZoneId);
+        }
         this.pathLoadingSignal.set(false);
       },
       error: () => {
@@ -165,7 +173,6 @@ export class GameEngineService {
     }
 
     this.pathLoadingSignal.set(true);
-    this.currentZoneIdSignal.set(gameSave.currentZoneId);
     this.currentQuizIndexSignal.set(gameSave.quizIndex);
     this.coinsSignal.set(gameSave.coins);
     this.isZoneCompletedSignal.set(false);
@@ -174,7 +181,7 @@ export class GameEngineService {
     this.hintTextSignal.set(null);
     this.eliminatedAnswersSignal.set([]);
     this.gameStartedSignal.set(true);
-    this.loadPathFromHttp(gameSave.selectedCharacterId);
+    this.loadPathFromHttp(gameSave.selectedCharacterId, gameSave.currentZoneId);
   }
 
   /**
@@ -423,10 +430,11 @@ export class GameEngineService {
    * Recommence la partie avec le même personnage.
    */
   restartGame(): void {
-    const characterId = this.pathDataSignal().character;
-    if (characterId) {
-      this.startGame(characterId);
+    if (!this.gameStartedSignal()) {
+      return;
     }
+    const characterId = this.pathDataSignal().character;
+    this.startGame(characterId);
   }
 
   /**

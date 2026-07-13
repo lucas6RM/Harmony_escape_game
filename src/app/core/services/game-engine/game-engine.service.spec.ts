@@ -1,83 +1,104 @@
+import { HttpClient, provideHttpClient } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
-import type { CharacterPath, GameSave, Zone } from '../../types';
+import { Observable, of } from 'rxjs';
+import type { CharacterPath, GameSave, RawCharacterPath, Zone } from '../../types';
 import { CompletedPathsService } from '../completed-paths/completed-paths.service';
 import { ContentLoaderService } from '../content-loader';
 import { PersistenceService } from '../persistence';
 import { GameEngineService } from './game-engine.service';
 
 /**
- * Chemin de test avec 3 Zones pour Mario.
+ * Chemin brut de test avec 3 Zones pour Mario dans la structure tree.
+ * Chaque Zone contient 2 Quiz (sauf la dernière avec 1 Quiz final).
+ * Les Choix naviguent via nextZoneId vers la Zone suivante.
  */
-const MOCK_MARIO_PATH: CharacterPath = {
+const MOCK_RAW_MARIO_PATH: RawCharacterPath = {
   character: 'mario',
-  zones: [
-    {
-      id: 'mario_zone_1',
+  startZoneId: 'mario-zone-1',
+  zones: {
+    'mario-zone-1': {
+      id: 'mario-zone-1',
       narration: "Tu arrives devant le palais d'Harmony. Luma t'attend, l'air inquiet.",
-      choices: [
+      quizzes: [
         {
-          text: "Entrer par le grand portail",
-          nextNarrationId: 'mario_n1_portal',
-          blocking: false,
+          type: 'maths',
+          question: 'Combien font 245 + 378 ?',
+          answers: ['613', '623', '618', '603'],
+          correctIndex: 1,
         },
         {
-          text: "Essayer de grimper au mur",
-          nextNarrationId: 'mario_n1_wall',
-          blocking: true,
-          penalty: 'Le mur est trop glissant ! Tu tombes à l\'eau.',
+          type: 'univers-mario',
+          question: 'Quel est le pouvoir spécial de Mario ?',
+          answers: ['Super Saute', 'Super Saut', 'Super Bond', 'Super Vol'],
+          correctIndex: 1,
         },
       ],
-      quiz: {
-        type: 'maths',
-        question: 'Combien font 245 + 378 ?',
-        answers: ['613', '623', '618', '603'],
-        correctIndex: 1,
-      },
-    },
-    {
-      id: 'mario_zone_2',
+      choices: [
+        { text: "Entrer par le grand portail", nextZoneId: 'mario-zone-2' },
+      ],
+    } as Zone,
+    'mario-zone-2': {
+      id: 'mario-zone-2',
       narration: "Tu traverses le hall principal. Des étoiles flottent dans l'air.",
-      choices: [
+      quizzes: [
         {
-          text: "Attraper une étoile",
-          nextNarrationId: 'mario_n2_star',
-          blocking: false,
+          type: 'francais',
+          question: 'Quel est le synonyme de "rapide" ?',
+          answers: ['Vite', 'Lent', 'Gros', 'Petit'],
+          correctIndex: 0,
+        },
+        {
+          type: 'contexte',
+          question: 'Qui t\'a attendu à l\'entrée du palais ?',
+          answers: ['Luma', 'Toad', 'Yoshi', 'Peach'],
+          correctIndex: 0,
         },
       ],
-      quiz: {
-        type: 'univers-mario',
-        question: 'Qui est le frère de Mario ?',
-        answers: ['Luigi', 'Wario', 'Toad', 'Yoshi'],
-        correctIndex: 0,
-      },
-    },
-    {
-      id: 'mario_zone_3',
+      choices: [
+        { text: "Attraper une étoile", nextZoneId: 'mario-zone-3' },
+      ],
+    } as Zone,
+    'mario-zone-3': {
+      id: 'mario-zone-3',
       narration: "Tu arrives dans la chambre d'Harmony. Bowser Junior est là !",
-      choices: [
+      quizzes: [
         {
-          text: "Confronter Bowser Junior",
-          nextNarrationId: 'mario_n3_final',
-          blocking: false,
+          type: 'contexte',
+          question: 'Qui a capturé Harmony ?',
+          answers: ['Bowser Junior', 'Bowser', 'Wario', 'Kamek'],
+          correctIndex: 0,
+          isFinal: true,
         },
       ],
-      quiz: {
-        type: 'contexte',
-        question: 'Qui t\'a attendu à l\'entrée du palais ?',
-        answers: ['Luma', 'Toad', 'Yoshi', 'Peach'],
-        correctIndex: 0,
-        isFinal: true,
-      },
-    },
-  ] as Zone[],
+      choices: [
+        { text: "Confronter Bowser Junior", nextZoneId: 'mario-zone-3' },
+      ],
+    } as Zone,
+  },
 };
 
 /**
- * Mock de ContentLoaderService qui retourne un chemin déterministe.
+ * Mock de HttpClient qui retourne le chemin brut de Mario synchronement.
+ */
+class HttpClientMock {
+  get<T>(_url: string): Observable<T> {
+    return of(MOCK_RAW_MARIO_PATH as unknown as T);
+  }
+}
+
+/**
+ * Mock de ContentLoaderService (requis par la dépendance d'injection).
  */
 class ContentLoaderServiceMock {
   loadPath(_character: string) {
-    return () => MOCK_MARIO_PATH;
+    return {
+      signal: () => ({
+        character: 'mario' as const,
+        startZoneId: MOCK_RAW_MARIO_PATH.startZoneId,
+        zones: MOCK_RAW_MARIO_PATH.zones,
+      }),
+      isLoading: () => false,
+    };
   }
 }
 
@@ -145,8 +166,10 @@ describe('GameEngineService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [],
       providers: [
         GameEngineService,
+        { provide: HttpClient, useClass: HttpClientMock },
         { provide: ContentLoaderService, useClass: ContentLoaderServiceMock },
         { provide: PersistenceService, useClass: PersistenceServiceMock },
         { provide: CompletedPathsService, useClass: CompletedPathsServiceMock },
@@ -157,19 +180,28 @@ describe('GameEngineService', () => {
     completedPathsMock = TestBed.inject(CompletedPathsService) as unknown as CompletedPathsServiceMock;
   });
 
+  // ──────────────────────────────────────────────────────────────
+  // startGame
+  // ──────────────────────────────────────────────────────────────
+
   describe('startGame', () => {
-    it('démarré = false avant d\'appeler startGame', () => {
+    it('gameStarted = false avant d\'appeler startGame', () => {
       expect(service.gameStarted()).toBe(false);
     });
 
-    it('démarré = true après avoir appelé startGame', () => {
+    it('gameStarted = true après avoir appelé startGame', () => {
       service.startGame('mario');
       expect(service.gameStarted()).toBe(true);
     });
 
-    it('l\'index de Zone courante est 0 après startGame', () => {
+    it('currentZoneId est l\'ID de départ après startGame', () => {
       service.startGame('mario');
-      expect(service.currentZoneIndex()).toBe(0);
+      expect(service.currentZoneId()).toBe('mario-zone-1');
+    });
+
+    it('currentQuizIndex est 0 après startGame', () => {
+      service.startGame('mario');
+      expect(service.currentQuizIndex()).toBe(0);
     });
 
     it('les Pièces sont à 0 après startGame', () => {
@@ -177,128 +209,103 @@ describe('GameEngineService', () => {
       expect(service.coins()).toBe(0);
     });
 
-    it('la Zone courante est la première Zone du Chemin', () => {
+    it('la Zone courante est la Zone de départ du Chemin', () => {
       service.startGame('mario');
-      expect(service.currentZone()?.id).toBe('mario_zone_1');
-    });
-
-    it('aucun événement narratif après startGame', () => {
-      service.startGame('mario');
-      expect(service.narrationEvent()).toBe(null);
+      expect(service.currentZone()?.id).toBe('mario-zone-1');
     });
 
     it('la Zone n\'est pas marquée comme terminée après startGame', () => {
       service.startGame('mario');
       expect(service.isZoneCompleted()).toBe(false);
     });
+
+    it('quizActive est false après startGame', () => {
+      service.startGame('mario');
+      expect(service.quizActive()).toBe(false);
+    });
   });
 
-  describe('selectChoice — choix non bloquant', () => {
+  // ──────────────────────────────────────────────────────────────
+  // Navigation arbre — selectChoice / navigateToZone
+  // ──────────────────────────────────────────────────────────────
+
+  describe('selectChoice — navigation arbre via nextZoneId', () => {
     beforeEach(() => {
       service.startGame('mario');
     });
 
-    it('met à jour narrationEvent avec le nextNarrationId du choix', () => {
+    it('navigate vers la Zone cible indiquée par nextZoneId', () => {
+      service.selectChoice(0); // nextZoneId = 'mario-zone-2'
+      expect(service.currentZoneId()).toBe('mario-zone-2');
+    });
+
+    it('reset quizIndex à 0 dans la nouvelle Zone', () => {
+      // On avance d'abord quizIndex
+      service.currentQuizIndex; // warm up computed
       service.selectChoice(0);
-      expect(service.narrationEvent()).toBe('mario_n1_portal');
+      expect(service.currentQuizIndex()).toBe(0);
     });
 
-    it('ne change pas l\'index de Zone courante', () => {
+    it('reset isZoneCompleted à false dans la nouvelle Zone', () => {
       service.selectChoice(0);
-      expect(service.currentZoneIndex()).toBe(0);
-    });
-  });
-
-  describe('selectChoice — choix bloquant', () => {
-    beforeEach(() => {
-      service.startGame('mario');
+      expect(service.isZoneCompleted()).toBe(false);
     });
 
-    it('affiche la pénalité dans narrationEvent', () => {
-      service.selectChoice(1);
-      expect(service.narrationEvent()).toBe("Le mur est trop glissant ! Tu tombes à l'eau.");
-    });
-
-    it('utilise le message par défaut si penalty n\'est pas défini', () => {
-      // On simule un choix bloquant sans penalty
-      const zone = service.currentZone();
-      if (zone) {
-        zone.choices[1].penalty = undefined;
-      }
-      service.selectChoice(1);
-      expect(service.narrationEvent()).toBe('Ce chemin est bloqué !');
-    });
-  });
-
-  describe('selectChoice — index invalide', () => {
-    beforeEach(() => {
-      service.startGame('mario');
+    it('reset quizActive à false dans la nouvelle Zone', () => {
+      service.selectChoice(0);
+      expect(service.quizActive()).toBe(false);
     });
 
     it('ne fait rien si l\'index est hors limites', () => {
       service.selectChoice(99);
-      expect(service.narrationEvent()).toBe(null);
-    });
-
-    it('ne fait rien si la Zone courante est null', () => {
-      // Avant startGame, currentZone est null
-      TestBed.inject(GameEngineService);
-      // On recrée un service propre sans startGame
+      expect(service.currentZoneId()).toBe('mario-zone-1');
     });
   });
 
-  describe('advanceZone', () => {
-    beforeEach(() => {
-      service.startGame('mario');
-    });
-
-    it('avance à la Zone suivante', () => {
-      service.advanceZone();
-      expect(service.currentZoneIndex()).toBe(1);
-      expect(service.currentZone()?.id).toBe('mario_zone_2');
-    });
-
-    it('réinitialise isZoneCompleted', () => {
-      service.completeZone();
-      expect(service.isZoneCompleted()).toBe(true);
-      service.advanceZone();
-      expect(service.isZoneCompleted()).toBe(false);
-    });
-
-    it('efface l\'événement narratif', () => {
-      service.selectChoice(0);
-      expect(service.narrationEvent()).not.toBe(null);
-      service.advanceZone();
-      expect(service.narrationEvent()).toBe(null);
-    });
-
-    it('ne dépasse pas la dernière Zone', () => {
-      // Avancer jusqu'à la dernière Zone
-      service.advanceZone(); // index 1
-      service.advanceZone(); // index 2 (dernière)
-      service.advanceZone(); // devrait rester à 2
-      expect(service.currentZoneIndex()).toBe(2);
-    });
-  });
+  // ──────────────────────────────────────────────────────────────
+  // restartZone
+  // ──────────────────────────────────────────────────────────────
 
   describe('restartZone', () => {
     beforeEach(() => {
       service.startGame('mario');
     });
 
-    it('efface l\'événement narratif', () => {
-      service.selectChoice(1); // choix bloquant
-      expect(service.narrationEvent()).not.toBe(null);
+    it('reset quizActive à false', () => {
       service.restartZone();
-      expect(service.narrationEvent()).toBe(null);
+      expect(service.quizActive()).toBe(false);
+    });
+
+    it('reset quizFeedback à null', () => {
+      service.restartZone();
+      expect(service.quizFeedback()).toBe(null);
+    });
+
+    it('reset hintText à null', () => {
+      service.restartZone();
+      expect(service.hintText()).toBe(null);
+    });
+
+    it('reset eliminatedAnswers à []', () => {
+      service.restartZone();
+      expect(service.eliminatedAnswers()).toEqual([]);
+    });
+
+    it('reset quizIndex à 0', () => {
+      service.restartZone();
+      expect(service.currentQuizIndex()).toBe(0);
     });
 
     it('démarque la Zone comme non terminée', () => {
-      service.completeZone();
+      service.completeQuiz();
       service.restartZone();
       expect(service.isZoneCompleted()).toBe(false);
     });
   });
+
+  // ──────────────────────────────────────────────────────────────
+  // addCoins
+  // ──────────────────────────────────────────────────────────────
 
   describe('addCoins', () => {
     beforeEach(() => {
@@ -315,31 +322,22 @@ describe('GameEngineService', () => {
       service.addCoins(2);
       expect(service.coins()).toBe(5);
     });
-  });
 
-  describe('clearEvent', () => {
-    beforeEach(() => {
-      service.startGame('mario');
+    it('clamp à 0 quand le solde deviendrait négatif', () => {
+      service.addCoins(1);
+      service.addCoins(-5);
+      expect(service.coins()).toBe(0);
     });
 
-    it('efface l\'événement narratif', () => {
-      service.selectChoice(0);
-      expect(service.narrationEvent()).not.toBe(null);
-      service.clearEvent();
-      expect(service.narrationEvent()).toBe(null);
+    it('reste à 0 quand on soustrait plus que le solde', () => {
+      service.addCoins(-10);
+      expect(service.coins()).toBe(0);
     });
   });
 
-  describe('completeZone', () => {
-    beforeEach(() => {
-      service.startGame('mario');
-    });
-
-    it('marque la Zone comme terminée', () => {
-      service.completeZone();
-      expect(service.isZoneCompleted()).toBe(true);
-    });
-  });
+  // ──────────────────────────────────────────────────────────────
+  // currentZone — avant startGame
+  // ──────────────────────────────────────────────────────────────
 
   describe('currentZone — avant startGame', () => {
     it('retourne null quand le jeu n\'est pas démarré', () => {
@@ -347,335 +345,410 @@ describe('GameEngineService', () => {
     });
   });
 
-  describe('Quiz', () => {
-    describe('Quiz non actif au démarrage', () => {
-      it('quizActive() est false après startGame', () => {
-        service.startGame('mario');
-        expect(service.quizActive()).toBe(false);
-      });
+  // ──────────────────────────────────────────────────────────────
+  // Quiz — état initial
+  // ──────────────────────────────────────────────────────────────
 
-      it('quizAttempts() est 0 après startGame', () => {
-        service.startGame('mario');
-        expect(service.quizAttempts()).toBe(0);
-      });
-
-      it('quizFeedback() est null après startGame', () => {
-        service.startGame('mario');
-        expect(service.quizFeedback()).toBe(null);
-      });
+  describe('Quiz — état initial', () => {
+    it('quizActive() est false après startGame', () => {
+      service.startGame('mario');
+      expect(service.quizActive()).toBe(false);
     });
 
-    describe('Quiz activé après un choix valide', () => {
-      beforeEach(() => {
-        service.startGame('mario');
-      });
-
-      it('quizActive() devient true après selectChoice(0)', () => {
-        service.selectChoice(0);
-        expect(service.quizActive()).toBe(true);
-      });
-
-      it('quizAttempts() est 0 après activation du Quiz', () => {
-        service.selectChoice(0);
-        expect(service.quizAttempts()).toBe(0);
-      });
-
-      it('quizFeedback() est null après activation du Quiz', () => {
-        service.selectChoice(0);
-        expect(service.quizFeedback()).toBe(null);
-      });
-    });
-
-    describe('Quiz réussi du 1er coup', () => {
-      beforeEach(() => {
-        service.startGame('mario');
-        service.selectChoice(0);
-      });
-
-      it('quizActive() devient false après réponse correcte', () => {
-        service.submitQuizAnswer(1); // correctIndex de mario_zone_1
-        expect(service.quizActive()).toBe(false);
-      });
-
-      it('coins() augmente de 2', () => {
-        service.submitQuizAnswer(1);
-        expect(service.coins()).toBe(2);
-      });
-
-      it('isZoneCompleted() devient true', () => {
-        service.submitQuizAnswer(1);
-        expect(service.isZoneCompleted()).toBe(true);
-      });
-
-      it('quizFeedback() est "correct"', () => {
-        service.submitQuizAnswer(1);
-        expect(service.quizFeedback()).toBe('correct');
-      });
-    });
-
-    describe('Quiz réussi au 2ème coup', () => {
-      beforeEach(() => {
-        service.startGame('mario');
-        service.selectChoice(0);
-      });
-
-      it('1ère tentative fausse : quizActive() reste true, quizAttempts() = 1, quizFeedback() = "incorrect"', () => {
-        service.submitQuizAnswer(0); // faux
-        expect(service.quizActive()).toBe(true);
-        expect(service.quizAttempts()).toBe(1);
-        expect(service.quizFeedback()).toBe('incorrect');
-      });
-
-      it('2ème tentative correcte : quizActive() devient false, coins +2, isZoneCompleted = true, feedback = "correct"', () => {
-        service.submitQuizAnswer(0); // faux
-        service.submitQuizAnswer(1); // correct
-        expect(service.quizActive()).toBe(false);
-        expect(service.coins()).toBe(2);
-        expect(service.isZoneCompleted()).toBe(true);
-        expect(service.quizFeedback()).toBe('correct');
-      });
-    });
-
-    describe('Quiz échoué après 2 tentatives', () => {
-      beforeEach(() => {
-        service.startGame('mario');
-        service.selectChoice(0);
-      });
-
-      it('1ère tentative fausse : quizAttempts() = 1, quizActive() reste true', () => {
-        service.submitQuizAnswer(0); // faux
-        expect(service.quizAttempts()).toBe(1);
-        expect(service.quizActive()).toBe(true);
-      });
-
-      it('2ème tentative fausse : quizActive() devient false, coins -1, isBlockingChoice = true, narrationEvent contient "Pénalité"', () => {
-        service.submitQuizAnswer(0); // 1ère faux
-        service.submitQuizAnswer(2); // 2ème faux
-        expect(service.quizActive()).toBe(false);
-        expect(service.coins()).toBe(-1);
-        expect(service.isBlockingChoice()).toBe(true);
-        expect(service.narrationEvent()).toContain('Pénalité');
-      });
-    });
-
-    describe('submitQuizAnswer sans quiz actif ne fait rien', () => {
-      it('ne change rien avant tout choix', () => {
-        service.startGame('mario');
-        service.submitQuizAnswer(0);
-        expect(service.quizActive()).toBe(false);
-        expect(service.quizAttempts()).toBe(0);
-        expect(service.quizFeedback()).toBe(null);
-        expect(service.coins()).toBe(0);
-      });
-    });
-
-    describe('restartZone réinitialise l\'état du Quiz', () => {
-      beforeEach(() => {
-        service.startGame('mario');
-      });
-
-      it('quizActive() redevient false', () => {
-        service.selectChoice(0);
-        expect(service.quizActive()).toBe(true);
-        service.restartZone();
-        expect(service.quizActive()).toBe(false);
-      });
-
-      it('quizAttempts() redevient 0', () => {
-        service.selectChoice(0);
-        service.submitQuizAnswer(0); // faux → attempts = 1
-        expect(service.quizAttempts()).toBe(1);
-        service.restartZone();
-        expect(service.quizAttempts()).toBe(0);
-      });
-
-      it('quizFeedback() redevient null', () => {
-        service.selectChoice(0);
-        service.submitQuizAnswer(0); // faux → feedback = 'incorrect'
-        expect(service.quizFeedback()).toBe('incorrect');
-        service.restartZone();
-        expect(service.quizFeedback()).toBe(null);
-      });
-    });
-
-    describe('advanceZone réinitialise l\'état du Quiz', () => {
-      beforeEach(() => {
-        service.startGame('mario');
-      });
-
-      it('quizActive() redevient false', () => {
-        service.selectChoice(0);
-        expect(service.quizActive()).toBe(true);
-        service.advanceZone();
-        expect(service.quizActive()).toBe(false);
-      });
-
-      it('quizAttempts() redevient 0', () => {
-        service.selectChoice(0);
-        service.submitQuizAnswer(0); // faux → attempts = 1
-        expect(service.quizAttempts()).toBe(1);
-        service.advanceZone();
-        expect(service.quizAttempts()).toBe(0);
-      });
-
-      it('quizFeedback() redevient null', () => {
-        service.selectChoice(0);
-        service.submitQuizAnswer(0); // faux → feedback = 'incorrect'
-        expect(service.quizFeedback()).toBe('incorrect');
-        service.advanceZone();
-        expect(service.quizFeedback()).toBe(null);
-      });
+    it('quizFeedback() est null après startGame', () => {
+      service.startGame('mario');
+      expect(service.quizFeedback()).toBe(null);
     });
   });
 
-  describe('Aides', () => {
-    describe('buyHint', () => {
-      beforeEach(() => {
-        service.startGame('mario');
-      });
+  // ──────────────────────────────────────────────────────────────
+  // Quiz — réponse correcte
+  // ──────────────────────────────────────────────────────────────
 
-      it('buyHint avec quiz non actif : retourne false, rien ne change', () => {
-        const result = service.buyHint();
-        expect(result).toBe(false);
-        expect(service.hintText()).toBe(null);
-        expect(service.coins()).toBe(0);
-      });
-
-      it('buyHint avec solde insuffisant : retourne false', () => {
-        service.selectChoice(0); // active le quiz
-        service.addCoins(2); // 2 pièces, besoin de 3
-        const result = service.buyHint();
-        expect(result).toBe(false);
-        expect(service.hintText()).toBe(null);
-        expect(service.coins()).toBe(2);
-      });
-
-      it('buyHint avec solde suffisant : coûte 3 pièces, hintText non null', () => {
-        service.selectChoice(0); // active le quiz
-        service.addCoins(5); // 5 pièces
-        const result = service.buyHint();
-        expect(result).toBe(true);
-        expect(service.coins()).toBe(2); // 5 - 3 = 2
-        expect(service.hintText()).not.toBe(null);
-        expect(service.hintText()).toContain('Indice');
-      });
-
-      it('buyHint affiche un indice basé sur la bonne réponse', () => {
-        service.selectChoice(0); // active le quiz, zone 1, bonne réponse = '623'
-        service.addCoins(3);
-        service.buyHint();
-        // La bonne réponse est '623', donc l'indice contient '623'
-        expect(service.hintText()).toContain('623');
-      });
-
-      it("buyHint ne peut être acheté qu'une seule fois par quiz", () => {
-        service.selectChoice(0);
-        service.addCoins(10);
-        service.buyHint();
-        const result2 = service.buyHint();
-        expect(result2).toBe(false);
-        expect(service.coins()).toBe(7); // Seule le premier achat a coûté 3
-      });
+  describe('Quiz — réponse correcte du 1er coup', () => {
+    beforeEach(() => {
+      service.startGame('mario');
+      // Activer le quiz manuellement pour les tests
+      (service as any).quizActiveSignal.set(true);
     });
 
-    describe('buyElimination', () => {
-      beforeEach(() => {
-        service.startGame('mario');
-      });
-
-      it('buyElimination avec quiz non actif : retourne false', () => {
-        const result = service.buyElimination();
-        expect(result).toBe(false);
-        expect(service.eliminatedAnswers()).toEqual([]);
-        expect(service.coins()).toBe(0);
-      });
-
-      it('buyElimination avec solde insuffisant : retourne false', () => {
-        service.selectChoice(0);
-        service.addCoins(4); // 4 pièces, besoin de 5
-        const result = service.buyElimination();
-        expect(result).toBe(false);
-        expect(service.eliminatedAnswers()).toEqual([]);
-        expect(service.coins()).toBe(4);
-      });
-
-      it('buyElimination avec solde suffisant : coûte 5 pièces, 2 indices éliminés', () => {
-        service.selectChoice(0);
-        service.addCoins(7);
-        const result = service.buyElimination();
-        expect(result).toBe(true);
-        expect(service.coins()).toBe(2); // 7 - 5 = 2
-        expect(service.eliminatedAnswers()).toHaveLength(2);
-      });
-
-      it('buyElimination ne contient jamais le correctIndex', () => {
-        service.selectChoice(0); // zone 1, correctIndex = 1
-        service.addCoins(5);
-        service.buyElimination();
-        const eliminated = service.eliminatedAnswers();
-        expect(eliminated).not.toContain(1); // correctIndex de mario_zone_1
-      });
-
-      it("buyElimination ne peut être acheté qu'une seule fois par quiz", () => {
-        service.selectChoice(0);
-        service.addCoins(15);
-        service.buyElimination();
-        const result2 = service.buyElimination();
-        expect(result2).toBe(false);
-        expect(service.coins()).toBe(10); // Seul le premier achat a coûté 5
-      });
+    it('quizActive() devient false après réponse correcte', () => {
+      service.submitQuizAnswer(1); // correctIndex de quiz 0 de mario-zone-1
+      expect(service.quizActive()).toBe(false);
     });
 
-    describe('Réinitialisation des aides', () => {
-      beforeEach(() => {
-        service.startGame('mario');
-      });
+    it('coins() augmente de 2', () => {
+      service.submitQuizAnswer(1);
+      expect(service.coins()).toBe(2);
+    });
 
-      it('restartZone réinitialise hintText et eliminatedAnswers', () => {
-        service.selectChoice(0);
-        service.addCoins(10);
-        service.buyHint();
-        service.buyElimination();
-        expect(service.hintText()).not.toBe(null);
-        expect(service.eliminatedAnswers()).toHaveLength(2);
+    it('isZoneCompleted() reste false car ce n\'est pas le dernier quiz de la Zone', () => {
+      // Zone 1 a 2 quizzes, on est au quiz 0 → pas terminé
+      service.submitQuizAnswer(1);
+      expect(service.isZoneCompleted()).toBe(false);
+    });
 
-        service.restartZone();
-        expect(service.hintText()).toBe(null);
-        expect(service.eliminatedAnswers()).toEqual([]);
-      });
-
-      it('advanceZone réinitialise hintText et eliminatedAnswers', () => {
-        service.selectChoice(0);
-        service.addCoins(10);
-        service.buyHint();
-        service.buyElimination();
-
-        service.advanceZone();
-        expect(service.hintText()).toBe(null);
-        expect(service.eliminatedAnswers()).toEqual([]);
-      });
-
-      it('selectChoice (choix valide) réinitialise hintText et eliminatedAnswers', () => {
-        service.addCoins(10);
-        service.selectChoice(0);
-        service.buyHint();
-        expect(service.hintText()).not.toBe(null);
-
-        // Refaire un choix valide réinitialise
-        service.selectChoice(0);
-        expect(service.hintText()).toBe(null);
-        expect(service.eliminatedAnswers()).toEqual([]);
-      });
+    it('quizFeedback() est "correct"', () => {
+      service.submitQuizAnswer(1);
+      expect(service.quizFeedback()).toBe('correct');
     });
   });
+
+  // ──────────────────────────────────────────────────────────────
+  // Quiz — réponse incorrecte (pas de free retry)
+  // ──────────────────────────────────────────────────────────────
+
+  describe('Quiz — réponse incorrecte (pas de free retry)', () => {
+    beforeEach(() => {
+      service.startGame('mario');
+      (service as any).quizActiveSignal.set(true);
+    });
+
+    it('1ère tentative fausse : -1 Pièce, quizActive devient false, feedback = "incorrect"', () => {
+      service.submitQuizAnswer(0); // faux
+      expect(service.quizActive()).toBe(false);
+      expect(service.coins()).toBe(0); // clampé à 0 (on avait 0, -1 → 0)
+      expect(service.quizFeedback()).toBe('incorrect');
+    });
+
+    it('avec des pièces : 1ère tentative fausse coûte -1 Pièce', () => {
+      service.addCoins(5);
+      service.submitQuizAnswer(0); // faux
+      expect(service.coins()).toBe(4); // 5 - 1 = 4
+      expect(service.quizFeedback()).toBe('incorrect');
+    });
+
+    it('submitQuizAnswer sans quiz actif ne fait rien', () => {
+      service.startGame('mario');
+      service.submitQuizAnswer(0);
+      expect(service.quizActive()).toBe(false);
+      expect(service.quizFeedback()).toBe(null);
+      expect(service.coins()).toBe(0);
+    });
+  });
+
+  // ──────────────────────────────────────────────────────────────
+  // Quiz — multiples Quiz par Zone
+  // ──────────────────────────────────────────────────────────────
+
+  describe('Quiz — multiples Quiz par Zone', () => {
+    beforeEach(() => {
+      service.startGame('mario');
+      (service as any).quizActiveSignal.set(true);
+    });
+
+    it('quizIndex = 0 au début de la Zone', () => {
+      expect(service.currentQuizIndex()).toBe(0);
+    });
+
+    it('quizzesRemaining = 2 pour la Zone 1 (qui a 2 quizzes)', () => {
+      expect(service.quizzesRemaining()).toBe(2);
+    });
+
+    it('réussir le quiz 0 ne termine pas la Zone (il reste des quizzes)', () => {
+      service.submitQuizAnswer(1); // correct quiz 0
+      expect(service.isZoneCompleted()).toBe(false);
+    });
+
+    it('le dernier quiz réussi de la Zone marque isZoneCompleted = true', () => {
+      // Quiz 0 réussi
+      service.submitQuizAnswer(1); // correct
+      service.advanceQuiz(); // → quiz 1
+      (service as any).quizActiveSignal.set(true);
+      // Quiz 1 réussi (dernier)
+      service.submitQuizAnswer(1); // correct
+      expect(service.isZoneCompleted()).toBe(true);
+    });
+  });
+
+  // ──────────────────────────────────────────────────────────────
+  // quizIndex progression
+  // ──────────────────────────────────────────────────────────────
+
+  describe('quizIndex progression', () => {
+    beforeEach(() => {
+      service.startGame('mario');
+    });
+
+    it('quizIndex s\'incrémente avec advanceQuiz()', () => {
+      expect(service.currentQuizIndex()).toBe(0);
+      service.advanceQuiz();
+      expect(service.currentQuizIndex()).toBe(1);
+    });
+
+    it('advanceQuiz() ne dépasse pas le dernier quiz de la Zone', () => {
+      // Zone 1 a 2 quizzes (index 0 et 1)
+      service.advanceQuiz(); // → 1
+      service.advanceQuiz(); // devrait rester à 1 (dernier)
+      expect(service.currentQuizIndex()).toBe(1);
+    });
+
+    it('navigateToZone() reset quizIndex à 0', () => {
+      service.advanceQuiz();
+      expect(service.currentQuizIndex()).toBe(1);
+      service.navigateToZone('mario-zone-2');
+      expect(service.currentQuizIndex()).toBe(0);
+    });
+  });
+
+  // ──────────────────────────────────────────────────────────────
+  // quizzesRemaining computed signal
+  // ──────────────────────────────────────────────────────────────
+
+  describe('quizzesRemaining computed signal', () => {
+    beforeEach(() => {
+      service.startGame('mario');
+    });
+
+    it('retourne 2 pour la Zone 1 (2 quizzes, index 0)', () => {
+      expect(service.quizzesRemaining()).toBe(2);
+    });
+
+    it('retourne 1 après avoir avancé au quiz 1', () => {
+      service.advanceQuiz();
+      expect(service.quizzesRemaining()).toBe(1);
+    });
+
+    it('retourne 1 pour la Zone 3 (1 quiz final)', () => {
+      service.navigateToZone('mario-zone-3');
+      expect(service.quizzesRemaining()).toBe(1);
+    });
+  });
+
+  describe('quizzesRemaining — avant startGame', () => {
+    it('retourne 0 quand le jeu n\'est pas démarré', () => {
+      expect(service.quizzesRemaining()).toBe(0);
+    });
+  });
+
+  // ──────────────────────────────────────────────────────────────
+  // currentQuiz computed signal
+  // ──────────────────────────────────────────────────────────────
+
+  describe('currentQuiz computed signal', () => {
+    beforeEach(() => {
+      service.startGame('mario');
+    });
+
+    it('retourne le quiz 0 au démarrage', () => {
+      const quiz = service.currentQuiz();
+      expect(quiz).not.toBeNull();
+      expect(quiz?.question).toBe('Combien font 245 + 378 ?');
+    });
+
+    it('retourne le quiz 1 après advanceQuiz()', () => {
+      service.advanceQuiz();
+      const quiz = service.currentQuiz();
+      expect(quiz).not.toBeNull();
+      expect(quiz?.question).toBe('Quel est le pouvoir spécial de Mario ?');
+    });
+  });
+
+  describe('currentQuiz — avant startGame', () => {
+    it('retourne null quand le jeu n\'est pas démarré', () => {
+      expect(service.currentQuiz()).toBeNull();
+    });
+  });
+
+  // ──────────────────────────────────────────────────────────────
+  // skipQuiz
+  // ──────────────────────────────────────────────────────────────
+
+  describe('skipQuiz', () => {
+    beforeEach(() => {
+      service.startGame('mario');
+      (service as any).quizActiveSignal.set(true);
+    });
+
+    it('coûte 2 Pièces', () => {
+      service.addCoins(5);
+      const result = service.skipQuiz();
+      expect(result).toBe(true);
+      expect(service.coins()).toBe(3); // 5 - 2 = 3
+    });
+
+    it('avance au quiz suivant', () => {
+      service.addCoins(2);
+      service.skipQuiz();
+      expect(service.currentQuizIndex()).toBe(1); // quiz 0 → quiz 1
+    });
+
+    it('retourne false si quiz non actif', () => {
+      (service as any).quizActiveSignal.set(false);
+      const result = service.skipQuiz();
+      expect(result).toBe(false);
+    });
+
+    it('retourne false si solde insuffisant', () => {
+      service.addCoins(1); // besoin de 2
+      const result = service.skipQuiz();
+      expect(result).toBe(false);
+      expect(service.coins()).toBe(1);
+    });
+
+    it('ne donne pas de récompense (+0 Pièces au-delà du coût)', () => {
+      service.addCoins(4);
+      service.skipQuiz();
+      expect(service.coins()).toBe(2); // 4 - 2 = 2, pas de +2
+    });
+
+    it('reset quizActive et feedback', () => {
+      service.addCoins(2);
+      service.skipQuiz();
+      expect(service.quizActive()).toBe(false);
+      expect(service.quizFeedback()).toBe(null);
+    });
+
+    it('sauter le dernier quiz ne termine pas la Zone automatiquement', () => {
+      // Zone 1 a 2 quizzes, skip quiz 0 → avance à quiz 1
+      service.addCoins(2);
+      service.skipQuiz();
+      expect(service.isZoneCompleted()).toBe(false);
+    });
+  });
+
+  // ──────────────────────────────────────────────────────────────
+  // Aides — buyHint
+  // ──────────────────────────────────────────────────────────────
+
+  describe('buyHint', () => {
+    beforeEach(() => {
+      service.startGame('mario');
+      (service as any).quizActiveSignal.set(true);
+    });
+
+    it('buyHint avec quiz non actif : retourne false', () => {
+      (service as any).quizActiveSignal.set(false);
+      const result = service.buyHint();
+      expect(result).toBe(false);
+      expect(service.hintText()).toBe(null);
+      expect(service.coins()).toBe(0);
+    });
+
+    it('buyHint avec solde insuffisant : retourne false', () => {
+      // Coût = 1 Pièce
+      const result = service.buyHint();
+      expect(result).toBe(false);
+      expect(service.hintText()).toBe(null);
+    });
+
+    it('buyHint avec solde suffisant : coûte 1 Pièce, hintText non null', () => {
+      service.addCoins(3);
+      const result = service.buyHint();
+      expect(result).toBe(true);
+      expect(service.coins()).toBe(2); // 3 - 1 = 2
+      expect(service.hintText()).not.toBe(null);
+    });
+
+    it('buyHint affiche un indice basé sur la bonne réponse', () => {
+      service.addCoins(1);
+      service.buyHint();
+      // La bonne réponse est '623', donc l\'indice contient '623'
+      expect(service.hintText()).toContain('623');
+    });
+
+    it("buyHint ne peut être acheté qu'une seule fois par quiz", () => {
+      service.addCoins(10);
+      service.buyHint();
+      const result2 = service.buyHint();
+      expect(result2).toBe(false);
+      expect(service.coins()).toBe(9); // Seul le premier achat a coûté 1
+    });
+  });
+
+  // ──────────────────────────────────────────────────────────────
+  // Aides — buyElimination
+  // ──────────────────────────────────────────────────────────────
+
+  describe('buyElimination', () => {
+    beforeEach(() => {
+      service.startGame('mario');
+      (service as any).quizActiveSignal.set(true);
+    });
+
+    it('buyElimination avec quiz non actif : retourne false', () => {
+      (service as any).quizActiveSignal.set(false);
+      const result = service.buyElimination();
+      expect(result).toBe(false);
+      expect(service.eliminatedAnswers()).toEqual([]);
+    });
+
+    it('buyElimination avec solde insuffisant : retourne false', () => {
+      // Coût = 2 Pièces
+      service.addCoins(1);
+      const result = service.buyElimination();
+      expect(result).toBe(false);
+      expect(service.eliminatedAnswers()).toEqual([]);
+    });
+
+    it('buyElimination avec solde suffisant : coûte 2 Pièces, 2 indices éliminés', () => {
+      service.addCoins(5);
+      const result = service.buyElimination();
+      expect(result).toBe(true);
+      expect(service.coins()).toBe(3); // 5 - 2 = 3
+      expect(service.eliminatedAnswers()).toHaveLength(2);
+    });
+
+    it('buyElimination ne contient jamais le correctIndex', () => {
+      service.addCoins(2);
+      service.buyElimination();
+      const eliminated = service.eliminatedAnswers();
+      expect(eliminated).not.toContain(1); // correctIndex de quiz 0 de mario-zone-1
+    });
+
+    it("buyElimination ne peut être acheté qu'une seule fois par quiz", () => {
+      service.addCoins(10);
+      service.buyElimination();
+      const result2 = service.buyElimination();
+      expect(result2).toBe(false);
+      expect(service.coins()).toBe(8); // Seul le premier achat a coûté 2
+    });
+  });
+
+  // ──────────────────────────────────────────────────────────────
+  // Réinitialisation des aides
+  // ──────────────────────────────────────────────────────────────
+
+  describe('Réinitialisation des aides', () => {
+    beforeEach(() => {
+      service.startGame('mario');
+      (service as any).quizActiveSignal.set(true);
+    });
+
+    it('restartZone réinitialise hintText et eliminatedAnswers', () => {
+      service.addCoins(10);
+      service.buyHint();
+      service.buyElimination();
+      expect(service.hintText()).not.toBe(null);
+      expect(service.eliminatedAnswers()).toHaveLength(2);
+
+      service.restartZone();
+      expect(service.hintText()).toBe(null);
+      expect(service.eliminatedAnswers()).toEqual([]);
+    });
+
+    it('navigateToZone réinitialise hintText et eliminatedAnswers', () => {
+      service.addCoins(10);
+      service.buyHint();
+      service.buyElimination();
+
+      service.navigateToZone('mario-zone-2');
+      expect(service.hintText()).toBe(null);
+      expect(service.eliminatedAnswers()).toEqual([]);
+    });
+  });
+
+  // ──────────────────────────────────────────────────────────────
+  // restoreGame
+  // ──────────────────────────────────────────────────────────────
 
   describe('restoreGame', () => {
     const mockGameSave: GameSave = {
       selectedCharacterId: 'mario',
-      currentZoneIndex: 2,
+      currentZoneId: 'mario-zone-3',
+      quizIndex: 1,
       coins: 7,
-      quizAttempts: 1,
-      zonesCompleted: [0, 1],
+      completedPaths: [],
     };
 
     it('charge le Chemin du personnage sauvegardé', () => {
@@ -683,9 +756,14 @@ describe('GameEngineService', () => {
       expect(service.path().character).toBe('mario');
     });
 
-    it('restaure l\'index de Zone courante', () => {
+    it('restaure l\'ID de Zone courante', () => {
       service.restoreGame(mockGameSave);
-      expect(service.currentZoneIndex()).toBe(2);
+      expect(service.currentZoneId()).toBe('mario-zone-3');
+    });
+
+    it('restaure l\'index du Quiz', () => {
+      service.restoreGame(mockGameSave);
+      expect(service.currentQuizIndex()).toBe(1);
     });
 
     it('restaure les Pièces accumulées', () => {
@@ -693,26 +771,9 @@ describe('GameEngineService', () => {
       expect(service.coins()).toBe(7);
     });
 
-    it('restaure les tentatives de Quiz', () => {
-      service.restoreGame(mockGameSave);
-      expect(service.quizAttempts()).toBe(1);
-    });
-
-    it('restaure les Zones terminées (copie défensive)', () => {
-      service.restoreGame(mockGameSave);
-      expect(service.zonesCompleted()).toEqual([0, 1]);
-      // Vérifier que c\'est une copie et non la même référence
-      expect(service.zonesCompleted()).not.toBe(mockGameSave.zonesCompleted);
-    });
-
     it('démarre le jeu (gameStarted = true)', () => {
       service.restoreGame(mockGameSave);
       expect(service.gameStarted()).toBe(true);
-    });
-
-    it('la Zone courante correspond à l\'index restauré', () => {
-      service.restoreGame(mockGameSave);
-      expect(service.currentZone()?.id).toBe('mario_zone_3');
     });
 
     it('réinitialise isZoneCompleted à false', () => {
@@ -720,10 +781,8 @@ describe('GameEngineService', () => {
       expect(service.isZoneCompleted()).toBe(false);
     });
 
-    it('réinitialise les signaux de session (narration, quiz, aides)', () => {
+    it('réinitialise les signaux de session (quiz, aides)', () => {
       service.restoreGame(mockGameSave);
-      expect(service.narrationEvent()).toBe(null);
-      expect(service.isBlockingChoice()).toBe(false);
       expect(service.quizActive()).toBe(false);
       expect(service.quizFeedback()).toBe(null);
       expect(service.hintText()).toBe(null);
@@ -733,10 +792,10 @@ describe('GameEngineService', () => {
     it('ne fait rien si selectedCharacterId est null', () => {
       const invalidSave: GameSave = {
         selectedCharacterId: null,
-        currentZoneIndex: 0,
+        currentZoneId: '',
+        quizIndex: 0,
         coins: 0,
-        quizAttempts: 0,
-        zonesCompleted: [],
+        completedPaths: [],
       };
       service.restoreGame(invalidSave);
       expect(service.gameStarted()).toBe(false);
@@ -744,15 +803,18 @@ describe('GameEngineService', () => {
 
     it('fonctionne après un startGame précédent (restaure par-dessus)', () => {
       service.startGame('mario');
-      expect(service.currentZoneIndex()).toBe(0);
+      expect(service.currentZoneId()).toBe('mario-zone-1');
       expect(service.coins()).toBe(0);
 
       service.restoreGame(mockGameSave);
-      expect(service.currentZoneIndex()).toBe(2);
+      expect(service.currentZoneId()).toBe('mario-zone-3');
       expect(service.coins()).toBe(7);
-      expect(service.zonesCompleted()).toEqual([0, 1]);
     });
   });
+
+  // ──────────────────────────────────────────────────────────────
+  // Auto-save via PersistenceService
+  // ──────────────────────────────────────────────────────────────
 
   describe('Auto-save via PersistenceService', () => {
     beforeEach(() => {
@@ -764,75 +826,24 @@ describe('GameEngineService', () => {
         service.startGame('mario');
         expect(persistenceMock.savedStates).toHaveLength(1);
         expect(persistenceMock.savedStates[0]).toEqual({
-          currentZoneIndex: 0,
+          currentZoneId: 'mario-zone-1',
+          quizIndex: 0,
           coins: 0,
-          quizAttempts: 0,
-          zonesCompleted: [],
         });
       });
     });
 
-    describe('completeZone', () => {
+    describe('navigateToZone', () => {
       beforeEach(() => {
         service.startGame('mario');
         persistenceMock.savedStates = []; // reset après startGame
       });
 
-      it('appelle saveGame avec l\'index de la Zone complétée dans zonesCompleted', () => {
-        service.completeZone();
-        expect(persistenceMock.savedStates).toHaveLength(1);
-        expect(persistenceMock.savedStates[0]).toEqual({
-          currentZoneIndex: 0,
-          coins: 0,
-          quizAttempts: 0,
-          zonesCompleted: [0],
-        });
-      });
-
-      it('n\'ajoute pas l\'index en double si completeZone est appelé deux fois', () => {
-        service.completeZone();
-        service.completeZone();
-        expect(persistenceMock.savedStates).toHaveLength(2);
-        expect(persistenceMock.savedStates[1]).toEqual({
-          currentZoneIndex: 0,
-          coins: 0,
-          quizAttempts: 0,
-          zonesCompleted: [0],
-        });
-      });
-
-      it('sauvegarde les Pièces accumulées', () => {
-        service.addCoins(5);
-        service.completeZone();
-        expect(persistenceMock.savedStates[0]).toMatchObject({
-          coins: 5,
-          zonesCompleted: [0],
-        });
-      });
-    });
-
-    describe('advanceZone', () => {
-      beforeEach(() => {
-        service.startGame('mario');
-        persistenceMock.savedStates = []; // reset après startGame
-      });
-
-      it('appelle saveGame avec le nouvel index de Zone', () => {
-        service.advanceZone();
+      it('appelle saveGame avec le nouvel ID de Zone', () => {
+        service.navigateToZone('mario-zone-2');
         expect(persistenceMock.savedStates).toHaveLength(1);
         expect(persistenceMock.savedStates[0]).toMatchObject({
-          currentZoneIndex: 1,
-        });
-      });
-
-      it('sauvegarde l\'état après avoir complété puis avancé', () => {
-        service.completeZone(); // Zone 0 complétée
-        persistenceMock.savedStates = []; // reset
-        service.advanceZone(); // avance à Zone 1
-        expect(persistenceMock.savedStates).toHaveLength(1);
-        expect(persistenceMock.savedStates[0]).toMatchObject({
-          currentZoneIndex: 1,
-          zonesCompleted: [0],
+          currentZoneId: 'mario-zone-2',
         });
       });
     });
@@ -840,21 +851,24 @@ describe('GameEngineService', () => {
     describe('submitQuizAnswer (réponse correcte)', () => {
       beforeEach(() => {
         service.startGame('mario');
-        service.selectChoice(0);
+        (service as any).quizActiveSignal.set(true);
         persistenceMock.savedStates = []; // reset après startGame
       });
 
-      it('déclenche saveGame via completeZone quand la réponse est correcte', () => {
-        service.submitQuizAnswer(1); // correctIndex de mario_zone_1
+      it('déclenche saveGame via completeQuiz quand la réponse est correcte', () => {
+        service.submitQuizAnswer(1); // correctIndex de quiz 0 de mario-zone-1
         expect(persistenceMock.savedStates).toHaveLength(1);
         expect(persistenceMock.savedStates[0]).toMatchObject({
-          currentZoneIndex: 0,
+          currentZoneId: 'mario-zone-1',
           coins: 2,
-          zonesCompleted: [0],
         });
       });
     });
   });
+
+  // ──────────────────────────────────────────────────────────────
+  // Fin de partie — Quiz final
+  // ──────────────────────────────────────────────────────────────
 
   describe('Fin de partie — Quiz final', () => {
     beforeEach(() => {
@@ -866,116 +880,25 @@ describe('GameEngineService', () => {
     });
 
     it('gameWon() reste false après un Quiz non-final réussi', () => {
-      service.selectChoice(0); // Zone 1 (non-final)
-      service.submitQuizAnswer(1); // réponse correcte
+      (service as any).quizActiveSignal.set(true);
+      service.submitQuizAnswer(1); // Zone 1 quiz 0 réussi (non-final)
       expect(service.gameWon()).toBe(false);
     });
 
     it('gameWon() devient true après le Quiz final réussi', () => {
-      // Avancer jusqu'à la dernière Zone (zone 3, Quiz final)
-      service.selectChoice(0);
-      service.submitQuizAnswer(1); // Zone 1 réussie
-      service.advanceZone();
-
-      service.selectChoice(0);
-      service.submitQuizAnswer(0); // Zone 2 réussie
-      service.advanceZone();
-
-      // Zone 3 = Quiz final (isFinal: true)
-      service.selectChoice(0);
-      service.submitQuizAnswer(0); // correctIndex de mario_zone_3
+      // Naviguer vers la Zone 3 (Quiz final)
+      service.navigateToZone('mario-zone-3');
+      (service as any).quizActiveSignal.set(true);
+      // Zone 3 = Quiz final (isFinal: true), correctIndex = 0
+      service.submitQuizAnswer(0);
       expect(service.gameWon()).toBe(true);
     });
 
     it('gameWon() ne devient pas true si le Quiz final échoue', () => {
-      // Avancer jusqu'à la dernière Zone
-      service.selectChoice(0);
-      service.submitQuizAnswer(1);
-      service.advanceZone();
-
-      service.selectChoice(0);
-      service.submitQuizAnswer(0);
-      service.advanceZone();
-
-      // Zone 3 = Quiz final → 2 erreurs
-      service.selectChoice(0);
+      service.navigateToZone('mario-zone-3');
+      (service as any).quizActiveSignal.set(true);
       service.submitQuizAnswer(1); // faux
-      service.submitQuizAnswer(2); // faux → pénalité
       expect(service.gameWon()).toBe(false);
-    });
-
-    it('l\'échec du Quiz final affiche un message motivant spécifique', () => {
-      // Avancer jusqu'à la dernière Zone
-      service.selectChoice(0);
-      service.submitQuizAnswer(1);
-      service.advanceZone();
-
-      service.selectChoice(0);
-      service.submitQuizAnswer(0);
-      service.advanceZone();
-
-      // Zone 3 = Quiz final → 2 erreurs
-      service.selectChoice(0);
-      service.submitQuizAnswer(1); // faux
-      service.submitQuizAnswer(2); // faux → pénalité
-      expect(service.narrationEvent()).toContain('Presque là');
-      expect(service.narrationEvent()).toContain('Bowser Junior');
-      expect(service.narrationEvent()).toContain('recommence');
-    });
-
-    it('l\'échec du Quiz final met isBlockingChoice à true (bouton Recommencer disponible)', () => {
-      // Avancer jusqu'à la dernière Zone
-      service.selectChoice(0);
-      service.submitQuizAnswer(1);
-      service.advanceZone();
-
-      service.selectChoice(0);
-      service.submitQuizAnswer(0);
-      service.advanceZone();
-
-      // Zone 3 = Quiz final → 2 erreurs
-      service.selectChoice(0);
-      service.submitQuizAnswer(1); // faux
-      service.submitQuizAnswer(2); // faux → pénalité
-      expect(service.isBlockingChoice()).toBe(true);
-    });
-
-    it('restartZone() permet de recommencer la Zone finale après échec', () => {
-      // Avancer jusqu'à la dernière Zone
-      service.selectChoice(0);
-      service.submitQuizAnswer(1);
-      service.advanceZone();
-
-      service.selectChoice(0);
-      service.submitQuizAnswer(0);
-      service.advanceZone();
-
-      // Zone 3 = Quiz final → 2 erreurs
-      service.selectChoice(0);
-      service.submitQuizAnswer(1); // faux
-      service.submitQuizAnswer(2); // faux → pénalité
-      expect(service.isBlockingChoice()).toBe(true);
-      expect(service.quizActive()).toBe(false);
-
-      // Le joueur clique sur "Recommencer la Zone"
-      service.restartZone();
-      expect(service.isBlockingChoice()).toBe(false);
-      expect(service.narrationEvent()).toBe(null);
-      expect(service.quizActive()).toBe(false);
-      expect(service.quizAttempts()).toBe(0);
-      expect(service.quizFeedback()).toBe(null);
-      // La Zone courante reste la Zone finale
-      expect(service.currentZone()?.id).toBe('mario_zone_3');
-      expect(service.currentZone()?.quiz.isFinal).toBe(true);
-    });
-
-    it('l\'échec d\'un Quiz non-final affiche le message générique de pénalité', () => {
-      // Zone 1 (non-final) → 2 erreurs
-      service.selectChoice(0);
-      service.submitQuizAnswer(0); // faux
-      service.submitQuizAnswer(2); // faux → pénalité
-      expect(service.narrationEvent()).toBe('Pénalité ! -1 Pièce. Recommence cette Zone.');
-      expect(service.narrationEvent()).not.toContain('Presque là');
     });
 
     it('characterId() retourne l\'identifiant du personnage', () => {
@@ -983,104 +906,54 @@ describe('GameEngineService', () => {
     });
 
     it('le Quiz final réussi donne +2 Pièces', () => {
-      // Avancer jusqu'à la dernière Zone
-      service.selectChoice(0);
-      service.submitQuizAnswer(1); // Zone 1 réussie → +2
-      service.advanceZone();
-
-      service.selectChoice(0);
-      service.submitQuizAnswer(0); // Zone 2 réussie → +2
-      service.advanceZone();
-
-      // Zone 3 = Quiz final → +2
-      service.selectChoice(0);
-      service.submitQuizAnswer(0); // correctIndex de mario_zone_3
-      expect(service.coins()).toBe(6); // 2 + 2 + 2
+      service.navigateToZone('mario-zone-3');
+      (service as any).quizActiveSignal.set(true);
+      service.submitQuizAnswer(0); // correctIndex de mario-zone-3
+      expect(service.coins()).toBe(2);
     });
 
     it('le Quiz final réussi marque la Zone comme terminée (isZoneCompleted = true)', () => {
-      // Avancer jusqu'à la dernière Zone
-      service.selectChoice(0);
-      service.submitQuizAnswer(1);
-      service.advanceZone();
-
-      service.selectChoice(0);
-      service.submitQuizAnswer(0);
-      service.advanceZone();
-
-      // Zone 3 = Quiz final
-      service.selectChoice(0);
+      service.navigateToZone('mario-zone-3');
+      (service as any).quizActiveSignal.set(true);
       service.submitQuizAnswer(0);
       expect(service.isZoneCompleted()).toBe(true);
     });
 
     it('le Quiz final réussi désactive le Quiz (quizActive = false)', () => {
-      // Avancer jusqu'à la dernière Zone
-      service.selectChoice(0);
-      service.submitQuizAnswer(1);
-      service.advanceZone();
-
-      service.selectChoice(0);
-      service.submitQuizAnswer(0);
-      service.advanceZone();
-
-      // Zone 3 = Quiz final
-      service.selectChoice(0);
-      expect(service.quizActive()).toBe(true);
+      service.navigateToZone('mario-zone-3');
+      (service as any).quizActiveSignal.set(true);
       service.submitQuizAnswer(0);
       expect(service.quizActive()).toBe(false);
     });
 
     it('l\'échec du Quiz final coûte -1 Pièce', () => {
-      // Avancer jusqu'à la dernière Zone avec des pièces accumulées
-      service.selectChoice(0);
-      service.submitQuizAnswer(1); // Zone 1 → +2
-      service.advanceZone();
-
-      service.selectChoice(0);
-      service.submitQuizAnswer(0); // Zone 2 → +2
-      service.advanceZone();
-
-      // Zone 3 = Quiz final → 2 erreurs → -1
-      service.selectChoice(0);
+      service.addCoins(5);
+      service.navigateToZone('mario-zone-3');
+      (service as any).quizActiveSignal.set(true);
       service.submitQuizAnswer(1); // faux
-      service.submitQuizAnswer(2); // faux → pénalité
-      expect(service.coins()).toBe(3); // 2 + 2 - 1 = 3
+      expect(service.coins()).toBe(4); // 5 - 1 = 4
     });
 
     it('startGame() réinitialise gameWon à false après une victoire', () => {
-      // Simuler une victoire
-      service.selectChoice(0);
-      service.submitQuizAnswer(1);
-      service.advanceZone();
-
-      service.selectChoice(0);
-      service.submitQuizAnswer(0);
-      service.advanceZone();
-
-      service.selectChoice(0);
+      service.navigateToZone('mario-zone-3');
+      (service as any).quizActiveSignal.set(true);
       service.submitQuizAnswer(0); // Quiz final réussi
       expect(service.gameWon()).toBe(true);
 
-      // Recommencer une nouvelle partie
       service.startGame('mario');
       expect(service.gameWon()).toBe(false);
     });
 
-    it('le Quiz final est bien identifié par isFinal: true dans la Zone', () => {
-      // Avancer jusqu'à la dernière Zone
-      service.selectChoice(0);
-      service.submitQuizAnswer(1);
-      service.advanceZone();
-
-      service.selectChoice(0);
-      service.submitQuizAnswer(0);
-      service.advanceZone();
-
-      // Zone 3 doit avoir quiz.isFinal = true
-      expect(service.currentZone()?.quiz.isFinal).toBe(true);
+    it('le Quiz final est bien identifié par isFinal: true', () => {
+      service.navigateToZone('mario-zone-3');
+      const quiz = service.currentQuiz();
+      expect(quiz?.isFinal).toBe(true);
     });
   });
+
+  // ──────────────────────────────────────────────────────────────
+  // returnToMenu
+  // ──────────────────────────────────────────────────────────────
 
   describe('returnToMenu', () => {
     beforeEach(() => {
@@ -1104,16 +977,10 @@ describe('GameEngineService', () => {
       expect(service.coins()).toBe(0);
     });
 
-    it('réinitialise l\'index de Zone à 0', () => {
-      service.advanceZone();
+    it('réinitialise currentZoneId à ""', () => {
+      service.navigateToZone('mario-zone-2');
       service.returnToMenu();
-      expect(service.currentZoneIndex()).toBe(0);
-    });
-
-    it('réinitialise les Zones terminées', () => {
-      service.completeZone();
-      service.returnToMenu();
-      expect(service.zonesCompleted()).toEqual([]);
+      expect(service.currentZoneId()).toBe('');
     });
 
     it('appelle clearSave() sur le PersistenceService', () => {
@@ -1123,16 +990,9 @@ describe('GameEngineService', () => {
     });
 
     it('réinitialise quizActive à false', () => {
-      service.selectChoice(0);
-      expect(service.quizActive()).toBe(true);
+      (service as any).quizActiveSignal.set(true);
       service.returnToMenu();
       expect(service.quizActive()).toBe(false);
-    });
-
-    it('réinitialise l\'événement narratif à null', () => {
-      service.selectChoice(0);
-      service.returnToMenu();
-      expect(service.narrationEvent()).toBe(null);
     });
 
     it('la Zone courante est null après returnToMenu', () => {
@@ -1140,6 +1000,10 @@ describe('GameEngineService', () => {
       expect(service.currentZone()).toBe(null);
     });
   });
+
+  // ──────────────────────────────────────────────────────────────
+  // returnToCharacterSelect
+  // ──────────────────────────────────────────────────────────────
 
   describe('returnToCharacterSelect', () => {
     beforeEach(() => {
@@ -1162,16 +1026,10 @@ describe('GameEngineService', () => {
       expect(service.coins()).toBe(0);
     });
 
-    it('réinitialise l\'index de Zone à 0', () => {
-      service.advanceZone();
+    it('réinitialise currentZoneId à ""', () => {
+      service.navigateToZone('mario-zone-2');
       service.returnToCharacterSelect();
-      expect(service.currentZoneIndex()).toBe(0);
-    });
-
-    it('réinitialise les Zones terminées', () => {
-      service.completeZone();
-      service.returnToCharacterSelect();
-      expect(service.zonesCompleted()).toEqual([]);
+      expect(service.currentZoneId()).toBe('');
     });
 
     it('appelle clearSave() sur le PersistenceService', () => {
@@ -1181,19 +1039,16 @@ describe('GameEngineService', () => {
     });
 
     it('ne PAS effacer les Chemins complétés', () => {
-      // Simuler que Mario a complété son Chemin
       completedPathsMock.addCompletedPath('mario');
       expect(completedPathsMock.getCompletedPaths()).toContain('mario');
 
       service.returnToCharacterSelect();
 
-      // Le Chemin complété de Mario doit rester
       expect(completedPathsMock.getCompletedPaths()).toContain('mario');
     });
 
     it('réinitialise quizActive à false', () => {
-      service.selectChoice(0);
-      expect(service.quizActive()).toBe(true);
+      (service as any).quizActiveSignal.set(true);
       service.returnToCharacterSelect();
       expect(service.quizActive()).toBe(false);
     });
@@ -1203,15 +1058,8 @@ describe('GameEngineService', () => {
       expect(service.currentZone()).toBe(null);
     });
 
-    it('réinitialise isBlockingChoice à false', () => {
-      service.selectChoice(1); // choix bloquant
-      expect(service.isBlockingChoice()).toBe(true);
-      service.returnToCharacterSelect();
-      expect(service.isBlockingChoice()).toBe(false);
-    });
-
     it('réinitialise quizFeedback à null', () => {
-      service.selectChoice(0);
+      (service as any).quizActiveSignal.set(true);
       service.submitQuizAnswer(0); // faux → feedback = 'incorrect'
       expect(service.quizFeedback()).toBe('incorrect');
       service.returnToCharacterSelect();
@@ -1219,8 +1067,8 @@ describe('GameEngineService', () => {
     });
 
     it('réinitialise hintText à null', () => {
-      service.selectChoice(0);
-      service.addCoins(3);
+      (service as any).quizActiveSignal.set(true);
+      service.addCoins(1);
       service.buyHint();
       expect(service.hintText()).not.toBe(null);
       service.returnToCharacterSelect();
@@ -1228,8 +1076,8 @@ describe('GameEngineService', () => {
     });
 
     it('réinitialise eliminatedAnswers à []', () => {
-      service.selectChoice(0);
-      service.addCoins(5);
+      (service as any).quizActiveSignal.set(true);
+      service.addCoins(2);
       service.buyElimination();
       expect(service.eliminatedAnswers()).toHaveLength(2);
       service.returnToCharacterSelect();
@@ -1237,27 +1085,19 @@ describe('GameEngineService', () => {
     });
 
     it('réinitialise gameWon à false après une victoire réelle', () => {
-      // Simuler une victoire
-      service.selectChoice(0);
-      service.submitQuizAnswer(1);
-      service.advanceZone();
-      service.selectChoice(0);
-      service.submitQuizAnswer(0);
-      service.advanceZone();
-      service.selectChoice(0);
+      service.navigateToZone('mario-zone-3');
+      (service as any).quizActiveSignal.set(true);
       service.submitQuizAnswer(0); // Quiz final réussi
       expect(service.gameWon()).toBe(true);
 
       service.returnToCharacterSelect();
       expect(service.gameWon()).toBe(false);
     });
-
-    it('réinitialise l\'événement narratif à null', () => {
-      service.selectChoice(0);
-      service.returnToCharacterSelect();
-      expect(service.narrationEvent()).toBe(null);
-    });
   });
+
+  // ──────────────────────────────────────────────────────────────
+  // addCompletedPath à la victoire
+  // ──────────────────────────────────────────────────────────────
 
   describe('addCompletedPath à la victoire', () => {
     beforeEach(() => {
@@ -1265,95 +1105,42 @@ describe('GameEngineService', () => {
     });
 
     it('appelle addCompletedPath quand le Quiz final est réussi', () => {
-      // Avancer jusqu'à la dernière Zone
-      service.selectChoice(0);
-      service.submitQuizAnswer(1); // Zone 1 réussie
-      service.advanceZone();
-
-      service.selectChoice(0);
-      service.submitQuizAnswer(0); // Zone 2 réussie
-      service.advanceZone();
-
-      // Zone 3 = Quiz final (isFinal: true)
-      service.selectChoice(0);
-      service.submitQuizAnswer(0); // correctIndex de mario_zone_3
+      service.navigateToZone('mario-zone-3');
+      (service as any).quizActiveSignal.set(true);
+      service.submitQuizAnswer(0); // correctIndex de mario-zone-3
 
       expect(completedPathsMock.getCompletedPaths()).toContain('mario');
     });
 
     it('n\'appelle pas addCompletedPath pour un Quiz non-final', () => {
-      service.selectChoice(0);
-      service.submitQuizAnswer(1); // Zone 1 réussie (non-final)
+      (service as any).quizActiveSignal.set(true);
+      service.submitQuizAnswer(1); // Zone 1 quiz 0 réussi (non-final)
 
       expect(completedPathsMock.getCompletedPaths()).not.toContain('mario');
     });
 
     it('n\'appelle pas addCompletedPath quand le Quiz final échoue', () => {
-      // Avancer jusqu'à la dernière Zone
-      service.selectChoice(0);
-      service.submitQuizAnswer(1);
-      service.advanceZone();
-
-      service.selectChoice(0);
-      service.submitQuizAnswer(0);
-      service.advanceZone();
-
-      // Zone 3 = Quiz final → 2 erreurs
-      service.selectChoice(0);
+      service.navigateToZone('mario-zone-3');
+      (service as any).quizActiveSignal.set(true);
       service.submitQuizAnswer(1); // faux
-      service.submitQuizAnswer(2); // faux → pénalité
 
       expect(completedPathsMock.getCompletedPaths()).not.toContain('mario');
     });
 
     it('appelle addCompletedPath avec le bon characterId (mario)', () => {
-      // Avancer jusqu'à la dernière Zone
-      service.selectChoice(0);
-      service.submitQuizAnswer(1);
-      service.advanceZone();
-
-      service.selectChoice(0);
+      service.navigateToZone('mario-zone-3');
+      (service as any).quizActiveSignal.set(true);
       service.submitQuizAnswer(0);
-      service.advanceZone();
-
-      // Zone 3 = Quiz final
-      service.selectChoice(0);
-      service.submitQuizAnswer(0); // correctIndex de mario_zone_3
 
       const paths = completedPathsMock.getCompletedPaths();
       expect(paths).toContain('mario');
       expect(paths).toHaveLength(1);
     });
-
-    it('ne crée pas de doublon dans les Chemins complétés si le Quiz final est réussi deux fois', () => {
-      // 1ère victoire
-      service.selectChoice(0);
-      service.submitQuizAnswer(1);
-      service.advanceZone();
-      service.selectChoice(0);
-      service.submitQuizAnswer(0);
-      service.advanceZone();
-      service.selectChoice(0);
-      service.submitQuizAnswer(0); // Quiz final réussi
-
-      expect(completedPathsMock.getCompletedPaths()).toContain('mario');
-      expect(completedPathsMock.getCompletedPaths()).toHaveLength(1);
-
-      // Recommencer et gagner de nouveau
-      service.restartGame();
-      service.selectChoice(0);
-      service.submitQuizAnswer(1);
-      service.advanceZone();
-      service.selectChoice(0);
-      service.submitQuizAnswer(0);
-      service.advanceZone();
-      service.selectChoice(0);
-      service.submitQuizAnswer(0); // Quiz final réussi à nouveau
-
-      // Toujours un seul 'mario' (le mock gère les doublons)
-      expect(completedPathsMock.getCompletedPaths()).toEqual(['mario']);
-    });
   });
+
+  // ──────────────────────────────────────────────────────────────
+  // allPathsCompleted
+  // ──────────────────────────────────────────────────────────────
 
   describe('allPathsCompleted', () => {
     it('retourne false quand aucun Chemin n\'est complété', () => {
@@ -1374,6 +1161,10 @@ describe('GameEngineService', () => {
     });
   });
 
+  // ──────────────────────────────────────────────────────────────
+  // restartGame
+  // ──────────────────────────────────────────────────────────────
+
   describe('restartGame', () => {
     beforeEach(() => {
       service.startGame('mario');
@@ -1381,66 +1172,27 @@ describe('GameEngineService', () => {
 
     it('redémarre le jeu avec le même personnage', () => {
       service.addCoins(10);
-      service.advanceZone();
+      service.navigateToZone('mario-zone-2');
       service.restartGame();
       expect(service.gameStarted()).toBe(true);
       expect(service.coins()).toBe(0);
-      expect(service.currentZoneIndex()).toBe(0);
       expect(service.characterId()).toBe('mario');
     });
 
     it('réinitialise gameWon à false après une victoire', () => {
-      // Simuler une victoire en réussissant le Quiz final
-      service.selectChoice(0);
-      service.submitQuizAnswer(1); // Zone 1 réussie
-      service.advanceZone();
-
-      service.selectChoice(0);
-      service.submitQuizAnswer(0); // Zone 2 réussie
-      service.advanceZone();
-
-      // Zone 3 = Quiz final (isFinal: true)
-      service.selectChoice(0);
-      service.submitQuizAnswer(0); // correctIndex de mario_zone_3
+      service.navigateToZone('mario-zone-3');
+      (service as any).quizActiveSignal.set(true);
+      service.submitQuizAnswer(0); // Quiz final réussi
       expect(service.gameWon()).toBe(true);
 
-      // Le joueur clique sur "Recommencer"
       service.restartGame();
       expect(service.gameWon()).toBe(false);
     });
 
     it('ne fait rien si aucun personnage n\'est chargé', () => {
-      // Après returnToMenu, pathSignal est null
       service.returnToMenu();
       service.restartGame();
       expect(service.gameStarted()).toBe(false);
-    });
-
-    it('réinitialise coins, zonesCompleted et currentZoneIndex après une victoire', () => {
-      // Simuler une victoire
-      service.selectChoice(0);
-      service.submitQuizAnswer(1); // Zone 1 → +2
-      service.advanceZone();
-
-      service.selectChoice(0);
-      service.submitQuizAnswer(0); // Zone 2 → +2
-      service.advanceZone();
-
-      service.selectChoice(0);
-      service.submitQuizAnswer(0); // Quiz final réussi
-      expect(service.gameWon()).toBe(true);
-      expect(service.coins()).toBe(6);
-      expect(service.currentZoneIndex()).toBe(2);
-      expect(service.zonesCompleted()).toContain(2);
-
-      // restartGame après victoire
-      service.restartGame();
-      expect(service.gameWon()).toBe(false);
-      expect(service.coins()).toBe(0);
-      expect(service.currentZoneIndex()).toBe(0);
-      expect(service.zonesCompleted()).toEqual([]);
-      expect(service.gameStarted()).toBe(true);
-      expect(service.characterId()).toBe('mario');
     });
   });
 });

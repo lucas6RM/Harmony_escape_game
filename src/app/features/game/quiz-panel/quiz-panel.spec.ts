@@ -249,7 +249,7 @@ describe('QuizPanelComponent', () => {
       fixture.detectChanges();
 
       const helpButtons = fixture.nativeElement.querySelectorAll('.help-button');
-      expect(helpButtons.length).toBe(2);
+      expect(helpButtons.length).toBe(3);
     });
 
     it('masque les boutons d\'aide quand disabled est true', async () => {

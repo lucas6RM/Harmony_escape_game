@@ -1,65 +1,88 @@
+import { HttpClient } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Observable, of } from 'rxjs';
 import { GameEngineService } from '../../../core/services/game-engine';
 import { ContentLoaderService } from '../../../core/services/content-loader';
-import type { CharacterPath, Zone } from '../../../core/types';
+import type { RawCharacterPath } from '../../../core/types';
 import { ZoneExplorer } from './zone-explorer';
 import { QuizPanelComponent } from '../quiz-panel/quiz-panel';
 
 /**
- * Chemin de test avec 2 Zones pour Mario.
+ * Chemin brut de test avec 2 Zones pour Mario (structure tree).
+ * Chaque Zone contient 2 quizzes.
  */
-const MOCK_MARIO_PATH: CharacterPath = {
+const MOCK_RAW_MARIO_PATH: RawCharacterPath = {
   character: 'mario',
-  zones: [
-    {
-      id: 'mario_zone_1',
+  startZoneId: 'mario-zone-1',
+  zones: {
+    'mario-zone-1': {
+      id: 'mario-zone-1',
       narration: "⭐ Tu arrives devant le palais d'Harmony. Luma t'attend, l'air inquiet. 🌟",
-      choices: [
+      quizzes: [
         {
-          text: "Entrer par le grand portail 🚪",
-          nextNarrationId: 'mario_n1_portal',
-          blocking: false,
+          type: 'maths',
+          question: 'Combien font 245 + 378 ?',
+          answers: ['613', '623', '618', '603'],
+          correctIndex: 1,
         },
         {
-          text: "Essayer de grimper au mur 🧗",
-          nextNarrationId: 'mario_n1_wall',
-          blocking: true,
-          penalty: 'Le mur est trop glissant ! Tu tombes à l\'eau. 💦',
+          type: 'univers-mario',
+          question: 'Quel est le pouvoir de Mario ?',
+          answers: ['Super Saut', 'Super Saute', 'Super Bond', 'Super Vol'],
+          correctIndex: 0,
         },
       ],
-      quiz: {
-        type: 'maths',
-        question: 'Combien font 245 + 378 ?',
-        answers: ['613', '623', '618', '603'],
-        correctIndex: 1,
-      },
+      choices: [
+        { text: "Entrer par le grand portail 🚪", nextZoneId: 'mario-zone-2' },
+        { text: "Explorer le jardin 🌺", nextZoneId: 'mario-zone-2' },
+      ],
     },
-    {
-      id: 'mario_zone_2',
+    'mario-zone-2': {
+      id: 'mario-zone-2',
       narration: "🌟 Tu traverses le hall principal. Des étoiles flottent dans l'air.",
-      choices: [
+      quizzes: [
         {
-          text: "Attraper une étoile ⭐",
-          nextNarrationId: 'mario_n2_star',
-          blocking: false,
+          type: 'univers-mario',
+          question: 'Qui est le frère de Mario ?',
+          answers: ['Luigi', 'Wario', 'Toad', 'Yoshi'],
+          correctIndex: 0,
+        },
+        {
+          type: 'contexte',
+          question: 'Où as-tu rencontré Luma ?',
+          answers: ['Devant le palais', 'Dans le hall', 'Au jardin', 'Sur le toit'],
+          correctIndex: 0,
         },
       ],
-      quiz: {
-        type: 'univers-mario',
-        question: 'Qui est le frère de Mario ?',
-        answers: ['Luigi', 'Wario', 'Toad', 'Yoshi'],
-        correctIndex: 0,
-      },
+      choices: [
+        { text: "Attraper une étoile ⭐", nextZoneId: 'mario-zone-2' },
+      ],
     },
-  ] as Zone[],
+  },
 };
 
 /**
- * Mock de ContentLoaderService qui retourne un chemin déterministe.
+ * Mock de HttpClient qui retourne le chemin brut de Mario synchronement.
+ */
+class HttpClientMock {
+  get<T>(_url: string): Observable<T> {
+    return of(MOCK_RAW_MARIO_PATH as unknown as T);
+  }
+}
+
+/**
+ * Mock de ContentLoaderService (requis par la dépendance d'injection).
  */
 class ContentLoaderServiceMock {
   loadPath(_character: string) {
-    return () => MOCK_MARIO_PATH;
+    return {
+      signal: () => ({
+        character: 'mario' as const,
+        startZoneId: MOCK_RAW_MARIO_PATH.startZoneId,
+        zones: MOCK_RAW_MARIO_PATH.zones,
+      }),
+      isLoading: () => false,
+    };
   }
 }
 
@@ -73,6 +96,7 @@ describe('ZoneExplorer', () => {
       imports: [ZoneExplorer],
       providers: [
         GameEngineService,
+        { provide: HttpClient, useClass: HttpClientMock },
         { provide: ContentLoaderService, useClass: ContentLoaderServiceMock },
       ],
     }).compileComponents();
@@ -118,24 +142,13 @@ describe('ZoneExplorer', () => {
 
     it('le deuxième bouton affiche le texte du deuxième choix', () => {
       const buttons = fixture.nativeElement.querySelectorAll('.choice-button');
-      expect(buttons[1].textContent).toContain('Essayer de grimper au mur');
-    });
-
-    it('le choix bloquant a la classe choice-blocking', () => {
-      const buttons = fixture.nativeElement.querySelectorAll('.choice-button');
-      expect(buttons[1].classList.contains('choice-blocking')).toBe(true);
-    });
-
-    it('le choix non bloquant n\'a pas la classe choice-blocking', () => {
-      const buttons = fixture.nativeElement.querySelectorAll('.choice-button');
-      expect(buttons[0].classList.contains('choice-blocking')).toBe(false);
+      expect(buttons[1].textContent).toContain('Explorer le jardin');
     });
 
     it('chaque bouton a un aria-label descriptif', () => {
       const buttons = fixture.nativeElement.querySelectorAll('.choice-button');
       expect(buttons[0].getAttribute('aria-label')).toContain('Choix 1');
       expect(buttons[1].getAttribute('aria-label')).toContain('Choix 2');
-      expect(buttons[1].getAttribute('aria-label')).toContain('chemin risqué');
     });
   });
 
@@ -162,72 +175,68 @@ describe('ZoneExplorer', () => {
 
       expect(spy).toHaveBeenCalledWith(1);
     });
+
+    it('selectChoice navigue vers la Zone cible (nextZoneId)', () => {
+      gameEngine.selectChoice(0);
+      expect(gameEngine.currentZoneId()).toBe('mario-zone-2');
+    });
   });
 
-  describe('événement narratif', () => {
+  describe('navigation entre Zones', () => {
     beforeEach(() => {
       gameEngine.startGame('mario');
       fixture.detectChanges();
     });
 
-    it('ne affiche pas d\'événement au démarrage', () => {
-      const eventBlock = fixture.nativeElement.querySelector('.event-block');
-      expect(eventBlock).toBeFalsy();
+    it('la narration change après avoir navigué vers une nouvelle Zone', () => {
+      expect(fixture.nativeElement.querySelector('.narration-text')?.textContent).toContain("Tu arrives devant le palais d'Harmony");
+
+      gameEngine.selectChoice(0); // navigue vers mario-zone-2
+      fixture.detectChanges();
+
+      expect(fixture.nativeElement.querySelector('.narration-text')?.textContent).toContain("Tu traverses le hall principal");
     });
 
-    it('affiche l\'événement narratif après un choix non bloquant', () => {
+    it('quizIndex est reset à 0 après navigation', () => {
       gameEngine.selectChoice(0);
-      fixture.detectChanges();
-
-      const eventBlock = fixture.nativeElement.querySelector('.event-block');
-      expect(eventBlock).toBeTruthy();
-      expect(eventBlock.textContent).toContain('mario_n1_portal');
-    });
-
-    it('affiche la pénalité après un choix bloquant', () => {
-      gameEngine.selectChoice(1);
-      fixture.detectChanges();
-
-      const eventBlock = fixture.nativeElement.querySelector('.event-block');
-      expect(eventBlock).toBeTruthy();
-      expect(eventBlock.textContent).toContain('Le mur est trop glissant');
-    });
-
-    it('l\'événement a role="alert" et aria-live="polite"', () => {
-      gameEngine.selectChoice(0);
-      fixture.detectChanges();
-
-      const eventBlock = fixture.nativeElement.querySelector('.event-block');
-      expect(eventBlock.getAttribute('role')).toBe('alert');
-      expect(eventBlock.getAttribute('aria-live')).toBe('polite');
+      expect(gameEngine.currentQuizIndex()).toBe(0);
     });
   });
 
-  describe('événement de pénalité (choix bloquant)', () => {
+  describe('feedback pénalité (Quiz raté)', () => {
     beforeEach(() => {
       gameEngine.startGame('mario');
       fixture.detectChanges();
     });
 
-    it('affiche le bouton "Recommencer la Zone" après un choix bloquant', () => {
-      gameEngine.selectChoice(1);
+    it('ne affiche pas de pénalité au démarrage', () => {
+      const penaltyBlock = fixture.nativeElement.querySelector('.event-penalty');
+      expect(penaltyBlock).toBeFalsy();
+    });
+
+    it('affiche la pénalité après une réponse incorrecte', () => {
+      (gameEngine as any).quizActiveSignal.set(true);
+      gameEngine.submitQuizAnswer(0); // faux (correctIndex = 1)
+      fixture.detectChanges();
+
+      const penaltyBlock = fixture.nativeElement.querySelector('.event-penalty');
+      expect(penaltyBlock).toBeTruthy();
+      expect(penaltyBlock.textContent).toContain('Pénalité');
+    });
+
+    it('la pénalité contient le bouton "Recommencer le Quiz"', () => {
+      (gameEngine as any).quizActiveSignal.set(true);
+      gameEngine.submitQuizAnswer(0); // faux
       fixture.detectChanges();
 
       const restartButton = fixture.nativeElement.querySelector('.restart-button');
       expect(restartButton).toBeTruthy();
-      expect(restartButton.textContent).toContain('Recommencer la Zone');
+      expect(restartButton.textContent).toContain('Recommencer le Quiz');
     });
 
-    it('ne affiche pas le bouton "Recommencer la Zone" après un choix non bloquant', () => {
-      gameEngine.selectChoice(0);
-      fixture.detectChanges();
-
-      const restartButton = fixture.nativeElement.querySelector('.restart-button');
-      expect(restartButton).toBeFalsy();
-    });
-
-    it('cliquer sur le bouton appelle restartZone() du service', () => {
-      gameEngine.selectChoice(1);
+    it('cliquer sur "Recommencer le Quiz" appelle restartZone()', () => {
+      (gameEngine as any).quizActiveSignal.set(true);
+      gameEngine.submitQuizAnswer(0); // faux
       fixture.detectChanges();
 
       const spy = vi.spyOn(gameEngine, 'restartZone');
@@ -238,37 +247,13 @@ describe('ZoneExplorer', () => {
       expect(spy).toHaveBeenCalled();
     });
 
-    it('l\'événement de pénalité a role="alert"', () => {
-      gameEngine.selectChoice(1);
+    it('la pénalité a role="alert"', () => {
+      (gameEngine as any).quizActiveSignal.set(true);
+      gameEngine.submitQuizAnswer(0); // faux
       fixture.detectChanges();
 
-      const eventBlock = fixture.nativeElement.querySelector('.event-block');
-      expect(eventBlock.getAttribute('role')).toBe('alert');
-    });
-
-    it('l\'événement de pénalité a la classe event-penalty', () => {
-      gameEngine.selectChoice(1);
-      fixture.detectChanges();
-
-      const eventBlock = fixture.nativeElement.querySelector('.event-block');
-      expect(eventBlock.classList.contains('event-penalty')).toBe(true);
-    });
-
-    it('le bouton a un aria-label descriptif', () => {
-      gameEngine.selectChoice(1);
-      fixture.detectChanges();
-
-      const restartButton = fixture.nativeElement.querySelector('.restart-button');
-      expect(restartButton.getAttribute('aria-label')).toContain('Recommencer la Zone');
-    });
-
-    it('l\'événement de pénalité contient l\'icône d\'avertissement', () => {
-      gameEngine.selectChoice(1);
-      fixture.detectChanges();
-
-      const eventIcon = fixture.nativeElement.querySelector('.event-icon');
-      expect(eventIcon).toBeTruthy();
-      expect(eventIcon.textContent).toContain('⚠️');
+      const penaltyBlock = fixture.nativeElement.querySelector('.event-penalty');
+      expect(penaltyBlock?.getAttribute('role')).toBe('alert');
     });
   });
 
@@ -278,47 +263,30 @@ describe('ZoneExplorer', () => {
       fixture.detectChanges();
     });
 
-    it('ne affiche pas le QuizPanel avant qu\'un choix valide ne soit fait', () => {
+    it('ne affiche pas le QuizPanel quand quizActive est false', () => {
       const quizPanel = fixture.nativeElement.querySelector('app-quiz-panel');
       expect(quizPanel).toBeFalsy();
     });
 
-    it('affiche le QuizPanel après un choix narratif non bloquant', () => {
-      gameEngine.selectChoice(0);
+    it('affiche le QuizPanel quand quizActive est true', () => {
+      (gameEngine as any).quizActiveSignal.set(true);
       fixture.detectChanges();
 
       const quizPanel = fixture.nativeElement.querySelector('app-quiz-panel');
       expect(quizPanel).toBeTruthy();
     });
 
-    it('ne affiche pas le QuizPanel après un choix bloquant', () => {
-      gameEngine.selectChoice(1);
-      fixture.detectChanges();
-
-      const quizPanel = fixture.nativeElement.querySelector('app-quiz-panel');
-      expect(quizPanel).toBeFalsy();
-    });
-
     it('le QuizPanel disparaît quand la Zone est terminée', () => {
-      gameEngine.selectChoice(0);
+      (gameEngine as any).quizActiveSignal.set(true);
       fixture.detectChanges();
 
       expect(fixture.nativeElement.querySelector('app-quiz-panel')).toBeTruthy();
 
-      gameEngine.submitQuizAnswer(1);
-      fixture.detectChanges();
-
-      const quizPanel = fixture.nativeElement.querySelector('app-quiz-panel');
-      expect(quizPanel).toBeFalsy();
-    });
-
-    it('le QuizPanel disparaît quand on recommence la Zone', () => {
-      gameEngine.selectChoice(0);
-      fixture.detectChanges();
-
-      expect(fixture.nativeElement.querySelector('app-quiz-panel')).toBeTruthy();
-
-      gameEngine.restartZone();
+      // Réussir les 2 quizzes de la Zone 1
+      gameEngine.submitQuizAnswer(1); // quiz 0 correct
+      gameEngine.advanceQuiz(); // → quiz 1
+      (gameEngine as any).quizActiveSignal.set(true);
+      gameEngine.submitQuizAnswer(0); // quiz 1 correct → isZoneCompleted = true
       fixture.detectChanges();
 
       const quizPanel = fixture.nativeElement.querySelector('app-quiz-panel');
@@ -326,35 +294,14 @@ describe('ZoneExplorer', () => {
     });
 
     it('cliquer sur une réponse appelle submitQuizAnswer avec l\'index', () => {
-      gameEngine.selectChoice(0);
+      (gameEngine as any).quizActiveSignal.set(true);
       fixture.detectChanges();
 
       const spy = vi.spyOn(gameEngine, 'submitQuizAnswer');
-      const quizPanel = fixture.nativeElement.querySelector('app-quiz-panel');
-      expect(quizPanel).toBeTruthy();
-
       component.onSelectAnswer(2);
       fixture.detectChanges();
 
       expect(spy).toHaveBeenCalledWith(2);
-    });
-
-    it('le QuizPanel est disabled quand il y a un feedback', () => {
-      gameEngine.selectChoice(0);
-      fixture.detectChanges();
-
-      const quizPanel = fixture.nativeElement.querySelector('app-quiz-panel');
-      expect(quizPanel).toBeTruthy();
-
-      gameEngine.submitQuizAnswer(3);
-      fixture.detectChanges();
-
-      // Après 1ère erreur, quizActive reste true mais feedback est 'incorrect'
-      // → le QuizPanel reste visible mais les boutons sont disabled
-      const quizPanelAfter = fixture.nativeElement.querySelector('app-quiz-panel');
-      expect(quizPanelAfter).toBeTruthy();
-      const buttons = quizPanelAfter.querySelectorAll('.answer-button');
-      expect(buttons[0].disabled).toBe(true);
     });
   });
 
@@ -369,11 +316,15 @@ describe('ZoneExplorer', () => {
       expect(successBlock).toBeFalsy();
     });
 
-    it('affiche le message de succès après un Quiz réussi', () => {
-      gameEngine.selectChoice(0);
-      fixture.detectChanges();
-
-      gameEngine.submitQuizAnswer(1);
+    it('affiche le message de succès après avoir réussi tous les quizzes', () => {
+      // Réussir quiz 0
+      (gameEngine as any).quizActiveSignal.set(true);
+      gameEngine.submitQuizAnswer(1); // correct
+      // Avancer au quiz 1
+      gameEngine.advanceQuiz();
+      (gameEngine as any).quizActiveSignal.set(true);
+      // Réussir quiz 1 (dernier) → isZoneCompleted = true
+      gameEngine.submitQuizAnswer(0); // correct
       fixture.detectChanges();
 
       const successBlock = fixture.nativeElement.querySelector('.success-block');
@@ -382,26 +333,28 @@ describe('ZoneExplorer', () => {
       expect(successBlock.textContent).toContain('+2 Pièces');
     });
 
-    it('le message de succès contient le bouton "Zone suivante"', () => {
-      gameEngine.selectChoice(0);
-      fixture.detectChanges();
-
+    it('le message de succès contient le bouton "Quiz suivant" (pas final)', () => {
+      (gameEngine as any).quizActiveSignal.set(true);
       gameEngine.submitQuizAnswer(1);
+      gameEngine.advanceQuiz();
+      (gameEngine as any).quizActiveSignal.set(true);
+      gameEngine.submitQuizAnswer(0);
       fixture.detectChanges();
 
       const advanceButton = fixture.nativeElement.querySelector('.advance-button');
       expect(advanceButton).toBeTruthy();
-      expect(advanceButton.textContent).toContain('Zone suivante');
+      expect(advanceButton.textContent).toContain('Quiz suivant');
     });
 
-    it('cliquer sur "Zone suivante" appelle advanceZone()', () => {
-      gameEngine.selectChoice(0);
-      fixture.detectChanges();
-
+    it('cliquer sur "Quiz suivant" appelle advanceQuiz()', () => {
+      (gameEngine as any).quizActiveSignal.set(true);
       gameEngine.submitQuizAnswer(1);
+      gameEngine.advanceQuiz();
+      (gameEngine as any).quizActiveSignal.set(true);
+      gameEngine.submitQuizAnswer(0);
       fixture.detectChanges();
 
-      const spy = vi.spyOn(gameEngine, 'advanceZone');
+      const spy = vi.spyOn(gameEngine, 'advanceQuiz');
       const advanceButton = fixture.nativeElement.querySelector('.advance-button');
       advanceButton.click();
       fixture.detectChanges();
@@ -409,121 +362,33 @@ describe('ZoneExplorer', () => {
       expect(spy).toHaveBeenCalled();
     });
 
-    it('le QuizPanel disparaît quand la Zone est terminée', () => {
-      gameEngine.selectChoice(0);
-      fixture.detectChanges();
-
-      gameEngine.submitQuizAnswer(1);
-      fixture.detectChanges();
-
-      const quizPanel = fixture.nativeElement.querySelector('app-quiz-panel');
-      expect(quizPanel).toBeFalsy();
-    });
-
     it('le message de succès a role="alert" et aria-live="polite"', () => {
-      gameEngine.selectChoice(0);
-      fixture.detectChanges();
-
+      (gameEngine as any).quizActiveSignal.set(true);
       gameEngine.submitQuizAnswer(1);
+      gameEngine.advanceQuiz();
+      (gameEngine as any).quizActiveSignal.set(true);
+      gameEngine.submitQuizAnswer(0);
       fixture.detectChanges();
 
       const successBlock = fixture.nativeElement.querySelector('.success-block');
-      expect(successBlock.getAttribute('role')).toBe('alert');
-      expect(successBlock.getAttribute('aria-live')).toBe('polite');
-    });
-
-    it('le bouton "Zone suivante" a un aria-label descriptif', () => {
-      gameEngine.selectChoice(0);
-      fixture.detectChanges();
-
-      gameEngine.submitQuizAnswer(1);
-      fixture.detectChanges();
-
-      const advanceButton = fixture.nativeElement.querySelector('.advance-button');
-      expect(advanceButton.getAttribute('aria-label')).toContain('Zone suivante');
+      expect(successBlock?.getAttribute('role')).toBe('alert');
+      expect(successBlock?.getAttribute('aria-live')).toBe('polite');
     });
   });
 
-  describe('message de nouvelle tentative (1ère erreur)', () => {
+  describe('quizzesRemaining affiché dans le composant', () => {
     beforeEach(() => {
       gameEngine.startGame('mario');
       fixture.detectChanges();
     });
 
-    it('ne affiche pas le message de nouvelle tentative au départ', () => {
-      const retryBlock = fixture.nativeElement.querySelector('.retry-block');
-      expect(retryBlock).toBeFalsy();
+    it('quizzesRemaining = 2 au début de la Zone 1', () => {
+      expect(gameEngine.quizzesRemaining()).toBe(2);
     });
 
-    it('affiche le message après une 1ère réponse incorrecte', () => {
-      gameEngine.selectChoice(0);
-      fixture.detectChanges();
-
-      // Réponse incorrecte (correctIndex = 1, on envoie 0)
-      gameEngine.submitQuizAnswer(0);
-      fixture.detectChanges();
-
-      const retryBlock = fixture.nativeElement.querySelector('.retry-block');
-      expect(retryBlock).toBeTruthy();
-      expect(retryBlock.textContent).toContain('Nouvelle tentative');
-      expect(retryBlock.textContent).toContain('Choisis une autre réponse');
-    });
-
-    it('le QuizPanel reste visible après une 1ère erreur', () => {
-      gameEngine.selectChoice(0);
-      fixture.detectChanges();
-
-      gameEngine.submitQuizAnswer(0);
-      fixture.detectChanges();
-
-      const quizPanel = fixture.nativeElement.querySelector('app-quiz-panel');
-      expect(quizPanel).toBeTruthy();
-    });
-
-    it('le message de nouvelle tentative a role="alert" et aria-live="polite"', () => {
-      gameEngine.selectChoice(0);
-      fixture.detectChanges();
-
-      gameEngine.submitQuizAnswer(0);
-      fixture.detectChanges();
-
-      const retryBlock = fixture.nativeElement.querySelector('.retry-block');
-      expect(retryBlock.getAttribute('role')).toBe('alert');
-      expect(retryBlock.getAttribute('aria-live')).toBe('polite');
-    });
-
-    it('ne affiche pas le message après la 2ème erreur (pénalité)', () => {
-      gameEngine.selectChoice(0);
-      fixture.detectChanges();
-
-      // 1ère erreur
-      gameEngine.submitQuizAnswer(0);
-      fixture.detectChanges();
-
-      expect(fixture.nativeElement.querySelector('.retry-block')).toBeTruthy();
-
-      // 2ème erreur
-      gameEngine.submitQuizAnswer(2);
-      fixture.detectChanges();
-
-      // Le message de retry disparaît car quizActive devient false
-      const retryBlock = fixture.nativeElement.querySelector('.retry-block');
-      expect(retryBlock).toBeFalsy();
-    });
-
-    it('le bloc de pénalité apparaît après 2 erreurs', () => {
-      gameEngine.selectChoice(0);
-      fixture.detectChanges();
-
-      gameEngine.submitQuizAnswer(0);
-      fixture.detectChanges();
-
-      gameEngine.submitQuizAnswer(2);
-      fixture.detectChanges();
-
-      const penaltyBlock = fixture.nativeElement.querySelector('.event-penalty');
-      expect(penaltyBlock).toBeTruthy();
-      expect(penaltyBlock.textContent).toContain('Pénalité');
+    it('quizzesRemaining = 1 après advanceQuiz', () => {
+      gameEngine.advanceQuiz();
+      expect(gameEngine.quizzesRemaining()).toBe(1);
     });
   });
 });
