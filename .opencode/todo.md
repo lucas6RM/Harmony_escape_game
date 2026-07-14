@@ -71,13 +71,13 @@ Créer le fichier `daisy.json` contenant le Chemin complet de Daisy sous forme d
 - Lint : `npm run lint`
 
 ## Tableau d'Avancement
-- [ ] Tâche 1 : Créer le squelette du fichier `src/assets/content/daisy.json` avec la structure de base (character, startZoneId, zones vide) et les 9 Zones avec leur narration, leurs choix narratifs et leur arbre de décision cohérent.
+- [x] Tâche 1 : Créer le squelette du fichier `src/assets/content/daisy.json` avec la structure de base (character, startZoneId, zones vide) et les 9 Zones avec leur narration, leurs choix narratifs et leur arbre de décision cohérent.
 - [x] Tâche 2 : Rédiger les Quiz pour les Zones d'exploration (daisy-entree, daisy-terrain-de-sport, daisy-terrasse-solaire, daisy-rampe-de-lancement, daisy-grotte-lumineuse, daisy-zone-trampoline, daisy-salle-des-trophées, daisy-orbitale) — 2 à 3 Quiz par Zone, répartis entre Maths CM1, Français CM1, Univers Mario, Contexte.
-- [ ] Tâche 3 : Rédiger le Quiz final de `daisy-chambre-harmony` (1 Quiz difficile de type Contexte avec `isFinal: true`), et valider la cohérence globale du fichier JSON (tous les nextZoneId corrects, format valide).
+- [x] Tâche 3 : Rédiger le Quiz final de `daisy-chambre-harmony` (1 Quiz difficile de type Contexte avec `isFinal: true`), et valider la cohérence globale du fichier JSON (tous les nextZoneId corrects, format valide).
 
 ## Zone de Transit & Logs
 ### Tâche en cours :
-- Aucune
+- Aucune (issue terminée)
 
 ### Compteur de rejets (tâche actuelle) :
 - 0 / 5
