@@ -264,6 +264,8 @@ describe('ZoneExplorer', () => {
     });
 
     it('ne affiche pas le QuizPanel quand quizActive est false', () => {
+      (gameEngine as any).quizActiveSignal.set(false);
+      fixture.detectChanges();
       const quizPanel = fixture.nativeElement.querySelector('app-quiz-panel');
       expect(quizPanel).toBeFalsy();
     });

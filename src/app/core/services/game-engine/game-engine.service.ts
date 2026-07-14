@@ -136,7 +136,7 @@ export class GameEngineService {
     this.saveGameState();
   }
 
-  private loadPathFromHttp(characterId: string, overrideZoneId?: string): void {
+  private loadPathFromHttp(characterId: string, overrideZoneId?: string, isRestore = false): void {
     this.http.get<RawCharacterPath>(`assets/content/${characterId}.json`).subscribe({
       next: (rawPath) => {
         const resolvedZones: { [zoneId: string]: Zone } = {};
@@ -152,6 +152,9 @@ export class GameEngineService {
           this.currentZoneIdSignal.set(overrideZoneId);
         } else {
           this.currentZoneIdSignal.set(rawPath.startZoneId);
+        }
+        if (!isRestore) {
+          this.currentQuizIndexSignal.set(0);
         }
         this.pathLoadingSignal.set(false);
       },
@@ -181,7 +184,7 @@ export class GameEngineService {
     this.hintTextSignal.set(null);
     this.eliminatedAnswersSignal.set([]);
     this.gameStartedSignal.set(true);
-    this.loadPathFromHttp(gameSave.selectedCharacterId, gameSave.currentZoneId);
+    this.loadPathFromHttp(gameSave.selectedCharacterId, gameSave.currentZoneId, true);
   }
 
   /**
@@ -204,6 +207,7 @@ export class GameEngineService {
 
     // Navigation vers la Zone suivante via nextZoneId
     this.navigateToZone(choice.nextZoneId);
+    this.quizActiveSignal.set(true);
   }
 
   /**
@@ -256,7 +260,7 @@ export class GameEngineService {
   restartZone(): void {
     this.currentQuizIndexSignal.set(0);
     this.isZoneCompletedSignal.set(false);
-    this.quizActiveSignal.set(false);
+    this.quizActiveSignal.set(true);
     this.quizFeedbackSignal.set(null);
     this.hintTextSignal.set(null);
     this.eliminatedAnswersSignal.set([]);
