@@ -15,7 +15,29 @@
           "nextZoneId": "daisy-terrasse-solaire"
         }
       ],
-      "quizzes": []
+      "quizzes": [
+        {
+          "type": "univers-mario",
+          "question": "Daisy est la princesse de quel royaume dans l'univers Super Mario ?",
+          "answers": ["Champignon", "Sarasaland", "Sable", "Fleur"],
+          "correctIndex": 1,
+          "hintText": "C'est un royaume tropical plein de fleurs et de soleil !"
+        },
+        {
+          "type": "maths",
+          "question": "Daisy a trouvé 18 Pièces dans le hall. Elle en donne 5 à Luma pour acheter un indice. Combien de Pièces lui reste-t-il ?",
+          "answers": ["11", "12", "13", "14"],
+          "correctIndex": 2,
+          "hintText": "Soustrais 5 à 18 !"
+        },
+        {
+          "type": "contexte",
+          "question": "Comment Daisy est-elle arrivée au palais d'Harmony ?",
+          "answers": ["En scooter", "En atterrissage forcé", "En galaxie volante", "En parachute"],
+          "correctIndex": 1,
+          "hintText": "Relis le tout début de la narration…"
+        }
+      ]
     },
     "daisy-terrain-de-sport": {
       "id": "daisy-terrain-de-sport",
@@ -30,7 +52,29 @@
           "nextZoneId": "daisy-grotte-lumineuse"
         }
       ],
-      "quizzes": []
+      "quizzes": [
+        {
+          "type": "maths",
+          "question": "Le terrain de sport contient 4 rangées d'anneaux lumineux. Chaque rangée a 7 anneaux. Combien d'anneaux y a-t-il au total ?",
+          "answers": ["21", "24", "28", "32"],
+          "correctIndex": 2,
+          "hintText": "Multiplie 4 par 7 !"
+        },
+        {
+          "type": "francais",
+          "question": "Dans la phrase « Daisy enchaîne les sauts avec grâce et puissance », quel est le verbe conjugué ?",
+          "answers": ["sauts", "enchaîne", "grâce", "puissance"],
+          "correctIndex": 1,
+          "hintText": "Le verbe est l'action que Daisy effectue."
+        },
+        {
+          "type": "contexte",
+          "question": "Quels types d'obstacles flottent dans le terrain de sport spatial ?",
+          "answers": ["Des Goombas et des Koopas", "Des anneaux lumineux, des barrières magnétiques et des coussins d'anti-gravité", "Des étoiles et des lunes", "Des blocs question et des tuyaux"],
+          "correctIndex": 1,
+          "hintText": "Relis bien la narration du terrain de sport…"
+        }
+      ]
     },
     "daisy-rampe-de-lancement": {
       "id": "daisy-rampe-de-lancement",
@@ -41,7 +85,29 @@
           "nextZoneId": "daisy-orbitale"
         }
       ],
-      "quizzes": []
+      "quizzes": [
+        {
+          "type": "univers-mario",
+          "question": "Dans Super Mario Galaxy, quel objet Mario doit collecter en grande quantité pour débloquer de nouvelles galaxies ?",
+          "answers": ["Des pièces", "Des Power Stars", "Des champignons", "Des coeurs"],
+          "correctIndex": 1,
+          "hintText": "Ce sont les étoiles puissantes qu'on gagne en terminant les galaxies !"
+        },
+        {
+          "type": "maths",
+          "question": "La rampe de lancement mesure 150 mètres de long. Daisy a déjà gravi 60 mètres. Combien de mètres lui reste-t-il à parcourir ?",
+          "answers": ["70", "80", "90", "100"],
+          "correctIndex": 2,
+          "hintText": "Soustrais 60 à 150 !"
+        },
+        {
+          "type": "contexte",
+          "question": "Quel vent fouette les cheveux de Daisy sur la rampe de lancement ?",
+          "answers": ["Le vent du nord", "Le vent cosmique", "Le vent stellaire", "Le vent galactique"],
+          "correctIndex": 1,
+          "hintText": "Relis la narration de la rampe de lancement…"
+        }
+      ]
     },
     "daisy-orbitale": {
       "id": "daisy-orbitale",
@@ -52,7 +118,22 @@
           "nextZoneId": "daisy-chambre-harmony"
         }
       ],
-      "quizzes": []
+      "quizzes": [
+        {
+          "type": "francais",
+          "question": "Quel est le pluriel du mot « un garde-fou » ?",
+          "answers": ["des garde-fous", "des garde-foux", "des gardes-fous", "des garde-fou"],
+          "correctIndex": 0,
+          "hintText": "Les mots composés avec un trait d'union : seul le dernier élément prend le « s » au pluriel (sauf exceptions)."
+        },
+        {
+          "type": "contexte",
+          "question": "Quelles traces Daisy a-t-elle remarquées au bout de la piste orbitale ?",
+          "answers": ["Des empreintes de pas", "Des traces de pneus de scooter", "Des traces de feu", "Des empreintes de pattes"],
+          "correctIndex": 1,
+          "hintText": "Ces traces prouvent que Bowser Junior est passé par là…"
+        }
+      ]
     },
     "daisy-grotte-lumineuse": {
       "id": "daisy-grotte-lumineuse",
@@ -63,7 +144,29 @@
           "nextZoneId": "daisy-chambre-harmony"
         }
       ],
-      "quizzes": []
+      "quizzes": [
+        {
+          "type": "maths",
+          "question": "La grotte contient 36 cristaux. Un tiers des cristaux sont roses, un quart sont oranges et le reste est violet. Combien de cristaux sont violets ?",
+          "answers": ["12", "15", "18", "20"],
+          "correctIndex": 1,
+          "hintText": "36 ÷ 3 = 12 roses, 36 ÷ 4 = 9 oranges. Le reste est violet : 36 - 12 - 9 = ?"
+        },
+        {
+          "type": "francais",
+          "question": "Quel est le contraire du mot « sombre » ?",
+          "answers": ["Obscur", "Lumineux", "Noir", "Foncé"],
+          "correctIndex": 1,
+          "hintText": "Le contraire de sombre, c'est ce qui est plein de lumière."
+        },
+        {
+          "type": "contexte",
+          "question": "À quoi réagissent les cristaux de la grotte selon Luma ?",
+          "answers": ["À la musique", "À l'énergie stellaire", "À la chaleur", "Au bruit"],
+          "correctIndex": 1,
+          "hintText": "Luma a expliqué ce qui alimente les cristaux…"
+        }
+      ]
     },
     "daisy-terrasse-solaire": {
       "id": "daisy-terrasse-solaire",
@@ -78,7 +181,29 @@
           "nextZoneId": "daisy-salle-des-trophées"
         }
       ],
-      "quizzes": []
+      "quizzes": [
+        {
+          "type": "univers-mario",
+          "question": "Quel Power-Up permet à Mario de voler dans les airs dans les jeux Super Mario ?",
+          "answers": ["La Fleur de Feu", "La Super Feuille", "La Plume de Cap", "La Fleur Étoile"],
+          "correctIndex": 2,
+          "hintText": "Ce Power-Up fait apparaître un petit chapeau sur la tête de Mario !"
+        },
+        {
+          "type": "francais",
+          "question": "Dans la phrase « La terrasse offre une vue panoramique incroyable », quel est le complément d'objet direct (COD) ?",
+          "answers": ["La terrasse", "une vue panoramique incroyable", "panoramique", "incroyable"],
+          "correctIndex": 1,
+          "hintText": "Le COD répond à la question « offre quoi ? »."
+        },
+        {
+          "type": "contexte",
+          "question": "Quels éléments Daisy observe-t-elle depuis la terrasse solaire ?",
+          "answers": ["Des Goombas et des Koopas", "Des jardins flottants, des cascades d'étoiles et des nuages de poussière cosmique", "Des galaxies et des planètes", "Des champignons et des blocs question"],
+          "correctIndex": 1,
+          "hintText": "Relis la description de la vue depuis la terrasse…"
+        }
+      ]
     },
     "daisy-zone-trampoline": {
       "id": "daisy-zone-trampoline",
@@ -89,7 +214,29 @@
           "nextZoneId": "daisy-orbitale"
         }
       ],
-      "quizzes": []
+      "quizzes": [
+        {
+          "type": "maths",
+          "question": "Chaque trampoline propulse Daisy 5 mètres plus haut que le précédent. Le premier trampoline la lance à 10 mètres. À quelle hauteur le 4ème trampoline la propulse-t-il ?",
+          "answers": ["15 mètres", "20 mètres", "25 mètres", "30 mètres"],
+          "correctIndex": 2,
+          "hintText": "1er = 10m, 2ème = 15m, 3ème = 20m, 4ème = ?"
+        },
+        {
+          "type": "univers-mario",
+          "question": "Dans Super Mario Galaxy, quel type de planète utilise sa gravité pour faire tourner Mario sur elle-même ?",
+          "answers": ["Les planètes de glace", "Les planètes à gravité", "Les planètes de feu", "Les planètes fantômes"],
+          "correctIndex": 1,
+          "hintText": "Mario peut marcher sur toutes les faces de ces planètes grâce à leur gravité particulière !"
+        },
+        {
+          "type": "contexte",
+          "question": "Comment sont disposés les trampolines gravitationnels dans les airs ?",
+          "answers": ["En ligne droite", "En cercle", "En spirale", "En échelle"],
+          "correctIndex": 2,
+          "hintText": "Relis la narration de la zone de trampolines…"
+        }
+      ]
     },
     "daisy-salle-des-trophées": {
       "id": "daisy-salle-des-trophées",
@@ -100,7 +247,29 @@
           "nextZoneId": "daisy-grotte-lumineuse"
         }
       ],
-      "quizzes": []
+      "quizzes": [
+        {
+          "type": "maths",
+          "question": "Harmony a gagné 24 médailles d'étoiles, 18 coupes en cristal et 12 boucliers. Combien de trophées a-t-elle au total ?",
+          "answers": ["48", "50", "52", "54"],
+          "correctIndex": 2,
+          "hintText": "Additionne 24 + 18 + 12 !"
+        },
+        {
+          "type": "francais",
+          "question": "Quel est le synonyme du mot « admirable » ?",
+          "answers": ["Triste", "Magnifique", "Petit", "Lent"],
+          "correctIndex": 1,
+          "hintText": "Quel mot a un sens proche de « qui mérite l'admiration » ?"
+        },
+        {
+          "type": "contexte",
+          "question": "Comment Harmony a-t-elle gagné ses trophées selon Luma ?",
+          "answers": ["En battant Bowser", "En aidant les galaxies en difficulté", "En collectant des pièces", "En courant vite"],
+          "correctIndex": 1,
+          "hintText": "Luma a précisé la raison pour laquelle Harmony a gagné tous ces trophées…"
+        }
+      ]
     },
     "daisy-chambre-harmony": {
       "id": "daisy-chambre-harmony",
