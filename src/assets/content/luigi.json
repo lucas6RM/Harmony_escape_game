@@ -1,0 +1,297 @@
+{
+  "character": "luigi",
+  "startZoneId": "luigi-entree",
+  "zones": {
+    "luigi-entree": {
+      "id": "luigi-entree",
+      "narration": "Luigi se tient devant l'immense portail du palais d'Harmony. Son frère Mario est déjà parti, mais Luigi a insisté pour venir aussi. « Je… je ne suis pas aussi courageux que Mario, mais je ne vais pas rester les bras croisés ! » murmure-t-il en se serrant les poings. Luma, le petit compagnon de Harmony, vole vers lui : « Luigi ! Merci d'être venu ! Bowser Junior a enlevé Harmony ! » Luigi sent une présence étrange dans le hall… comme si quelqu'un le regardait depuis l'ombre. À sa gauche, un couloir sombre s'étend, rempli d'une brume légère. Devant lui, une grande porte dorée est entrebâillée et laisse filtrer une lumière mystérieuse. « Il faut que je sois brave… pour Harmony ! »",
+      "choices": [
+        {
+          "text": "S'aventurer dans le couloir sombre rempli de brume",
+          "nextZoneId": "luigi-sous-sol"
+        },
+        {
+          "text": "Ouvrir la grande porte dorée",
+          "nextZoneId": "luigi-galerie-des-ombres"
+        }
+      ],
+      "quizzes": [
+        {
+          "type": "univers-mario",
+          "question": "Quel est le nom du frère cadet de Mario ?",
+          "answers": ["Wario", "Waluigi", "Luigi", "Toad"],
+          "correctIndex": 2,
+          "hintText": "C'est le personnage vert qui porte un « L » sur sa casquette !"
+        },
+        {
+          "type": "maths",
+          "question": "Luigi mesure 1,65 m. Mario mesure 1,55 m. De combien Luigi est-il plus grand que Mario ?",
+          "answers": ["5 cm", "10 cm", "15 cm", "20 cm"],
+          "correctIndex": 1,
+          "hintText": "Soustrais 1,55 de 1,65 !"
+        },
+        {
+          "type": "contexte",
+          "question": "Que sent Luigi dans le hall du palais ?",
+          "answers": ["Une odeur de confiture", "Une présence étrange, comme si quelqu'un le regardait", "Un vent glacial", "Un parfum de fleurs"],
+          "correctIndex": 1,
+          "hintText": "Relis le début de la narration…"
+        }
+      ]
+    },
+    "luigi-sous-sol": {
+      "id": "luigi-sous-sol",
+      "narration": "Luigi pénètre dans le couloir sombre et frissonne. La brume glisse autour de ses jambes comme des doigts froids. « B-bon, ce n'est rien… c'est juste de la brume… » se rassure-t-il en se parlant tout seul. Des bruits mystérieux résonnent dans les tunnels : des grincements, des murmures, et parfois ce qui ressemble à un rire lointain. Luma vole près de son épaule, lui-même un peu inquiet : « Luigi, il faut faire attention… ce sous-sol est rempli de passages secrets. » Luigi avance prudemment et découvre deux issues : une porte rouillée qui semble mener à une pièce cachée, et un escalier qui monte vers une lueur bleutée. Les bruits semblent venir des deux côtés…",
+      "choices": [
+        {
+          "text": "Ouvrir la porte rouillée vers la pièce cachée",
+          "nextZoneId": "luigi-chambre-secrete"
+        },
+        {
+          "text": "Monter l'escalier vers la lueur bleutée",
+          "nextZoneId": "luigi-salle-des-miroirs"
+        }
+      ],
+      "quizzes": [
+        {
+          "type": "maths",
+          "question": "Le couloir du sous-sol mesure 72 mètres. Luigi avance à 3 mètres par seconde. Combien de temps lui faut-il pour le traverser ?",
+          "answers": ["20 s", "22 s", "24 s", "26 s"],
+          "correctIndex": 2,
+          "hintText": "Divise 72 par 3 !"
+        },
+        {
+          "type": "francais",
+          "question": "Dans la phrase « La brume glisse autour de ses jambes », quel est le sujet du verbe « glisse » ?",
+          "answers": ["ses jambes", "La brume", "autour", "glisse"],
+          "correctIndex": 1,
+          "hintText": "Qui ou quoi glisse ? C'est le sujet."
+        },
+        {
+          "type": "contexte",
+          "question": "Quels bruits Luigi entend-il dans le sous-sol ?",
+          "answers": ["Des chants d'oiseaux", "Des grincements, des murmures et un rire lointain", "Des explosions", "De la musique"],
+          "correctIndex": 1,
+          "hintText": "Relis la description des bruits dans la narration…"
+        }
+      ]
+    },
+    "luigi-chambre-secrete": {
+      "id": "luigi-chambre-secrete",
+      "narration": "Luigi pousse la porte rouillée avec précaution. Elle grince longuement, et une poussière d'étoiles se met à danser dans l'air. « Wouah… » souffle Luigi en ouvrant grand les yeux. Devant lui s'étend une pièce secrète remplie d'artefacts anciens : des statues de Lumas, des cristaux qui changent de couleur, et des tablettes gravées de symboles galactiques. « C'est incroyable… Harmony ne savait même pas que cette pièce existait ! » murmure Luma. Au fond de la pièce, un passage secret s'ouvre dans le sol, révélant une fosse remplie de météorites qui brillent d'une lumière douce. « Regarde Luigi… ces météorites… elles sont magnifiques… et un peu effrayantes… »",
+      "choices": [
+        {
+          "text": "Descendre dans la fosse aux météorites lumineuses",
+          "nextZoneId": "luigi-fosse-aux-asteroixdes"
+        }
+      ],
+      "quizzes": [
+        {
+          "type": "maths",
+          "question": "Il y a 27 artefacts dans la chambre secrète. Un tiers sont des statues, la moitié sont des cristaux, et le reste sont des tablettes. Combien de tablettes y a-t-il ?",
+          "answers": ["6", "7", "8", "9"],
+          "correctIndex": 1,
+          "hintText": "27 ÷ 3 = 9 statues, 27 ÷ 2 = 13,5… arrondis à 13 cristaux. 27 - 9 - 13 = ?"
+        },
+        {
+          "type": "francais",
+          "question": "Dans la phrase « Une poussière d'étoiles se met à danser dans l'air », quel est le verbe conjugué ?",
+          "answers": ["danser", "met", "d'étoiles", "l'air"],
+          "correctIndex": 1,
+          "hintText": "Le verbe conjugué change selon le sujet. « Se met » est au présent."
+        },
+        {
+          "type": "contexte",
+          "question": "Quels types d'artefacts Luigi trouve-t-il dans la chambre secrète ?",
+          "answers": ["Des épées et des boucliers", "Des statues de Lumas, des cristaux et des tablettes gravées", "Des livres et des cartes", "Des instruments de musique"],
+          "correctIndex": 1,
+          "hintText": "Relis la description de la pièce…"
+        }
+      ]
+    },
+    "luigi-fosse-aux-asteroixdes": {
+      "id": "luigi-fosse-aux-asteroixdes",
+      "narration": "Luigi descend prudemment dans la fosse et reste sans voix. Des météorites de toutes tailles flottent dans les airs, émettant une lumière douce qui change de couleur : bleu, violet, vert… « C'est… c'est magnifique… » chuchote Luigi, oubliant un instant sa peur. Luma s'illumine de joie : « Ce sont des météorites vivantes ! Elles réagissent à notre présence ! » En effet, les météorites semblent danser autour de Luigi, comme si elles voulaient lui montrer le chemin. Au fond de la fosse, une ouverture mène vers une grande porte. « Je crois que c'est la Chambre d'Harmony… » dit Luma en pointant la porte du museau. Luigi prend une grande inspiration. « C'est maintenant ou jamais… »",
+      "choices": [
+        {
+          "text": "Traverser l'ouverture et entrer dans la Chambre d'Harmony",
+          "nextZoneId": "luigi-chambre-harmony"
+        }
+      ],
+      "quizzes": [
+        {
+          "type": "maths",
+          "question": "Il y a 48 météorites dans la fosse. Un quart sont bleues, un tiers sont violettes, et le reste sont vertes. Combien de météorites vertes y a-t-il ?",
+          "answers": ["10", "12", "14", "16"],
+          "correctIndex": 2,
+          "hintText": "48 ÷ 4 = 12 bleues, 48 ÷ 3 = 16 violettes. 48 - 12 - 16 = ?"
+        },
+        {
+          "type": "francais",
+          "question": "Dans la phrase « Les météorites semblent danser autour de Luigi », quel est le complément circonstanciel de lieu ?",
+          "answers": ["Les météorites", "semblent danser", "autour de Luigi", "de"],
+          "correctIndex": 2,
+          "hintText": "Le complément de lieu répond à la question « où ? »"
+        },
+        {
+          "type": "contexte",
+          "question": "Comment réagissent les météorites à la présence de Luigi et Luma ?",
+          "answers": ["Elles explosent", "Elles dansent autour d'eux", "Elles s'éteignent", "Elles changent de taille"],
+          "correctIndex": 1,
+          "hintText": "Relis ce que Luma dit sur les météorites…"
+        }
+      ]
+    },
+    "luigi-salle-des-miroirs": {
+      "id": "luigi-salle-des-miroirs",
+      "narration": "Luigi monte l'escalier et se retrouve dans une salle remplie de miroirs infinis. Chaque miroir reflète non pas Luigi, mais une galaxie différente ! Des étoiles filent, des planètes tournent, et des nébuleuses colorées dansent dans les reflets. « C'est… c'est trop beau… » murmure Luigi, les larmes aux yeux. Luma vole de miroir en miroir : « Chaque miroir montre une galaxie que Harmony aimait observer ! » Luigi se regarde dans un miroir et voit brièvement son reflet… mais il a l'air plus courageux, plus déterminé. « Peut-être que… peut-être que je suis plus brave que je ne le pense… » Au fond de la salle, un passage unique mène vers une porte dorée. « La Chambre d'Harmony… je sens qu'elle est juste là… »",
+      "choices": [
+        {
+          "text": "Traverser le passage vers la porte dorée",
+          "nextZoneId": "luigi-chambre-harmony"
+        }
+      ],
+      "quizzes": [
+        {
+          "type": "maths",
+          "question": "Il y a 36 miroirs dans la salle. Si chaque miroir reflète 5 galaxies différentes, combien de galaxies Luigi peut-il observer au total ?",
+          "answers": ["150", "160", "170", "180"],
+          "correctIndex": 3,
+          "hintText": "Multiplie 36 par 5 !"
+        },
+        {
+          "type": "francais",
+          "question": "Dans la phrase « Des étoiles filent, des planètes tournent, et des nébuleuses dansent », combien y a-t-il de verbes conjugués ?",
+          "answers": ["1", "2", "3", "4"],
+          "correctIndex": 2,
+          "hintText": "Compte les actions : filent, tournent, dansent."
+        },
+        {
+          "type": "contexte",
+          "question": "Que voit Luigi quand il se regarde dans un miroir ?",
+          "answers": ["Son reflet normal", "Son reflet plus courageux et déterminé", "Un fantôme", "Mario à sa place"],
+          "correctIndex": 1,
+          "hintText": "Le miroir lui montre une version de lui-même…"
+        }
+      ]
+    },
+    "luigi-galerie-des-ombres": {
+      "id": "luigi-galerie-des-ombres",
+      "narration": "Luigi ouvre la grande porte dorée et entre dans une galerie immense. Des silhouettes flottantes se déplacent lentement le long des murs, projetant des ombres dansantes sur le sol. « E-euh… bonjour ? » dit Luigi d'une voix tremblante. Les silhouettes ne répondent pas, mais elles semblent amicales… comme des gardiens silencieux du palais. Luma vole en avant : « Ne t'inquiète pas Luigi, ce sont des ombres de Lumas qui ont disparu il y a longtemps. Elles veillent sur le palais. » Luigi remarque deux passages : une fenêtre ouverte donne sur une terrasse sous les étoiles, et une grande armoire en bois semble cacher quelque chose. « Je… je vais y aller… » se dit Luigi en serrant les poings.",
+      "choices": [
+        {
+          "text": "Sortir par la fenêtre vers la terrasse sous les étoiles",
+          "nextZoneId": "luigi-terrasse-nocturne"
+        },
+        {
+          "text": "Ouvrir l'armoire en bois mystérieuse",
+          "nextZoneId": "luigi-vault-de-luma"
+        }
+      ],
+      "quizzes": [
+        {
+          "type": "maths",
+          "question": "Il y a 64 silhouettes flottantes dans la galerie. Si elles se déplacent à raison de 2 par seconde, combien de temps faut-il pour qu'elles traversent toutes la galerie ?",
+          "answers": ["28 s", "30 s", "32 s", "34 s"],
+          "correctIndex": 2,
+          "hintText": "Divise 64 par 2 !"
+        },
+        {
+          "type": "francais",
+          "question": "Dans la phrase « Des silhouettes flottantes se déplacent lentement », quel est l'adjectif qui accompagne « silhouettes » ?",
+          "answers": ["lentement", "flottantes", "Des", "se"],
+          "correctIndex": 1,
+          "hintText": "L'adjectif qualifie le nom. « Lentement » est un adverbe."
+        },
+        {
+          "type": "contexte",
+          "question": "Que sont les silhouettes flottantes selon Luma ?",
+          "answers": ["Des fantômes malveillants", "Des ombres de Lumas disparus qui veillent sur le palais", "Des reflets de Bowser Junior", "Des illusions créées par Harmony"],
+          "correctIndex": 1,
+          "hintText": "Luma rassure Luigi en expliquant…"
+        }
+      ]
+    },
+    "luigi-terrasse-nocturne": {
+      "id": "luigi-terrasse-nocturne",
+      "narration": "Luigi franchit la fenêtre et se retrouve sur une terrasse ouverte sur le cosmos. Un vent spatial frais lui caresse le visage. Au-dessus de lui, des milliers d'étoiles scintillent dans un ciel d'un noir profond. « C'est… c'est la plus belle chose que j'aie jamais vue… » murmure Luigi, le souffle coupé. Luma s'envole et décrit des ronds dans les airs : « Regarde Luigi ! Les étoiles forment la silhouette d'une flèche qui pointe vers le fond du palais ! C'est Harmony qui nous guide ! » Luigi suit la flèche stellaire du regard et voit une ouverture au bout de la terrasse. « Les météorites… je les vois briller au loin… »",
+      "choices": [
+        {
+          "text": "Suivre la flèche stellaire vers l'ouverture",
+          "nextZoneId": "luigi-fosse-aux-asteroixdes"
+        }
+      ],
+      "quizzes": [
+        {
+          "type": "maths",
+          "question": "La terrasse mesure 25 mètres de long sur 12 mètres de large. Quelle est sa surface ?",
+          "answers": ["250 m²", "275 m²", "300 m²", "325 m²"],
+          "correctIndex": 2,
+          "hintText": "Multiplie 25 par 12 !"
+        },
+        {
+          "type": "francais",
+          "question": "Dans la phrase « Un vent spatial frais lui caresse le visage », quel est le complément d'objet direct (COD) ?",
+          "answers": ["Un vent spatial frais", "lui", "le visage", "caresse"],
+          "correctIndex": 2,
+          "hintText": "Le COD répond à la question « quoi ? » après le verbe. Le vent caresse quoi ?"
+        },
+        {
+          "type": "contexte",
+          "question": "Quelle forme forment les étoiles selon Luma ?",
+          "answers": ["Un cœur", "Une flèche pointant vers le fond du palais", "Un champignon", "Une étoile"],
+          "correctIndex": 1,
+          "hintText": "Luma dit que c'est Harmony qui les a arrangées…"
+        }
+      ]
+    },
+    "luigi-vault-de-luma": {
+      "id": "luigi-vault-de-luma",
+      "narration": "Luigi ouvre l'armoire en bois et découvre un coffre-fort scintillant ! À l'intérieur, des trésors de Luma sont soigneusement rangés : des étoiles en cristal, des pièces dorées gravées de symboles galactiques, et une carte du palais annotée par Harmony. « C'est le Vault de Luma ! » s'exclame Luma avec émotion. « Harmony m'a aidé à cacher ces trésors ici… » Luigi examine la carte et remarque qu'une flèche rouge pointe vers la Salle des Miroirs. « Harmony savait que quelqu'un viendrait… elle a préparé le chemin ! » dit Luma fièrement. Au fond du coffre, une clé dorée brille doucement. « Elle doit ouvrir la porte de la Salle des Miroirs… »",
+      "choices": [
+        {
+          "text": "Prendre la clé et se diriger vers la Salle des Miroirs",
+          "nextZoneId": "luigi-salle-des-miroirs"
+        }
+      ],
+      "quizzes": [
+        {
+          "type": "maths",
+          "question": "Le coffre contient 156 pièces dorées. Luigi en compte 43 étoiles en cristal et 67 artefacts. Combien d'objets y a-t-il au total dans le coffre ?",
+          "answers": ["153", "156", "159", "162"],
+          "correctIndex": 2,
+          "hintText": "Additionne 156 + 43 + 67 !"
+        },
+        {
+          "type": "francais",
+          "question": "Dans la phrase « Des trésors de Luma sont soigneusement rangés », quel est l'adverbe ?",
+          "answers": ["Des", "soigneusement", "rangés", "trésors"],
+          "correctIndex": 1,
+          "hintText": "L'adverbe modifie le verbe ou l'adjectif. Il répond à « comment ? »"
+        },
+        {
+          "type": "contexte",
+          "question": "Que contient le Vault de Luma ?",
+          "answers": ["Des armes et des boucliers", "Des étoiles en cristal, des pièces dorées et une carte du palais", "Des vêtements et des chaussures", "Des livres et des lettres"],
+          "correctIndex": 1,
+          "hintText": "Relis la description du coffre…"
+        }
+      ]
+    },
+    "luigi-chambre-harmony": {
+      "id": "luigi-chambre-harmony",
+      "narration": "Luigi pousse la porte et se fige. Harmony est là, retenue par un filet d'énergie violette au centre de la pièce. Bowser Junior est assis sur un trône de jeux vidéo, en train de rire. « Eh bien eh bien, Luigi ! Le petit frère timide ! Tu penses vraiment pouvoir me battre ? » Harmony crie : « Luigi ! Je savais que tu viendrais ! Tu es plus courageux que tu ne le crois ! » Luigi tremble… mais il se rappelle ce qu'il a vu dans le miroir : une version de lui-même, déterminée et brave. Il prend une grande inspiration. « Bowser Junior… je… je suis Luigi ! Et je ne vais pas te laisser faire ça ! » Luma se place devant lui, brillant de toute sa lumière. « Ensemble, on va la sauver ! » C'est le moment pour Luigi de prouver qu'il est un vrai héros !",
+      "choices": [],
+      "quizzes": [
+        {
+          "type": "contexte",
+          "question": "Luigi est arrivé à la Chambre d'Harmony. Parmi les Zones suivantes, laquelle Luigi a-t-il pu traverser S'il est passé par le Chemin le plus long (Entrée → Sous-sol → Chambre secrète → Fosse aux astéroïdes → Chambre) ?",
+          "answers": ["La Galerie des Ombres", "La Terrasse nocturne", "La Chambre secrète", "Le Vault de Luma"],
+          "correctIndex": 2,
+          "hintText": "Le chemin par le couloir sombre passe par le sous-sol, puis la chambre secrète, puis…",
+          "isFinal": true
+        }
+      ]
+    }
+  }
+}

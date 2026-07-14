@@ -1,0 +1,290 @@
+{
+  "character": "daisy",
+  "startZoneId": "daisy-entree",
+  "zones": {
+    "daisy-entree": {
+      "id": "daisy-entree",
+      "narration": "Daisy atterrit en atterrissage forcé devant le portail du palais d'Harmony ! « Wouah, quelle entrée ! » s'exclame-t-elle en se redressant avec un grand sourire. Luma vole vers elle en trébuchant : « Daisy ! Merci d'être venue ! Bowser Junior a enlevé Harmony ! Il a laissé des traces de scooter partout ! » Daisy fronce les sourcils, déterminée : « Bowser Junior, hein ? Il va voir de quelle pâte la princesse de Sarasaland est faite ! » Elle observe le hall majestueux : à sa gauche, un passage menant à un terrain de sport spatial rempli d'obstacles flottants. Devant elle, un balcon offre une vue imprenable sur une terrasse ensoleillée. « On ne perd pas de temps ! Au boulot ! »",
+      "choices": [
+        {
+          "text": "Filer vers le terrain de sport spatial",
+          "nextZoneId": "daisy-terrain-de-sport"
+        },
+        {
+          "text": "Prendre le balcon vers la terrasse ensoleillée",
+          "nextZoneId": "daisy-terrasse-solaire"
+        }
+      ],
+      "quizzes": [
+        {
+          "type": "univers-mario",
+          "question": "Daisy est la princesse de quel royaume dans l'univers Super Mario ?",
+          "answers": ["Champignon", "Sarasaland", "Sable", "Fleur"],
+          "correctIndex": 1,
+          "hintText": "C'est un royaume tropical plein de fleurs et de soleil !"
+        },
+        {
+          "type": "maths",
+          "question": "Daisy a trouvé 18 Pièces dans le hall. Elle en donne 5 à Luma pour acheter un indice. Combien de Pièces lui reste-t-il ?",
+          "answers": ["11", "12", "13", "14"],
+          "correctIndex": 2,
+          "hintText": "Soustrais 5 à 18 !"
+        },
+        {
+          "type": "contexte",
+          "question": "Comment Daisy est-elle arrivée au palais d'Harmony ?",
+          "answers": ["En scooter", "En atterrissage forcé", "En galaxie volante", "En parachute"],
+          "correctIndex": 1,
+          "hintText": "Relis le tout début de la narration…"
+        }
+      ]
+    },
+    "daisy-terrain-de-sport": {
+      "id": "daisy-terrain-de-sport",
+      "narration": "Daisy s'élance sur le terrain de sport spatial et ne peut s'empêcher de crier : « Enfin un endroit à ma mesure ! » Des obstacles gravitationnels flottent dans les airs : des anneaux lumineux à traverser, des barrières magnétiques à sauter, et des coussins d'anti-gravité qui propulsent vers le plafond. « Harmony devait s'entraîner ici ! » remarque Luma. Daisy enchaîne les sauts avec grâce et puissance. « Regarde-moi ça, Luma ! Je suis une championne ! » Au fond du terrain, elle repère deux passages : une rampe de lancement géante qui monte vers les étoiles, et un tunnel sombre qui descend vers une grotte mystérieuse. « Deux options… mais Daisy n'a jamais peur du challenge ! »",
+      "choices": [
+        {
+          "text": "Prendre la rampe de lancement vers les étoiles",
+          "nextZoneId": "daisy-rampe-de-lancement"
+        },
+        {
+          "text": "S'engouffrer dans le tunnel vers la grotte",
+          "nextZoneId": "daisy-grotte-lumineuse"
+        }
+      ],
+      "quizzes": [
+        {
+          "type": "maths",
+          "question": "Le terrain de sport contient 4 rangées d'anneaux lumineux. Chaque rangée a 7 anneaux. Combien d'anneaux y a-t-il au total ?",
+          "answers": ["21", "24", "28", "32"],
+          "correctIndex": 2,
+          "hintText": "Multiplie 4 par 7 !"
+        },
+        {
+          "type": "francais",
+          "question": "Dans la phrase « Daisy enchaîne les sauts avec grâce et puissance », quel est le verbe conjugué ?",
+          "answers": ["sauts", "enchaîne", "grâce", "puissance"],
+          "correctIndex": 1,
+          "hintText": "Le verbe est l'action que Daisy effectue."
+        },
+        {
+          "type": "contexte",
+          "question": "Quels types d'obstacles flottent dans le terrain de sport spatial ?",
+          "answers": ["Des Goombas et des Koopas", "Des anneaux lumineux, des barrières magnétiques et des coussins d'anti-gravité", "Des étoiles et des lunes", "Des blocs question et des tuyaux"],
+          "correctIndex": 1,
+          "hintText": "Relis bien la narration du terrain de sport…"
+        }
+      ]
+    },
+    "daisy-rampe-de-lancement": {
+      "id": "daisy-rampe-de-lancement",
+      "narration": "Daisy grimpe la rampe de lancement en criant : « C'est parti pour le grand saut ! » La rampe est immense, bordée de rails scintillants qui brillent comme des étoiles. Plus elle monte, plus la vue devient époustouflante : le palais entier se dessine sous ses pieds, entouré de galaxies qui tournent lentement. « Je suis une fusée ! » hurle Daisy en descendant la rampe à toute vitesse. Le vent cosmique lui fouette les cheveux et elle sent l'adrénaline monter. Au bout de la rampe, une plateforme l'attend, reliée à une piste orbitale qui fait le tour du palais. « Regarde Luma, on va faire le tour du palais en un tour de roue ! »",
+      "choices": [
+        {
+          "text": "Emprunter la piste orbitale autour du palais",
+          "nextZoneId": "daisy-orbitale"
+        }
+      ],
+      "quizzes": [
+        {
+          "type": "univers-mario",
+          "question": "Dans Super Mario Galaxy, quel objet Mario doit collecter en grande quantité pour débloquer de nouvelles galaxies ?",
+          "answers": ["Des pièces", "Des Power Stars", "Des champignons", "Des coeurs"],
+          "correctIndex": 1,
+          "hintText": "Ce sont les étoiles puissantes qu'on gagne en terminant les galaxies !"
+        },
+        {
+          "type": "maths",
+          "question": "La rampe de lancement mesure 150 mètres de long. Daisy a déjà gravi 60 mètres. Combien de mètres lui reste-t-il à parcourir ?",
+          "answers": ["70", "80", "90", "100"],
+          "correctIndex": 2,
+          "hintText": "Soustrais 60 à 150 !"
+        },
+        {
+          "type": "contexte",
+          "question": "Quel vent fouette les cheveux de Daisy sur la rampe de lancement ?",
+          "answers": ["Le vent du nord", "Le vent cosmique", "Le vent stellaire", "Le vent galactique"],
+          "correctIndex": 1,
+          "hintText": "Relis la narration de la rampe de lancement…"
+        }
+      ]
+    },
+    "daisy-orbitale": {
+      "id": "daisy-orbitale",
+      "narration": "Daisy dévale la piste orbitale à toute allure ! Le palais défile sous ses pieds comme un immense jouet cosmique. « C'est encore mieux qu'un manège ! » crie-t-elle en riant aux éclats. La piste est bordée de garde-fous en cristal qui scintillent à chaque passage. Luma vole à ses côtés, impressionné : « Daisy, tu es incroyable ! Personne n'a jamais fait cette piste aussi vite ! » Au bout de la piste orbitale, une porte massive se profile. Des traces de pneus de scooter sont visibles sur le sol. « Bowser Junior est passé par là ! » s'exclame Daisy en serrant les poings. « Harmony, tiens bon, ta meilleure amie arrive ! »",
+      "choices": [
+        {
+          "text": "Ouvrir la porte massive et foncer vers Harmony",
+          "nextZoneId": "daisy-chambre-harmony"
+        }
+      ],
+      "quizzes": [
+        {
+          "type": "francais",
+          "question": "Quel est le pluriel du mot « un garde-fou » ?",
+          "answers": ["des garde-fous", "des garde-foux", "des gardes-fous", "des garde-fou"],
+          "correctIndex": 0,
+          "hintText": "Les mots composés avec un trait d'union : seul le dernier élément prend le « s » au pluriel (sauf exceptions)."
+        },
+        {
+          "type": "contexte",
+          "question": "Quelles traces Daisy a-t-elle remarquées au bout de la piste orbitale ?",
+          "answers": ["Des empreintes de pas", "Des traces de pneus de scooter", "Des traces de feu", "Des empreintes de pattes"],
+          "correctIndex": 1,
+          "hintText": "Ces traces prouvent que Bowser Junior est passé par là…"
+        }
+      ]
+    },
+    "daisy-grotte-lumineuse": {
+      "id": "daisy-grotte-lumineuse",
+      "narration": "Daisy s'engouffre dans le tunnel et atterrit dans une grotte qui lui coupe le souffle. Des cristaux de toutes tailles pavoisent les parois, émettant une lumière douce qui change de couleur : rose, orange, violet… « C'est trop beau ! » souffle Daisy, un instant silencieuse. Les cristaux réagissent à sa présence et se mettent à danser de lumière, comme s'ils voulaient lui montrer le chemin. Luma s'illumine de joie : « Ces cristaux sont vivants ! Ils réagissent à l'énergie stellaire ! » Daisy tend la main et un cristal rose s'illumine plus fort. « Ils sont sympas, ces cristaux ! » Au fond de la grotte, une ouverture mène vers une grande porte dorée. « Je sens qu'Harmony est juste de l'autre côté… »",
+      "choices": [
+        {
+          "text": "Traverser l'ouverture et entrer dans la Chambre d'Harmony",
+          "nextZoneId": "daisy-chambre-harmony"
+        }
+      ],
+      "quizzes": [
+        {
+          "type": "maths",
+          "question": "La grotte contient 36 cristaux. Un tiers des cristaux sont roses, un quart sont oranges et le reste est violet. Combien de cristaux sont violets ?",
+          "answers": ["12", "15", "18", "20"],
+          "correctIndex": 1,
+          "hintText": "36 ÷ 3 = 12 roses, 36 ÷ 4 = 9 oranges. Le reste est violet : 36 - 12 - 9 = ?"
+        },
+        {
+          "type": "francais",
+          "question": "Quel est le contraire du mot « sombre » ?",
+          "answers": ["Obscur", "Lumineux", "Noir", "Foncé"],
+          "correctIndex": 1,
+          "hintText": "Le contraire de sombre, c'est ce qui est plein de lumière."
+        },
+        {
+          "type": "contexte",
+          "question": "À quoi réagissent les cristaux de la grotte selon Luma ?",
+          "answers": ["À la musique", "À l'énergie stellaire", "À la chaleur", "Au bruit"],
+          "correctIndex": 1,
+          "hintText": "Luma a expliqué ce qui alimente les cristaux…"
+        }
+      ]
+    },
+    "daisy-terrasse-solaire": {
+      "id": "daisy-terrasse-solaire",
+      "narration": "Daisy franchit le balcon et atterrit sur une terrasse baignée de lumière stellaire. « Ah, c'est exactement mon style ! » s'exclame-t-elle en étirant les bras. La terrasse offre une vue panoramique incroyable : des jardins flottants, des cascades d'étoiles, et des nuages de poussière cosmique qui scintillent comme des paillettes. « Harmony avait vraiment le goût du beau ! » remarque Daisy en admirant le paysage. Luma vole autour d'elle : « Daisy, il faut qu'on avance ! Bowser Junior ne va pas attendre ! » Daisy repère deux passages : une zone de trampolines gravitationnels qui rebondissent dans les airs, et un escalier doré qui descend vers une salle mystérieuse. « Trampolines ou escalier… Daisy adore les deux ! »",
+      "choices": [
+        {
+          "text": "Sauter sur les trampolines gravitationnels",
+          "nextZoneId": "daisy-zone-trampoline"
+        },
+        {
+          "text": "Descendre l'escalier doré vers la salle mystérieuse",
+          "nextZoneId": "daisy-salle-des-trophées"
+        }
+      ],
+      "quizzes": [
+        {
+          "type": "univers-mario",
+          "question": "Quel Power-Up permet à Mario de voler dans les airs dans les jeux Super Mario ?",
+          "answers": ["La Fleur de Feu", "La Super Feuille", "La Plume de Cap", "La Fleur Étoile"],
+          "correctIndex": 2,
+          "hintText": "Ce Power-Up fait apparaître un petit chapeau sur la tête de Mario !"
+        },
+        {
+          "type": "francais",
+          "question": "Dans la phrase « La terrasse offre une vue panoramique incroyable », quel est le complément d'objet direct (COD) ?",
+          "answers": ["La terrasse", "une vue panoramique incroyable", "panoramique", "incroyable"],
+          "correctIndex": 1,
+          "hintText": "Le COD répond à la question « offre quoi ? »."
+        },
+        {
+          "type": "contexte",
+          "question": "Quels éléments Daisy observe-t-elle depuis la terrasse solaire ?",
+          "answers": ["Des Goombas et des Koopas", "Des jardins flottants, des cascades d'étoiles et des nuages de poussière cosmique", "Des galaxies et des planètes", "Des champignons et des blocs question"],
+          "correctIndex": 1,
+          "hintText": "Relis la description de la vue depuis la terrasse…"
+        }
+      ]
+    },
+    "daisy-zone-trampoline": {
+      "id": "daisy-zone-trampoline",
+      "narration": "Daisy saute sur le premier trampoline et s'envole comme une fusée ! « WAAAAH ! C'est génial ! » hurle-t-elle en rebondissant de trampoline en trampoline. Les trampolines gravitationnels sont disposés en spirale dans les airs, chacun propulsant plus haut que le précédent. Daisy enchaîne les sauts avec un sourire aux lèvres : « Regarde-moi ça, Luma ! Je suis la reine des airs ! » Luma la suit en volant, impressionné : « Tu es vraiment incroyable, Daisy ! » Au sommet de la spirale, une plateforme relie la zone de trampolines à la piste orbitale du palais. « La piste orbitale ! On va faire le tour du palais ! » crie Daisy en bondissant vers la plateforme.",
+      "choices": [
+        {
+          "text": "Prendre la piste orbitale autour du palais",
+          "nextZoneId": "daisy-orbitale"
+        }
+      ],
+      "quizzes": [
+        {
+          "type": "maths",
+          "question": "Chaque trampoline propulse Daisy 5 mètres plus haut que le précédent. Le premier trampoline la lance à 10 mètres. À quelle hauteur le 4ème trampoline la propulse-t-il ?",
+          "answers": ["15 mètres", "20 mètres", "25 mètres", "30 mètres"],
+          "correctIndex": 2,
+          "hintText": "1er = 10m, 2ème = 15m, 3ème = 20m, 4ème = ?"
+        },
+        {
+          "type": "univers-mario",
+          "question": "Dans Super Mario Galaxy, quel type de planète utilise sa gravité pour faire tourner Mario sur elle-même ?",
+          "answers": ["Les planètes de glace", "Les planètes à gravité", "Les planètes de feu", "Les planètes fantômes"],
+          "correctIndex": 1,
+          "hintText": "Mario peut marcher sur toutes les faces de ces planètes grâce à leur gravité particulière !"
+        },
+        {
+          "type": "contexte",
+          "question": "Comment sont disposés les trampolines gravitationnels dans les airs ?",
+          "answers": ["En ligne droite", "En cercle", "En spirale", "En échelle"],
+          "correctIndex": 2,
+          "hintText": "Relis la narration de la zone de trampolines…"
+        }
+      ]
+    },
+    "daisy-salle-des-trophées": {
+      "id": "daisy-salle-des-trophées",
+      "narration": "Daisy descend l'escalier doré et entre dans une salle remplie de trophées scintillants. « Wouah, Harmony était une vraie championne ! » s'exclame-t-elle en admirant les coupes en cristal, les médailles d'étoiles, et les boucliers gravés de symboles galactiques. Chaque trophée raconte une aventure : des courses de Lumas, des tournois de sauts gravitationnels, des compétitions de collecte d'étoiles. « Elle était vraiment forte ! » murmure Daisy avec admiration. Luma ajoute : « Harmony a gagné tous ces trophées en aidant les galaxies en difficulté ! » Au fond de la salle, un passage mène vers une grotte remplie de cristaux lumineux. « Les cristaux… je les vois briller ! » dit Daisy en pointant le passage du doigt.",
+      "choices": [
+        {
+          "text": "Traverser le passage vers la grotte aux cristaux",
+          "nextZoneId": "daisy-grotte-lumineuse"
+        }
+      ],
+      "quizzes": [
+        {
+          "type": "maths",
+          "question": "Harmony a gagné 24 médailles d'étoiles, 18 coupes en cristal et 12 boucliers. Combien de trophées a-t-elle au total ?",
+          "answers": ["48", "50", "52", "54"],
+          "correctIndex": 2,
+          "hintText": "Additionne 24 + 18 + 12 !"
+        },
+        {
+          "type": "francais",
+          "question": "Quel est le synonyme du mot « admirable » ?",
+          "answers": ["Triste", "Magnifique", "Petit", "Lent"],
+          "correctIndex": 1,
+          "hintText": "Quel mot a un sens proche de « qui mérite l'admiration » ?"
+        },
+        {
+          "type": "contexte",
+          "question": "Comment Harmony a-t-elle gagné ses trophées selon Luma ?",
+          "answers": ["En battant Bowser", "En aidant les galaxies en difficulté", "En collectant des pièces", "En courant vite"],
+          "correctIndex": 1,
+          "hintText": "Luma a précisé la raison pour laquelle Harmony a gagné tous ces trophées…"
+        }
+      ]
+    },
+    "daisy-chambre-harmony": {
+      "id": "daisy-chambre-harmony",
+      "narration": "Daisy enfonçe la porte d'un coup d'épaule et se fige. Harmony est là, retenue par un filet d'énergie violette au centre de la pièce. Bowser Junior est assis sur un trône de jeux vidéo, en train de rire. « Eh bien eh bien, Daisy ! La princesse de Sarasaland en personne ! Tu crois vraiment que tu vas me battre ? » Harmony crie : « Daisy ! Je savais que tu viendrais ! Tu es la plus courageuse de toutes ! » Daisy croise les bras et sourit avec détermination. « Bowser Junior, tu as fait une grosse erreur en touchant à ma meilleure amie ! » Luma se place derrière Daisy, brillant de toute sa lumière. « Ensemble, on va la sauver ! » Bowser Junior se lève et lance un dernier défi : « Si tu veux libérer Harmony, prouve-moi que tu es vraiment la princesse la plus forte ! » C'est le moment pour Daisy de montrer de quoi elle est capable !",
+      "choices": [],
+      "quizzes": [
+        {
+          "type": "contexte",
+          "question": "Daisy est arrivée à la Chambre d'Harmony. Parmi les Zones suivantes, laquelle Daisy a-t-elle pu traverser si elle est passée par le Chemin le plus long (Entrée → Terrasse → Trophées → Grotte → Chambre) ?",
+          "answers": ["Le Terrain de sport spatial", "La Rampe de lancement", "La Salle des trophées", "La Zone de trampolines"],
+          "correctIndex": 2,
+          "hintText": "Le chemin le plus long passe par la Terrasse, puis la Salle des trophées, puis la Grotte…",
+          "isFinal": true
+        }
+      ]
+    }
+  }
+}
