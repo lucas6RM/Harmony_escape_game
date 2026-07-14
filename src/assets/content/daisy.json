@@ -275,7 +275,16 @@
       "id": "daisy-chambre-harmony",
       "narration": "Daisy enfonçe la porte d'un coup d'épaule et se fige. Harmony est là, retenue par un filet d'énergie violette au centre de la pièce. Bowser Junior est assis sur un trône de jeux vidéo, en train de rire. « Eh bien eh bien, Daisy ! La princesse de Sarasaland en personne ! Tu crois vraiment que tu vas me battre ? » Harmony crie : « Daisy ! Je savais que tu viendrais ! Tu es la plus courageuse de toutes ! » Daisy croise les bras et sourit avec détermination. « Bowser Junior, tu as fait une grosse erreur en touchant à ma meilleure amie ! » Luma se place derrière Daisy, brillant de toute sa lumière. « Ensemble, on va la sauver ! » Bowser Junior se lève et lance un dernier défi : « Si tu veux libérer Harmony, prouve-moi que tu es vraiment la princesse la plus forte ! » C'est le moment pour Daisy de montrer de quoi elle est capable !",
       "choices": [],
-      "quizzes": []
+      "quizzes": [
+        {
+          "type": "contexte",
+          "question": "Daisy est arrivée à la Chambre d'Harmony. Parmi les Zones suivantes, laquelle Daisy a-t-elle pu traverser si elle est passée par le Chemin le plus long (Entrée → Terrasse → Trophées → Grotte → Chambre) ?",
+          "answers": ["Le Terrain de sport spatial", "La Rampe de lancement", "La Salle des trophées", "La Zone de trampolines"],
+          "correctIndex": 2,
+          "hintText": "Le chemin le plus long passe par la Terrasse, puis la Salle des trophées, puis la Grotte…",
+          "isFinal": true
+        }
+      ]
     }
   }
 }
