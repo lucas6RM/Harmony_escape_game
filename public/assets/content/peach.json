@@ -1,20 +1,633 @@
 {
   "character": "peach",
-  "zones": [
-    {
-      "id": "peach_zone_1",
-      "narration": "La princesse Peach atterrit gracieusement devant le palais. Elle sait qu'Harmony a besoin d'elle.",
+  "startZoneId": "peach-entree",
+  "zones": {
+    "peach-entree": {
+      "id": "peach-entree",
+      "narration": "La princesse Peach atterrit gracieusement devant le portail du palais d'Harmony. Elle reconnaît immédiatement l'atmosphère chaleureuse de ce lieu qu'elle affectionne tant. « Harmony et moi, nous avons passé tant de moments merveilleux ici… » murmure-t-elle en posant délicatement sa main sur la porte. Luma vole vers elle, les yeux brillants d'inquiétude : « Princesse Peach ! Merci d'être venue ! Bowser Junior a enlevé Harmony ! Il est passé par le salon royal et par la serre… je n'ai pas pu l'arrêter ! » Peach redresse sa couronne avec détermination. « Ne t'inquiète pas, petit Luma. Je vais retrouver Harmony. » Elle observe le hall majestueux : à sa droite, une porte ornée de roses mène vers le Salon Royal. Devant elle, un passage verdoyant s'ouvre vers la Serre Enchantée, remplie d'un parfum de fleurs cosmiques. « Il faut que je sois méthodique… Harmony compterait sur moi. »",
       "choices": [
-        { "text": "Utiliser sa couronne pour ouvrir le portail magique", "nextNarrationId": "peach_n1", "blocking": false },
-        { "text": "Demander poliment à entrer", "nextNarrationId": "peach_n1", "blocking": true, "penalty": "recommencer la zone" }
+        {
+          "text": "Entrer dans le Salon Royal par la porte ornée de roses",
+          "nextZoneId": "peach-salon-royal"
+        },
+        {
+          "text": "Prendre le passage verdoyant vers la Serre Enchantée",
+          "nextZoneId": "peach-serre-enchantee"
+        }
       ],
-      "quiz": {
-        "type": "univers-mario",
-        "question": "Quel est le nom du fils de Bowser ?",
-        "answers": ["Bowser Jr", "Baby Bowser", "Junior Koopa", "Bowser Jr"],
-        "correctIndex": 0,
-        "isFinal": true
-      }
+      "quizzes": [
+        {
+          "type": "univers-mario",
+          "question": "Quel est le fruit préféré de Peach dans les jeux Super Mario ?",
+          "answers": ["La pomme", "La cerise", "La pêche", "La fraise"],
+          "correctIndex": 2,
+          "hintText": "Son nom en anglais est un indice…"
+        },
+        {
+          "type": "maths",
+          "question": "Peach a 15 Pièces. Elle répond correctement à 3 Quiz et incorrectement à 1 Quiz. Combien de Pièces a-t-elle maintenant ?",
+          "answers": ["18 Pièces", "20 Pièces", "22 Pièces", "24 Pièces"],
+          "correctIndex": 1,
+          "hintText": "3 × (+2) = +6 et 1 × (-1) = -1. 15 + 6 - 1 = ?"
+        },
+        {
+          "type": "contexte",
+          "question": "Par quels passages Bowser Junior est-il passé selon Luma ?",
+          "answers": ["Par le jardin et la cuisine", "Par le salon royal et la serre", "Par le couloir et la tour", "Par la galerie et la terrasse"],
+          "correctIndex": 1,
+          "hintText": "Luma mentionne deux lieux précis…"
+        },
+        {
+          "type": "francais",
+          "question": "Dans la phrase « Elle reconnaît immédiatement l'atmosphère chaleureuse », quel est l'adverbe ?",
+          "answers": ["chaleureuse", "immédiatement", "reconnaît", "atmosphère"],
+          "correctIndex": 1,
+          "hintText": "L'adverbe modifie le verbe et répond à la question « comment ? »"
+        },
+        {
+          "type": "univers-mario",
+          "question": "Dans Super Mario Galaxy, quel Power-Up permet à Peach de voler ?",
+          "answers": ["La Fleur Étoile", "Le Cape Feather (Plume de Cape)", "La Fleur de Feu", "Le Super Champignon"],
+          "correctIndex": 1,
+          "hintText": "C'est le même Power-Up que Mario utilise pour planer…"
+        },
+        {
+          "type": "contexte",
+          "question": "Combien de passages Peach peut-elle emprunter depuis le hall du palais ?",
+          "answers": ["1", "2", "3", "4"],
+          "correctIndex": 1,
+          "hintText": "Une porte ornée de roses et un passage verdoyant…"
+        },
+        {
+          "type": "maths",
+          "question": "Le portail du palais mesure 5,4 mètres de haut. Peach mesure 1,65 m. Combien de Peach empilées faut-il pour atteindre le sommet du portail ?",
+          "answers": ["2", "3", "4", "5"],
+          "correctIndex": 3,
+          "hintText": "Divise 5,4 par 1,65 et arrondis à l'entier supérieur !"
+        },
+        {
+          "type": "francais",
+          "question": "Quel est le synonyme du mot « gracieusement » dans « Peach atterrit gracieusement » ?",
+          "answers": ["Lourdement", "Avec élégance", "Vite", "Brutalement"],
+          "correctIndex": 1,
+          "hintText": "Gracieusement évoque la grâce et l'élégance."
+        }
+      ]
+    },
+    "peach-salon-royal": {
+      "id": "peach-salon-royal",
+      "narration": "Peach entre dans le Salon Royal et son cœur se serre. C'est une pièce élégante remplie de souvenirs d'Harmony : des tableaux de galaxies accrochés aux murs, des coussins brodés de constellations, et une bibliothèque remplie de livres sur les étoiles. « C'est ici qu'on discutait de nos rêves… » se souvient Peach en caressant un coussin. Sur la table basse, elle remarque un carnet ouvert : Harmony y a dessiné une carte du palais avec des flèches pointant vers deux directions. « Elle savait… elle a préparé un plan au cas où ! » Peach voit deux issues : une porte menant à la Bibliothèque, remplie de livres sur les galaxies, et un balcon ouvert sur la Terrasse Royale, d'où l'on peut voir tout le palais. Des traces de pneus de scooter sont visibles près des deux passages…",
+      "choices": [
+        {
+          "text": "Entrer dans la Bibliothèque remplie de livres sur les galaxies",
+          "nextZoneId": "peach-bibliotheque"
+        },
+        {
+          "text": "Sortir sur le balcon vers la Terrasse Royale",
+          "nextZoneId": "peach-terrasse-royale"
+        }
+      ],
+      "quizzes": [
+        {
+          "type": "contexte",
+          "question": "Quel objet Peach trouve-t-elle sur la table basse du Salon Royal ?",
+          "answers": ["Une lettre de Bowser Junior", "Un carnet ouvert avec une carte du palais", "Une clé dorée", "Un Power-Up"],
+          "correctIndex": 1,
+          "hintText": "Harmony a préparé quelque chose…"
+        },
+        {
+          "type": "maths",
+          "question": "Il y a 56 livres dans le Salon Royal. Un quart sont des livres sur les étoiles, un tiers sont des albums illustrés, et le reste sont des carnets. Combien de carnets y a-t-il ?",
+          "answers": ["18", "19", "20", "21"],
+          "correctIndex": 2,
+          "hintText": "56 ÷ 4 = 14 livres étoiles, 56 ÷ 3 ≈ 18,67… arrondis à 19 albums. 56 - 14 - 19 = ?"
+        },
+        {
+          "type": "francais",
+          "question": "Dans la phrase « Des tableaux de galaxies sont accrochés aux murs », quel est le sujet ?",
+          "answers": ["aux murs", "Des tableaux de galaxies", "sont accrochés", "galaxies"],
+          "correctIndex": 1,
+          "hintText": "Qui ou quoi est accroché ? C'est le sujet."
+        },
+        {
+          "type": "univers-mario",
+          "question": "Dans Super Mario Galaxy, quel est le nom du palais où vit Peach ?",
+          "answers": ["Le Château de Peach", "Le Palais des Étoiles", "Le Château des Champignons", "Le Palais Royal"],
+          "correctIndex": 0,
+          "hintText": "C'est le château rose emblématique de l'univers Mario !"
+        },
+        {
+          "type": "contexte",
+          "question": "Quels souvenirs d'Harmony Peach trouve-t-elle dans le Salon Royal ?",
+          "answers": ["Des jouets et des poupées", "Des tableaux de galaxies, des coussins brodés et des livres sur les étoiles", "Des vêtements et des chaussures", "Des instruments de musique"],
+          "correctIndex": 1,
+          "hintText": "Relis la description du salon…"
+        },
+        {
+          "type": "maths",
+          "question": "Le Salon Royal mesure 12 mètres de long sur 8 mètres de large. Quelle est sa surface ?",
+          "answers": ["80 m²", "88 m²", "96 m²", "104 m²"],
+          "correctIndex": 2,
+          "hintText": "Multiplie 12 par 8 !"
+        },
+        {
+          "type": "francais",
+          "question": "Quel est le contraire du mot « élégant » ?",
+          "answers": ["Beau", "Rustique", "Grand", "Lumineux"],
+          "correctIndex": 1,
+          "hintText": "Élégant = raffiné, chic. Son contraire évoque le simple, le brut."
+        },
+        {
+          "type": "univers-mario",
+          "question": "Quel sport Peach pratique-t-elle dans les jeux Mario Sports ?",
+          "answers": ["Le football uniquement", "Le tennis, le golf, le baseball et bien d'autres", "La natation uniquement", "Le basketball uniquement"],
+          "correctIndex": 1,
+          "hintText": "Peach est une sportive polyvalente dans l'univers Mario !"
+        }
+      ]
+    },
+    "peach-bibliotheque": {
+      "id": "peach-bibliotheque",
+      "narration": "Peach franchit la porte de la Bibliothèque et reste sans voix. Des étagères immenses montent jusqu'au plafond, remplies de livres sur les galaxies, les constellations et les planètes lointaines. Des globes célestes tournent lentement au-dessus des tables de lecture. « Harmony adorait ce lieu… elle pouvait passer des heures ici à lire sur les étoiles. » Peach remarque que certains livres ont été déplacés dans la précipitation. Sur une étagère, un livre ouvert tombe entre ses mains : c'est un traité sur les jardins cosmiques, avec une note écrite par Harmony : « Mon jardin privé contient la clé pour me retrouver. » Peach comprend : le Jardin Privé d'Harmony est la prochaine étape ! Une seule porte mène vers ce jardin secret.",
+      "choices": [
+        {
+          "text": "Traverser la porte vers le Jardin Privé d'Harmony",
+          "nextZoneId": "peach-jardin-prive"
+        }
+      ],
+      "quizzes": [
+        {
+          "type": "contexte",
+          "question": "Quelle note Harmony a-t-elle laissée dans le livre de la Bibliothèque ?",
+          "answers": ["« Bowser Junior est dans la cuisine »", "« Mon jardin privé contient la clé pour me retrouver »", "« Cachez-vous dans la serre »", "« Venez vite à la terrasse »"],
+          "correctIndex": 1,
+          "hintText": "Le livre ouvert contient un message d'Harmony…"
+        },
+        {
+          "type": "maths",
+          "question": "La Bibliothèque contient 240 livres. Peach en lit 15 par heure. Combien de temps lui faut-il pour les lire tous ?",
+          "answers": ["14 heures", "15 heures", "16 heures", "18 heures"],
+          "correctIndex": 2,
+          "hintText": "Divise 240 par 15 !"
+        },
+        {
+          "type": "francais",
+          "question": "Dans la phrase « Des étagères immenses montent jusqu'au plafond », quel est le complément de lieu ?",
+          "answers": ["Des étagères immenses", "montent", "jusqu'au plafond", "immenses"],
+          "correctIndex": 2,
+          "hintText": "Le complément de lieu répond à la question « où ? »"
+        },
+        {
+          "type": "univers-mario",
+          "question": "Dans Super Mario Galaxy, quel objet Luma utilise-t-il pour lire les messages cachés dans les galaxies ?",
+          "answers": ["Un télescope", "Un livre d'étoiles", "Une loupe magique", "Il n'y a pas de messages cachés"],
+          "correctIndex": 1,
+          "hintText": "Luma peut lire les messages gravés dans les étoiles !"
+        },
+        {
+          "type": "contexte",
+          "question": "Quel détail laisse penser que Bowser Junior est passé dans la Bibliothèque ?",
+          "answers": ["Des livres ont été déplacés dans la précipitation", "La porte est cassée", "Il y a des empreintes de pas", "Les globes célestes sont éteints"],
+          "correctIndex": 0,
+          "hintText": "Peach remarque un désordre particulier…"
+        },
+        {
+          "type": "maths",
+          "question": "Il y a 8 étagères dans la Bibliothèque. Chaque étagère contient 35 livres. Combien de livres y a-t-il au total ?",
+          "answers": ["260", "270", "280", "290"],
+          "correctIndex": 2,
+          "hintText": "Multiplie 8 par 35 !"
+        },
+        {
+          "type": "francais",
+          "question": "Conjugue le verbe « tomber » au passé composé, 3ème personne du singulier :",
+          "answers": ["Il tombe", "Il est tombé", "Il a tombé", "Il tombait"],
+          "correctIndex": 1,
+          "hintText": "« Tomber » se conjugue avec « être » au passé composé."
+        },
+        {
+          "type": "contexte",
+          "question": "Quel type de livre tombe entre les mains de Peach ?",
+          "answers": ["Un livre de recettes", "Un traité sur les jardins cosmiques", "Un album de photos", "Un manuel de magie"],
+          "correctIndex": 1,
+          "hintText": "Le livre contient un indice sur le jardin d'Harmony…"
+        }
+      ]
+    },
+    "peach-jardin-prive": {
+      "id": "peach-jardin-prive",
+      "narration": "Peach entre dans le Jardin Privé d'Harmony et un sourire illumine son visage. C'est un endroit magique : des fleurs cosmiques de toutes les couleurs poussent en spirales, des papillons lumineux dansent dans les airs, et une fontaine au centre du jardin projette de l'eau scintillante en forme d'étoiles. « C'est le jardin que Harmony chérissait le plus… » murmure Peach. Elle remarque des traces de scooter près d'une porte dorée au fond du jardin. « Bowser Junior est passé par ici… et il a emmené Harmony de l'autre côté de cette porte. » Peach prend une profonde inspiration. « C'est la Chambre d'Harmony… je le sens. Il est temps de la retrouver. »",
+      "choices": [
+        {
+          "text": "Traverser la porte dorée vers la Chambre d'Harmony",
+          "nextZoneId": "peach-chambre-harmony"
+        }
+      ],
+      "quizzes": [
+        {
+          "type": "contexte",
+          "question": "Quel détail dans le Jardin Privé indique le passage de Bowser Junior ?",
+          "answers": ["Des fleurs écrasées", "Des traces de scooter près d'une porte dorée", "Un vase brisé", "Des empreintes de pattes de Koopa"],
+          "correctIndex": 1,
+          "hintText": "Peach remarque quelque chose près de la porte…"
+        },
+        {
+          "type": "maths",
+          "question": "Le Jardin Privé contient 72 fleurs cosmiques. Un tiers sont roses, la moitié sont bleues, et le reste sont violettes. Combien de fleurs violettes y a-t-il ?",
+          "answers": ["10", "12", "14", "16"],
+          "correctIndex": 1,
+          "hintText": "72 ÷ 3 = 24 roses, 72 ÷ 2 = 36 bleues. 72 - 24 - 36 = ?"
+        },
+        {
+          "type": "francais",
+          "question": "Dans la phrase « Des papillons lumineux dansent dans les airs », quel est le groupe sujet ?",
+          "answers": ["dansent", "Des papillons lumineux", "dans les airs", "lumineux"],
+          "correctIndex": 1,
+          "hintText": "Qui danse ? C'est le groupe sujet."
+        },
+        {
+          "type": "univers-mario",
+          "question": "Dans les jeux Mario, quel type de fleur Peach utilise souvent comme arme ?",
+          "answers": ["La Fleur de Feu", "La Fleur Étoile", "La Fleur de Glace", "La Super Fleur"],
+          "correctIndex": 0,
+          "hintText": "Cette fleur permet de cracher des flammes…"
+        },
+        {
+          "type": "contexte",
+          "question": "Quelle forme projette la fontaine au centre du Jardin Privé ?",
+          "answers": ["Des cœurs", "Des étoiles", "Des champignons", "Des couronnes"],
+          "correctIndex": 1,
+          "hintText": "L'eau scintillante forme une forme céleste…"
+        },
+        {
+          "type": "maths",
+          "question": "La fontaine projette de l'eau à 3 mètres de hauteur. Si Peach saute à 0,5 mètre, combien de Peach empilées faut-il pour atteindre la hauteur de la fontaine ?",
+          "answers": ["4", "5", "6", "7"],
+          "correctIndex": 2,
+          "hintText": "Divise 3 par 0,5 !"
+        },
+        {
+          "type": "francais",
+          "question": "Quel est le sens du mot « chérissait » dans « le jardin que Harmony chérissait le plus » ?",
+          "answers": ["Elle le détestait", "Elle l'aimait profondément", "Elle l'ignorait", "Elle le craignait"],
+          "correctIndex": 1,
+          "hintText": "Chérir signifie aimer avec beaucoup d'affection."
+        },
+        {
+          "type": "univers-mario",
+          "question": "Quel est le nom du mari de Peach dans les jeux Mario ?",
+          "answers": ["Mario", "Luigi", "Toad", "Peach n'a pas de mari officiel dans les jeux"],
+          "correctIndex": 3,
+          "hintText": "Bien que Mario et Peach soient proches, ils ne sont jamais officiellement mariés dans les jeux…"
+        }
+      ]
+    },
+    "peach-terrasse-royale": {
+      "id": "peach-terrasse-royale",
+      "narration": "Peach sort sur la Terrasse Royale et admire le panorama à couper le souffle. Le palais flotte dans l'espace, entouré de galaxies qui tournent lentement. Des étoiles scintillent dans toutes les directions, et on peut voir les planètes lointaines tourner autour de leurs soleils. « Harmony adorait venir ici pour observer les étoiles… » se souvient Peach. Luma vole près d'elle et pointe du museau vers une porte au bout de la terrasse : « Regarde, Princesse ! Les traces de Bowser Junior mènent directement à la Chambre d'Harmony ! » Peach suit les traces du regard et voit une porte massive ornée de symboles galactiques. « C'est par là… je vais la sauver. »",
+      "choices": [
+        {
+          "text": "Suivre les traces vers la porte massive de la Chambre d'Harmony",
+          "nextZoneId": "peach-chambre-harmony"
+        }
+      ],
+      "quizzes": [
+        {
+          "type": "contexte",
+          "question": "Comment Luma identifie-t-il le chemin vers la Chambre d'Harmony depuis la Terrasse Royale ?",
+          "answers": ["En suivant une flèche stellaire", "En pointant les traces de Bowser Junior", "En écoutant un bruit", "En sentant une odeur"],
+          "correctIndex": 1,
+          "hintText": "Luma voit des traces spécifiques…"
+        },
+        {
+          "type": "maths",
+          "question": "La Terrasse Royale mesure 30 mètres de long sur 15 mètres de large. Quel est son périmètre ?",
+          "answers": ["75 m", "80 m", "90 m", "100 m"],
+          "correctIndex": 2,
+          "hintText": "Périmètre = 2 × (longueur + largeur) = 2 × (30 + 15)"
+        },
+        {
+          "type": "francais",
+          "question": "Dans la phrase « Le palais flotte dans l'espace, entouré de galaxies », quel est le participe passé ?",
+          "answers": ["flotte", "entouré", "espace", "galaxies"],
+          "correctIndex": 1,
+          "hintText": "Le participe passé d'un verbe du 3ème groupe en « -re » se termine par « -é »."
+        },
+        {
+          "type": "univers-mario",
+          "question": "Dans Super Mario Galaxy, quelle est la première galaxie que Mario explore ?",
+          "answers": ["La Galaxie Goober", "La Galaxie du Champignon", "La Galaxie du Sumo", "La Galaxie de la Bombe"],
+          "correctIndex": 1,
+          "hintText": "C'est une galaxie simple avec des champignons géants !"
+        },
+        {
+          "type": "contexte",
+          "question": "Quelle décoration orne la porte massive au bout de la Terrasse Royale ?",
+          "answers": ["Des roses", "Des symboles galactiques", "Des étoiles en or", "Des fleurs de feu"],
+          "correctIndex": 1,
+          "hintText": "La porte est ornée de symboles célestes…"
+        },
+        {
+          "type": "maths",
+          "question": "On peut voir 4 500 étoiles depuis la terrasse. Si Peach en observe 75 par minute, combien de temps lui faut-il pour les observer toutes ?",
+          "answers": ["55 min", "58 min", "60 min", "65 min"],
+          "correctIndex": 2,
+          "hintText": "Divise 4 500 par 75 !"
+        },
+        {
+          "type": "francais",
+          "question": "Quel est le synonyme du mot « panorama » ?",
+          "answers": ["Vue", "Brouillard", "Horizon", "Carte"],
+          "correctIndex": 0,
+          "hintText": "Un panorama, c'est une vue étendue sur un paysage."
+        },
+        {
+          "type": "contexte",
+          "question": "Que Peach se souvient-elle en étant sur la Terrasse Royale ?",
+          "answers": ["Que Mario l'avait invitée", "Qu'Harmony adorait venir observer les étoiles ici", "Que Bowser Junior habitait ici", "Que la serre était proche"],
+          "correctIndex": 1,
+          "hintText": "Peach pense à un souvenir précis avec Harmony…"
+        }
+      ]
+    },
+    "peach-serre-enchantee": {
+      "id": "peach-serre-enchantee",
+      "narration": "Peach pénètre dans la Serre Enchantée et est immédiatement enveloppée par un parfum de fleurs magiques. Des plantes de toutes tailles poussent dans des pots flottants : des cactus qui chantent, des orchidées qui changent de couleur, et des lianes lumineuses qui dansent au gré du vent cosmique. « C'est magnifique… Harmony avait un don pour faire pousser des plantes extraordinaires ! » s'exclame Peach. Luma vole parmi les plantes : « Princesse, Bowser Junior a écrasé quelques fleurs en passant… je vois deux chemins possibles ! » Peach observe : une fontaine scintillante attire son regard au centre de la serre, et un chemin secret se cache derrière une ride de lianes. « Il faut que je choisisse le bon… »",
+      "choices": [
+        {
+          "text": "Se diriger vers la fontaine scintillante",
+          "nextZoneId": "peach-fontaine-des-soeux"
+        },
+        {
+          "text": "Explorer le chemin secret derrière les lianes",
+          "nextZoneId": "peach-atelier-de-luma"
+        }
+      ],
+      "quizzes": [
+        {
+          "type": "contexte",
+          "question": "Quel détail indique le passage de Bowser Junior dans la Serre Enchantée ?",
+          "answers": ["Des pots cassés", "Des fleurs écrasées", "Des empreintes de pas", "Des plantes brûlées"],
+          "correctIndex": 1,
+          "hintText": "Luma mentionne ce que Bowser Junior a fait aux plantes…"
+        },
+        {
+          "type": "maths",
+          "question": "La Serre contient 96 plantes. Un quart sont des cactus, un tiers sont des orchidées, et le reste sont des lianes. Combien de lianes y a-t-il ?",
+          "answers": ["24", "26", "28", "30"],
+          "correctIndex": 0,
+          "hintText": "96 ÷ 4 = 24 cactus, 96 ÷ 3 = 32 orchidées. 96 - 24 - 32 = ?"
+        },
+        {
+          "type": "francais",
+          "question": "Dans la phrase « Des plantes de toutes tailles poussent dans des pots flottants », quel est le verbe conjugué ?",
+          "answers": ["poussent", "flottants", "Des", "tailles"],
+          "correctIndex": 0,
+          "hintText": "Le verbe conjugué est celui qui change selon le sujet. « Des plantes » (pluriel) → « poussent »."
+        },
+        {
+          "type": "univers-mario",
+          "question": "Dans les jeux Mario, quel type de plante ennemi sort des tuyaux verts ?",
+          "answers": ["Un Goomba", "Un Piranha Plant", "Un Koopa Troopa", "Un Bob-omb"],
+          "correctIndex": 1,
+          "hintText": "C'est une plante carnivore emblématique de l'univers Mario !"
+        },
+        {
+          "type": "contexte",
+          "question": "Combien de chemins Peach peut-elle emprunter depuis la Serre Enchantée ?",
+          "answers": ["1", "2", "3", "4"],
+          "correctIndex": 1,
+          "hintText": "Une fontaine et un chemin secret…"
+        },
+        {
+          "type": "maths",
+          "question": "Les orchidées de la serre changent de couleur toutes les 6 secondes. Combien de changements se produisent en 10 minutes ?",
+          "answers": ["90", "95", "100", "110"],
+          "correctIndex": 2,
+          "hintText": "10 minutes = 600 secondes. 600 ÷ 6 = ?"
+        },
+        {
+          "type": "francais",
+          "question": "Quel est le contraire du mot « magique » ?",
+          "answers": ["Ordinaire", "Beau", "Grand", "Rapide"],
+          "correctIndex": 0,
+          "hintText": "Magique = surnaturel, extraordinaire. Son contraire, c'est ce qui est normal."
+        },
+        {
+          "type": "univers-mario",
+          "question": "Quel Power-Up permet à Peach de cracher des flammes ?",
+          "answers": ["La Fleur Étoile", "La Fleur de Feu", "Le Cape Feather", "Le Super Champignon"],
+          "correctIndex": 1,
+          "hintText": "Ce Power-Up transforme le personnage en version enflammée…"
+        }
+      ]
+    },
+    "peach-fontaine-des-soeux": {
+      "id": "peach-fontaine-des-soeux",
+      "narration": "Peach s'approche de la Fontaine des Souhaits et reste émerveillée. L'eau scintillante forme des arcs-en-ciel qui dansent dans l'air, et des pièces d'étoiles brillent au fond de la fontaine. « On dit que cette fontaine exauce les souhaits de ceux qui y jettent une pièce… » murmure Peach. Elle jette une pièce d'étoile en pensant à Harmony : « Je souhaite retrouver ma meilleure amie saine et sauve. » La fontaine émet un éclat lumineux, et un passage se révèle derrière elle, menant vers la Terrasse Royale. « C'est un signe ! La fontaine me guide vers Harmony ! » dit Peach avec espoir. Luma hoche la tête : « Je savais que la fontaine t'aiderait, Princesse ! »",
+      "choices": [
+        {
+          "text": "Emprunter le passage vers la Terrasse Royale",
+          "nextZoneId": "peach-terrasse-royale"
+        }
+      ],
+      "quizzes": [
+        {
+          "type": "contexte",
+          "question": "Que souhaite Peach en jetant une pièce dans la fontaine ?",
+          "answers": ["De devenir reine", "De retrouver Harmony saine et sauve", "De battre Bowser Junior", "De trouver un Power-Up"],
+          "correctIndex": 1,
+          "hintText": "Peach pense à sa meilleure amie…"
+        },
+        {
+          "type": "maths",
+          "question": "Il y a 45 pièces d'étoiles au fond de la fontaine. Peach en jette 1, et Luma en ramasse 3. Combien de pièces restent-il ?",
+          "answers": ["40", "41", "42", "43"],
+          "correctIndex": 1,
+          "hintText": "45 - 1 - 3 = ?"
+        },
+        {
+          "type": "francais",
+          "question": "Dans la phrase « L'eau scintillante forme des arcs-en-ciel », quel est l'adjectif ?",
+          "answers": ["L'eau", "scintillante", "forme", "arcs-en-ciel"],
+          "correctIndex": 1,
+          "hintText": "L'adjectif qualifie le nom. Quel mot décrit l'eau ?"
+        },
+        {
+          "type": "univers-mario",
+          "question": "Dans Super Mario Galaxy, que se passe-t-il quand Mario collecte une Power Star ?",
+          "answers": ["Il devient invincible temporairement", "Le château de Peach se répare un peu plus", "Il gagne 100 pièces", "Il débloque un nouveau costume"],
+          "correctIndex": 1,
+          "hintText": "Les Power Stars servent à reconstruire le château détruit…"
+        },
+        {
+          "type": "contexte",
+          "question": "Que révèle la fontaine après le souhait de Peach ?",
+          "answers": ["Un trésor caché", "Un passage menant vers la Terrasse Royale", "Un message de Bowser Junior", "Une clé magique"],
+          "correctIndex": 1,
+          "hintText": "La fontaine guide Peach…"
+        },
+        {
+          "type": "maths",
+          "question": "La fontaine projette 8 jets d'eau. Chaque jet contient 120 gouttes par seconde. Combien de gouttes la fontaine projette-t-elle en une minute ?",
+          "answers": ["5 600", "5 760", "5 880", "6 000"],
+          "correctIndex": 1,
+          "hintText": "8 × 120 = 960 gouttes/seconde. 960 × 60 = ?"
+        },
+        {
+          "type": "francais",
+          "question": "Quel est le pluriel du mot « un arc-en-ciel » ?",
+          "answers": ["des arcs-en-ciel", "des arcs-en-ciels", "des arc-en-ciels", "des arc-en-ciel"],
+          "correctIndex": 0,
+          "hintText": "« Arc » prend un « s » au pluriel, mais « ciel » reste invariable dans cette expression."
+        },
+        {
+          "type": "contexte",
+          "question": "Comment Luma réagit-il au souhait de Peach ?",
+          "answers": ["Il est sceptique", "Il hoche la tête en disant que la fontaine aidera Peach", "Il rit", "Il pleure"],
+          "correctIndex": 1,
+          "hintText": "Luma a confiance en la fontaine…"
+        }
+      ]
+    },
+    "peach-atelier-de-luma": {
+      "id": "peach-atelier-de-luma",
+      "narration": "Peach écarte délicatement les lianes et découvre un atelier secret ! C'est l'Atelier de Luma, un espace rempli d'objets en cours de fabrication : des étoiles en verre, des coussins cosmiques, et des instruments musicaux en forme de planètes. « C'est ici que Luma fabrique ses objets magiques ! » s'exclame Peach en examinant une petite étoile en verre. Luma rougit un peu : « E-euh… oui, Princesse… je travaille sur des cadeaux pour Harmony… » Sur une table, Peach remarque un plan du palais avec un chemin tracé vers la Bibliothèque. « Luma, tu savais que Bowser Junior était passé ? » Luma hoche la tête tristement : « J'ai vu ses traces… le chemin le plus sûr passe par la Bibliothèque. »",
+      "choices": [
+        {
+          "text": "Suivre le plan de Luma vers la Bibliothèque",
+          "nextZoneId": "peach-bibliotheque"
+        }
+      ],
+      "quizzes": [
+        {
+          "type": "contexte",
+          "question": "Quels objets Peach observe-t-elle dans l'Atelier de Luma ?",
+          "answers": ["Des armes et des boucliers", "Des étoiles en verre, des coussins cosmiques et des instruments en forme de planètes", "Des livres et des cartes", "Des vêtements et des chaussures"],
+          "correctIndex": 1,
+          "hintText": "Luma fabrique des objets magiques…"
+        },
+        {
+          "type": "maths",
+          "question": "Luma fabrique 18 étoiles en verre par jour. Combien en fabrique-t-il en 5 jours ?",
+          "answers": ["80", "85", "90", "95"],
+          "correctIndex": 2,
+          "hintText": "Multiplie 18 par 5 !"
+        },
+        {
+          "type": "francais",
+          "question": "Dans la phrase « Luma rougit un peu », quel est le verbe conjugué ?",
+          "answers": ["rougit", "un", "peu", "Luma"],
+          "correctIndex": 0,
+          "hintText": "Le verbe est l'action. Que fait Luma ?"
+        },
+        {
+          "type": "univers-mario",
+          "question": "Dans Super Mario Galaxy, en quoi Luma peut-il se transformer pour aider Mario à traverser un gouffre ?",
+          "answers": ["En un parachute", "En une échelle", "En un pont", "En un trampoline"],
+          "correctIndex": 1,
+          "hintText": "Luma s'allonge et devient une échelle pour que Mario puisse grimper !"
+        },
+        {
+          "type": "contexte",
+          "question": "Quel chemin Luma recommande-t-il à Peach depuis l'Atelier ?",
+          "answers": ["Vers la Terrasse Royale", "Vers la Bibliothèque", "Vers le Jardin Privé", "Vers la Serre"],
+          "correctIndex": 1,
+          "hintText": "Le plan du palais montre un chemin tracé…"
+        },
+        {
+          "type": "maths",
+          "question": "L'atelier contient 3 rangées de 14 objets chacune. Si Luma en a fini 25, combien d'objets restent-il à fabriquer ?",
+          "answers": ["15", "16", "17", "18"],
+          "correctIndex": 2,
+          "hintText": "3 × 14 = 42 objets au total. 42 - 25 = ?"
+        },
+        {
+          "type": "francais",
+          "question": "Quel est le sens du mot « délicatement » dans « Peach écarte délicatement les lianes » ?",
+          "answers": ["Avec force", "Avec douceur et précaution", "Avec colère", "Avec vitesse"],
+          "correctIndex": 1,
+          "hintText": "Délicatement vient de « délicat », c'est-à-dire avec soin."
+        },
+        {
+          "type": "contexte",
+          "question": "Pourquoi Luma rougit-il quand Peach découvre son atelier ?",
+          "answers": ["Parce qu'il a peur", "Parce qu'il est embarrassé d'être surpris en train de fabriquer des cadeaux", "Parce qu'il est en colère", "Parce qu'il a faim"],
+          "correctIndex": 1,
+          "hintText": "Luma est surpris qu'on découvre son activité secrète…"
+        }
+      ]
+    },
+    "peach-chambre-harmony": {
+      "id": "peach-chambre-harmony",
+      "narration": "Peach pousse la porte et son cœur bat à tout rompre. Harmony est là, retenue par un filet d'énergie violette au centre de la pièce. Bowser Junior est assis sur un trône de jeux vidéo, en train de rire méchamment. « Eh bien eh bien, la princesse Peach ! Tu crois vraiment que tu vas me battre avec ta petite couronne ? » Harmony crie d'une voix forte : « Peach ! Je savais que tu viendrais ! Tu es la meilleure amie qu'on puisse avoir ! » Peach avance avec grâce et détermination. « Bowser Junior, tu vas la laisser partir. Maintenant. » Elle retire sa couronne et la fait briller d'une lumière éclatante. « Cette couronne contient toute l'énergie des étoiles du palais… et je vais l'utiliser pour libérer Harmony ! » Luma s'illumine et rejoint Peach. « Ensemble, Princesse ! » C'est le moment pour Peach de prouver qu'une princesse peut aussi être une héroïne !",
+      "choices": [],
+      "quizzes": [
+        {
+          "type": "contexte",
+          "question": "Peach est arrivée à la Chambre d'Harmony. Parmi les Zones suivantes, laquelle Peach a-t-elle pu traverser S'il est passé par le Chemin le plus long (Entrée → Serre → Atelier de Luma → Bibliothèque → Jardin Privé → Chambre) ?",
+          "answers": ["Le Salon Royal", "La Terrasse Royale", "L'Atelier de Luma", "La Fontaine des Souhaits"],
+          "correctIndex": 2,
+          "hintText": "Le chemin par la serre passe par l'atelier de Luma, puis la bibliothèque, puis le jardin privé…",
+          "isFinal": true
+        },
+        {
+          "type": "contexte",
+          "question": "Que fait Peach pour libérer Harmony ?",
+          "answers": ["Elle utilise une épée", "Elle fait briller sa couronne avec l'énergie des étoiles", "Elle appelle Mario à l'aide", "Elle jette une pièce dans la fontaine"],
+          "correctIndex": 1,
+          "hintText": "Peach retire sa couronne et l'utilise…"
+        },
+        {
+          "type": "francais",
+          "question": "Dans la phrase « Bowser Junior, tu vas la laisser partir. Maintenant. », quel est le registre de « Maintenant. » isolé en phrase courte ?",
+          "answers": ["Un langage familier", "Un langage emphatique (pour insister)", "Un langage soutenu", "Un langage technique"],
+          "correctIndex": 1,
+          "hintText": "Isoler un mot en phrase courte sert à marquer l'insistance."
+        },
+        {
+          "type": "univers-mario",
+          "question": "Quel est le véhicule emblématique de Bowser Junior ?",
+          "answers": ["Un char d'assaut", "Un scooter jaune avec une pince à peinture", "Un avion", "Une montgolfière"],
+          "correctIndex": 1,
+          "hintText": "Il conduit un scooter avec une pince spéciale…"
+        },
+        {
+          "type": "contexte",
+          "question": "Combien de chemins différents Peach peut-elle emprunter pour atteindre la Chambre d'Harmony ?",
+          "answers": ["2", "3", "4", "5"],
+          "correctIndex": 2,
+          "hintText": "Compte les branches de l'arbre de décision de Peach…"
+        },
+        {
+          "type": "maths",
+          "question": "Si Peach a traversé 6 Zones et répondu correctement à 14 Quiz et incorrectement à 2 Quiz, combien de Pièces a-t-elle gagnées ?",
+          "answers": ["24 Pièces", "26 Pièces", "28 Pièces", "30 Pièces"],
+          "correctIndex": 1,
+          "hintText": "14 × (+2) = +28 et 2 × (-1) = -2. Total = 28 - 2"
+        },
+        {
+          "type": "contexte",
+          "question": "Quel rôle joue Luma quand Peach affronte Bowser Junior ?",
+          "answers": ["Il se cache", "Il s'illumine et rejoint Peach", "Il fuit la pièce", "Il négocie avec Bowser Junior"],
+          "correctIndex": 1,
+          "hintText": "Relis la fin de la narration…"
+        },
+        {
+          "type": "francais",
+          "question": "Transforme en discours indirect : Harmony crie : « Peach ! Je savais que tu viendrais ! »",
+          "answers": ["Harmony crie que Peach savait qu'elle viendrait.", "Harmony crie que Peach savait qu'elle viendrait.", "Harmony crie à Peach qu'elle savait qu'elle viendrait.", "Harmony crie que Peach savait que tu viendrais."],
+          "correctIndex": 2,
+          "hintText": "Au discours indirect, on adapte les pronoms et on introduit avec « que » ou « à [quelqu'un] que »."
+        },
+        {
+          "type": "maths",
+          "question": "Le filet d'énergie violette a une forme hexagonale régulière. Chaque côté mesure 1,2 mètre. Quel est le périmètre du filet ?",
+          "answers": ["6,0 m", "6,2 m", "7,2 m", "7,4 m"],
+          "correctIndex": 2,
+          "hintText": "Un hexagone a 6 côtés. Périmètre = 6 × 1,2"
+        }
+      ]
     }
-  ]
+  }
 }
