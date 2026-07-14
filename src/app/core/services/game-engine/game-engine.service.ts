@@ -128,7 +128,7 @@ export class GameEngineService {
     this.isZoneCompletedSignal.set(false);
     this.gameWonSignal.set(false);
     this.gameStartedSignal.set(true);
-    this.quizActiveSignal.set(false);
+    this.quizActiveSignal.set(true);
     this.quizFeedbackSignal.set(null);
     this.hintTextSignal.set(null);
     this.eliminatedAnswersSignal.set([]);
@@ -179,7 +179,7 @@ export class GameEngineService {
     this.currentQuizIndexSignal.set(gameSave.quizIndex);
     this.coinsSignal.set(gameSave.coins);
     this.isZoneCompletedSignal.set(false);
-    this.quizActiveSignal.set(false);
+    this.quizActiveSignal.set(true);
     this.quizFeedbackSignal.set(null);
     this.hintTextSignal.set(null);
     this.eliminatedAnswersSignal.set([]);
@@ -207,14 +207,13 @@ export class GameEngineService {
 
     // Navigation vers la Zone suivante via nextZoneId
     this.navigateToZone(choice.nextZoneId);
-    this.quizActiveSignal.set(true);
   }
 
   /**
    * Navigue vers une Zone identifiée par son ID.
    *
    * Réinitialise l'état du Quiz (quizIndex à 0, aides, feedback)
-   * et affiche la narration de la nouvelle Zone.
+   * et affiche le premier Quiz de la nouvelle Zone.
    *
    * @param nextZoneId - Identifiant de la Zone cible
    */
@@ -222,7 +221,7 @@ export class GameEngineService {
     this.currentZoneIdSignal.set(nextZoneId);
     this.currentQuizIndexSignal.set(0);
     this.isZoneCompletedSignal.set(false);
-    this.quizActiveSignal.set(false);
+    this.quizActiveSignal.set(true);
     this.quizFeedbackSignal.set(null);
     this.hintTextSignal.set(null);
     this.eliminatedAnswersSignal.set([]);
@@ -244,12 +243,31 @@ export class GameEngineService {
     if (currentIdx < zone.quizzes.length - 1) {
       this.currentQuizIndexSignal.set(currentIdx + 1);
       this.isZoneCompletedSignal.set(false);
+      this.quizActiveSignal.set(true);
+      this.quizFeedbackSignal.set(null);
+      this.hintTextSignal.set(null);
+      this.eliminatedAnswersSignal.set([]);
+      this.saveGameState();
+    } else {
+      this.isZoneCompletedSignal.set(true);
       this.quizActiveSignal.set(false);
       this.quizFeedbackSignal.set(null);
       this.hintTextSignal.set(null);
       this.eliminatedAnswersSignal.set([]);
       this.saveGameState();
     }
+  }
+
+  /**
+   * Continue après avoir terminé tous les Quiz d'une Zone.
+   * Réinitialise le feedback et affiche les choix narratifs.
+   */
+  continueAfterZone(): void {
+    this.quizFeedbackSignal.set(null);
+    this.hintTextSignal.set(null);
+    this.eliminatedAnswersSignal.set([]);
+    this.isZoneCompletedSignal.set(false);
+    this.saveGameState();
   }
 
   /**
@@ -281,7 +299,6 @@ export class GameEngineService {
     if (currentIdx >= zone.quizzes.length - 1) {
       this.isZoneCompletedSignal.set(true);
     }
-    this.saveGameState();
   }
 
   /**
@@ -467,12 +484,6 @@ export class GameEngineService {
       this.completeQuiz();
       this.quizFeedbackSignal.set('correct');
       this.quizActiveSignal.set(false);
-
-      // Vérifier si c'est le Quiz final → victoire !
-      if (quiz.isFinal) {
-        this.gameWonSignal.set(true);
-        this.completedPathsService.addCompletedPath(this.characterId());
-      }
 
       return;
     }

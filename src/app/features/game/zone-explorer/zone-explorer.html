@@ -39,11 +39,11 @@
   }
 
   <!-- Message de succès : Quiz réussi -->
-  @if (isZoneCompleted()) {
+  @if (quizFeedback() === 'correct') {
   <div class="success-block" role="alert" aria-live="polite">
     <span class="success-icon" aria-hidden="true">🎉</span>
     <p class="success-text">Bravo ! +2 Pièces 🪙</p>
-    @if (!isFinalQuiz()) {
+    @if (quizzesRemaining() > 1) {
     <button
       type="button"
       class="advance-button"
@@ -51,6 +51,15 @@
       (click)="onAdvanceZone()"
     >
       Quiz suivant
+    </button>
+    } @else if (!isFinalQuiz()) {
+    <button
+      type="button"
+      class="advance-button"
+      aria-label="Continuer"
+      (click)="onContinueAfterZone()"
+    >
+      Continuer
     </button>
     }
   </div>

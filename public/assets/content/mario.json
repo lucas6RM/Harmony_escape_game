@@ -36,6 +36,48 @@
           "answers": ["King Bowser", "Bowser Junior", "Wario", "Dry Bowser"],
           "correctIndex": 1,
           "hintText": "Luma a mentionné les traces de scooter laissées dans le hall…"
+        },
+        {
+          "type": "maths",
+          "question": "Le portail du palais mesure 4,5 mètres de haut. Mario mesure 1,55 m. Combien de fois Mario doit-il se superposer pour atteindre le sommet du portail ?",
+          "answers": ["2 fois", "3 fois", "4 fois", "5 fois"],
+          "correctIndex": 2,
+          "hintText": "Divise 4,5 par 1,55 et arrondis à l'entier supérieur !"
+        },
+        {
+          "type": "francais",
+          "question": "Dans la phrase « L'air vibre d'énergie cosmique », quel est le complément d'objet ?",
+          "answers": ["L'air", "vibre", "d'énergie cosmique", "cosmique"],
+          "correctIndex": 2,
+          "hintText": "Le complément précise l'action du verbe. De quoi l'air vibre-t-il ?"
+        },
+        {
+          "type": "univers-mario",
+          "question": "Dans Super Mario Galaxy, combien de Power Stars faut-il au minimum pour débloquer le vrai final du jeu ?",
+          "answers": ["70", "80", "90", "100"],
+          "correctIndex": 2,
+          "hintText": "C'est bien plus que les 70 nécessaires pour battre Bowser la première fois…"
+        },
+        {
+          "type": "contexte",
+          "question": "Combien de passages Mario peut-il emprunter depuis le hall du palais ?",
+          "answers": ["1", "2", "3", "4"],
+          "correctIndex": 1,
+          "hintText": "Recherche dans la narration : un passage lumineux et un couloir sombre…"
+        },
+        {
+          "type": "maths",
+          "question": "Bowser Junior a laissé 12 traces de pneus dans le hall. Si chaque tour de son scooter laisse 2 traces, combien de tours a-t-il fait ?",
+          "answers": ["4", "5", "6", "8"],
+          "correctIndex": 2,
+          "hintText": "Divise 12 par 2 !"
+        },
+        {
+          "type": "francais",
+          "question": "Quel est le synonyme du mot « majestueux » dans « le hall majestueux » ?",
+          "answers": ["Petit", "Imposant", "Sombre", "Étroit"],
+          "correctIndex": 1,
+          "hintText": "Majestueux évoque la grandeur et le prestige."
         }
       ]
     },
@@ -66,6 +108,55 @@
           "answers": ["De la confiture d'étoile", "Du champignon magique", "De la fleur de feu", "Du sucre en poudre"],
           "correctIndex": 0,
           "hintText": "Recherche dans la narration de cette Zone…"
+        },
+        {
+          "type": "maths",
+          "question": "Il y a 48 pétales d'étoiles dans le jardin. Harmony en cueille un tiers. Combien de pétales Harmony a-t-elle cueillis ?",
+          "answers": ["12", "14", "16", "18"],
+          "correctIndex": 2,
+          "hintText": "Divise 48 par 3 !"
+        },
+        {
+          "type": "francais",
+          "question": "Dans la phrase « Des plantes en forme d'étoiles tournent doucement », quel est le complément circonstanciel de manière ?",
+          "answers": ["Des plantes", "en forme d'étoiles", "tournent", "doucement"],
+          "correctIndex": 3,
+          "hintText": "Le complément de manière répond à la question « comment ? »"
+        },
+        {
+          "type": "univers-mario",
+          "question": "Dans Super Mario Galaxy, quel type de planète Mario doit faire tourner autour d'un trou noir pour progresser ?",
+          "answers": ["Une planète Goomba", "Une planète somnolente (Sleepy Planet)", "Une planète Piranha", "Une planète champignon"],
+          "correctIndex": 1,
+          "hintText": "Mario doit la pousser pour qu'elle orbite correctement…"
+        },
+        {
+          "type": "contexte",
+          "question": "Quel détail laisse penser que Bowser Junior est passé récemment dans le Jardin des Étoiles ?",
+          "answers": ["La porte est entrebâillée", "Des pétales ont été piétinés", "L'odeur de confiture a disparu", "L'escalier est cassé"],
+          "correctIndex": 1,
+          "hintText": "Relis la fin de la narration…"
+        },
+        {
+          "type": "maths",
+          "question": "L'escalier en spirale a 125 marches. Mario en a déjà gravi 47. Combien de marches lui restent-elles à monter ?",
+          "answers": ["68", "72", "78", "82"],
+          "correctIndex": 2,
+          "hintText": "Soustrais 47 de 125 !"
+        },
+        {
+          "type": "francais",
+          "question": "Conjugue le verbe « cueillir » au passé composé, 3ème personne du singulier :",
+          "answers": ["Elle cueille", "Elle a cueilli", "Elle a cueillit", "Elle cueillera"],
+          "correctIndex": 1,
+          "hintText": "Le passé composé se forme avec « avoir » au présent + le participe passé."
+        },
+        {
+          "type": "univers-mario",
+          "question": "Quel Power-Up permet à Mario de voler dans Super Mario Galaxy ?",
+          "answers": ["La Fleur Étoile", "Le Cape Feather (Plume de Cape)", "La Fleur de Feu", "Le Super Champignon"],
+          "correctIndex": 1,
+          "hintText": "C'est le même Power-Up que dans Super Mario 64…"
         }
       ]
     },
@@ -99,6 +190,48 @@
           "answers": ["Des coussins", "Des livres", "Des casquettes rouges", "Des étoiles filantes en verre"],
           "correctIndex": 2,
           "hintText": "Relis bien la narration de la Tour de Luma…"
+        },
+        {
+          "type": "maths",
+          "question": "La chambre de Luma est un cercle de 3 mètres de rayon. Calcule l'aire approximative de la chambre (arrondis à l'entier le plus proche).",
+          "answers": ["25 m²", "28 m²", "30 m²", "32 m²"],
+          "correctIndex": 2,
+          "hintText": "Aire = π × r² = 3,14 × 3² = 3,14 × 9"
+        },
+        {
+          "type": "francais",
+          "question": "Dans la phrase « Mario remarque que certains objets semblent avoir été déplacés », quelle est la nature du mot « certains » ?",
+          "answers": ["Un déterminant indéfini", "Un adjectif démonstratif", "Un pronom personnel", "Un adjectif possessif"],
+          "correctIndex": 0,
+          "hintText": "« Certains » désigne une quantité imprécise."
+        },
+        {
+          "type": "contexte",
+          "question": "Quelle forme a le lit dans la chambre de Luma ?",
+          "answers": ["Un cercle", "Une étoile", "Une lune croissante", "Un champignon"],
+          "correctIndex": 2,
+          "hintText": "Relis la description de la chambre…"
+        },
+        {
+          "type": "univers-mario",
+          "question": "Dans Super Mario Galaxy, combien de Lumas peut-on avoir comme compagnons au maximum dans le palais de Peach ?",
+          "answers": ["10", "20", "30", "40"],
+          "correctIndex": 2,
+          "hintText": "Il faut récupérer des Lumas perdus dans toutes les galaxies !"
+        },
+        {
+          "type": "francais",
+          "question": "Transforme cette phrase à la voix passive : « Bowser Junior a enlevé Harmony. »",
+          "answers": ["Harmony a été enlevée par Bowser Junior.", "Harmony enlève Bowser Junior.", "Bowser Junior est enlevé par Harmony.", "Harmony est enlevant Bowser Junior."],
+          "correctIndex": 0,
+          "hintText": "En voix passive, le complément d'objet devient le sujet."
+        },
+        {
+          "type": "maths",
+          "question": "L'escalier en spirale fait 180 marches. Mario met en moyenne 2 secondes par marche. Combien de temps lui faut-il pour monter l'escalier en minutes ?",
+          "answers": ["5 min", "6 min", "7 min", "8 min"],
+          "correctIndex": 1,
+          "hintText": "180 × 2 = 360 secondes, puis divise par 60 !"
         }
       ]
     },
@@ -125,6 +258,55 @@
           "answers": ["Bleue", "Verte", "Rouge", "Jaune"],
           "correctIndex": 2,
           "hintText": "C'est la couleur associée au scooter de Bowser Junior…"
+        },
+        {
+          "type": "maths",
+          "question": "Le télescope de Luma grossit les objets 150 fois. Si la Chambre d'Harmony mesure 8 mètres de large, quelle taille apparente a-t-elle dans le télescope ?",
+          "answers": ["1 000 m", "1 100 m", "1 200 m", "1 300 m"],
+          "correctIndex": 2,
+          "hintText": "Multiplie 8 par 150 !"
+        },
+        {
+          "type": "francais",
+          "question": "Dans la phrase « Le cœur serré, il comprend qu'il n'y a plus qu'une seule direction », que signifie « le cœur serré » ?",
+          "answers": ["Il est heureux", "Il est inquiet et stressé", "Il est en forme", "Il a faim"],
+          "correctIndex": 1,
+          "hintText": "Avoir le cœur serré, c'est ressentir de l'angoisse ou de l'inquiétude."
+        },
+        {
+          "type": "univers-mario",
+          "question": "Dans Super Mario Galaxy, quel boss Mario affronte-t-il sur une planète qui tourne autour d'un soleil géant ?",
+          "answers": ["Petey Piranha", "Attini du Sumo", "Didier le Broc", "Météoite"],
+          "correctIndex": 0,
+          "hintText": "C'est une énorme plante carnivore dans la Galaxie du Sumo…"
+        },
+        {
+          "type": "contexte",
+          "question": "Comment Luma a-t-il localisé Bowser Junior depuis l'observatoire ?",
+          "answers": ["En suivant des empreintes", "En voyant une lueur rouge au télescope", "En écoutant un bruit", "En recevant un message"],
+          "correctIndex": 1,
+          "hintText": "Relis ce que Luma crie à Mario…"
+        },
+        {
+          "type": "maths",
+          "question": "Il y a 3 600 étoiles visibles dans le ciel depuis l'observatoire. Si Luma peut en compter 25 par minute, combien de temps lui faut-il pour les compter toutes ?",
+          "answers": ["120 min", "130 min", "140 min", "150 min"],
+          "correctIndex": 3,
+          "hintText": "Divise 3 600 par 25 !"
+        },
+        {
+          "type": "francais",
+          "question": "Quel est le participe passé du verbe « ajuster » ?",
+          "answers": ["ajusté", "ajustait", "ajustera", "ajustant"],
+          "correctIndex": 0,
+          "hintText": "Les verbes du 1er groupe ont un participe passé en « -é »."
+        },
+        {
+          "type": "univers-mario",
+          "question": "Dans l'univers Mario, quel est le nom du fils de Bowser ?",
+          "answers": ["Bowser Jr.", "Baby Bowser", "Koopa Jr.", "Bowser II"],
+          "correctIndex": 0,
+          "hintText": "On l'appelle aussi « Bowser Junior »…"
         }
       ]
     },
@@ -158,6 +340,48 @@
           "answers": ["Des empreintes de pas", "Des empreintes de pneus de scooter", "Des traces de feu", "Des empreintes de pattes de Koopa"],
           "correctIndex": 1,
           "hintText": "Relis la narration de cette Zone…"
+        },
+        {
+          "type": "maths",
+          "question": "Chaque mini-galaxie fait le tour de son soleil en 12 secondes. Si Mario observe pendant 3 minutes, combien de tours complets une galaxie a-t-elle effectués ?",
+          "answers": ["10", "12", "15", "18"],
+          "correctIndex": 2,
+          "hintText": "3 minutes = 180 secondes. Divise 180 par 12 !"
+        },
+        {
+          "type": "francais",
+          "question": "Dans la phrase « Des mini-galaxies entières tournent lentement dans l'air », remplace « lentement » par un adverbe de même sens :",
+          "answers": ["Vite", "Doucement", "Fortement", "Soudainement"],
+          "correctIndex": 1,
+          "hintText": "Lentement et doucement sont des synonymes."
+        },
+        {
+          "type": "contexte",
+          "question": "À quoi servait la Salle des Galaxies selon Mario ?",
+          "answers": ["À stocker des Power Stars", "À étudier les constellations", "À observer les ennemis", "À préparer des repas"],
+          "correctIndex": 1,
+          "hintText": "Mario dit que Harmony utilisait cette salle pour…"
+        },
+        {
+          "type": "univers-mario",
+          "question": "Dans Super Mario Galaxy, quel type d'ennemi Mario doit éviter car il écrase tout sur son passage ?",
+          "answers": ["Un Goomba", "Un Thwomp", "Un Koopa Troopa", "Un Piranha Plant"],
+          "correctIndex": 1,
+          "hintText": "Son nom est un jeu de mots avec « thump » (boum)…"
+        },
+        {
+          "type": "maths",
+          "question": "La porte massive mesure 3,2 m de haut sur 2,5 m de large. Calcule son aire.",
+          "answers": ["7,5 m²", "8 m²", "8,5 m²", "9 m²"],
+          "correctIndex": 1,
+          "hintText": "Aire = hauteur × largeur = 3,2 × 2,5"
+        },
+        {
+          "type": "francais",
+          "question": "Quel est le genre et le nombre du groupe nominal « des planètes minuscules » ?",
+          "answers": ["Masculin singulier", "Féminin singulier", "Féminin pluriel", "Masculin pluriel"],
+          "correctIndex": 2,
+          "hintText": "« Planète » est un mot féminin et « des » indique le pluriel."
         }
       ]
     },
@@ -195,6 +419,48 @@
           "answers": ["Un Goomba", "Un Goober", "Un Bob-omb", "Un Thwomp"],
           "correctIndex": 1,
           "hintText": "Son nom commence par « Goo » et c'est un petit astéroïde vivant !"
+        },
+        {
+          "type": "maths",
+          "question": "Le couloir mesure 48 mètres de long. Mario avance à raison de 4 mètres par seconde quand il ne saute pas. S'il passe 6 secondes à sauter, combien de temps lui faut-il pour traverser le couloir ?",
+          "answers": ["12 s", "15 s", "18 s", "20 s"],
+          "correctIndex": 2,
+          "hintText": "48 ÷ 4 = 12 s de marche + 6 s de sauts = ?"
+        },
+        {
+          "type": "francais",
+          "question": "Dans la phrase « Des cristaux lumineux accrochés aux murs éclairent le chemin », quel est le verbe principal ?",
+          "answers": ["accrochés", "éclairent", "sont", "flottent"],
+          "correctIndex": 1,
+          "hintText": "« Accrochés » est un participe passé utilisé comme adjectif. Le verbe conjugué est…"
+        },
+        {
+          "type": "contexte",
+          "question": "Combien de passages Mario voit-il au bout du couloir des météores ?",
+          "answers": ["1", "2", "3", "4"],
+          "correctIndex": 1,
+          "hintText": "Un tunnel étroit et un pont en verre…"
+        },
+        {
+          "type": "maths",
+          "question": "Il y a 54 roches dans le couloir. Un tiers des roches sont petites, la moitié sont moyennes, et le reste sont grandes. Combien de roches grandes y a-t-il ?",
+          "answers": ["8", "9", "10", "12"],
+          "correctIndex": 1,
+          "hintText": "54 ÷ 3 = 18 petites, 54 ÷ 2 = 27 moyennes. Le reste = 54 - 18 - 27"
+        },
+        {
+          "type": "univers-mario",
+          "question": "Dans Super Mario Galaxy, quel élément Mario doit collecter pour réparer le château de Peach ?",
+          "answers": ["Des Power Stars", "Des Coins", "Des Super Mushrooms", "Des Heart Containers"],
+          "correctIndex": 0,
+          "hintText": "Ce sont les étoiles puissantes qui réparent le château pièce par pièce…"
+        },
+        {
+          "type": "francais",
+          "question": "Quel est le féminin du mot « un météore » ?",
+          "answers": ["Une météore", "Une météore", "Le mot est épicène (pas de féminin)", "Une météorite"],
+          "correctIndex": 2,
+          "hintText": "Certains mots scientifiques n'ont pas de forme féminine distincte."
         }
       ]
     },
@@ -210,10 +476,10 @@
       "quizzes": [
         {
           "type": "francais",
-          "question": "Quel est le pluriel du mot « un tuyau » ?",
-          "answers": ["des tuyaus", "des tuyaux", "des tuyau", "des tuyauxs"],
+          "question": "Quel est le féminin du mot « un chevalier » ?",
+          "answers": ["Une chevalière", "Une chevaleresse", "Une chevaleuse", "Le mot n'a pas de féminin"],
           "correctIndex": 1,
-          "hintText": "Les mots en « -au » prennent généralement un « x » au pluriel."
+          "hintText": "Le suffixe « -esse » forme souvent le féminin (ex : un comte / une comtesse)."
         },
         {
           "type": "contexte",
@@ -221,6 +487,55 @@
           "answers": ["De l'eau", "De l'énergie stellaire", "Du feu", "De l'électricité"],
           "correctIndex": 1,
           "hintText": "Luma a parlé des tuyaux dans le sous-sol…"
+        },
+        {
+          "type": "maths",
+          "question": "Les conduits du sous-sol transportent 250 litres d'énergie stellaire par minute. Combien de litres transportent-ils en une heure ?",
+          "answers": ["12 500 L", "13 500 L", "15 000 L", "16 500 L"],
+          "correctIndex": 2,
+          "hintText": "1 heure = 60 minutes. Multiplie 250 par 60 !"
+        },
+        {
+          "type": "francais",
+          "question": "Dans la phrase « L'air est frais et on entend un bourdonnement lointain », quel est le coordonné de « L'air est frais » ?",
+          "answers": ["et", "on entend un bourdonnement lointain", "frais", "lointain"],
+          "correctIndex": 1,
+          "hintText": "La conjonction « et » relie deux propositions."
+        },
+        {
+          "type": "contexte",
+          "question": "Quelles deux odeurs Mario perçoit-il en arrivant devant la Cuisine Cosmique ?",
+          "answers": ["De la confiture d'étoile et des champignons grillés", "Du feu et de la fumée", "Des fleurs et du parfum", "De l'énergie stellaire et de l'ozone"],
+          "correctIndex": 0,
+          "hintText": "Relis le moment où Mario arrive devant la porte ouverte…"
+        },
+        {
+          "type": "maths",
+          "question": "Le tunnel du sous-sol fait 84 mètres. Mario y met 2 minutes pour le traverser. À quelle vitesse moyenne Mario avance-t-il en mètres par seconde ?",
+          "answers": ["0,6 m/s", "0,7 m/s", "0,8 m/s", "0,9 m/s"],
+          "correctIndex": 1,
+          "hintText": "2 min = 120 s. Vitesse = 84 ÷ 120"
+        },
+        {
+          "type": "univers-mario",
+          "question": "Dans les jeux Mario, quel type de tuyau vert est le plus emblématique du jeu ?",
+          "answers": ["Un tuyau d'arrosage", "Un tuyau de warp (téléportation)", "Un tuyau d'égout", "Un tuyau d'irrigation"],
+          "correctIndex": 1,
+          "hintText": "Mario y saute pour se téléporter dans un autre lieu…"
+        },
+        {
+          "type": "francais",
+          "question": "Quel est le sens du mot « prudemment » dans « Mario avance prudemment » ?",
+          "answers": ["Avec vitesse", "Avec précaution", "Avec joie", "Avec colère"],
+          "correctIndex": 1,
+          "hintText": "Prudemment vient de « prudence », c'est-à-dire la précaution."
+        },
+        {
+          "type": "maths",
+          "question": "Il y a 12 conduits lumineux sur chaque mur du tunnel. Le tunnel a 2 murs. Si 3 conduits sont cassés au total, combien de conduits fonctionnent encore ?",
+          "answers": ["21", "23", "25", "27"],
+          "correctIndex": 1,
+          "hintText": "12 × 2 = 24 conduits au total. 24 - 3 = ?"
         }
       ]
     },
@@ -254,6 +569,48 @@
           "answers": ["La Fleur de Feu", "Le Super Champignon", "La Fleur Étoile", "Le Champignon Taille"],
           "correctIndex": 3,
           "hintText": "Ce champignon fait grandir Mario, contrairement au Super Champignon qui le fait juste passer de Mini à Super."
+        },
+        {
+          "type": "maths",
+          "question": "La Cuisine Cosmique contient 6 rangées de 15 bocaux chacune. Si Harmony utilise 4 bocaux par jour, pendant combien de jours les confitures vont-elles durer ?",
+          "answers": ["18 jours", "20 jours", "22 jours", "25 jours"],
+          "correctIndex": 1,
+          "hintText": "6 × 15 = 90 bocaux. 90 ÷ 4 = ?"
+        },
+        {
+          "type": "francais",
+          "question": "Dans la phrase « Des champignons Power-Up flottent au-dessus d'un comptoir immense », quel est le complément de lieu ?",
+          "answers": ["Des champignons Power-Up", "flottent", "au-dessus d'un comptoir immense", "immense"],
+          "correctIndex": 2,
+          "hintText": "Le complément de lieu répond à la question « où ? »"
+        },
+        {
+          "type": "contexte",
+          "question": "Que dit la note d'Harmony à Mario ?",
+          "answers": ["De fuir le palais", "Que Bowser Junior est passé et qu'elle l'a suivi vers sa chambre", "De trouver Luma", "De ne pas venir la chercher"],
+          "correctIndex": 1,
+          "hintText": "Relis la note écrite sur le comptoir…"
+        },
+        {
+          "type": "francais",
+          "question": "Quel est le sens de l'expression « à la hâte » dans « une note écrite à la hâte » ?",
+          "answers": ["Avec soin", "Très vite, sans prendre son temps", "Avec colère", "En secret"],
+          "correctIndex": 1,
+          "hintText": "« Hâte » signifie vitesse, précipitation."
+        },
+        {
+          "type": "maths",
+          "question": "Il y a 3 types de fruits galactiques : 35 fruits étoile, 28 fruits lune et 17 fruits soleil. Combien de fruits galactiques y a-t-il au total ?",
+          "answers": ["78", "79", "80", "81"],
+          "correctIndex": 2,
+          "hintText": "Additionne 35 + 28 + 17 !"
+        },
+        {
+          "type": "univers-mario",
+          "question": "Dans Super Mario Galaxy, quel Power-Up permet à Mario de se transformer en pingouin ?",
+          "answers": ["La Fleur de Feu", "Le Penguin Suit (Combinaison Pingouin)", "L'Ice Flower", "Le Propeller Mushroom"],
+          "correctIndex": 1,
+          "hintText": "Ce costume spécial permet de nager et de glisser sur la glace…"
         }
       ]
     },
@@ -269,6 +626,62 @@
           "correctIndex": 2,
           "hintText": "Le chemin le plus long passe par le Chemin des météores, puis le sous-sol, puis…",
           "isFinal": true
+        },
+        {
+          "type": "contexte",
+          "question": "Avec quel objet Bowser Junior a-t-il retenu Harmony ?",
+          "answers": ["Des chaînes de fer", "Un filet d'énergie violette", "Un sort magique", "Un filet en corde"],
+          "correctIndex": 1,
+          "hintText": "Relis le début de la narration de la Chambre d'Harmony…"
+        },
+        {
+          "type": "contexte",
+          "question": "Sur quoi est assis Bowser Junior dans la Chambre d'Harmony ?",
+          "answers": ["Sur un trône de feu", "Sur un trône de jeux vidéo", "Sur un trône d'or", "Sur un trône de pierres"],
+          "correctIndex": 1,
+          "hintText": "Bowser Junior adore les jeux vidéo…"
+        },
+        {
+          "type": "francais",
+          "question": "Dans la phrase « Bowser Junior, tu vas la laisser partir MAINTENANT ! », quel est le registre de langue de « MAINTENANT » en majuscules ?",
+          "answers": ["Un langage soutenu", "Un langage familier", "Un langage emphatique (pour insister)", "Un langage technique"],
+          "correctIndex": 2,
+          "hintText": "Les majuscules servent à marquer l'insistance et la force du propos."
+        },
+        {
+          "type": "univers-mario",
+          "question": "Quel est le véhicule emblématique de Bowser Junior dans les jeux Mario ?",
+          "answers": ["Un char d'assaut", "Un scooter", "Un avion", "Une montgolfière"],
+          "correctIndex": 1,
+          "hintText": "Il conduit un scooter jaune avec une pince à peinture…"
+        },
+        {
+          "type": "maths",
+          "question": "Si Mario a répondu correctement à 18 Quiz durant son Chemin et incorrectement à 3 Quiz, combien de Pièces a-t-il gagnées au total ?",
+          "answers": ["30 Pièces", "33 Pièces", "36 Pièces", "39 Pièces"],
+          "correctIndex": 0,
+          "hintText": "18 × (+2) = +36 et 3 × (-1) = -3. Total = 36 - 3"
+        },
+        {
+          "type": "contexte",
+          "question": "Quel rôle joue Luma quand Mario affronte Bowser Junior ?",
+          "answers": ["Il combat Bowser Junior", "Il se cache derrière Mario, prêt à aider", "Il est parti chercher de l'aide", "Il négocie avec Bowser Junior"],
+          "correctIndex": 1,
+          "hintText": "Relis ce que fait Luma dans la narration…"
+        },
+        {
+          "type": "francais",
+          "question": "Transforme en discours indirect : Harmony crie : « Mario ! Ne t'inquiète pas, je suis forte ! »",
+          "answers": ["Harmony crie que Mario ne s'inquiète pas et qu'elle est forte.", "Harmony crie que Mario ne s'inquiète pas et qu'elle sera forte.", "Harmony crie Mario de ne pas s'inquiéter et d'être forte.", "Harmony dit à Mario qu'il ne s'inquiète pas et qu'elle est forte."],
+          "correctIndex": 0,
+          "hintText": "Au discours indirect, on introduit la phrase avec « que » et on adapte les pronoms."
+        },
+        {
+          "type": "maths",
+          "question": "Le filet d'énergie violette mesure 4,8 mètres de périmètre. Si c'est un carré, quelle est la longueur d'un côté ?",
+          "answers": ["1,1 m", "1,2 m", "1,3 m", "1,4 m"],
+          "correctIndex": 1,
+          "hintText": "Périmètre d'un carré = 4 × côté. Donc côté = 4,8 ÷ 4"
         }
       ]
     }

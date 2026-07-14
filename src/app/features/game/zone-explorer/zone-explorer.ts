@@ -107,10 +107,17 @@ export class ZoneExplorer {
   }
 
   /**
-   * Passe au Quiz/Zone suivante après un quiz réussi.
+   * Passe au Quiz suivant après un quiz réussi.
    */
   onAdvanceZone(): void {
     this.gameEngine.advanceQuiz();
+  }
+
+  /**
+   * Continue après le dernier quiz d'une Zone (affiche les choix narratifs).
+   */
+  onContinueAfterZone(): void {
+    this.gameEngine.continueAfterZone();
   }
 
   /**
