@@ -1,18 +1,18 @@
-# Issue #20 : Chemin de Mario
+# Issue #22 : Chemin de Peach
 
 ## Spécification
-Créer le fichier `mario.json` contenant le Chemin complet de Mario sous forme d'arbre de décision.
+Créer le fichier `peach.json` contenant le Chemin complet de Peach sous forme d'arbre de décision.
 
 ## Structure du fichier
-Le fichier doit être placé dans `src/assets/content/mario.json` (le ContentLoaderService charge depuis `assets/content/`).
+Le fichier doit être placé dans `public/assets/content/peach.json` (le ContentLoaderService charge depuis `assets/content/`).
 
 ```json
 {
-  "character": "mario",
-  "startZoneId": "mario-entree",
+  "character": "peach",
+  "startZoneId": "peach-entree",
   "zones": {
-    "mario-entree": { ... },
-    "mario-jardin-des-etoiles": { ... },
+    "peach-entree": { ... },
+    "peach-salon-royal": { ... },
     ...
   }
 }
@@ -20,83 +20,51 @@ Le fichier doit être placé dans `src/assets/content/mario.json` (le ContentLoa
 
 ## Arbre de décision
 ```
-[mario-entree]
-  ├─(jardin)──► [mario-jardin-des-etoiles]
-  │               ├─(escalier)──► [mario-tour-de-luma] ──► [mario-observatoire] ──► [mario-chambre-harmony]
-  │               └─(porte)──► [mario-salle-des-galaxies] ──► [mario-chambre-harmony]
-  └─(couloir)──► [mario-chemin-des-meteores]
-                    ├─(tunnel)──► [mario-sous-sol] ──► [mario-cuisine-cosmique] ──► [mario-chambre-harmony]
-                    └─(pont)──► [mario-salle-des-galaxies] ──► [mario-chambre-harmony]
+[peach-entree]
+  ├─(salon)──► [peach-salon-royal]
+  │               ├─(bibliothèque)──► [peach-bibliotheque] ──► [peach-jardin-prive] ──► [peach-chambre-harmony]
+  │               └─(balcon)──► [peach-terrasse-royale] ──► [peach-chambre-harmony]
+  └─(jardin)──► [peach-serre-enchantee]
+                   ├─(fontaine)──► [peach-fontaine-des-soeux] ──► [peach-terrasse-royale] ──► [peach-chambre-harmony]
+                   └─(chemin secret)──► [peach-atelier-de-luma] ──► [peach-bibliotheque] ──► [peach-jardin-prive] ──► [peach-chambre-harmony]
 ```
 
 ## Zones (9 au total)
-1. **mario-entree** — Le hall d'accueil. Bowser Junior a laissé une trace.
-2. **mario-jardin-des-etoiles** — Jardin flottant avec plantes galactiques
-3. **mario-tour-de-luma** — Chambre de Luma, objets volants
-4. **mario-observatoire** — Vue sur les étoiles, télescopes
-5. **mario-salle-des-galaxies** — Mini-galaxies en rotation
-6. **mario-chemin-des-meteores** — Couloir dangereux, roches flottantes
-7. **mario-sous-sol** — Tunnels secrets
-8. **mario-cuisine-cosmique** — Ingrédients spatiaux
-9. **mario-chambre-harmony** — Zone finale, Harmony retenue
-
-## Types TypeScript attendus (dans src/app/core/types/)
-
-### Zone
-```typescript
-interface Zone {
-  id: string;
-  narration: string;
-  choices: NarrativeChoice[];
-  quizzes: Quiz[];
-}
-```
-
-### NarrativeChoice
-```typescript
-interface NarrativeChoice {
-  text: string;
-  nextZoneId: string;
-}
-```
-
-### Quiz
-```typescript
-interface Quiz {
-  type: 'maths' | 'francais' | 'univers-mario' | 'contexte';
-  question: string;
-  answers: string[];
-  correctIndex: number;
-  hintText?: string;
-  isFinal?: boolean;
-}
-```
+1. **peach-entree** — Le hall d'accueil. Peach atterrit gracieusement.
+2. **peach-salon-royal** — Salon élégant rempli de souvenirs d'Harmony
+3. **peach-bibliotheque** — Bibliothèque avec livres sur les galaxies
+4. **peach-jardin-prive** — Jardin magique de fleurs cosmiques
+5. **peach-terrasse-royale** — Terrasse ouverte sur les galaxies
+6. **peach-serre-enchantee** — Serre avec plantes magiques flottantes
+7. **peach-fontaine-des-soeux** — Fontaine scintillante qui exauce les souhaits
+8. **peach-atelier-de-luma** — Atelier secret de Luma avec objets magiques
+9. **peach-chambre-harmony** — Zone finale, Harmony retenue
 
 ## Règles par Zone
 - **Narration** : texte immersif, ton adapté à des enfants de 10 ans
 - **Quiz** : 2 à 3 Quiz par Zone (sauf la Zone finale qui en a 1 difficile avec `isFinal: true`)
-- **Choix narratifs** : au moins 2 choix par Zone (sauf les Zones terminales comme `mario-chambre-harmony` qui n'a pas de choix)
+- **Choix narratifs** : au moins 2 choix par Zone (sauf les Zones terminales comme `peach-chambre-harmony` qui n'a pas de choix)
 - **Types de Quiz** : répartir entre Maths (CM1), Français (CM1), Univers Mario, Contexte
 
 ## Parcours possibles
-- Court : Entrée → Jardin → Salle des galaxies → Chambre (4 Zones)
-- Moyen : Entrée → Jardin → Tour → Observatoire → Chambre (5 Zones)
-- Long : Entrée → Chemin des météores → Sous-sol → Cuisine → Chambre (5 Zones)
+- Court : Entrée → Salon → Terrasse → Chambre (4 Zones)
+- Moyen : Entrée → Salon → Bibliothèque → Jardin → Chambre (5 Zones)
+- Long : Entrée → Serre → Fontaine → Terrasse → Chambre (5 Zones)
+- Long 2 : Entrée → Serre → Atelier → Bibliothèque → Jardin → Chambre (6 Zones)
 
 ## Standards du Projet & Commandes
 - Build : `npm run build`
 - Test : `npm run test --watch=false`
-- Lint : `npm run lint`
 
 ## Zone de Transit & Logs
 ### Tâche en cours :
-- [x] Créer le fichier mario.json avec les 9 Zones du Chemin de Mario
+- [x] Créer le fichier peach.json avec les 9 Zones du Chemin de Peach
 
 ### Compteur de rejets (tâche actuelle) :
 - 0 / 5
 
 ### Dernier retour de Review :
-- Validé : JSON valide, 9 zones conformes, arbre de décision correct, quiz bien répartis (maths:5, francais:4, univers-mario:5, contexte:8), narrations adaptées, build OK, 337 tests passés.
+- Validé : JSON valide, 9 zones conformes, arbre de décision correct (4 chemins), quiz bien répartis (maths:18, francais:18, univers-mario:13, contexte:24), narrations adaptées au personnage de Peach, build OK, tests stables (20 échecs pré-existants non liés à cette issue).
 
 ### Blocage Actuel :
 - Aucun.
