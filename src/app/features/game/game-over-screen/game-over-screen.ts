@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { GameEngineService } from '../../../core/services/game-engine';
-import { PersistenceService } from '../../../core/services/persistence';
 import { CHARACTERS } from '../../../core/types';
 
 /**
@@ -23,7 +22,6 @@ import { CHARACTERS } from '../../../core/types';
 })
 export class GameOverScreen {
   private readonly gameEngine = inject(GameEngineService);
-  private readonly persistence = inject(PersistenceService);
   private readonly router = inject(Router);
 
   /** Identifiant du personnage qui a perdu */
@@ -58,7 +56,7 @@ export class GameOverScreen {
    * Retour au menu principal — efface la sauvegarde et navigue vers `/accueil`.
    */
   protected onReturnToMenu(): void {
-    this.persistence.clearSave();
+    this.gameEngine.returnToMenu();
     this.router.navigate(['/accueil']);
   }
 }

@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, inject, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { GameEngineService } from '../../../core/services/game-engine';
 import { PersistenceService } from '../../../core/services/persistence';
 import { GameOverScreen } from '../game-over-screen/game-over-screen';
@@ -19,6 +20,7 @@ import { VictoryScreen } from '../victory-screen/victory-screen';
 export class GameShell implements OnInit {
   private readonly gameEngine = inject(GameEngineService);
   private readonly persistence = inject(PersistenceService);
+  private readonly router = inject(Router);
 
   /** Nombre de Pièces accumulées par le joueur */
   readonly coins = this.gameEngine.coins;
@@ -41,20 +43,14 @@ export class GameShell implements OnInit {
   ngOnInit(): void {
     const gameSave = this.persistence.getGameSave();
     if (!gameSave?.selectedCharacterId) {
+      this.router.navigate(['/accueil']);
       return;
     }
 
-    const currentCharacterId = this.gameEngine.characterId();
-    const saveCharacterId = gameSave.selectedCharacterId;
-
-    if (this.gameStarted() && currentCharacterId === saveCharacterId) {
+    if (this.gameStarted() && this.gameEngine.characterId() === gameSave.selectedCharacterId) {
       return;
     }
 
-    if (currentCharacterId !== saveCharacterId) {
-      this.gameEngine.startGame(saveCharacterId);
-    } else {
-      this.gameEngine.restoreGame(gameSave);
-    }
+    this.gameEngine.restoreGame(gameSave);
   }
 }

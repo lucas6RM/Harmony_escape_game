@@ -195,6 +195,8 @@ export class GameEngineService {
     this.quizFeedbackSignal.set(null);
     this.hintTextSignal.set(null);
     this.eliminatedAnswersSignal.set([]);
+    this.gameWonSignal.set(false);
+    this.gameOverSignal.set(false);
     this.gameStartedSignal.set(true);
     this.loadPathFromHttp(gameSave.selectedCharacterId, gameSave.currentZoneId, true);
   }
