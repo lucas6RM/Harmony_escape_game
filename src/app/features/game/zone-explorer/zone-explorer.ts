@@ -87,14 +87,14 @@ export class ZoneExplorer {
    * @param index - Index du choix dans la Zone courante
    */
   onSelectChoice(index: number): void {
-    this.gameEngine.selectChoice(index);
+    this.preserveScroll(() => this.gameEngine.selectChoice(index));
   }
 
   /**
    * Recommence la Zone courante après une pénalité de Quiz raté.
    */
   onRestartZone(): void {
-    this.gameEngine.restartZone();
+    this.preserveScroll(() => this.gameEngine.restartZone());
   }
 
   /**
@@ -103,41 +103,56 @@ export class ZoneExplorer {
    * @param index - Index de la réponse dans le Quiz (0-3)
    */
   onSelectAnswer(index: number): void {
-    this.gameEngine.submitQuizAnswer(index);
+    this.preserveScroll(() => this.gameEngine.submitQuizAnswer(index));
   }
 
   /**
    * Passe au Quiz suivant après un quiz réussi.
    */
   onAdvanceZone(): void {
-    this.gameEngine.advanceQuiz();
+    this.preserveScroll(() => this.gameEngine.advanceQuiz());
   }
 
   /**
    * Continue après le dernier quiz d'une Zone (affiche les choix narratifs).
    */
   onContinueAfterZone(): void {
-    this.gameEngine.continueAfterZone();
+    this.preserveScroll(() => this.gameEngine.continueAfterZone());
   }
 
   /**
    * Achète un Indice via le GameEngineService.
    */
   onBuyHint(): void {
-    this.gameEngine.buyHint();
+    this.preserveScroll(() => this.gameEngine.buyHint());
   }
 
   /**
    * Achète l'élimination de 2 réponses via le GameEngineService.
    */
   onBuyElimination(): void {
-    this.gameEngine.buyElimination();
+    this.preserveScroll(() => this.gameEngine.buyElimination());
   }
 
   /**
    * Saute le Quiz courant via le GameEngineService.
    */
   onSkipQuiz(): void {
-    this.gameEngine.skipQuiz();
+    this.preserveScroll(() => this.gameEngine.skipQuiz());
+  }
+
+  /**
+   * Exécute une action tout en préservant la position de scroll et en retirant
+   * le focus pour empêcher le navigateur mobile de recentrer la vue.
+   */
+  private preserveScroll(action: () => void): void {
+    const scrollY = window.scrollY;
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+    action();
+    requestAnimationFrame(() => {
+      window.scrollTo(0, scrollY);
+    });
   }
 }
