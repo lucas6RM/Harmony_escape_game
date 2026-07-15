@@ -263,6 +263,50 @@ describe('GameEngineService', () => {
   });
 
   // ──────────────────────────────────────────────────────────────
+  // retryQuiz
+  // ──────────────────────────────────────────────────────────────
+
+  describe('retryQuiz', () => {
+    beforeEach(() => {
+      service.startGame('mario');
+    });
+
+    it('réactive quizActive après une mauvaise réponse', () => {
+      (service as any).quizActiveSignal.set(true);
+      service.submitQuizAnswer(0); // faux
+      expect(service.quizActive()).toBe(false);
+      service.retryQuiz();
+      expect(service.quizActive()).toBe(true);
+    });
+
+    it('clear quizFeedback à null', () => {
+      (service as any).quizActiveSignal.set(true);
+      service.submitQuizAnswer(0); // faux → feedback = 'incorrect'
+      expect(service.quizFeedback()).toBe('incorrect');
+      service.retryQuiz();
+      expect(service.quizFeedback()).toBe(null);
+    });
+
+    it('ne change pas quizIndex (reste sur le même Quiz)', () => {
+      (service as any).quizActiveSignal.set(true);
+      service.submitQuizAnswer(0); // faux
+      service.retryQuiz();
+      expect(service.currentQuizIndex()).toBe(0);
+    });
+
+    it('ne change pas les aides déjà achetées', () => {
+      (service as any).quizActiveSignal.set(true);
+      service.addCoins(10);
+      service.buyHint();
+      service.buyElimination();
+      service.submitQuizAnswer(0); // faux
+      service.retryQuiz();
+      expect(service.hintText()).not.toBe(null);
+      expect(service.eliminatedAnswers()).toHaveLength(2);
+    });
+  });
+
+  // ──────────────────────────────────────────────────────────────
   // restartZone
   // ──────────────────────────────────────────────────────────────
 

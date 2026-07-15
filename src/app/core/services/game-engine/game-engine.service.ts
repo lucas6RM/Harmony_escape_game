@@ -437,6 +437,18 @@ export class GameEngineService {
   }
 
   /**
+   * Réactive le Quiz courant après une mauvaise réponse.
+   *
+   * Le joueur clique sur "Réessayer" : les boutons de réponse
+   * redeviennent actifs, le feedback est effacé, mais le quizIndex
+   * reste inchangé (le joueur rejoue le même Quiz).
+   */
+  retryQuiz(): void {
+    this.quizActiveSignal.set(true);
+    this.quizFeedbackSignal.set(null);
+  }
+
+  /**
    * Soumet une réponse au Quiz en cours.
    *
    * - Réponse correcte : +2 Pièces, avance au Quiz suivant ou termine la Zone.
@@ -466,7 +478,8 @@ export class GameEngineService {
       return;
     }
 
-    // Réponse incorrecte → -1 Pièce et recommencer le Quiz
+    // Réponse incorrecte → -1 Pièce, feedback d'erreur, quiz désactivé
+    // Le joueur doit cliquer sur "Réessayer" pour réactiver
     this.addCoins(-1);
     this.quizFeedbackSignal.set('incorrect');
     this.quizActiveSignal.set(false);

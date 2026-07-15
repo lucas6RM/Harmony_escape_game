@@ -224,22 +224,22 @@ describe('ZoneExplorer', () => {
       expect(penaltyBlock.textContent).toContain('Pénalité');
     });
 
-    it('la pénalité contient le bouton "Recommencer le Quiz"', () => {
+    it('la pénalité contient le bouton "Réessayer"', () => {
       (gameEngine as any).quizActiveSignal.set(true);
       gameEngine.submitQuizAnswer(0); // faux
       fixture.detectChanges();
 
       const restartButton = fixture.nativeElement.querySelector('.restart-button');
       expect(restartButton).toBeTruthy();
-      expect(restartButton.textContent).toContain('Recommencer le Quiz');
+      expect(restartButton.textContent).toContain('Réessayer');
     });
 
-    it('cliquer sur "Recommencer le Quiz" appelle restartZone()', () => {
+    it('cliquer sur "Réessayer" appelle retryQuiz()', () => {
       (gameEngine as any).quizActiveSignal.set(true);
       gameEngine.submitQuizAnswer(0); // faux
       fixture.detectChanges();
 
-      const spy = vi.spyOn(gameEngine, 'restartZone');
+      const spy = vi.spyOn(gameEngine, 'retryQuiz');
       const restartButton = fixture.nativeElement.querySelector('.restart-button');
       restartButton.click();
       fixture.detectChanges();

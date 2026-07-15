@@ -93,6 +93,14 @@ export class ZoneExplorer {
   }
 
   /**
+   * Réactive le Quiz courant après une mauvaise réponse.
+   * Le joueur rejoue le même Quiz sans reset de quizIndex.
+   */
+  onRetryQuiz(): void {
+    this.preserveScroll(() => this.gameEngine.retryQuiz());
+  }
+
+  /**
    * Soumet la réponse du Quiz sélectionnée par le joueur.
    *
    * @param index - Index de la réponse dans le Quiz (0-3)
