@@ -26,8 +26,8 @@ Refondre le flux des mauvaises réponses et ajouter le Game Over + persistance d
 
 ### Issue #31
 - [x] Tâche 1 : Supprimer `skipQuiz()` du `GameEngineService` et retirer `skip` de `HintType` / `HINT_COSTS` dans les types
-- [ ] Tâche 2 : Retirer le bouton "Sauter" du `QuizPanelComponent` et la logique de saut du `ZoneExplorerComponent`
-- [ ] Tâche 3 : Mettre à jour ou retirer les tests liés à `skipQuiz`, vérifier que le jeu compile et les tests passent
+- [x] Tâche 2 : Retirer le bouton "Sauter" du `QuizPanelComponent` et la logique de saut du `ZoneExplorerComponent`
+- [x] Tâche 3 : Mettre à jour ou retirer les tests liés à `skipQuiz`, vérifier que le jeu compile et les tests passent
 
 ### Issue #32
 - [ ] Tâche 4 : Refondre `submitQuizAnswer()` pour ne plus reset `quizIndex` après mauvaise réponse + créer `retryQuiz()` qui réactive `quizActive` et clear `quizFeedback`
@@ -38,7 +38,7 @@ Refondre le flux des mauvaises réponses et ajouter le Game Over + persistance d
 
 ## Zone de Transit & Logs
 ### Tâche en cours :
-- Tâche 2
+- Aucune (Issue #31 terminée)
 
 ### Compteur de rejets (tâche actuelle) :
 - 0 / 5

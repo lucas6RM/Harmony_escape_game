@@ -552,63 +552,6 @@ describe('GameEngineService', () => {
   });
 
   // ──────────────────────────────────────────────────────────────
-  // skipQuiz
-  // ──────────────────────────────────────────────────────────────
-
-  describe('skipQuiz', () => {
-    beforeEach(() => {
-      service.startGame('mario');
-      (service as any).quizActiveSignal.set(true);
-    });
-
-    it('coûte 2 Pièces', () => {
-      service.addCoins(5);
-      const result = service.skipQuiz();
-      expect(result).toBe(true);
-      expect(service.coins()).toBe(3); // 5 - 2 = 3
-    });
-
-    it('avance au quiz suivant', () => {
-      service.addCoins(2);
-      service.skipQuiz();
-      expect(service.currentQuizIndex()).toBe(1); // quiz 0 → quiz 1
-    });
-
-    it('retourne false si quiz non actif', () => {
-      (service as any).quizActiveSignal.set(false);
-      const result = service.skipQuiz();
-      expect(result).toBe(false);
-    });
-
-    it('retourne false si solde insuffisant', () => {
-      service.addCoins(1); // besoin de 2
-      const result = service.skipQuiz();
-      expect(result).toBe(false);
-      expect(service.coins()).toBe(1);
-    });
-
-    it('ne donne pas de récompense (+0 Pièces au-delà du coût)', () => {
-      service.addCoins(4);
-      service.skipQuiz();
-      expect(service.coins()).toBe(2); // 4 - 2 = 2, pas de +2
-    });
-
-    it('avance au quiz suivant et reset feedback', () => {
-      service.addCoins(2);
-      service.skipQuiz();
-      expect(service.quizActive()).toBe(false);
-      expect(service.quizFeedback()).toBe(null);
-    });
-
-    it('sauter le dernier quiz ne termine pas la Zone automatiquement', () => {
-      // Zone 1 a 2 quizzes, skip quiz 0 → avance à quiz 1
-      service.addCoins(2);
-      service.skipQuiz();
-      expect(service.isZoneCompleted()).toBe(false);
-    });
-  });
-
-  // ──────────────────────────────────────────────────────────────
   // Aides — buyHint
   // ──────────────────────────────────────────────────────────────
 
