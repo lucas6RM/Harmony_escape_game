@@ -1,6 +1,7 @@
 {
   "character": "peach",
   "startZoneId": "peach-entree",
+  "gameOverNarration": "Peach ajuste sa couronne avec dignité, même dans l'adversité. « Une princesse ne se laisse jamais abattre. » Luma s'approche doucement. « Princesse, chaque tentative te rapproche d'Harmony. La force d'une vraie princesse, c'est sa persévérance. » Peach sourit avec détermination. « Tu as raison, petit Luma. Je reviendrai. »",
   "zones": {
     "peach-entree": {
       "id": "peach-entree",

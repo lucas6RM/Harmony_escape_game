@@ -1,6 +1,7 @@
 {
   "character": "daisy",
   "startZoneId": "daisy-entree",
+  "gameOverNarration": "Daisy se redresse d'un coup, les poings sur les hanches. « Attends, c'est tout ? Pas question ! La princesse de Sarasaland ne lâche jamais l'affaire ! » Luma rit joyeusement. « C'est ça l'esprit, Daisy ! Recharge tes énergies et reviens plus forte que jamais ! » Daisy fait un clin d'œil. « Tu peux compter sur moi, Luma ! »",
   "zones": {
     "daisy-entree": {
       "id": "daisy-entree",

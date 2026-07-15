@@ -21,7 +21,7 @@ export class GameEngineService {
 
   // ── État interne ────────────────────────────────────────────────
 
-  private readonly pathDataSignal = signal<CharacterPath>({ character: 'mario', startZoneId: '', zones: {} });
+  private readonly pathDataSignal = signal<CharacterPath>({ character: 'mario', startZoneId: '', gameOverNarration: '', zones: {} });
   private readonly pathLoadingSignal = signal<boolean>(false);
 
   private readonly currentZoneIdSignal = signal<string>('');
@@ -37,6 +37,7 @@ export class GameEngineService {
   private readonly eliminatedAnswersSignal = signal<number[]>([]);
   private readonly gameWonSignal = signal<boolean>(false);
   private readonly gameOverSignal = signal<boolean>(false);
+  private readonly zonesExploredSignal = signal<number>(0);
 
   // ── Accès public (Signals) ──────────────────────────────────────
 
@@ -103,6 +104,9 @@ export class GameEngineService {
   /** Indique si le joueur est en Game Over (Pièces < 0) */
   readonly gameOver: Signal<boolean> = this.gameOverSignal;
 
+  /** Nombre de Zones explorées par le joueur durant la partie */
+  readonly zonesExplored: Signal<number> = this.zonesExploredSignal;
+
   /** Indique si le Chemin est encore en cours de chargement asynchrone */
   readonly pathLoading: Signal<boolean> = this.pathLoadingSignal;
 
@@ -132,6 +136,7 @@ export class GameEngineService {
     this.isZoneCompletedSignal.set(false);
     this.gameWonSignal.set(false);
     this.gameOverSignal.set(false);
+    this.zonesExploredSignal.set(1);
     this.gameStartedSignal.set(true);
     this.quizActiveSignal.set(true);
     this.quizFeedbackSignal.set(null);
@@ -151,6 +156,7 @@ export class GameEngineService {
         this.pathDataSignal.set({
           character: rawPath.character,
           startZoneId: rawPath.startZoneId,
+          gameOverNarration: rawPath.gameOverNarration ?? '',
           zones: resolvedZones,
         });
         if (overrideZoneId) {
@@ -164,7 +170,7 @@ export class GameEngineService {
         this.pathLoadingSignal.set(false);
       },
       error: () => {
-        this.pathDataSignal.set({ character: characterId as 'mario' | 'luigi' | 'peach' | 'daisy', startZoneId: '', zones: {} });
+        this.pathDataSignal.set({ character: characterId as 'mario' | 'luigi' | 'peach' | 'daisy', startZoneId: '', gameOverNarration: '', zones: {} });
         this.pathLoadingSignal.set(false);
       },
     });
@@ -183,6 +189,7 @@ export class GameEngineService {
     this.pathLoadingSignal.set(true);
     this.currentQuizIndexSignal.set(gameSave.quizIndex);
     this.coinsSignal.set(gameSave.coins);
+    this.zonesExploredSignal.set(gameSave.zonesExplored ?? 1);
     this.isZoneCompletedSignal.set(false);
     this.quizActiveSignal.set(true);
     this.quizFeedbackSignal.set(null);
@@ -224,6 +231,7 @@ export class GameEngineService {
    */
   navigateToZone(nextZoneId: string): void {
     this.currentZoneIdSignal.set(nextZoneId);
+    this.zonesExploredSignal.update(z => z + 1);
     this.currentQuizIndexSignal.set(0);
     this.isZoneCompletedSignal.set(false);
     this.quizActiveSignal.set(true);
@@ -314,6 +322,7 @@ export class GameEngineService {
       currentZoneId: this.currentZoneIdSignal(),
       quizIndex: this.currentQuizIndexSignal(),
       coins: this.coinsSignal(),
+      zonesExplored: this.zonesExploredSignal(),
     });
   }
 
@@ -365,6 +374,12 @@ export class GameEngineService {
     }
     this.coinsSignal.update(c => c - cost);
     this.hintTextSignal.set(hint);
+    this.persistenceService.saveGame({
+      currentZoneId: this.currentZoneIdSignal(),
+      quizIndex: this.currentQuizIndexSignal(),
+      coins: this.coinsSignal(),
+      zonesExplored: this.zonesExploredSignal(),
+    });
     return true;
   }
 
@@ -394,6 +409,12 @@ export class GameEngineService {
     const toEliminate = incorrectIndices.slice(0, 2);
     this.coinsSignal.update(c => c - cost);
     this.eliminatedAnswersSignal.set(toEliminate);
+    this.persistenceService.saveGame({
+      currentZoneId: this.currentZoneIdSignal(),
+      quizIndex: this.currentQuizIndexSignal(),
+      coins: this.coinsSignal(),
+      zonesExplored: this.zonesExploredSignal(),
+    });
     return true;
   }
 
@@ -402,7 +423,7 @@ export class GameEngineService {
    * et efface la sauvegarde.
    */
   returnToMenu(): void {
-    this.pathDataSignal.set({ character: 'mario', startZoneId: '', zones: {} });
+    this.pathDataSignal.set({ character: 'mario', startZoneId: '', gameOverNarration: '', zones: {} });
     this.pathLoadingSignal.set(false);
     this.currentZoneIdSignal.set('');
     this.currentQuizIndexSignal.set(0);
@@ -415,6 +436,7 @@ export class GameEngineService {
     this.eliminatedAnswersSignal.set([]);
     this.gameWonSignal.set(false);
     this.gameOverSignal.set(false);
+    this.zonesExploredSignal.set(0);
     this.persistenceService.clearSave();
   }
 
@@ -423,7 +445,7 @@ export class GameEngineService {
    * sans effacer les Chemins complétés.
    */
   returnToCharacterSelect(): void {
-    this.pathDataSignal.set({ character: 'mario', startZoneId: '', zones: {} });
+    this.pathDataSignal.set({ character: 'mario', startZoneId: '', gameOverNarration: '', zones: {} });
     this.pathLoadingSignal.set(false);
     this.currentZoneIdSignal.set('');
     this.currentQuizIndexSignal.set(0);
@@ -436,6 +458,7 @@ export class GameEngineService {
     this.eliminatedAnswersSignal.set([]);
     this.gameWonSignal.set(false);
     this.gameOverSignal.set(false);
+    this.zonesExploredSignal.set(0);
     this.persistenceService.clearSave();
   }
 
@@ -488,6 +511,12 @@ export class GameEngineService {
       this.completeQuiz();
       this.quizFeedbackSignal.set('correct');
       this.quizActiveSignal.set(false);
+      this.persistenceService.saveGame({
+        currentZoneId: this.currentZoneIdSignal(),
+        quizIndex: this.currentQuizIndexSignal(),
+        coins: this.coinsSignal(),
+        zonesExplored: this.zonesExploredSignal(),
+      });
 
       return;
     }
@@ -497,5 +526,11 @@ export class GameEngineService {
     this.addCoins(-1);
     this.quizFeedbackSignal.set('incorrect');
     this.quizActiveSignal.set(false);
+    this.persistenceService.saveGame({
+      currentZoneId: this.currentZoneIdSignal(),
+      quizIndex: this.currentQuizIndexSignal(),
+      coins: this.coinsSignal(),
+      zonesExplored: this.zonesExploredSignal(),
+    });
   }
 }

@@ -5,6 +5,12 @@
     <span class="coins-count">{{ coins() }}</span>
   </div>
 
+  <!-- Indicateur de Zones explorées -->
+  <div class="zones-display" role="status" aria-live="polite" aria-label="Zones explorées">
+    <span class="zones-icon" aria-hidden="true">🗺️</span>
+    <span class="zones-count">{{ zonesExplored() }}</span>
+  </div>
+
   <!-- Indicateur de chargement pendant le chargement du Chemin -->
   @if (loading()) {
   <div class="loading-state" role="status" aria-label="Chargement du Chemin en cours">

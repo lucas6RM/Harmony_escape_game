@@ -14,6 +14,7 @@ import { QuizPanelComponent } from '../quiz-panel/quiz-panel';
 const MOCK_RAW_MARIO_PATH: RawCharacterPath = {
   character: 'mario',
   startZoneId: 'mario-zone-1',
+  gameOverNarration: '',
   zones: {
     'mario-zone-1': {
       id: 'mario-zone-1',
@@ -79,6 +80,7 @@ class ContentLoaderServiceMock {
       signal: () => ({
         character: 'mario' as const,
         startZoneId: MOCK_RAW_MARIO_PATH.startZoneId,
+        gameOverNarration: MOCK_RAW_MARIO_PATH.gameOverNarration,
         zones: MOCK_RAW_MARIO_PATH.zones,
       }),
       isLoading: () => false,

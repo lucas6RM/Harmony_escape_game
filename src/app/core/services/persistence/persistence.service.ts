@@ -58,6 +58,7 @@ export class PersistenceService {
       quizIndex: 0,
       coins: 0,
       completedPaths: [],
+      zonesExplored: 0,
     };
     this.storage.setItem(GAME_SAVE_KEY, JSON.stringify(save));
   }
@@ -101,6 +102,7 @@ export class PersistenceService {
     currentZoneId: string;
     quizIndex: number;
     coins: number;
+    zonesExplored: number;
   }): void {
     const existing = this.getGameSave();
     const merged: GameSave = {
@@ -109,6 +111,7 @@ export class PersistenceService {
       quizIndex: state.quizIndex,
       coins: state.coins,
       completedPaths: existing?.completedPaths ?? [],
+      zonesExplored: state.zonesExplored ?? (existing?.zonesExplored ?? 0),
     };
     this.storage.setItem(GAME_SAVE_KEY, JSON.stringify(merged));
   }
@@ -198,6 +201,11 @@ export class PersistenceService {
 
     // completedPaths doit être un tableau
     if (!Array.isArray(obj['completedPaths'])) {
+      return false;
+    }
+
+    // zonesExplored doit être un nombre >= 0 (optionnel, fallback à 0)
+    if (typeof obj['zonesExplored'] !== 'undefined' && (typeof obj['zonesExplored'] !== 'number' || obj['zonesExplored'] < 0)) {
       return false;
     }
 

@@ -14,6 +14,7 @@ import { GameOverScreen } from './game-over-screen';
 const MOCK_RAW_MARIO_PATH: RawCharacterPath = {
   character: 'mario',
   startZoneId: 'mario-zone-1',
+  gameOverNarration: '',
   zones: {
     'mario-zone-1': {
       id: 'mario-zone-1',
@@ -82,6 +83,7 @@ class ContentLoaderServiceMock {
       signal: () => ({
         character: character as 'mario' | 'luigi' | 'peach' | 'daisy',
         startZoneId: MOCK_RAW_MARIO_PATH.startZoneId,
+        gameOverNarration: MOCK_RAW_MARIO_PATH.gameOverNarration,
         zones: MOCK_RAW_MARIO_PATH.zones,
       }),
       isLoading: () => false,
@@ -159,9 +161,9 @@ describe('GameOverScreen', () => {
       expect(narration.textContent).toContain('Harmony reste prisonnière');
     });
 
-    it('affiche le score avec le nombre de Zones explorées (fallback 0)', () => {
+    it('affiche le score avec le nombre de Zones explorées', () => {
       const scoreValue = fixture.nativeElement.querySelector('.score-value');
-      expect(scoreValue.textContent).toContain('0');
+      expect(scoreValue.textContent).toContain('1');
     });
 
     it('affiche le label "Zones explorées"', () => {

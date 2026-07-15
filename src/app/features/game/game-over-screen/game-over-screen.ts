@@ -44,17 +44,15 @@ export class GameOverScreen {
   });
 
   /**
-   * Nombre de Zones explorées.
-   * Pour l'instant fallback à 0 — sera connecté au vrai compteur à la Tâche 7.
+   * Nombre de Zones explorées — connecté au vrai compteur depuis GameEngineService.
    */
-  protected readonly zonesExplored = computed(() => 0);
+  protected readonly zonesExplored = this.gameEngine.zonesExplored;
 
   /**
-   * Narration de Game Over spécifique au personnage.
-   * Pour l'instant fallback vide — sera connecté au champ `gameOverNarration`
-   * de `CharacterPath` à la Tâche 7.
+   * Narration de Game Over spécifique au personnage — connectée au champ
+   * `gameOverNarration` du `CharacterPath` actif.
    */
-  protected readonly gameOverNarration = computed(() => '');
+  protected readonly gameOverNarration = computed(() => this.gameEngine.path().gameOverNarration ?? '');
 
   /**
    * Retour au menu principal — efface la sauvegarde et navigue vers `/accueil`.

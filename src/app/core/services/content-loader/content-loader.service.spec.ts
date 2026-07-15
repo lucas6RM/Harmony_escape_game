@@ -36,6 +36,7 @@ const MOCK_MARIO_ZONE_1: Zone = {
 const MOCK_MARIO_PATH: CharacterPath = {
   character: 'mario',
   startZoneId: 'mario_zone_1',
+  gameOverNarration: '',
   zones: {
     mario_zone_1: MOCK_MARIO_ZONE_1,
   },
@@ -47,6 +48,7 @@ const MOCK_MARIO_PATH: CharacterPath = {
 const MOCK_RAW_MARIO_PATH: RawCharacterPath = {
   character: 'mario',
   startZoneId: 'mario_zone_1',
+  gameOverNarration: '',
   zones: {
     mario_zone_1: MOCK_MARIO_ZONE_1,
   },
@@ -58,6 +60,7 @@ const MOCK_RAW_MARIO_PATH: RawCharacterPath = {
 const MOCK_RAW_LUIGI_PATH: RawCharacterPath = {
   character: 'luigi',
   startZoneId: 'luigi_zone_1',
+  gameOverNarration: '',
   zones: {
     luigi_zone_1: {
       id: 'luigi_zone_1',

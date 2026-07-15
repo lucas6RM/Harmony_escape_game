@@ -1,6 +1,7 @@
 {
   "character": "mario",
   "startZoneId": "mario-entree",
+  "gameOverNarration": "Mario tombe à genoux, ses gants serrés en poings. « Pas comme ça… Je ne vais pas abandonner Harmony ! » Luma pose une patte réconfortante sur son épaule. « Repose-toi, Mario. La prochaine fois, tu seras plus fort. Les étoiles te guideront. »",
   "zones": {
     "mario-entree": {
       "id": "mario-entree",

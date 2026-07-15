@@ -15,6 +15,7 @@ import { GameEngineService } from './game-engine.service';
 const MOCK_RAW_MARIO_PATH: RawCharacterPath = {
   character: 'mario',
   startZoneId: 'mario-zone-1',
+  gameOverNarration: 'Mario tombe à genoux, ses gants serrés en poings.',
   zones: {
     'mario-zone-1': {
       id: 'mario-zone-1',
@@ -95,6 +96,7 @@ class ContentLoaderServiceMock {
       signal: () => ({
         character: 'mario' as const,
         startZoneId: MOCK_RAW_MARIO_PATH.startZoneId,
+        gameOverNarration: MOCK_RAW_MARIO_PATH.gameOverNarration,
         zones: MOCK_RAW_MARIO_PATH.zones,
       }),
       isLoading: () => false,
@@ -757,6 +759,7 @@ describe('GameEngineService', () => {
       quizIndex: 1,
       coins: 7,
       completedPaths: [],
+      zonesExplored: 3,
     };
 
     it('charge le Chemin du personnage sauvegardé', () => {
@@ -777,6 +780,11 @@ describe('GameEngineService', () => {
     it('restaure les Pièces accumulées', () => {
       service.restoreGame(mockGameSave);
       expect(service.coins()).toBe(7);
+    });
+
+    it('restaure le nombre de Zones explorées', () => {
+      service.restoreGame(mockGameSave);
+      expect(service.zonesExplored()).toBe(3);
     });
 
     it('démarre le jeu (gameStarted = true)', () => {
@@ -804,6 +812,7 @@ describe('GameEngineService', () => {
         quizIndex: 0,
         coins: 0,
         completedPaths: [],
+        zonesExplored: 0,
       };
       service.restoreGame(invalidSave);
       expect(service.gameStarted()).toBe(false);
@@ -837,6 +846,7 @@ describe('GameEngineService', () => {
           currentZoneId: 'mario-zone-1',
           quizIndex: 0,
           coins: 0,
+          zonesExplored: 1,
         });
       });
     });
@@ -852,6 +862,7 @@ describe('GameEngineService', () => {
         expect(persistenceMock.savedStates).toHaveLength(1);
         expect(persistenceMock.savedStates[0]).toMatchObject({
           currentZoneId: 'mario-zone-2',
+          zonesExplored: 2,
         });
       });
     });
@@ -869,6 +880,7 @@ describe('GameEngineService', () => {
         expect(persistenceMock.savedStates[0]).toMatchObject({
           currentZoneId: 'mario-zone-1',
           coins: 2,
+          zonesExplored: 1,
         });
       });
     });

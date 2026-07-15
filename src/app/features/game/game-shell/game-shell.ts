@@ -23,6 +23,9 @@ export class GameShell implements OnInit {
   /** Nombre de Pièces accumulées par le joueur */
   readonly coins = this.gameEngine.coins;
 
+  /** Nombre de Zones explorées par le joueur */
+  readonly zonesExplored = this.gameEngine.zonesExplored;
+
   /** Indique si le jeu a été démarré (Chemin chargé) */
   readonly gameStarted = this.gameEngine.gameStarted;
 
