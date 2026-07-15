@@ -30,7 +30,7 @@ Refondre le flux des mauvaises réponses et ajouter le Game Over + persistance d
 - [x] Tâche 3 : Mettre à jour ou retirer les tests liés à `skipQuiz`, vérifier que le jeu compile et les tests passent
 
 ### Issue #32
-- [ ] Tâche 4 : Refondre `submitQuizAnswer()` pour ne plus reset `quizIndex` après mauvaise réponse + créer `retryQuiz()` qui réactive `quizActive` et clear `quizFeedback`
+- [x] Tâche 4 : Refondre `submitQuizAnswer()` pour ne plus reset `quizIndex` après mauvaise réponse + créer `retryQuiz()` qui réactive `quizActive` et clear `quizFeedback`
 - [ ] Tâche 5 : Retirer le clamp `Math.max(0, ...)` dans `addCoins()` + déclencher `gameOverSignal` quand Pièces < 0
 - [ ] Tâche 6 : Créer le composant `GameOverScreen` (style `VictoryScreen`) avec narration spécifique au personnage, score Zones explorées, bouton "Retour au menu" vers `/accueil` + `clearSave()`
 - [ ] Tâche 7 : Ajouter `zonesExplored` à `GameSave`, `gameOverNarration` à `CharacterPath`, persister les Pièces après chaque modification, afficher le compteur de Zones dans `GameShellComponent`
@@ -44,7 +44,4 @@ Refondre le flux des mauvaises réponses et ajouter le Game Over + persistance d
 - 0 / 5
 
 ### Dernier retour de Review :
-- Aucun.
-
-### Blocage Actuel :
 - Aucun.
