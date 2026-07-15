@@ -337,7 +337,7 @@ describe('ZoneExplorer', () => {
       expect(successBlock.textContent).toContain('+2 Pièces');
     });
 
-    it('le message de succès contient le bouton "Quiz suivant" (pas final)', () => {
+    it('le message de succès contient le bouton "Continuer" (dernier quiz, pas final)', () => {
       (gameEngine as any).quizActiveSignal.set(true);
       gameEngine.submitQuizAnswer(1);
       gameEngine.advanceQuiz();
@@ -347,10 +347,10 @@ describe('ZoneExplorer', () => {
 
       const advanceButton = fixture.nativeElement.querySelector('.advance-button');
       expect(advanceButton).toBeTruthy();
-      expect(advanceButton.textContent).toContain('Quiz suivant');
+      expect(advanceButton.textContent).toContain('Continuer');
     });
 
-    it('cliquer sur "Quiz suivant" appelle advanceQuiz()', () => {
+    it('cliquer sur "Continuer" appelle continueAfterZone()', () => {
       (gameEngine as any).quizActiveSignal.set(true);
       gameEngine.submitQuizAnswer(1);
       gameEngine.advanceQuiz();
@@ -358,7 +358,7 @@ describe('ZoneExplorer', () => {
       gameEngine.submitQuizAnswer(0);
       fixture.detectChanges();
 
-      const spy = vi.spyOn(gameEngine, 'advanceQuiz');
+      const spy = vi.spyOn(gameEngine, 'continueAfterZone');
       const advanceButton = fixture.nativeElement.querySelector('.advance-button');
       advanceButton.click();
       fixture.detectChanges();

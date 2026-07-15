@@ -138,7 +138,7 @@ export class GameEngineService {
     this.gameOverSignal.set(false);
     this.zonesExploredSignal.set(1);
     this.gameStartedSignal.set(true);
-    this.quizActiveSignal.set(true);
+    this.quizActiveSignal.set(false);
     this.quizFeedbackSignal.set(null);
     this.hintTextSignal.set(null);
     this.eliminatedAnswersSignal.set([]);
@@ -191,7 +191,7 @@ export class GameEngineService {
     this.coinsSignal.set(gameSave.coins);
     this.zonesExploredSignal.set(gameSave.zonesExplored ?? 1);
     this.isZoneCompletedSignal.set(false);
-    this.quizActiveSignal.set(true);
+    this.quizActiveSignal.set(false);
     this.quizFeedbackSignal.set(null);
     this.hintTextSignal.set(null);
     this.eliminatedAnswersSignal.set([]);
@@ -511,6 +511,13 @@ export class GameEngineService {
       this.completeQuiz();
       this.quizFeedbackSignal.set('correct');
       this.quizActiveSignal.set(false);
+
+      // Si c'est le Quiz final, déclencher la victoire
+      if (quiz.isFinal) {
+        this.gameWonSignal.set(true);
+        this.completedPathsService.addCompletedPath(this.pathDataSignal().character);
+      }
+
       this.persistenceService.saveGame({
         currentZoneId: this.currentZoneIdSignal(),
         quizIndex: this.currentQuizIndexSignal(),
