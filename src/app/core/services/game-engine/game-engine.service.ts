@@ -36,6 +36,7 @@ export class GameEngineService {
   private readonly hintTextSignal = signal<string | null>(null);
   private readonly eliminatedAnswersSignal = signal<number[]>([]);
   private readonly gameWonSignal = signal<boolean>(false);
+  private readonly gameOverSignal = signal<boolean>(false);
 
   // ── Accès public (Signals) ──────────────────────────────────────
 
@@ -99,6 +100,9 @@ export class GameEngineService {
   /** Indique si le joueur a gagné la partie (Quiz final réussi) */
   readonly gameWon: Signal<boolean> = this.gameWonSignal;
 
+  /** Indique si le joueur est en Game Over (Pièces < 0) */
+  readonly gameOver: Signal<boolean> = this.gameOverSignal;
+
   /** Indique si le Chemin est encore en cours de chargement asynchrone */
   readonly pathLoading: Signal<boolean> = this.pathLoadingSignal;
 
@@ -127,6 +131,7 @@ export class GameEngineService {
     this.coinsSignal.set(0);
     this.isZoneCompletedSignal.set(false);
     this.gameWonSignal.set(false);
+    this.gameOverSignal.set(false);
     this.gameStartedSignal.set(true);
     this.quizActiveSignal.set(true);
     this.quizFeedbackSignal.set(null);
@@ -313,12 +318,19 @@ export class GameEngineService {
   }
 
   /**
-   * Ajoute des Pièces au total du joueur (clampé à 0).
+   * Ajoute des Pièces au total du joueur.
    *
-   * @param amount - Nombre de Pièces à ajouter
+   * Si le solde devient négatif (Pièces < 0), le Game Over est déclenché
+   * et la sauvegarde est effacée.
+   *
+   * @param amount - Nombre de Pièces à ajouter (positif ou négatif)
    */
   addCoins(amount: number): void {
-    this.coinsSignal.update(current => Math.max(0, current + amount));
+    this.coinsSignal.update(current => current + amount);
+    if (this.coinsSignal() < 0) {
+      this.gameOverSignal.set(true);
+      this.persistenceService.clearSave();
+    }
   }
 
   /**
@@ -402,6 +414,7 @@ export class GameEngineService {
     this.hintTextSignal.set(null);
     this.eliminatedAnswersSignal.set([]);
     this.gameWonSignal.set(false);
+    this.gameOverSignal.set(false);
     this.persistenceService.clearSave();
   }
 
@@ -422,6 +435,7 @@ export class GameEngineService {
     this.hintTextSignal.set(null);
     this.eliminatedAnswersSignal.set([]);
     this.gameWonSignal.set(false);
+    this.gameOverSignal.set(false);
     this.persistenceService.clearSave();
   }
 

@@ -223,6 +223,11 @@ describe('GameEngineService', () => {
       service.startGame('mario');
       expect(service.quizActive()).toBe(false);
     });
+
+    it('gameOver est false après startGame', () => {
+      service.startGame('mario');
+      expect(service.gameOver()).toBe(false);
+    });
   });
 
   // ──────────────────────────────────────────────────────────────
@@ -367,15 +372,30 @@ describe('GameEngineService', () => {
       expect(service.coins()).toBe(5);
     });
 
-    it('clamp à 0 quand le solde deviendrait négatif', () => {
+    it('devient négatif quand le solde est insuffisant', () => {
       service.addCoins(1);
       service.addCoins(-5);
-      expect(service.coins()).toBe(0);
+      expect(service.coins()).toBe(-4);
     });
 
-    it('reste à 0 quand on soustrait plus que le solde', () => {
+    it('devient négatif quand on soustrait plus que le solde', () => {
       service.addCoins(-10);
-      expect(service.coins()).toBe(0);
+      expect(service.coins()).toBe(-10);
+    });
+
+    it('déclenche gameOver quand les Pièces deviennent négatives', () => {
+      service.addCoins(1);
+      expect(service.gameOver()).toBe(false);
+      service.addCoins(-5);
+      expect(service.coins()).toBe(-4);
+      expect(service.gameOver()).toBe(true);
+    });
+
+    it('déclenche gameOver et efface la sauvegarde quand Pièces < 0', () => {
+      const clearSpy = vi.spyOn(persistenceMock, 'clearSave');
+      service.addCoins(-1);
+      expect(service.gameOver()).toBe(true);
+      expect(clearSpy).toHaveBeenCalled();
     });
   });
 
@@ -451,7 +471,7 @@ describe('GameEngineService', () => {
     it('1ère tentative fausse : -1 Pièce, quizActive devient false, feedback = "incorrect"', () => {
       service.submitQuizAnswer(0); // faux
       expect(service.quizActive()).toBe(false);
-      expect(service.coins()).toBe(0); // clampé à 0 (on avait 0, -1 → 0)
+      expect(service.coins()).toBe(-1); // 0 - 1 = -1 (pas de clamp)
       expect(service.quizFeedback()).toBe('incorrect');
     });
 
@@ -959,6 +979,12 @@ describe('GameEngineService', () => {
       expect(service.gameWon()).toBe(false);
     });
 
+    it('réinitialise gameOver à false', () => {
+      (service as any).gameOverSignal.set(true);
+      service.returnToMenu();
+      expect(service.gameOver()).toBe(false);
+    });
+
     it('réinitialise les Pièces à 0', () => {
       service.addCoins(10);
       service.returnToMenu();
@@ -1006,6 +1032,12 @@ describe('GameEngineService', () => {
     it('réinitialise gameWon à false', () => {
       service.returnToCharacterSelect();
       expect(service.gameWon()).toBe(false);
+    });
+
+    it('réinitialise gameOver à false', () => {
+      (service as any).gameOverSignal.set(true);
+      service.returnToCharacterSelect();
+      expect(service.gameOver()).toBe(false);
     });
 
     it('réinitialise les Pièces à 0', () => {
