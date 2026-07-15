@@ -23,12 +23,12 @@ Ajouter le champ `gameOverNarration` à chaque JSON de chemin avec un texte narr
 
 ## Acceptance criteria
 
-- [ ] Chaque Quiz du chemin Mario a un `hintText` scénarisé avec Luigi
-- [ ] Chaque Quiz du chemin Luigi a un `hintText` scénarisé avec Mario
-- [ ] Chaque Quiz du chemin Peach a un `hintText` scénarisé avec Toad
-- [ ] Chaque Quiz du chemin Daisy a un `hintText` scénarisé avec Wario
-- [ ] Chaque chemin a un `gameOverNarration` théâtral et spécifique
-- [ ] Les fichiers JSON sont valides et le jeu charge correctement les données
+- [x] Chaque Quiz du chemin Mario a un `hintText` scénarisé avec Luigi
+- [x] Chaque Quiz du chemin Luigi a un `hintText` scénarisé avec Mario
+- [x] Chaque Quiz du chemin Peach a un `hintText` scénarisé avec Toad
+- [x] Chaque Quiz du chemin Daisy a un `hintText` scénarisé avec Wario
+- [x] Chaque chemin a un `gameOverNarration` théâtral et spécifique
+- [x] Les fichiers JSON sont valides et le jeu charge correctement les données
 
 ## Blocked by
 
@@ -48,11 +48,11 @@ Ajouter le champ `gameOverNarration` à chaque JSON de chemin avec un texte narr
 - [x] Tâche 2 : Scénariser les hintText du chemin Luigi avec Mario (fichier `src/assets/content/luigi.json`)
 - [x] Tâche 3 : Scénariser les hintText du chemin Peach avec Toad (fichier `src/assets/content/peach.json`)
 - [x] Tâche 4 : Scénariser les hintText du chemin Daisy avec Wario (fichier `src/assets/content/daisy.json`)
-- [ ] Tâche 5 : Vérifier les gameOverNarration et valider les JSON (build + tests)
+- [x] Tâche 5 : Vérifier les gameOverNarration et valider les JSON (build + tests)
 
 ## Zone de Transit & Logs
 ### Tâche en cours :
-- Tâche 4 : Scénariser les hintText du chemin Daisy avec Wario
+- Aucune (issue terminée)
 
 ### Compteur de rejets (tâche actuelle) :
 - 0 / 5

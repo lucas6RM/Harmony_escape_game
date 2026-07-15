@@ -1,6 +1,7 @@
 {
   "character": "luigi",
   "startZoneId": "luigi-entree",
+  "gameOverNarration": "Luigi recule d'un pas, les mains tremblantes. « J-Je suis désolé Harmony… je n'étais pas assez courageux… » Mais Luma brille doucement près de lui. « Luigi, tu as fait de ton mieux. Le vrai courage, c'est de se relever après une chute. » Luigi lève la tête et sourit faiblement. « Tu as raison Luma… je réessayerai. »",
   "zones": {
     "luigi-entree": {
       "id": "luigi-entree",
@@ -21,56 +22,56 @@
           "question": "Quel est le nom du frère cadet de Mario ?",
           "answers": ["Wario", "Waluigi", "Luigi", "Toad"],
           "correctIndex": 2,
-          "hintText": "C'est le personnage vert qui porte un « L » sur sa casquette !"
+          "hintText": "Mario sort de nulle part avec son sourire habituel et pose une main rassurante sur l'épaule de Luigi : « T'inquiète pas petit frère, la réponse, c'est toi ! Le type en vert avec le L, c'est qui ? »"
         },
         {
           "type": "maths",
           "question": "Luigi mesure 1,65 m. Mario mesure 1,55 m. De combien Luigi est-il plus grand que Mario ?",
           "answers": ["5 cm", "10 cm", "15 cm", "20 cm"],
           "correctIndex": 1,
-          "hintText": "Soustrais 1,55 de 1,65 !"
+          "hintText": "Mario fait le geste de mesurer avec ses doigts et rigole : « 1,65 moins 1,55… c'est comme comparer nos tailles ! Tu vois la différence, non ? »"
         },
         {
           "type": "contexte",
           "question": "Que sent Luigi dans le hall du palais ?",
           "answers": ["Une odeur de confiture", "Une présence étrange, comme si quelqu'un le regardait", "Un vent glacial", "Un parfum de fleurs"],
           "correctIndex": 1,
-          "hintText": "Relis le début de la narration…"
+          "hintText": "Mario se penche par-dessus l'épaule de Luigi et lit la narration à haute voix : « Regarde bien ce qu'il est écrit au début, la réponse est cachée juste là ! »"
         },
         {
           "type": "francais",
           "question": "Dans la phrase « Luigi a insisté pour venir aussi », quel est le temps du verbe « a insisté » ?",
           "answers": ["Le présent", "L'imparfait", "Le passé composé", "Le futur"],
           "correctIndex": 2,
-          "hintText": "« A + participe passé » forme le passé composé."
+          "hintText": "Mario tire un petit carnet de sa poche et gratouille sa casquette : « A plus participe passé… ça fait le passé composé ! C'est comme quand je dis j'ai sauté ! »"
         },
         {
           "type": "univers-mario",
           "question": "Dans Super Mario Galaxy, quelle est la couleur de la casquette de Luigi ?",
           "answers": ["Rouge", "Bleue", "Verte", "Jaune"],
           "correctIndex": 2,
-          "hintText": "La couleur de Luigi est sa signature !"
+          "hintText": "Mario pointe sa propre casquette rouge puis celle de Luigi et rit : « Moi c'est rouge, et toi c'est… la couleur de ton pull, petit frère ! »"
         },
         {
           "type": "contexte",
           "question": "Combien de passages Luigi voit-il depuis le hall du palais ?",
           "answers": ["1", "2", "3", "4"],
           "correctIndex": 1,
-          "hintText": "Un couloir sombre et une grande porte dorée…"
+          "hintText": "Mario lève un doigt pour chaque passage qu'il repère : « Un couloir… et une porte… ça fait combien au total ? »"
         },
         {
           "type": "maths",
           "question": "Luigi a 10 Pièces. Il répond bien à 4 Quiz et mal à 2 Quiz. Combien de Pièces a-t-il maintenant ?",
           "answers": ["14 Pièces", "16 Pièces", "18 Pièces", "20 Pièces"],
           "correctIndex": 0,
-          "hintText": "4 × (+2) = +8 et 2 × (-1) = -2. 10 + 8 - 2 = ?"
+          "hintText": "Mario sort des pièces de sa poche et les compte à voix haute : « 4 bonnes réponses, ça fait 8 Pièces gagnées, et 2 mauvaises, ça fait 2 perdues… 10 plus 8 moins 2, c'est combien ? »"
         },
         {
           "type": "francais",
           "question": "Quel est le synonyme du mot « immense » dans « l'immense portail » ?",
           "answers": ["Petit", "Énorme", "Étroit", "Sombre"],
           "correctIndex": 1,
-          "hintText": "Immense veut dire très grand, très vaste."
+          "hintText": "Mario ouvre grand les bras pour montrer la taille du hall : « Immense, c'est comme… énorme ! Regarde autour de toi, tout est gigantesque ici ! »"
         }
       ]
     },
@@ -93,56 +94,56 @@
           "question": "Le couloir du sous-sol mesure 72 mètres. Luigi avance à 3 mètres par seconde. Combien de temps lui faut-il pour le traverser ?",
           "answers": ["20 s", "22 s", "24 s", "26 s"],
           "correctIndex": 2,
-          "hintText": "Divise 72 par 3 !"
+          "hintText": "Mario allume une torche et éclaire le couloir d'une voix grave : « 72 mètres à 3 mètres par seconde… divise 72 par 3, comme on partage des champignons entre trois amis ! »"
         },
         {
           "type": "francais",
           "question": "Dans la phrase « La brume glisse autour de ses jambes », quel est le sujet du verbe « glisse » ?",
           "answers": ["ses jambes", "La brume", "autour", "glisse"],
           "correctIndex": 1,
-          "hintText": "Qui ou quoi glisse ? C'est le sujet."
+          "hintText": "Mario se blottit près de Luigi et murmure à voix basse pour ne pas effrayer les ombres : « Qui glisse ? Demande-toi ça… et tu auras le sujet ! »"
         },
         {
           "type": "contexte",
           "question": "Quels bruits Luigi entend-il dans le sous-sol ?",
           "answers": ["Des chants d'oiseaux", "Des grincements, des murmures et un rire lointain", "Des explosions", "De la musique"],
           "correctIndex": 1,
-          "hintText": "Relis la description des bruits dans la narration…"
+          "hintText": "Mario se couvre les oreilles en riant nerveusement : « Grincements, murmures, rire lointain… tu les as entendus aussi, non ? Relis bien ! »"
         },
         {
           "type": "univers-mario",
           "question": "Dans les jeux Mario, quel ennemi classique se cache dans une coquille et marche à l'envers quand on le fait sauter ?",
           "answers": ["Un Goomba", "Un Koopa Troopa", "Un Bob-omb", "Un Piranha Plant"],
           "correctIndex": 1,
-          "hintText": "C'est la tortue verte ou orange qu'on rencontre partout !"
+          "hintText": "Mario imite le mouvement d'un Koopa qui marche à l'envers et rigole : « La tortue avec la coquille qu'on fait rebondir… tu la connais bien ! »"
         },
         {
           "type": "maths",
           "question": "Il y a 5 tunnels dans le sous-sol. Chaque tunnel contient 9 portes. Combien de portes y a-t-il au total ?",
           "answers": ["36", "40", "45", "50"],
           "correctIndex": 2,
-          "hintText": "Multiplie 5 par 9 !"
+          "hintText": "Mario trace un petit tableau dans la brume avec son doigt : « 5 tunnels, chacun avec 9 portes… multiplie et tu auras le total ! »"
         },
         {
           "type": "francais",
           "question": "Quel est le contraire du mot « prudent » ?",
           "answers": ["Timide", "Impatient", "Imprudent", "Calme"],
           "correctIndex": 2,
-          "hintText": "Prudent = qui fait attention. Son contraire, c'est qui ne fait pas attention."
+          "hintText": "Mario fait un pas en avant sans regarder et recule vite en riant : « Prudent, c'est faire attention ! Son contraire, c'est faire n'importe quoi ! »"
         },
         {
           "type": "contexte",
           "question": "Combien d'issues Luigi découvre-t-il dans le sous-sol ?",
           "answers": ["1", "2", "3", "4"],
           "correctIndex": 1,
-          "hintText": "Une porte rouillée et un escalier…"
+          "hintText": "Mario compte sur ses doigts en se frottant les bras de froid : « Une porte rouillée, un escalier… ça fait combien de sorties au total ? »"
         },
         {
           "type": "univers-mario",
           "question": "Quel jeu Super Mario a introduit Luigi en tant que personnage jouable pour la première fois ?",
           "answers": ["Super Mario Bros.", "Super Mario Bros. 2", "Super Mario Bros. 3", "Super Mario World"],
           "correctIndex": 1,
-          "hintText": "C'est le deuxième jeu de la série originale !"
+          "hintText": "Mario se gratille la tête en réfléchissant : « Le premier jeu, Luigi n'était pas jouable… mais le deuxième, oui ! Tu te souviens ? »"
         }
       ]
     },
@@ -161,56 +162,56 @@
           "question": "Il y a 27 artefacts dans la chambre secrète. Un tiers sont des statues, la moitié sont des cristaux, et le reste sont des tablettes. Combien de tablettes y a-t-il ?",
           "answers": ["6", "7", "8", "9"],
           "correctIndex": 1,
-          "hintText": "27 ÷ 3 = 9 statues, 27 ÷ 2 = 13,5… arrondis à 13 cristaux. 27 - 9 - 13 = ?"
+          "hintText": "Mario observe les artefacts avec fascination et murmure : « 27 au total… un tiers de statues, la moitié de cristaux… et le reste, ce sont les tablettes ! »"
         },
         {
           "type": "francais",
           "question": "Dans la phrase « Une poussière d'étoiles se met à danser dans l'air », quel est le verbe conjugué ?",
           "answers": ["danser", "met", "d'étoiles", "l'air"],
           "correctIndex": 1,
-          "hintText": "Le verbe conjugué change selon le sujet. « Se met » est au présent."
+          "hintText": "Mario touche un cristal qui change de couleur et sourit : « Le verbe conjugué, c'est celui qui change selon le sujet… se met, c'est au présent ! »"
         },
         {
           "type": "contexte",
           "question": "Quels types d'artefacts Luigi trouve-t-il dans la chambre secrète ?",
           "answers": ["Des épées et des boucliers", "Des statues de Lumas, des cristaux et des tablettes gravées", "Des livres et des cartes", "Des instruments de musique"],
           "correctIndex": 1,
-          "hintText": "Relis la description de la pièce…"
+          "hintText": "Mario désigne les statues de Lumas du menton : « Statues, cristaux, tablettes gravées… tout est décrit dans la narration, relis bien ! »"
         },
         {
           "type": "univers-mario",
           "question": "Dans Super Mario Galaxy, quel objet spécial peut se transformer en différents outils selon la situation ?",
           "answers": ["Le Super Champignon", "Luma", "La Fleur Étoile", "Le Cape Feather"],
           "correctIndex": 1,
-          "hintText": "Le petit compagnon étoile peut devenir une échelle, un parachute, et bien plus !"
+          "hintText": "Mario imite Luma qui vole et se transforme en riant : « Le petit étoile qui devient échelle, parachute, et plein d'autres trucs… c'est qui ? »"
         },
         {
           "type": "maths",
           "question": "Les cristaux de la chambre changent de couleur toutes les 4 secondes. Combien de changements de couleur se produisent en 2 minutes ?",
           "answers": ["25", "30", "35", "40"],
           "correctIndex": 1,
-          "hintText": "2 minutes = 120 secondes. 120 ÷ 4 = ?"
+          "hintText": "Mario compte les changements de couleur du cristal en comptant avec ses doigts : « 2 minutes, c'est 120 secondes… 120 divisé par 4, ça fait combien ? »"
         },
         {
           "type": "francais",
           "question": "Quel est le pluriel du mot « un cristal » ?",
           "answers": ["des cristals", "des cristaux", "des cristau", "des cristalls"],
           "correctIndex": 1,
-          "hintText": "Les mots en « -al » prennent généralement « -aux » au pluriel."
+          "hintText": "Mario ramasse un cristal et en imagine plusieurs : « Un cristal… des cristaux ! Les mots en -al font -aux au pluriel, comme bocal-bocaux ! »"
         },
         {
           "type": "contexte",
           "question": "Quel passage Luigi découvre-t-il au fond de la chambre secrète ?",
           "answers": ["Un tunnel vers la sortie", "Une fosse remplie de météorites brillantes", "Un escalier vers le toit", "Une porte vers la cuisine"],
           "correctIndex": 1,
-          "hintText": "Le sol s'ouvre et révèle…"
+          "hintText": "Mario regarde par-dessus le bord du trou et siffle : « Wouah… des météorites brillantes en bas ! C'est bien ça le passage secret ! »"
         },
         {
           "type": "univers-mario",
           "question": "Dans l'univers Mario, quel est le nom de la planète natale de Bowser ?",
           "answers": ["La planète Peach", "La planète Mushroom", "La planète Bowser (ou Dark Land)", "La planète Luma"],
           "correctIndex": 2,
-          "hintText": "C'est le domaine sombre du roi Koopa !"
+          "hintText": "Mario fait une grimace en pensant à Bowser : « La planète du roi Koopa… c'est la planète Bowser, aussi appelée Dark Land ! »"
         }
       ]
     },
@@ -229,56 +230,56 @@
           "question": "Il y a 48 météorites dans la fosse. Un quart sont bleues, un tiers sont violettes, et le reste sont vertes. Combien de météorites vertes y a-t-il ?",
           "answers": ["10", "12", "14", "16"],
           "correctIndex": 2,
-          "hintText": "48 ÷ 4 = 12 bleues, 48 ÷ 3 = 16 violettes. 48 - 12 - 16 = ?"
+          "hintText": "Mario suit une météorite bleue du regard et sourit : « 48 météorites… un quart de bleues, un tiers de violettes… et le reste, c'est les vertes ! »"
         },
         {
           "type": "francais",
           "question": "Dans la phrase « Les météorites semblent danser autour de Luigi », quel est le complément circonstanciel de lieu ?",
           "answers": ["Les météorites", "semblent danser", "autour de Luigi", "de"],
           "correctIndex": 2,
-          "hintText": "Le complément de lieu répond à la question « où ? »"
+          "hintText": "Mario tourne autour de Luigi en imitant les météorites : « Où ça se passe ? Autour de Luigi ! C'est ça, le complément de lieu ! »"
         },
         {
           "type": "contexte",
           "question": "Comment réagissent les météorites à la présence de Luigi et Luma ?",
           "answers": ["Elles explosent", "Elles dansent autour d'eux", "Elles s'éteignent", "Elles changent de taille"],
           "correctIndex": 1,
-          "hintText": "Relis ce que Luma dit sur les météorites…"
+          "hintText": "Mario tend la main vers une météorite qui s'approche et rit : « Elles dansent autour de nous ! Relis ce que Luma a dit, c'est magique ! »"
         },
         {
           "type": "univers-mario",
           "question": "Dans Super Mario Galaxy, quel type de planète est constituée de plusieurs morceaux que Mario doit assembler ?",
           "answers": ["Une planète Goober", "Une planète Puzzle", "Une planète Piranha", "Une planète somnolente"],
           "correctIndex": 1,
-          "hintText": "Mario doit faire rebondir les morceaux pour les reconnecter !"
+          "hintText": "Mario imite le geste d'assembler des morceaux et sourit : « Les planètes en morceaux qu'on doit reconstituer… c'est les planètes Puzzle ! »"
         },
         {
           "type": "maths",
           "question": "Une météorite bleue émet 120 lueurs par minute. Combien de lueurs émet-elle en 5 minutes ?",
           "answers": ["500", "550", "600", "650"],
           "correctIndex": 2,
-          "hintText": "Multiplie 120 par 5 !"
+          "hintText": "Mario compte les lueurs d'une météorite bleue en clignant des yeux : « 120 lueurs par minute pendant 5 minutes… multiplie et tu auras le total ! »"
         },
         {
           "type": "francais",
           "question": "Quel est le sens du mot « chuchote » dans « chuchote Luigi, oubliant sa peur » ?",
           "answers": ["Parler très fort", "Parler très doucement", "Crier", "Rire"],
           "correctIndex": 1,
-          "hintText": "Chuchoter, c'est parler à voix basse, presque sans bruit."
+          "hintText": "Mario se rapproche et chuchote si bas qu'il est presque inaudible : « Chuchoter, c'est parler tout doucement… comme moi en ce moment ! »"
         },
         {
           "type": "contexte",
           "question": "Combien de couleurs de lumière émettent les météorites selon la narration ?",
           "answers": ["2", "3", "4", "5"],
           "correctIndex": 1,
-          "hintText": "Bleu, violet, vert…"
+          "hintText": "Mario pointe chaque météorite de sa couleur : « Bleu… violet… vert… ça fait combien de couleurs au total ? »"
         },
         {
           "type": "univers-mario",
           "question": "Quel Power-Up permet à Luigi de sauter plus haut dans Luigi's Mansion ?",
           "answers": ["Le Super Champignon", "La Poltergust 5000", "La Fleur Étoile", "Le Jump Pad"],
           "correctIndex": 1,
-          "hintText": "C'est l'aspirateur fantôme emblématique de Luigi !"
+          "hintText": "Mario imite le bruit d'un aspirateur en riant aux éclats : « L'aspirateur à fantômes de Luigi… la Poltergust 5000 ! Tu la connais ! »"
         }
       ]
     },
@@ -297,56 +298,56 @@
           "question": "Il y a 36 miroirs dans la salle. Si chaque miroir reflète 5 galaxies différentes, combien de galaxies Luigi peut-il observer au total ?",
           "answers": ["150", "160", "170", "180"],
           "correctIndex": 3,
-          "hintText": "Multiplie 36 par 5 !"
+          "hintText": "Mario observe une galaxie dans un miroir, les yeux écarquillés : « 36 miroirs avec 5 galaxies chacun… multiplie et tu auras toutes les galaxies ! »"
         },
         {
           "type": "francais",
           "question": "Dans la phrase « Des étoiles filent, des planètes tournent, et des nébuleuses dansent », combien y a-t-il de verbes conjugués ?",
           "answers": ["1", "2", "3", "4"],
           "correctIndex": 2,
-          "hintText": "Compte les actions : filent, tournent, dansent."
+          "hintText": "Mario se regarde dans un miroir et voit une galaxie à sa place : « Filent, tournent, dansent… chaque action, c'est un verbe ! Compte-les ! »"
         },
         {
           "type": "contexte",
           "question": "Que voit Luigi quand il se regarde dans un miroir ?",
           "answers": ["Son reflet normal", "Son reflet plus courageux et déterminé", "Un fantôme", "Mario à sa place"],
           "correctIndex": 1,
-          "hintText": "Le miroir lui montre une version de lui-même…"
+          "hintText": "Mario pose une main sur le cœur de Luigi avec émotion : « Le miroir te montre qui tu peux devenir… plus courageux, plus déterminé ! »"
         },
         {
           "type": "univers-mario",
           "question": "Dans Super Mario Galaxy, quel boss Mario affronte-t-il dans un miroir géant ?",
           "answers": ["Petey Piranha", "Météoite", "Attini du Sumo", "Didier le Broc"],
           "correctIndex": 1,
-          "hintText": "C'est un énorme astéroïde qui vit dans un miroir cosmique !"
+          "hintText": "Mario frappe doucement un miroir et observe la galaxie qui s'agite : « Le boss du miroir cosmique… c'est Météoite, l'énorme astéroïde ! »"
         },
         {
           "type": "maths",
           "question": "Luigi observe les miroirs pendant 15 minutes. Il regarde 4 miroirs par minute. Combien de miroirs a-t-il observés au total ?",
           "answers": ["50", "55", "60", "65"],
           "correctIndex": 2,
-          "hintText": "Multiplie 15 par 4 !"
+          "hintText": "Mario passe de miroir en miroir en comptant : « 15 minutes à raison de 4 miroirs par minute… multiplie et tu auras le total ! »"
         },
         {
           "type": "francais",
           "question": "Quel est le synonyme du mot « déterminé » ?",
           "answers": ["Hésitant", "Résolu", "Fatigué", "Timide"],
           "correctIndex": 1,
-          "hintText": "Déterminé = qui a une volonté ferme, qui ne recule pas."
+          "hintText": "Mario regarde Luigi droit dans les yeux avec sérieux : « Déterminé, c'est résolu ! Quelqu'un qui ne recule pas… comme toi en ce moment ! »"
         },
         {
           "type": "contexte",
           "question": "Que montre chaque miroir dans la Salle des Miroirs ?",
           "answers": ["Le reflet de Luigi", "Une galaxie différente", "Le visage de Bowser Junior", "La Chambre d'Harmony"],
           "correctIndex": 1,
-          "hintText": "Les miroirs ne reflètent pas Luigi… ils reflètent…"
+          "hintText": "Mario pointe un miroir qui montre une nébuleuse : « Pas de reflet ici… juste des galaxies ! C'est ce que montre chaque miroir ! »"
         },
         {
           "type": "univers-mario",
           "question": "Quel jeu de la série Mario met Luigi en personnage principal et se déroule dans une maison hantée ?",
           "answers": ["Luigi's Mansion", "Mario Kart", "Mario Party", "Super Mario Odyssey"],
           "correctIndex": 0,
-          "hintText": "Luigi y aspire des fantômes avec un aspirateur spécial !"
+          "hintText": "Mario fait une tête effrayée en riant : « Luigi tout seul dans une maison hantée avec son aspirateur… c'est Luigi's Mansion ! »"
         }
       ]
     },
@@ -369,56 +370,56 @@
           "question": "Il y a 64 silhouettes flottantes dans la galerie. Si elles se déplacent à raison de 2 par seconde, combien de temps faut-il pour qu'elles traversent toutes la galerie ?",
           "answers": ["28 s", "30 s", "32 s", "34 s"],
           "correctIndex": 2,
-          "hintText": "Divise 64 par 2 !"
+          "hintText": "Mario observe une silhouette flottante passer près de lui : « 64 silhouettes à 2 par seconde… divise 64 par 2 et tu auras le temps ! »"
         },
         {
           "type": "francais",
           "question": "Dans la phrase « Des silhouettes flottantes se déplacent lentement », quel est l'adjectif qui accompagne « silhouettes » ?",
           "answers": ["lentement", "flottantes", "Des", "se"],
           "correctIndex": 1,
-          "hintText": "L'adjectif qualifie le nom. « Lentement » est un adverbe."
+          "hintText": "Mario suit une silhouette du regard et murmure : « Flottantes qualifie silhouettes… c'est l'adjectif ! Lentement, lui, c'est un adverbe ! »"
         },
         {
           "type": "contexte",
           "question": "Que sont les silhouettes flottantes selon Luma ?",
           "answers": ["Des fantômes malveillants", "Des ombres de Lumas disparus qui veillent sur le palais", "Des reflets de Bowser Junior", "Des illusions créées par Harmony"],
           "correctIndex": 1,
-          "hintText": "Luma rassure Luigi en expliquant…"
+          "hintText": "Mario tend la main vers une silhouette qui passe et sourit tristement : « Ce sont des gardiens… des ombres de Lumas disparus qui veillent sur le palais ! »"
         },
         {
           "type": "univers-mario",
           "question": "Dans Luigi's Mansion, quel est le nom du fantôme qui possède Luigi au début du jeu ?",
           "answers": ["E. Gadd", "Gastly", "Ettina", "Boo"],
           "correctIndex": 2,
-          "hintText": "C'est une petite sorcière fantôme !"
+          "hintText": "Mario fait une petite grimace de fantôme et chuchote : « La petite sorcière qui possède Luigi au début… c'est Ettina ! »"
         },
         {
           "type": "maths",
           "question": "La galerie mesure 120 mètres de long. Les silhouettes parcourent la galerie en 4 minutes. À quelle vitesse moyenne se déplacent-elles en mètres par minute ?",
           "answers": ["25 m/min", "30 m/min", "35 m/min", "40 m/min"],
           "correctIndex": 1,
-          "hintText": "Divise 120 par 4 !"
+          "hintText": "Mario chronomètre le passage d'une silhouette avec son poignet : « 120 mètres en 4 minutes… divise et tu auras la vitesse en mètres par minute ! »"
         },
         {
           "type": "francais",
           "question": "Quel est le pluriel du mot « un garde » ?",
           "answers": ["des gardes", "des gardes", "des gard", "des gardes"],
           "correctIndex": 0,
-          "hintText": "Les mots en « -e » muet ajoutent un « s » au pluriel."
+          "hintText": "Mario observe les ombres des gardiens et réfléchit à voix haute : « Un garde… des gardes ! Les mots en -e muet ajoutent juste un s ! »"
         },
         {
           "type": "contexte",
           "question": "Combien de passages Luigi remarque-t-il dans la Galerie des Ombres ?",
           "answers": ["1", "2", "3", "4"],
           "correctIndex": 1,
-          "hintText": "Une fenêtre et une armoire…"
+          "hintText": "Mario désigne la fenêtre puis l'armoire en levant un doigt pour chacune : « Une fenêtre, une armoire… ça fait deux passages ! »"
         },
         {
           "type": "univers-mario",
           "question": "Quel personnage de l'univers Mario est un scientifique qui aide Luigi dans Luigi's Mansion ?",
           "answers": ["Toad", "Professor E. Gadd", "Waluigi", "Yoshi"],
           "correctIndex": 1,
-          "hintText": "C'est un professeur inventeur avec une mèche de cheveux blanche !"
+          "hintText": "Mario imite le professeur avec ses lunettes et sa mèche blanche : « Le scientifique qui invente l'aspirateur à fantômes… c'est le Professeur E. Gadd ! »"
         }
       ]
     },
@@ -437,56 +438,56 @@
           "question": "La terrasse mesure 25 mètres de long sur 12 mètres de large. Quelle est sa surface ?",
           "answers": ["250 m²", "275 m²", "300 m²", "325 m²"],
           "correctIndex": 2,
-          "hintText": "Multiplie 25 par 12 !"
+          "hintText": "Mario contemple le ciel étoilé et trace un rectangle dans l'air : « 25 mètres sur 12… multiplie et tu auras la surface de cette magnifique terrasse ! »"
         },
         {
           "type": "francais",
           "question": "Dans la phrase « Un vent spatial frais lui caresse le visage », quel est le complément d'objet direct (COD) ?",
           "answers": ["Un vent spatial frais", "lui", "le visage", "caresse"],
           "correctIndex": 2,
-          "hintText": "Le COD répond à la question « quoi ? » après le verbe. Le vent caresse quoi ?"
+          "hintText": "Mario laisse le vent caresser son visage et sourit : « Le vent caresse quoi ? Le visage ! C'est ça, le COD ! »"
         },
         {
           "type": "contexte",
           "question": "Quelle forme forment les étoiles selon Luma ?",
           "answers": ["Un cœur", "Une flèche pointant vers le fond du palais", "Un champignon", "Une étoile"],
           "correctIndex": 1,
-          "hintText": "Luma dit que c'est Harmony qui les a arrangées…"
+          "hintText": "Mario suit la flèche stellaire du regard, les yeux brillants : « Harmony qui arrange les étoiles en flèche pour nous guider… c'est touchant ! »"
         },
         {
           "type": "univers-mario",
           "question": "Dans Super Mario Galaxy, comment Mario atterrit-il pour la première fois dans l'espace ?",
           "answers": ["En sautant depuis le château de Peach", "En prenant un ascenseur spatial", "En volant avec Yoshi", "En utilisant un vaisseau"],
           "correctIndex": 0,
-          "hintText": "Mario saute depuis le château envahi d'étoiles et atterrit dans le cosmos !"
+          "hintText": "Mario imite un saut dans le vide en riant : « Au début du jeu, Mario saute depuis le château de Peach et atterrit dans l'espace ! »"
         },
         {
           "type": "maths",
           "question": "Il y a 3 000 étoiles visibles depuis la terrasse. Si Luma peut en compter 50 par minute, combien de temps lui faut-il pour les compter toutes ?",
           "answers": ["50 min", "55 min", "60 min", "65 min"],
           "correctIndex": 2,
-          "hintText": "Divise 3 000 par 50 !"
+          "hintText": "Mario pointe une étoile au hasard et sourit : « 3 000 étoiles à 50 par minute… divise et tu auras le temps pour les compter toutes ! »"
         },
         {
           "type": "francais",
           "question": "Conjugue le verbe « scintiller » au présent, 3ème personne du pluriel :",
           "answers": ["ils scintille", "ils scintillent", "ils scintillait", "ils scintilleront"],
           "correctIndex": 1,
-          "hintText": "Les verbes en « -er » au pluriel prennent « -ent » au présent."
+          "hintText": "Mario pointe les étoiles qui brillent au-dessus d'eux : « Ils scintillent ! Les verbes en -er au pluriel prennent -ent au présent ! »"
         },
         {
           "type": "contexte",
           "question": "Que voit Luigi briller au loin depuis la terrasse ?",
           "answers": ["Le château de Peach", "Les météorites de la fosse", "Le scooter de Bowser Junior", "La Cuisine Cosmique"],
           "correctIndex": 1,
-          "hintText": "Luigi suit la flèche stellaire et aperçoit…"
+          "hintText": "Mario suit le regard de Luigi vers l'horizon : « Au bout de la flèche stellaire, on voit les météorites de la fosse briller au loin ! »"
         },
         {
           "type": "univers-mario",
           "question": "Quel est le nom de l'étoile principale que Mario doit collecter dans Super Mario Galaxy ?",
           "answers": ["La Super Star", "La Power Star", "La Grand Star", "La Lumine Star"],
           "correctIndex": 1,
-          "hintText": "C'est l'étoile puissante qui répare le château de Peach !"
+          "hintText": "Mario fait briller ses poings comme des étoiles : « L'étoile qu'on collecte dans Galaxy… la Power Star ! Elle répare le château ! »"
         }
       ]
     },
@@ -505,56 +506,56 @@
           "question": "Le coffre contient 156 pièces dorées. Luigi en compte 43 étoiles en cristal et 67 artefacts. Combien d'objets y a-t-il au total dans le coffre ?",
           "answers": ["153", "156", "159", "162"],
           "correctIndex": 2,
-          "hintText": "Additionne 156 + 43 + 67 !"
+          "hintText": "Mario fouille dans le coffre avec enthousiasme : « 156 pièces, 43 étoiles, 67 artefacts… additionne tout et tu auras le total ! »"
         },
         {
           "type": "francais",
           "question": "Dans la phrase « Des trésors de Luma sont soigneusement rangés », quel est l'adverbe ?",
           "answers": ["Des", "soigneusement", "rangés", "trésors"],
           "correctIndex": 1,
-          "hintText": "L'adverbe modifie le verbe ou l'adjectif. Il répond à « comment ? »"
+          "hintText": "Mario range soigneusement une pièce dorée dans sa poche : « Soigneusement, c'est l'adverbe ! Il dit comment on fait l'action ! »"
         },
         {
           "type": "contexte",
           "question": "Que contient le Vault de Luma ?",
           "answers": ["Des armes et des boucliers", "Des étoiles en cristal, des pièces dorées et une carte du palais", "Des vêtements et des chaussures", "Des livres et des lettres"],
           "correctIndex": 1,
-          "hintText": "Relis la description du coffre…"
+          "hintText": "Mario soulève une étoile en cristal qui brille entre ses doigts : « Étoiles en cristal, pièces dorées, une carte… relis bien ce qu'il y a dans le coffre ! »"
         },
         {
           "type": "univers-mario",
           "question": "Dans Super Mario Galaxy, combien de Power Stars faut-il pour débloquer le niveau secret « Galaxie du Grand Trône » ?",
           "answers": ["70", "80", "90", "100"],
           "correctIndex": 2,
-          "hintText": "Il faut 90 Power Stars pour accéder au vrai final !"
+          "hintText": "Mario compte les étoiles en cristal du coffre en faisant la comparaison : « 90 Power Stars pour le vrai final de Galaxy… c'est un record ! »"
         },
         {
           "type": "maths",
           "question": "La carte du palais mesure 48 cm de long sur 32 cm de large. Quel est son périmètre ?",
           "answers": ["140 cm", "152 cm", "160 cm", "168 cm"],
           "correctIndex": 2,
-          "hintText": "Périmètre = 2 × (longueur + largeur) = 2 × (48 + 32)"
+          "hintText": "Mario déroule la carte et trace le contour avec son doigt : « Périmètre, c'est le tour complet… 2 fois la longueur plus 2 fois la largeur ! »"
         },
         {
           "type": "francais",
           "question": "Quel est le contraire du mot « fièrement » ?",
           "answers": ["Honteusement", "Joyeusement", "Tristement", "Colériquement"],
           "correctIndex": 0,
-          "hintText": "Fièrement = avec fierté. Son contraire, c'est avec honte."
+          "hintText": "Mario se redresse la tête fièrement en regardant les trésors : « Fièrement… son contraire, c'est honteusement ! Avec honte ! »"
         },
         {
           "type": "contexte",
           "question": "Vers quelle Zone pointe la flèche rouge sur la carte d'Harmony ?",
           "answers": ["La Fosse aux astéroïdes", "La Salle des Miroirs", "La Terrasse nocturne", "La Chambre d'Harmony"],
           "correctIndex": 1,
-          "hintText": "Luigi examine la carte et voit…"
+          "hintText": "Mario suit la flèche rouge sur la carte avec son doigt : « Elle pointe vers la Salle des Miroirs ! C'est notre prochaine étape ! »"
         },
         {
           "type": "univers-mario",
           "question": "Quel objet Luma peut-il utiliser pour créer un tremplin dans Super Mario Galaxy ?",
           "answers": ["Un champignon", "Un Goober (petit astéroïde)", "Un bloc question", "Une fleur"],
           "correctIndex": 1,
-          "hintText": "Luma mord le Goober et le lance pour créer un tremplin !"
+          "hintText": "Mario imite Luma qui mord un petit astéroïde et le lance : « Luma utilise le Goober comme tremplin ! Le petit astéroïde qu'il lance ! »"
         }
       ]
     },
@@ -568,7 +569,7 @@
           "question": "Luigi est arrivé à la Chambre d'Harmony. Parmi les Zones suivantes, laquelle Luigi a-t-il pu traverser S'il est passé par le Chemin le plus long (Entrée → Sous-sol → Chambre secrète → Fosse aux astéroïdes → Chambre) ?",
           "answers": ["La Galerie des Ombres", "La Terrasse nocturne", "La Chambre secrète", "Le Vault de Luma"],
           "correctIndex": 2,
-          "hintText": "Le chemin par le couloir sombre passe par le sous-sol, puis la chambre secrète, puis…",
+          "hintText": "Mario se tient debout, déterminé, face à Bowser Junior : « Le plus long chemin, c'est par le sous-sol, la chambre secrète, et la fosse aux astéroïdes ! »",
           "isFinal": true
         },
         {
@@ -576,49 +577,49 @@
           "question": "Que se rappelle Luigi qui lui donne du courage face à Bowser Junior ?",
           "answers": ["Un conseil de Mario", "Ce qu'il a vu dans le miroir : une version de lui-même déterminée", "Un rêve qu'il a fait", "La carte d'Harmony"],
           "correctIndex": 1,
-          "hintText": "Luigi pense à un moment précis de son Chemin…"
+          "hintText": "Mario serre la main de Luigi avec force : « Tu as vu qui tu étais dans le miroir… déterminé, brave ! C'est ça qui te donne du courage ! »"
         },
         {
           "type": "francais",
           "question": "Dans la phrase « Luigi tremble… mais il se rappelle ce qu'il a vu », quel est le rôle de « mais » ?",
           "answers": ["Une conjonction de coordination qui marque l'opposition", "Un adverbe", "Un pronom", "Un déterminant"],
           "correctIndex": 0,
-          "hintText": "« Mais » relie deux propositions et marque un contraste."
+          "hintText": "Mario croise les bras et explique avec conviction : « Mais, c'est le mot qui oppose deux choses… une conjonction de coordination ! »"
         },
         {
           "type": "univers-mario",
           "question": "Quel est le surnom que Bowser Junior donne souvent à Mario dans les jeux ?",
           "answers": ["Le Plombier Rouge", "Le Petit Frère", "Le Héros Timide", "Le Champion"],
           "correctIndex": 0,
-          "hintText": "Bowser Junior se moque souvent du métier de Mario…"
+          "hintText": "Mario fait une grimace en pensant à Bowser Junior : « Il m'appelle toujours le Plombier Rouge pour me moquer de moi ! »"
         },
         {
           "type": "contexte",
           "question": "Combien de chemins différents Luigi peut-il emprunter pour atteindre la Chambre d'Harmony ?",
           "answers": ["2", "3", "4", "5"],
           "correctIndex": 2,
-          "hintText": "Compte les branches de l'arbre de décision de Luigi…"
+          "hintText": "Mario trace les chemins possibles dans l'air avec son doigt : « Sous-sol ou galerie… puis deux branches à chaque fois… ça fait quatre chemins ! »"
         },
         {
           "type": "maths",
           "question": "Si Luigi a traversé 5 Zones et répondu correctement à 12 Quiz et incorrectement à 4 Quiz, combien de Pièces a-t-il gagnées ?",
           "answers": ["18 Pièces", "20 Pièces", "22 Pièces", "24 Pièces"],
           "correctIndex": 0,
-          "hintText": "12 × (+2) = +24 et 4 × (-1) = -4. Total = 24 - 4"
+          "hintText": "Mario compte les Pièces imaginaires dans sa main ouverte : « 12 bonnes réponses, c'est 24 Pièces gagnées… 4 mauvaises, c'est 4 perdues… 24 moins 4, c'est 18 ! »"
         },
         {
           "type": "francais",
           "question": "Transforme en discours indirect : Luigi dit : « Je suis Luigi ! Et je ne vais pas te laisser faire ça ! »",
           "answers": ["Luigi dit qu'il est Luigi et qu'il ne va pas le laisser faire ça.", "Luigi dit que je suis Luigi et que je ne vais pas te laisser faire ça.", "Luigi dit qu'il est Luigi et qu'il ne va pas te laisser faire ça.", "Luigi dit que Luigi est Luigi et qu'il ne va pas le laisser faire ça."],
           "correctIndex": 0,
-          "hintText": "Au discours indirect, « je » devient « il » et « te » devient « le »."
+          "hintText": "Mario fait un signe de courage à Luigi : « Au discours indirect, je devient il et te devient le… tu y arrives, petit frère ! »"
         },
         {
           "type": "contexte",
           "question": "Quel rôle joue Luma quand Luigi affronte Bowser Junior ?",
           "answers": ["Il se cache", "Il se place devant Luigi, brillant de toute sa lumière", "Il fuit la pièce", "Il négocie avec Bowser Junior"],
           "correctIndex": 1,
-          "hintText": "Relis la fin de la narration…"
+          "hintText": "Mario regarde Luma briller avec admiration : « Luma se place devant Luigi, tout brillant… c'est un acte de courage ! Relis la fin ! »"
         }
       ]
     }

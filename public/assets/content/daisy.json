@@ -1,6 +1,7 @@
 {
   "character": "daisy",
   "startZoneId": "daisy-entree",
+  "gameOverNarration": "Daisy se redresse d'un coup, les poings sur les hanches. « Attends, c'est tout ? Pas question ! La princesse de Sarasaland ne lâche jamais l'affaire ! » Luma rit joyeusement. « C'est ça l'esprit, Daisy ! Recharge tes énergies et reviens plus forte que jamais ! » Daisy fait un clin d'œil. « Tu peux compter sur moi, Luma ! »",
   "zones": {
     "daisy-entree": {
       "id": "daisy-entree",
@@ -21,21 +22,21 @@
           "question": "Daisy est la princesse de quel royaume dans l'univers Super Mario ?",
           "answers": ["Champignon", "Sarasaland", "Sable", "Fleur"],
           "correctIndex": 1,
-          "hintText": "C'est un royaume tropical plein de fleurs et de soleil !"
+          "hintText": "Wario émerge d'un tas de pièces en ricanant : « C'est un royaume tropical, Sarasaland, si tu veux savoir ! »"
         },
         {
           "type": "maths",
           "question": "Daisy a trouvé 18 Pièces dans le hall. Elle en donne 5 à Luma pour acheter un indice. Combien de Pièces lui reste-t-il ?",
           "answers": ["11", "12", "13", "14"],
           "correctIndex": 2,
-          "hintText": "Soustrais 5 à 18 !"
+          "hintText": "Wario sort de derrière un baril et grogne : « Tu soustrais 5 à 18, et ça te donne 13, même pas besoin de calculatrice ! »"
         },
         {
           "type": "contexte",
           "question": "Comment Daisy est-elle arrivée au palais d'Harmony ?",
           "answers": ["En scooter", "En atterrissage forcé", "En galaxie volante", "En parachute"],
           "correctIndex": 1,
-          "hintText": "Relis le tout début de la narration…"
+          "hintText": "Wario se frotte les mains et murmure : « Elle est arrivée en atterrissage forcé, Daisy… relis le début, tu verras ! »"
         }
       ]
     },
@@ -58,21 +59,21 @@
           "question": "Le terrain de sport contient 4 rangées d'anneaux lumineux. Chaque rangée a 7 anneaux. Combien d'anneaux y a-t-il au total ?",
           "answers": ["21", "24", "28", "32"],
           "correctIndex": 2,
-          "hintText": "Multiplie 4 par 7 !"
+          "hintText": "Wario arrive en vélo-camion et hurle : « 4 rangées de 7 anneaux, ça fait 28 ! Même un Goomba sait faire ça ! »"
         },
         {
           "type": "francais",
           "question": "Dans la phrase « Daisy enchaîne les sauts avec grâce et puissance », quel est le verbe conjugué ?",
           "answers": ["sauts", "enchaîne", "grâce", "puissance"],
           "correctIndex": 1,
-          "hintText": "Le verbe est l'action que Daisy effectue."
+          "hintText": "Wario tripote une pièce dorée et rappelle : « Le verbe, c'est l'action ! Ici, c'est \"enchaîne\" que Daisy fait ! »"
         },
         {
           "type": "contexte",
           "question": "Quels types d'obstacles flottent dans le terrain de sport spatial ?",
           "answers": ["Des Goombas et des Koopas", "Des anneaux lumineux, des barrières magnétiques et des coussins d'anti-gravité", "Des étoiles et des lunes", "Des blocs question et des tuyaux"],
           "correctIndex": 1,
-          "hintText": "Relis bien la narration du terrain de sport…"
+          "hintText": "Wario fait une grimace et conseille : « Les anneaux lumineux, les barrières magnétiques et les coussins d'anti-gravité… relis la narration, Daisy ! »"
         }
       ]
     },
@@ -91,21 +92,21 @@
           "question": "Dans Super Mario Galaxy, quel objet Mario doit collecter en grande quantité pour débloquer de nouvelles galaxies ?",
           "answers": ["Des pièces", "Des Power Stars", "Des champignons", "Des coeurs"],
           "correctIndex": 1,
-          "hintText": "Ce sont les étoiles puissantes qu'on gagne en terminant les galaxies !"
+          "hintText": "Wario arrive en courant après un trésor et crie : « Les Power Stars ! C'est ça qu'il faut collecter pour débloquer les galaxies ! »"
         },
         {
           "type": "maths",
           "question": "La rampe de lancement mesure 150 mètres de long. Daisy a déjà gravi 60 mètres. Combien de mètres lui reste-t-il à parcourir ?",
           "answers": ["70", "80", "90", "100"],
           "correctIndex": 2,
-          "hintText": "Soustrais 60 à 150 !"
+          "hintText": "Wario se cache dans un coin et chuchote : « 150 moins 60… ça fait 90 mètres restants, ma petite Daisy ! »"
         },
         {
           "type": "contexte",
           "question": "Quel vent fouette les cheveux de Daisy sur la rampe de lancement ?",
           "answers": ["Le vent du nord", "Le vent cosmique", "Le vent stellaire", "Le vent galactique"],
           "correctIndex": 1,
-          "hintText": "Relis la narration de la rampe de lancement…"
+          "hintText": "Wario tape du poing dans sa main et indique : « C'est le vent cosmique qui fouette ses cheveux ! Relis bien la narration ! »"
         }
       ]
     },
@@ -124,14 +125,14 @@
           "question": "Quel est le pluriel du mot « un garde-fou » ?",
           "answers": ["des garde-fous", "des garde-foux", "des gardes-fous", "des garde-fou"],
           "correctIndex": 0,
-          "hintText": "Les mots composés avec un trait d'union : seul le dernier élément prend le « s » au pluriel (sauf exceptions)."
+          "hintText": "Wario renifle l'air et suggère : « Garde-fous avec un \"s\" à la fin ! C'est la règle des mots composés, ma chère ! »"
         },
         {
           "type": "contexte",
           "question": "Quelles traces Daisy a-t-elle remarquées au bout de la piste orbitale ?",
           "answers": ["Des empreintes de pas", "Des traces de pneus de scooter", "Des traces de feu", "Des empreintes de pattes"],
           "correctIndex": 1,
-          "hintText": "Ces traces prouvent que Bowser Junior est passé par là…"
+          "hintText": "Wario trébuche sur une roche et précise : « Des traces de pneus de scooter ! Bowser Junior est passé par là, c'est clair comme de l'eau de roche ! »"
         }
       ]
     },
@@ -150,21 +151,21 @@
           "question": "La grotte contient 36 cristaux. Un tiers des cristaux sont roses, un quart sont oranges et le reste est violet. Combien de cristaux sont violets ?",
           "answers": ["12", "15", "18", "20"],
           "correctIndex": 1,
-          "hintText": "36 ÷ 3 = 12 roses, 36 ÷ 4 = 9 oranges. Le reste est violet : 36 - 12 - 9 = ?"
+          "hintText": "Wario sort un livre de poche et lit : « 12 roses, 9 oranges… 36 moins 12 moins 9, ça fait 15 cristaux violets ! Je pourrais les vendre, hein ! »"
         },
         {
           "type": "francais",
           "question": "Quel est le contraire du mot « sombre » ?",
           "answers": ["Obscur", "Lumineux", "Noir", "Foncé"],
           "correctIndex": 1,
-          "hintText": "Le contraire de sombre, c'est ce qui est plein de lumière."
+          "hintText": "Wario se gratte la tête et explique : « Le contraire de sombre, c'est lumineux ! Comme ces cristaux que j'aimerais bien voler… »"
         },
         {
           "type": "contexte",
           "question": "À quoi réagissent les cristaux de la grotte selon Luma ?",
           "answers": ["À la musique", "À l'énergie stellaire", "À la chaleur", "Au bruit"],
           "correctIndex": 1,
-          "hintText": "Luma a expliqué ce qui alimente les cristaux…"
+          "hintText": "Wario lance un regard malicieux et dit : « L'énergie stellaire ! C'est ça qui fait briller les cristaux, pas de l'or malheureusement… »"
         }
       ]
     },
@@ -187,21 +188,21 @@
           "question": "Quel Power-Up permet à Mario de voler dans les airs dans les jeux Super Mario ?",
           "answers": ["La Fleur de Feu", "La Super Feuille", "La Plume de Cap", "La Fleur Étoile"],
           "correctIndex": 2,
-          "hintText": "Ce Power-Up fait apparaître un petit chapeau sur la tête de Mario !"
+          "hintText": "Wario se balance sur un filin et crie : « La Plume de Cap ! Elle donne un petit chapeau à Mario pour qu'il puisse voler ! »"
         },
         {
           "type": "francais",
           "question": "Dans la phrase « La terrasse offre une vue panoramique incroyable », quel est le complément d'objet direct (COD) ?",
           "answers": ["La terrasse", "une vue panoramique incroyable", "panoramique", "incroyable"],
           "correctIndex": 1,
-          "hintText": "Le COD répond à la question « offre quoi ? »."
+          "hintText": "Wario s'assoit sur un nuage de poussière cosmique et grogne : « \"Offre quoi ?\" Une vue panoramique incroyable ! C'est le COD ! »"
         },
         {
           "type": "contexte",
           "question": "Quels éléments Daisy observe-t-elle depuis la terrasse solaire ?",
           "answers": ["Des Goombas et des Koopas", "Des jardins flottants, des cascades d'étoiles et des nuages de poussière cosmique", "Des galaxies et des planètes", "Des champignons et des blocs question"],
           "correctIndex": 1,
-          "hintText": "Relis la description de la vue depuis la terrasse…"
+          "hintText": "Wario pointe le paysage du doigt et ricane : « Les jardins flottants, les cascades d'étoiles et les nuages de poussière cosmique ! Relis bien ! »"
         }
       ]
     },
@@ -220,21 +221,21 @@
           "question": "Chaque trampoline propulse Daisy 5 mètres plus haut que le précédent. Le premier trampoline la lance à 10 mètres. À quelle hauteur le 4ème trampoline la propulse-t-il ?",
           "answers": ["15 mètres", "20 mètres", "25 mètres", "30 mètres"],
           "correctIndex": 2,
-          "hintText": "1er = 10m, 2ème = 15m, 3ème = 20m, 4ème = ?"
+          "hintText": "Wario saute sur un trampoline et atterrit de travers : « 10, 15, 20… le 4ème, c'est 25 mètres ! Aïe, j'ai mal au dos ! »"
         },
         {
           "type": "univers-mario",
           "question": "Dans Super Mario Galaxy, quel type de planète utilise sa gravité pour faire tourner Mario sur elle-même ?",
           "answers": ["Les planètes de glace", "Les planètes à gravité", "Les planètes de feu", "Les planètes fantômes"],
           "correctIndex": 1,
-          "hintText": "Mario peut marcher sur toutes les faces de ces planètes grâce à leur gravité particulière !"
+          "hintText": "Wario tourne en rond sur lui-même et gémit : « Les planètes à gravité ! Mario marche sur toutes les faces… moi j'ai le vertige ! »"
         },
         {
           "type": "contexte",
           "question": "Comment sont disposés les trampolines gravitationnels dans les airs ?",
           "answers": ["En ligne droite", "En cercle", "En spirale", "En échelle"],
           "correctIndex": 2,
-          "hintText": "Relis la narration de la zone de trampolines…"
+          "hintText": "Wario se relève en se frottant les côtes et grogne : « En spirale ! Les trampolines sont disposés en spirale, relis la narration ! »"
         }
       ]
     },
@@ -253,21 +254,21 @@
           "question": "Harmony a gagné 24 médailles d'étoiles, 18 coupes en cristal et 12 boucliers. Combien de trophées a-t-elle au total ?",
           "answers": ["48", "50", "52", "54"],
           "correctIndex": 2,
-          "hintText": "Additionne 24 + 18 + 12 !"
+          "hintText": "Wario jette un œil envieux sur les trophées et murmure : « 24 plus 18 plus 12… ça fait 54 trophées ! Si seulement c'étaient des pièces… »"
         },
         {
           "type": "francais",
           "question": "Quel est le synonyme du mot « admirable » ?",
           "answers": ["Triste", "Magnifique", "Petit", "Lent"],
           "correctIndex": 1,
-          "hintText": "Quel mot a un sens proche de « qui mérite l'admiration » ?"
+          "hintText": "Wario lève les yeux au ciel et soupire : « Magnifique ! C'est le synonyme d'admirable ! Comme ces trophées que je voudrais tous ! »"
         },
         {
           "type": "contexte",
           "question": "Comment Harmony a-t-elle gagné ses trophées selon Luma ?",
           "answers": ["En battant Bowser", "En aidant les galaxies en difficulté", "En collectant des pièces", "En courant vite"],
           "correctIndex": 1,
-          "hintText": "Luma a précisé la raison pour laquelle Harmony a gagné tous ces trophées…"
+          "hintText": "Wario croise les bras et bougonne : « En aidant les galaxies en difficulté ! Luma l'a dit bien clair, Harmony est une vraie championne… »"
         }
       ]
     },
@@ -281,7 +282,7 @@
           "question": "Daisy est arrivée à la Chambre d'Harmony. Parmi les Zones suivantes, laquelle Daisy a-t-elle pu traverser si elle est passée par le Chemin le plus long (Entrée → Terrasse → Trophées → Grotte → Chambre) ?",
           "answers": ["Le Terrain de sport spatial", "La Rampe de lancement", "La Salle des trophées", "La Zone de trampolines"],
           "correctIndex": 2,
-          "hintText": "Le chemin le plus long passe par la Terrasse, puis la Salle des trophées, puis la Grotte…",
+          "hintText": "Wario apparaît dans l'ombre, hésitant entre aider Daisy et voler les trophées de Bowser Junior : « Le chemin le plus long, c'est Entrée → Terrasse → Salle des trophées → Grotte → Chambre ! »",
           "isFinal": true
         }
       ]
