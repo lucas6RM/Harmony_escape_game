@@ -34,14 +34,17 @@ Refondre le flux des mauvaises réponses et ajouter le Game Over + persistance d
 - [x] Tâche 5 : Retirer le clamp `Math.max(0, ...)` dans `addCoins()` + déclencher `gameOverSignal` quand Pièces < 0
 - [x] Tâche 6 : Créer le composant `GameOverScreen` (style `VictoryScreen`) avec narration spécifique au personnage, score Zones explorées, bouton "Retour au menu" vers `/accueil` + `clearSave()`
 - [x] Tâche 7 : Ajouter `zonesExplored` à `GameSave`, `gameOverNarration` à `CharacterPath`, persister les Pièces après chaque modification, afficher le compteur de Zones dans `GameShellComponent`
-- [ ] Tâche 8 : Mettre à jour le bloc pénalité dans `ZoneExplorerComponent` pour afficher "Réessayer" au lieu de "Recommencer le Quiz", mettre à jour les tests, vérifier compilation et tests
+- [x] Tâche 8 : Mettre à jour le bloc pénalité dans `ZoneExplorerComponent` pour afficher "Réessayer" au lieu de "Recommencer le Quiz", mettre à jour les tests, vérifier compilation et tests
 
 ## Zone de Transit & Logs
 ### Tâche en cours :
-- Aucune (Issue #31 terminée)
+- Aucune (toutes les issues terminées, PR créée)
 
 ### Compteur de rejets (tâche actuelle) :
 - 0 / 5
 
 ### Dernier retour de Review :
 - Aucun.
+
+### PR
+- https://github.com/lucas6RM/Harmony_escape_game/pull/34
