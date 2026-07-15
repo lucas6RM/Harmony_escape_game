@@ -47,12 +47,12 @@ Ajouter le champ `gameOverNarration` à chaque JSON de chemin avec un texte narr
 - [x] Tâche 1 : Scénariser les hintText du chemin Mario avec Luigi (fichier `src/assets/content/mario.json`)
 - [x] Tâche 2 : Scénariser les hintText du chemin Luigi avec Mario (fichier `src/assets/content/luigi.json`)
 - [x] Tâche 3 : Scénariser les hintText du chemin Peach avec Toad (fichier `src/assets/content/peach.json`)
-- [ ] Tâche 4 : Scénariser les hintText du chemin Daisy avec Wario (fichier `src/assets/content/daisy.json`)
+- [x] Tâche 4 : Scénariser les hintText du chemin Daisy avec Wario (fichier `src/assets/content/daisy.json`)
 - [ ] Tâche 5 : Vérifier les gameOverNarration et valider les JSON (build + tests)
 
 ## Zone de Transit & Logs
 ### Tâche en cours :
-- Tâche 3 : Scénariser les hintText du chemin Peach avec Toad
+- Tâche 4 : Scénariser les hintText du chemin Daisy avec Wario
 
 ### Compteur de rejets (tâche actuelle) :
 - 0 / 5
