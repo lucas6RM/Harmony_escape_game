@@ -1,0 +1,50 @@
+<div class="game-over-screen" role="main" aria-label="Scène de Game Over">
+  <!-- ── En-tête Game Over ──────────────────────────────────────── -->
+  <div class="game-over-header" role="banner">
+    <span class="game-over-icon" aria-hidden="true">💫</span>
+    <h1 class="game-over-title">Game Over</h1>
+    <span class="game-over-icon" aria-hidden="true">💫</span>
+  </div>
+
+  <!-- ── Texte narratif ─────────────────────────────────────────── -->
+  <div class="game-over-narration" role="region" aria-label="Narration de Game Over">
+    <p class="narration-line">
+      {{ characterEmoji() }} {{ characterName() }} a épuisé toutes ses Pièces...
+    </p>
+    <p class="narration-line">
+      L'obscurité envahit le palais. Les étoiles s'éteignent une à une.
+    </p>
+    <p class="narration-line narration-highlight">
+      🌑 Harmony reste prisonnière de Bowser Junior... pour l'instant. 🌑
+    </p>
+    <p class="narration-line">
+      Mais ne t'inquiète pas, {{ characterName() }} ! Chaque tentative te rend
+      plus fort. Luma croit en toi et attend ton retour !
+    </p>
+    @if (gameOverNarration()) {
+    <p class="narration-line narration-character">
+      {{ gameOverNarration() }}
+    </p>
+    }
+  </div>
+
+  <!-- ── Score : Zones explorées ────────────────────────────────── -->
+  <div class="game-over-score" role="status" aria-live="polite" aria-label="Score">
+    <span class="score-icon" aria-hidden="true">🗺️</span>
+    <span class="score-label">Zones explorées :</span>
+    <span class="score-value">{{ zonesExplored() }}</span>
+  </div>
+
+  <!-- ── Bouton Retour au menu ──────────────────────────────────── -->
+  <div class="game-over-actions" role="group" aria-label="Actions disponibles">
+    <button
+      type="button"
+      class="action-button action-menu"
+      aria-label="Retourner au menu principal"
+      (click)="onReturnToMenu()"
+    >
+      <span aria-hidden="true">🏠</span>
+      <span>Retour au menu</span>
+    </button>
+  </div>
+</div>
