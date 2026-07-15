@@ -22,56 +22,56 @@
           "question": "Quel est le fruit préféré de Peach dans les jeux Super Mario ?",
           "answers": ["La pomme", "La cerise", "La pêche", "La fraise"],
           "correctIndex": 2,
-          "hintText": "Son nom en anglais est un indice…"
+          "hintText": "Toad sort de derrière un pilier du hall et crie joyeusement : « Princesse Peach, son nom en anglais est Peach, comme le fruit ! »"
         },
         {
           "type": "maths",
           "question": "Peach a 15 Pièces. Elle répond correctement à 3 Quiz et incorrectement à 1 Quiz. Combien de Pièces a-t-elle maintenant ?",
           "answers": ["18 Pièces", "20 Pièces", "22 Pièces", "24 Pièces"],
           "correctIndex": 1,
-          "hintText": "3 × (+2) = +6 et 1 × (-1) = -1. 15 + 6 - 1 = ?"
+          "hintText": "Toad arrive en courant avec un bloc-notes et tambourine des pieds : « Princesse, 3 fois plus 2 ça fait plus 6, et 1 moins 1… donc 15 + 6 - 1, ça donne 20 ! »"
         },
         {
           "type": "contexte",
           "question": "Par quels passages Bowser Junior est-il passé selon Luma ?",
           "answers": ["Par le jardin et la cuisine", "Par le salon royal et la serre", "Par le couloir et la tour", "Par la galerie et la terrasse"],
           "correctIndex": 1,
-          "hintText": "Luma mentionne deux lieux précis…"
+          "hintText": "Toad se cache derrière Peach et chuchote nerveusement : « Princesse, Luma a dit le salon royal et la serre… retenir ces deux mots, c'est la clé ! »"
         },
         {
           "type": "francais",
           "question": "Dans la phrase « Elle reconnaît immédiatement l'atmosphère chaleureuse », quel est l'adverbe ?",
           "answers": ["chaleureuse", "immédiatement", "reconnaît", "atmosphère"],
           "correctIndex": 1,
-          "hintText": "L'adverbe modifie le verbe et répond à la question « comment ? »"
+          "hintText": "Toad ajuste son champignon et explique avec sérieux : « Princesse, l'adverbe, c'est le mot qui dit comment on fait l'action… ici, c'est « immédiatement » ! »"
         },
         {
           "type": "univers-mario",
           "question": "Dans Super Mario Galaxy, quel Power-Up permet à Peach de voler ?",
           "answers": ["La Fleur Étoile", "Le Cape Feather (Plume de Cape)", "La Fleur de Feu", "Le Super Champignon"],
           "correctIndex": 1,
-          "hintText": "C'est le même Power-Up que Mario utilise pour planer…"
+          "hintText": "Toad pointe du doigt avec enthousiasme en sautille : « Le Cape Feather, Princesse ! C'est la plume de cape qui permet de voler, comme Mario ! »"
         },
         {
           "type": "contexte",
           "question": "Combien de passages Peach peut-elle emprunter depuis le hall du palais ?",
           "answers": ["1", "2", "3", "4"],
           "correctIndex": 1,
-          "hintText": "Une porte ornée de roses et un passage verdoyant…"
+          "hintText": "Toad fait un grand sourire et rappelle en tapotant ses doigts : « Princesse, il y a la porte des roses et le passage verdoyant… ça fait deux passages ! »"
         },
         {
           "type": "maths",
           "question": "Le portail du palais mesure 5,4 mètres de haut. Peach mesure 1,65 m. Combien de Peach empilées faut-il pour atteindre le sommet du portail ?",
           "answers": ["2", "3", "4", "5"],
           "correctIndex": 3,
-          "hintText": "Divise 5,4 par 1,65 et arrondis à l'entier supérieur !"
+          "hintText": "Toad sort un calculateur de sa poche et précise en marmonnant : « 5,4 divisé par 1,65, ça fait 3,27… donc il faut 5 Peach empilées pour atteindre le haut ! »"
         },
         {
           "type": "francais",
           "question": "Quel est le synonyme du mot « gracieusement » dans « Peach atterrit gracieusement » ?",
           "answers": ["Lourdement", "Avec élégance", "Vite", "Brutalement"],
           "correctIndex": 1,
-          "hintText": "Gracieusement évoque la grâce et l'élégance."
+          "hintText": "Toad bondit de joie et conseille en faisant une petite révérence : « Princesse, gracieusement, c'est comme « avec élégance »… vous connaissez le mot mieux que quiconque ! »"
         }
       ]
     },
@@ -94,56 +94,56 @@
           "question": "Quel objet Peach trouve-t-elle sur la table basse du Salon Royal ?",
           "answers": ["Une lettre de Bowser Junior", "Un carnet ouvert avec une carte du palais", "Une clé dorée", "Un Power-Up"],
           "correctIndex": 1,
-          "hintText": "Harmony a préparé quelque chose…"
+          "hintText": "Toad entre dans le salon en baissant la voix par respect et murmure : « Princesse, Harmony a laissé un carnet ouvert avec une carte du palais sur la table… »"
         },
         {
           "type": "maths",
           "question": "Il y a 56 livres dans le Salon Royal. Un quart sont des livres sur les étoiles, un tiers sont des albums illustrés, et le reste sont des carnets. Combien de carnets y a-t-il ?",
           "answers": ["18", "19", "20", "21"],
           "correctIndex": 2,
-          "hintText": "56 ÷ 4 = 14 livres étoiles, 56 ÷ 3 ≈ 18,67… arrondis à 19 albums. 56 - 14 - 19 = ?"
+          "hintText": "Toad sort une loupe et observe les étagères en calculant : « 56 divisé par 4, ça fait 14 livres sur les étoiles, puis 19 albums… il reste 20 carnets ! »"
         },
         {
           "type": "francais",
           "question": "Dans la phrase « Des tableaux de galaxies sont accrochés aux murs », quel est le sujet ?",
           "answers": ["aux murs", "Des tableaux de galaxies", "sont accrochés", "galaxies"],
           "correctIndex": 1,
-          "hintText": "Qui ou quoi est accroché ? C'est le sujet."
+          "hintText": "Toad roule dans tous les sens d'impatience et crie : « Princesse, qui est accroché ? Les tableaux de galaxies ! C'est le sujet de la phrase ! »"
         },
         {
           "type": "univers-mario",
           "question": "Dans Super Mario Galaxy, quel est le nom du palais où vit Peach ?",
           "answers": ["Le Château de Peach", "Le Palais des Étoiles", "Le Château des Champignons", "Le Palais Royal"],
           "correctIndex": 0,
-          "hintText": "C'est le château rose emblématique de l'univers Mario !"
+          "hintText": "Toad s'essuie le front et murmure avec fierté : « Princesse, votre demeure s'appelle le Château de Peach… c'est le plus beau château du royaume ! »"
         },
         {
           "type": "contexte",
           "question": "Quels souvenirs d'Harmony Peach trouve-t-elle dans le Salon Royal ?",
           "answers": ["Des jouets et des poupées", "Des tableaux de galaxies, des coussins brodés et des livres sur les étoiles", "Des vêtements et des chaussures", "Des instruments de musique"],
           "correctIndex": 1,
-          "hintText": "Relis la description du salon…"
+          "hintText": "Toad fait un salut militaire et indique avec son doigt : « Princesse, Harmony a laissé des tableaux de galaxies, des coussins brodés de constellations et des livres sur les étoiles ! »"
         },
         {
           "type": "maths",
           "question": "Le Salon Royal mesure 12 mètres de long sur 8 mètres de large. Quelle est sa surface ?",
           "answers": ["80 m²", "88 m²", "96 m²", "104 m²"],
           "correctIndex": 2,
-          "hintText": "Multiplie 12 par 8 !"
+          "hintText": "Toad bondit sur place et crie : « Douze fois huit, Princesse… ça fait 96 mètres carrés ! La surface du salon ! »"
         },
         {
           "type": "francais",
           "question": "Quel est le contraire du mot « élégant » ?",
           "answers": ["Beau", "Rustique", "Grand", "Lumineux"],
           "correctIndex": 1,
-          "hintText": "Élégant = raffiné, chic. Son contraire évoque le simple, le brut."
+          "hintText": "Toad s'assoit poliment sur un coussin et explique : « Princesse, le contraire d'élégant, c'est rustique… comme quelque chose de simple et brut ! »"
         },
         {
           "type": "univers-mario",
           "question": "Quel sport Peach pratique-t-elle dans les jeux Mario Sports ?",
           "answers": ["Le football uniquement", "Le tennis, le golf, le baseball et bien d'autres", "La natation uniquement", "Le basketball uniquement"],
           "correctIndex": 1,
-          "hintText": "Peach est une sportive polyvalente dans l'univers Mario !"
+          "hintText": "Toad arrive essoufflé en tenant une raquette de tennis et crie : « Princesse, vous faites du tennis, du golf, du baseball… vous êtes une championne dans tous les sports ! »"
         }
       ]
     },
@@ -162,56 +162,56 @@
           "question": "Quelle note Harmony a-t-elle laissée dans le livre de la Bibliothèque ?",
           "answers": ["« Bowser Junior est dans la cuisine »", "« Mon jardin privé contient la clé pour me retrouver »", "« Cachez-vous dans la serre »", "« Venez vite à la terrasse »"],
           "correctIndex": 1,
-          "hintText": "Le livre ouvert contient un message d'Harmony…"
+          "hintText": "Toad sort de derrière une étagère en tenant un livre et lit à haute voix : « Princesse, Harmony a écrit : « Mon jardin privé contient la clé pour me retrouver » ! »"
         },
         {
           "type": "maths",
           "question": "La Bibliothèque contient 240 livres. Peach en lit 15 par heure. Combien de temps lui faut-il pour les lire tous ?",
           "answers": ["14 heures", "15 heures", "16 heures", "18 heures"],
           "correctIndex": 2,
-          "hintText": "Divise 240 par 15 !"
+          "hintText": "Toad s'installe sur un tabouret et compte sur ses doigts : « 240 divisé par 15, Princesse… ça fait exactement 16 heures de lecture ! »"
         },
         {
           "type": "francais",
           "question": "Dans la phrase « Des étagères immenses montent jusqu'au plafond », quel est le complément de lieu ?",
           "answers": ["Des étagères immenses", "montent", "jusqu'au plafond", "immenses"],
           "correctIndex": 2,
-          "hintText": "Le complément de lieu répond à la question « où ? »"
+          "hintText": "Toad tourne les pages d'un livre et murmure : « Princesse, où les étagères montent-elles ? Jusqu'au plafond ! C'est le complément de lieu ! »"
         },
         {
           "type": "univers-mario",
           "question": "Dans Super Mario Galaxy, quel objet Luma utilise-t-il pour lire les messages cachés dans les galaxies ?",
           "answers": ["Un télescope", "Un livre d'étoiles", "Une loupe magique", "Il n'y a pas de messages cachés"],
           "correctIndex": 1,
-          "hintText": "Luma peut lire les messages gravés dans les étoiles !"
+          "hintText": "Toad pointe un globe céleste du doigt et explique : « Princesse, Luma utilise un livre d'étoiles pour lire les messages cachés dans les galaxies ! »"
         },
         {
           "type": "contexte",
           "question": "Quel détail laisse penser que Bowser Junior est passé dans la Bibliothèque ?",
           "answers": ["Des livres ont été déplacés dans la précipitation", "La porte est cassée", "Il y a des empreintes de pas", "Les globes célestes sont éteints"],
           "correctIndex": 0,
-          "hintText": "Peach remarque un désordre particulier…"
+          "hintText": "Toad sautille d'un pied sur l'autre et chuchote : « Princesse, les livres ont été déplacés dans la précipitation… Bowser Junior n'était pas venu pour lire ! »"
         },
         {
           "type": "maths",
           "question": "Il y a 8 étagères dans la Bibliothèque. Chaque étagère contient 35 livres. Combien de livres y a-t-il au total ?",
           "answers": ["260", "270", "280", "290"],
           "correctIndex": 2,
-          "hintText": "Multiplie 8 par 35 !"
+          "hintText": "Toad sort un stylo et gratouille un calcul sur un livre : « Huit fois trente-cinq, Princesse… ça fait 280 livres au total ! »"
         },
         {
           "type": "francais",
           "question": "Conjugue le verbe « tomber » au passé composé, 3ème personne du singulier :",
           "answers": ["Il tombe", "Il est tombé", "Il a tombé", "Il tombait"],
           "correctIndex": 1,
-          "hintText": "« Tomber » se conjugue avec « être » au passé composé."
+          "hintText": "Toad referme un grammaire avec un claquement et annonce : « Princesse, « tomber » se conjugue avec « être »… donc « il est tombé » ! »"
         },
         {
           "type": "contexte",
           "question": "Quel type de livre tombe entre les mains de Peach ?",
           "answers": ["Un livre de recettes", "Un traité sur les jardins cosmiques", "Un album de photos", "Un manuel de magie"],
           "correctIndex": 1,
-          "hintText": "Le livre contient un indice sur le jardin d'Harmony…"
+          "hintText": "Toad tient le livre ouvert contre sa poitrine et dit avec émotion : « C'est un traité sur les jardins cosmiques, Princesse… c'est lui qui contient l'indice ! »"
         }
       ]
     },
@@ -230,56 +230,56 @@
           "question": "Quel détail dans le Jardin Privé indique le passage de Bowser Junior ?",
           "answers": ["Des fleurs écrasées", "Des traces de scooter près d'une porte dorée", "Un vase brisé", "Des empreintes de pattes de Koopa"],
           "correctIndex": 1,
-          "hintText": "Peach remarque quelque chose près de la porte…"
+          "hintText": "Toad sort de derrière un buisson de fleurs cosmiques et crie en pointant : « Princesse, il y a des traces de scooter près de la porte dorée ! C'est par là qu'il est passé ! »"
         },
         {
           "type": "maths",
           "question": "Le Jardin Privé contient 72 fleurs cosmiques. Un tiers sont roses, la moitié sont bleues, et le reste sont violettes. Combien de fleurs violettes y a-t-il ?",
           "answers": ["10", "12", "14", "16"],
           "correctIndex": 1,
-          "hintText": "72 ÷ 3 = 24 roses, 72 ÷ 2 = 36 bleues. 72 - 24 - 36 = ?"
+          "hintText": "Toad cueille une fleur cosmique et compte en la regardant : « 24 roses, 36 bleues… il reste 12 fleurs violettes, Princesse ! »"
         },
         {
           "type": "francais",
           "question": "Dans la phrase « Des papillons lumineux dansent dans les airs », quel est le groupe sujet ?",
           "answers": ["dansent", "Des papillons lumineux", "dans les airs", "lumineux"],
           "correctIndex": 1,
-          "hintText": "Qui danse ? C'est le groupe sujet."
+          "hintText": "Toad imite les papillons lumineux en battant des bras et crie : « Qui danse ? Les papillons lumineux ! C'est le groupe sujet ! »"
         },
         {
           "type": "univers-mario",
           "question": "Dans les jeux Mario, quel type de fleur Peach utilise souvent comme arme ?",
           "answers": ["La Fleur de Feu", "La Fleur Étoile", "La Fleur de Glace", "La Super Fleur"],
           "correctIndex": 0,
-          "hintText": "Cette fleur permet de cracher des flammes…"
+          "hintText": "Toad imite un jet de flamme avec ses mains et rit : « Princesse, c'est la Fleur de Feu qui permet de cracher des flammes ! »"
         },
         {
           "type": "contexte",
           "question": "Quelle forme projette la fontaine au centre du Jardin Privé ?",
           "answers": ["Des cœurs", "Des étoiles", "Des champignons", "Des couronnes"],
           "correctIndex": 1,
-          "hintText": "L'eau scintillante forme une forme céleste…"
+          "hintText": "Toad se penche au-dessus de la fontaine et murmure émerveillé : « Regardez, Princesse… l'eau forme des étoiles ! »"
         },
         {
           "type": "maths",
           "question": "La fontaine projette de l'eau à 3 mètres de hauteur. Si Peach saute à 0,5 mètre, combien de Peach empilées faut-il pour atteindre la hauteur de la fontaine ?",
           "answers": ["4", "5", "6", "7"],
           "correctIndex": 2,
-          "hintText": "Divise 3 par 0,5 !"
+          "hintText": "Toad saute aussi haut qu'il peut et retombe en riant : « Trois divisé par zéro virgule cinq, Princesse… ça fait six Peach empilées ! »"
         },
         {
           "type": "francais",
           "question": "Quel est le sens du mot « chérissait » dans « le jardin que Harmony chérissait le plus » ?",
           "answers": ["Elle le détestait", "Elle l'aimait profondément", "Elle l'ignorait", "Elle le craignait"],
           "correctIndex": 1,
-          "hintText": "Chérir signifie aimer avec beaucoup d'affection."
+          "hintText": "Toad pose une main sur le cœur et dit doucement : « Princesse, chérir, c'est aimer profondément… Harmony aimait ce jardin plus que tout ! »"
         },
         {
           "type": "univers-mario",
           "question": "Quel est le nom du mari de Peach dans les jeux Mario ?",
           "answers": ["Mario", "Luigi", "Toad", "Peach n'a pas de mari officiel dans les jeux"],
           "correctIndex": 3,
-          "hintText": "Bien que Mario et Peach soient proches, ils ne sont jamais officiellement mariés dans les jeux…"
+          "hintText": "Toad fait un clin d'œil complice et murmure : « Princesse, bien que tout le monde le pense… vous n'avez jamais été officiellement mariée dans les jeux ! »"
         }
       ]
     },
@@ -298,56 +298,56 @@
           "question": "Comment Luma identifie-t-il le chemin vers la Chambre d'Harmony depuis la Terrasse Royale ?",
           "answers": ["En suivant une flèche stellaire", "En pointant les traces de Bowser Junior", "En écoutant un bruit", "En sentant une odeur"],
           "correctIndex": 1,
-          "hintText": "Luma voit des traces spécifiques…"
+          "hintText": "Toad se tient au bord de la terrasse, le regard perdu dans les étoiles, et murmure : « Princesse, Luma a pointé les traces de Bowser Junior… c'est le chemin ! »"
         },
         {
           "type": "maths",
           "question": "La Terrasse Royale mesure 30 mètres de long sur 15 mètres de large. Quel est son périmètre ?",
           "answers": ["75 m", "80 m", "90 m", "100 m"],
           "correctIndex": 2,
-          "hintText": "Périmètre = 2 × (longueur + largeur) = 2 × (30 + 15)"
+          "hintText": "Toad marche le long du bord de la terrasse en comptant ses pas : « Trente plus quinze, ça fait quarante-cinq… fois deux, ça donne 90 mètres de périmètre ! »"
         },
         {
           "type": "francais",
           "question": "Dans la phrase « Le palais flotte dans l'espace, entouré de galaxies », quel est le participe passé ?",
           "answers": ["flotte", "entouré", "espace", "galaxies"],
           "correctIndex": 1,
-          "hintText": "Le participe passé d'un verbe du 3ème groupe en « -re » se termine par « -é »."
+          "hintText": "Toad contemple une galaxie lointaine et dit rêveusement : « « Entouré », Princesse… c'est le participe passé, ça finit par « -é » ! »"
         },
         {
           "type": "univers-mario",
           "question": "Dans Super Mario Galaxy, quelle est la première galaxie que Mario explore ?",
           "answers": ["La Galaxie Goober", "La Galaxie du Champignon", "La Galaxie du Sumo", "La Galaxie de la Bombe"],
           "correctIndex": 1,
-          "hintText": "C'est une galaxie simple avec des champignons géants !"
+          "hintText": "Toad pointe une galaxie au loin et crie avec excitation : « La Galaxie du Champignon, Princesse ! C'est la toute première que Mario explore ! »"
         },
         {
           "type": "contexte",
           "question": "Quelle décoration orne la porte massive au bout de la Terrasse Royale ?",
           "answers": ["Des roses", "Des symboles galactiques", "Des étoiles en or", "Des fleurs de feu"],
           "correctIndex": 1,
-          "hintText": "La porte est ornée de symboles célestes…"
+          "hintText": "Toad s'approche de la porte massive et trace un symbole du doigt : « Regardez, Princesse… des symboles galactiques ornent cette porte ! »"
         },
         {
           "type": "maths",
           "question": "On peut voir 4 500 étoiles depuis la terrasse. Si Peach en observe 75 par minute, combien de temps lui faut-il pour les observer toutes ?",
           "answers": ["55 min", "58 min", "60 min", "65 min"],
           "correctIndex": 2,
-          "hintText": "Divise 4 500 par 75 !"
+          "hintText": "Toad sort un télescope improvisé avec ses mains et calcule : « Quatre mille cinq cents divisé par 75… ça fait exactement 60 minutes ! »"
         },
         {
           "type": "francais",
           "question": "Quel est le synonyme du mot « panorama » ?",
           "answers": ["Vue", "Brouillard", "Horizon", "Carte"],
           "correctIndex": 0,
-          "hintText": "Un panorama, c'est une vue étendue sur un paysage."
+          "hintText": "Toad s'étire les bras vers le cosmos et soupire : « Princesse, un panorama, c'est une vue magnifique sur tout le paysage… comme ici ! »"
         },
         {
           "type": "contexte",
           "question": "Que Peach se souvient-elle en étant sur la Terrasse Royale ?",
           "answers": ["Que Mario l'avait invitée", "Qu'Harmony adorait venir observer les étoiles ici", "Que Bowser Junior habitait ici", "Que la serre était proche"],
           "correctIndex": 1,
-          "hintText": "Peach pense à un souvenir précis avec Harmony…"
+          "hintText": "Toad se tourne vers Peach avec un sourire nostalgique et dit : « Princesse, vous vous souvenez qu'Harmony adorait venir observer les étoiles ici… c'est votre souvenir ! »"
         }
       ]
     },
@@ -370,56 +370,56 @@
           "question": "Quel détail indique le passage de Bowser Junior dans la Serre Enchantée ?",
           "answers": ["Des pots cassés", "Des fleurs écrasées", "Des empreintes de pas", "Des plantes brûlées"],
           "correctIndex": 1,
-          "hintText": "Luma mentionne ce que Bowser Junior a fait aux plantes…"
+          "hintText": "Toad sort de derrière un cactus qui chante et crie en montrant le sol : « Princesse, Bowser Junior a écrasé des fleurs en passant ! C'est la preuve ! »"
         },
         {
           "type": "maths",
           "question": "La Serre contient 96 plantes. Un quart sont des cactus, un tiers sont des orchidées, et le reste sont des lianes. Combien de lianes y a-t-il ?",
           "answers": ["24", "26", "28", "30"],
           "correctIndex": 0,
-          "hintText": "96 ÷ 4 = 24 cactus, 96 ÷ 3 = 32 orchidées. 96 - 24 - 32 = ?"
+          "hintText": "Toad touche délicatement une orchidée qui change de couleur et calcule : « 24 cactus, 32 orchidées… il reste 24 lianes, Princesse ! »"
         },
         {
           "type": "francais",
           "question": "Dans la phrase « Des plantes de toutes tailles poussent dans des pots flottants », quel est le verbe conjugué ?",
           "answers": ["poussent", "flottants", "Des", "tailles"],
           "correctIndex": 0,
-          "hintText": "Le verbe conjugué est celui qui change selon le sujet. « Des plantes » (pluriel) → « poussent »."
+          "hintText": "Toad observe une liane qui danse et explique : « Princesse, « poussent » est le verbe conjugué… il change selon le sujet « des plantes » ! »"
         },
         {
           "type": "univers-mario",
           "question": "Dans les jeux Mario, quel type de plante ennemi sort des tuyaux verts ?",
           "answers": ["Un Goomba", "Un Piranha Plant", "Un Koopa Troopa", "Un Bob-omb"],
           "correctIndex": 1,
-          "hintText": "C'est une plante carnivore emblématique de l'univers Mario !"
+          "hintText": "Toad se cache derrière un tuyau vert en riant et crie : « Le Piranha Plant, Princesse ! C'est la plante qui sort des tuyaux ! »"
         },
         {
           "type": "contexte",
           "question": "Combien de chemins Peach peut-elle emprunter depuis la Serre Enchantée ?",
           "answers": ["1", "2", "3", "4"],
           "correctIndex": 1,
-          "hintText": "Une fontaine et un chemin secret…"
+          "hintText": "Toad fait un pas vers la fontaine puis un pas vers les lianes et dit : « Princesse, il y a deux chemins… la fontaine et le passage secret ! »"
         },
         {
           "type": "maths",
           "question": "Les orchidées de la serre changent de couleur toutes les 6 secondes. Combien de changements se produisent en 10 minutes ?",
           "answers": ["90", "95", "100", "110"],
           "correctIndex": 2,
-          "hintText": "10 minutes = 600 secondes. 600 ÷ 6 = ?"
+          "hintText": "Toad regarde une orchidée changer de couleur en comptant et annonce : « Six cents secondes divisées par six… ça fait 100 changements de couleur ! »"
         },
         {
           "type": "francais",
           "question": "Quel est le contraire du mot « magique » ?",
           "answers": ["Ordinaire", "Beau", "Grand", "Rapide"],
           "correctIndex": 0,
-          "hintText": "Magique = surnaturel, extraordinaire. Son contraire, c'est ce qui est normal."
+          "hintText": "Toad touche une plante ordinaire et compare avec une fleur cosmique : « Princesse, le contraire de magique, c'est ordinaire… comme cette plante ! »"
         },
         {
           "type": "univers-mario",
           "question": "Quel Power-Up permet à Peach de cracher des flammes ?",
           "answers": ["La Fleur Étoile", "La Fleur de Feu", "Le Cape Feather", "Le Super Champignon"],
           "correctIndex": 1,
-          "hintText": "Ce Power-Up transforme le personnage en version enflammée…"
+          "hintText": "Toad imite Peach en crachant des flammes imaginaires et rit : « La Fleur de Feu, Princesse ! Elle transforme le personnage en version enflammée ! »"
         }
       ]
     },
@@ -438,56 +438,56 @@
           "question": "Que souhaite Peach en jetant une pièce dans la fontaine ?",
           "answers": ["De devenir reine", "De retrouver Harmony saine et sauve", "De battre Bowser Junior", "De trouver un Power-Up"],
           "correctIndex": 1,
-          "hintText": "Peach pense à sa meilleure amie…"
+          "hintText": "Toad se penche au bord de la fontaine et ferme les yeux en rêvant : « Princesse, vous avez souhaité retrouver Harmony saine et sauve… c'est le plus beau des souhaits ! »"
         },
         {
           "type": "maths",
           "question": "Il y a 45 pièces d'étoiles au fond de la fontaine. Peach en jette 1, et Luma en ramasse 3. Combien de pièces restent-il ?",
           "answers": ["40", "41", "42", "43"],
           "correctIndex": 1,
-          "hintText": "45 - 1 - 3 = ?"
+          "hintText": "Toad ramasse une pièce d'étoile au fond de la fontaine et calcule : « Quarante-cinq moins un moins trois… il reste 41 pièces, Princesse ! »"
         },
         {
           "type": "francais",
           "question": "Dans la phrase « L'eau scintillante forme des arcs-en-ciel », quel est l'adjectif ?",
           "answers": ["L'eau", "scintillante", "forme", "arcs-en-ciel"],
           "correctIndex": 1,
-          "hintText": "L'adjectif qualifie le nom. Quel mot décrit l'eau ?"
+          "hintText": "Toad jette une goutte d'eau sur sa main et observe : « Princesse, « scintillante » est l'adjectif… c'est lui qui décrit l'eau ! »"
         },
         {
           "type": "univers-mario",
           "question": "Dans Super Mario Galaxy, que se passe-t-il quand Mario collecte une Power Star ?",
           "answers": ["Il devient invincible temporairement", "Le château de Peach se répare un peu plus", "Il gagne 100 pièces", "Il débloque un nouveau costume"],
           "correctIndex": 1,
-          "hintText": "Les Power Stars servent à reconstruire le château détruit…"
+          "hintText": "Toad imite une étoile qui brille et explique : « Princesse, chaque Power Star réparé un peu plus le château de Peach ! »"
         },
         {
           "type": "contexte",
           "question": "Que révèle la fontaine après le souhait de Peach ?",
           "answers": ["Un trésor caché", "Un passage menant vers la Terrasse Royale", "Un message de Bowser Junior", "Une clé magique"],
           "correctIndex": 1,
-          "hintText": "La fontaine guide Peach…"
+          "hintText": "Toad suit le passage révélé avec ses yeux écarquillés et crie : « Regardez, Princesse ! La fontaine a ouvert un passage vers la Terrasse Royale ! »"
         },
         {
           "type": "maths",
           "question": "La fontaine projette 8 jets d'eau. Chaque jet contient 120 gouttes par seconde. Combien de gouttes la fontaine projette-t-elle en une minute ?",
           "answers": ["5 600", "5 760", "5 880", "6 000"],
           "correctIndex": 1,
-          "hintText": "8 × 120 = 960 gouttes/seconde. 960 × 60 = ?"
+          "hintText": "Toad compte les gouttes d'eau en tapotant le bord de la fontaine : « Huit fois 120, ça fait 960 gouttes par seconde… fois 60, ça fait 5 760 ! »"
         },
         {
           "type": "francais",
           "question": "Quel est le pluriel du mot « un arc-en-ciel » ?",
           "answers": ["des arcs-en-ciel", "des arcs-en-ciels", "des arc-en-ciels", "des arc-en-ciel"],
           "correctIndex": 0,
-          "hintText": "« Arc » prend un « s » au pluriel, mais « ciel » reste invariable dans cette expression."
+          "hintText": "Toad dessine un arc-en-ciel dans l'eau de la fontaine et explique : « Princesse, au pluriel, on dit « des arcs-en-ciel »… « ciel » ne prend pas de « s » ici ! »"
         },
         {
           "type": "contexte",
           "question": "Comment Luma réagit-il au souhait de Peach ?",
           "answers": ["Il est sceptique", "Il hoche la tête en disant que la fontaine aidera Peach", "Il rit", "Il pleure"],
           "correctIndex": 1,
-          "hintText": "Luma a confiance en la fontaine…"
+          "hintText": "Toad hoche la tête en regardant la fontaine scintiller et murmure : « Luma savait que la fontaine t'aiderait, Princesse… il a toujours confiance ! »"
         }
       ]
     },
@@ -506,56 +506,56 @@
           "question": "Quels objets Peach observe-t-elle dans l'Atelier de Luma ?",
           "answers": ["Des armes et des boucliers", "Des étoiles en verre, des coussins cosmiques et des instruments en forme de planètes", "Des livres et des cartes", "Des vêtements et des chaussures"],
           "correctIndex": 1,
-          "hintText": "Luma fabrique des objets magiques…"
+          "hintText": "Toad tient une étoile en verre contre la lumière et l'observe fasciné : « Princesse, Luma fabrique des étoiles en verre, des coussins cosmiques et des instruments en forme de planètes ! »"
         },
         {
           "type": "maths",
           "question": "Luma fabrique 18 étoiles en verre par jour. Combien en fabrique-t-il en 5 jours ?",
           "answers": ["80", "85", "90", "95"],
           "correctIndex": 2,
-          "hintText": "Multiplie 18 par 5 !"
+          "hintText": "Toad empile des étoiles en verre en comptant et crie : « Dix-huit fois cinq, Princesse… ça fait 90 étoiles en verre ! »"
         },
         {
           "type": "francais",
           "question": "Dans la phrase « Luma rougit un peu », quel est le verbe conjugué ?",
           "answers": ["rougit", "un", "peu", "Luma"],
           "correctIndex": 0,
-          "hintText": "Le verbe est l'action. Que fait Luma ?"
+          "hintText": "Toad imite Luma en rougissant et rit : « Princesse, « rougit » est le verbe… c'est l'action que fait Luma ! »"
         },
         {
           "type": "univers-mario",
           "question": "Dans Super Mario Galaxy, en quoi Luma peut-il se transformer pour aider Mario à traverser un gouffre ?",
           "answers": ["En un parachute", "En une échelle", "En un pont", "En un trampoline"],
           "correctIndex": 1,
-          "hintText": "Luma s'allonge et devient une échelle pour que Mario puisse grimper !"
+          "hintText": "Toad s'allonge par terre et imite une échelle en riant : « Princesse, Luma se transforme en échelle pour aider Mario à traverser les gouffres ! »"
         },
         {
           "type": "contexte",
           "question": "Quel chemin Luma recommande-t-il à Peach depuis l'Atelier ?",
           "answers": ["Vers la Terrasse Royale", "Vers la Bibliothèque", "Vers le Jardin Privé", "Vers la Serre"],
           "correctIndex": 1,
-          "hintText": "Le plan du palais montre un chemin tracé…"
+          "hintText": "Toad suit le tracé du plan du doigt et annonce : « Princesse, le plan montre que le chemin le plus sûr passe par la Bibliothèque ! »"
         },
         {
           "type": "maths",
           "question": "L'atelier contient 3 rangées de 14 objets chacune. Si Luma en a fini 25, combien d'objets restent-il à fabriquer ?",
           "answers": ["15", "16", "17", "18"],
           "correctIndex": 2,
-          "hintText": "3 × 14 = 42 objets au total. 42 - 25 = ?"
+          "hintText": "Toad compte les objets sur les étagères en tapotant et calcule : « Trois fois 14, ça fait 42… moins 25 déjà finis, il reste 17 objets ! »"
         },
         {
           "type": "francais",
           "question": "Quel est le sens du mot « délicatement » dans « Peach écarte délicatement les lianes » ?",
           "answers": ["Avec force", "Avec douceur et précaution", "Avec colère", "Avec vitesse"],
           "correctIndex": 1,
-          "hintText": "Délicatement vient de « délicat », c'est-à-dire avec soin."
+          "hintText": "Toad écarte une liane avec précaution et explique : « Princesse, délicatement, c'est avec douceur et précaution… comme vous le faites ! »"
         },
         {
           "type": "contexte",
           "question": "Pourquoi Luma rougit-il quand Peach découvre son atelier ?",
           "answers": ["Parce qu'il a peur", "Parce qu'il est embarrassé d'être surpris en train de fabriquer des cadeaux", "Parce qu'il est en colère", "Parce qu'il a faim"],
           "correctIndex": 1,
-          "hintText": "Luma est surpris qu'on découvre son activité secrète…"
+          "hintText": "Toad rougit à la place de Luma et murmure : « Princesse, Luma rougit parce qu'il est embarrassé… on a surpris son activité secrète ! »"
         }
       ]
     },
@@ -569,7 +569,7 @@
           "question": "Peach est arrivée à la Chambre d'Harmony. Parmi les Zones suivantes, laquelle Peach a-t-elle pu traverser S'il est passé par le Chemin le plus long (Entrée → Serre → Atelier de Luma → Bibliothèque → Jardin Privé → Chambre) ?",
           "answers": ["Le Salon Royal", "La Terrasse Royale", "L'Atelier de Luma", "La Fontaine des Souhaits"],
           "correctIndex": 2,
-          "hintText": "Le chemin par la serre passe par l'atelier de Luma, puis la bibliothèque, puis le jardin privé…",
+          "hintText": "Toad se dresse courageusement devant la porte et trace le chemin dans l'air : « Princesse, le plus long chemin passe par la serre, l'atelier de Luma, la bibliothèque, le jardin… et enfin ici ! »",
           "isFinal": true
         },
         {
@@ -577,56 +577,56 @@
           "question": "Que fait Peach pour libérer Harmony ?",
           "answers": ["Elle utilise une épée", "Elle fait briller sa couronne avec l'énergie des étoiles", "Elle appelle Mario à l'aide", "Elle jette une pièce dans la fontaine"],
           "correctIndex": 1,
-          "hintText": "Peach retire sa couronne et l'utilise…"
+          "hintText": "Toad brandit son poing en l'air et crie avec courage : « Princesse, vous faites briller votre couronne avec l'énergie des étoiles pour libérer Harmony ! »"
         },
         {
           "type": "francais",
           "question": "Dans la phrase « Bowser Junior, tu vas la laisser partir. Maintenant. », quel est le registre de « Maintenant. » isolé en phrase courte ?",
           "answers": ["Un langage familier", "Un langage emphatique (pour insister)", "Un langage soutenu", "Un langage technique"],
           "correctIndex": 1,
-          "hintText": "Isoler un mot en phrase courte sert à marquer l'insistance."
+          "hintText": "Toad frappe du pied et crie « MAINTENANT ! » avant d'expliquer : « Princesse, isoler un mot comme ça, c'est pour insister… c'est du langage emphatique ! »"
         },
         {
           "type": "univers-mario",
           "question": "Quel est le véhicule emblématique de Bowser Junior ?",
           "answers": ["Un char d'assaut", "Un scooter jaune avec une pince à peinture", "Un avion", "Une montgolfière"],
           "correctIndex": 1,
-          "hintText": "Il conduit un scooter avec une pince spéciale…"
+          "hintText": "Toad imite le bruit d'un scooter et rit nerveusement : « Le scooter jaune de Bowser Junior avec sa pince à peinture, Princesse ! C'est son véhicule ! »"
         },
         {
           "type": "contexte",
           "question": "Combien de chemins différents Peach peut-elle emprunter pour atteindre la Chambre d'Harmony ?",
           "answers": ["2", "3", "4", "5"],
           "correctIndex": 2,
-          "hintText": "Compte les branches de l'arbre de décision de Peach…"
+          "hintText": "Toad dessine l'arbre de décision de Peach dans l'air avec son doigt et compte : « Princesse, il y a quatre chemins différents pour arriver ici ! »"
         },
         {
           "type": "maths",
           "question": "Si Peach a traversé 6 Zones et répondu correctement à 14 Quiz et incorrectement à 2 Quiz, combien de Pièces a-t-elle gagnées ?",
           "answers": ["24 Pièces", "26 Pièces", "28 Pièces", "30 Pièces"],
           "correctIndex": 1,
-          "hintText": "14 × (+2) = +28 et 2 × (-1) = -2. Total = 28 - 2"
+          "hintText": "Toad sort son calculateur et tape frénétiquement : « Quatorze fois plus deux, ça fait 28… moins deux, ça donne 26 Pièces, Princesse ! »"
         },
         {
           "type": "contexte",
           "question": "Quel rôle joue Luma quand Peach affronte Bowser Junior ?",
           "answers": ["Il se cache", "Il s'illumine et rejoint Peach", "Il fuit la pièce", "Il négocie avec Bowser Junior"],
           "correctIndex": 1,
-          "hintText": "Relis la fin de la narration…"
+          "hintText": "Toad s'illumine en même temps que Luma et crie : « Luma rejoint Peach, Princesse ! Ensemble, vous allez battre Bowser Junior ! »"
         },
         {
           "type": "francais",
           "question": "Transforme en discours indirect : Harmony crie : « Peach ! Je savais que tu viendrais ! »",
           "answers": ["Harmony crie que Peach savait qu'elle viendrait.", "Harmony crie que Peach savait qu'elle viendrait.", "Harmony crie à Peach qu'elle savait qu'elle viendrait.", "Harmony crie que Peach savait que tu viendrais."],
           "correctIndex": 2,
-          "hintText": "Au discours indirect, on adapte les pronoms et on introduit avec « que » ou « à [quelqu'un] que »."
+          "hintText": "Toad met sa main en porte-voix et crie : « Princesse, au discours indirect, on dit : Harmony crie à Peach qu'elle savait qu'elle viendrait ! »"
         },
         {
           "type": "maths",
           "question": "Le filet d'énergie violette a une forme hexagonale régulière. Chaque côté mesure 1,2 mètre. Quel est le périmètre du filet ?",
           "answers": ["6,0 m", "6,2 m", "7,2 m", "7,4 m"],
           "correctIndex": 2,
-          "hintText": "Un hexagone a 6 côtés. Périmètre = 6 × 1,2"
+          "hintText": "Toad trace un hexagone dans l'air et compte les côtés : « Six côtés de 1,2 mètres… ça fait 7,2 mètres de périmètre, Princesse ! »"
         }
       ]
     }
