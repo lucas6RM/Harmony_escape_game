@@ -17,4 +17,7 @@ export interface CharacterPath {
 
   /** Zones du Chemin, indexées par leur identifiant */
   zones: { [zoneId: string]: Zone };
+
+  /** Narration dramatique affichée en cas de Game Over sur ce Chemin */
+  gameOverNarration: string;
 }

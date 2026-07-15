@@ -1,6 +1,7 @@
 {
   "character": "luigi",
   "startZoneId": "luigi-entree",
+  "gameOverNarration": "Luigi recule d'un pas, les mains tremblantes. « J-Je suis désolé Harmony… je n'étais pas assez courageux… » Mais Luma brille doucement près de lui. « Luigi, tu as fait de ton mieux. Le vrai courage, c'est de se relever après une chute. » Luigi lève la tête et sourit faiblement. « Tu as raison Luma… je réessayerai. »",
   "zones": {
     "luigi-entree": {
       "id": "luigi-entree",

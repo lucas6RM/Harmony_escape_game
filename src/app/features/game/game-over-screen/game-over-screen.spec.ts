@@ -4,12 +4,12 @@ import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { GameEngineService } from '../../../core/services/game-engine';
 import { ContentLoaderService } from '../../../core/services/content-loader';
+import { PersistenceService } from '../../../core/services/persistence';
 import type { RawCharacterPath } from '../../../core/types';
-import { VictoryScreen } from './victory-screen';
+import { GameOverScreen } from './game-over-screen';
 
 /**
  * Chemin brut de test avec 3 Zones pour Mario (structure tree).
- * La dernière Zone contient un Quiz final.
  */
 const MOCK_RAW_MARIO_PATH: RawCharacterPath = {
   character: 'mario',
@@ -67,7 +67,6 @@ const MOCK_RAW_MARIO_PATH: RawCharacterPath = {
 
 class HttpClientMock {
   get<T>(url: string): Observable<T> {
-    // Extrait le nom du personnage depuis l'URL (ex: "assets/content/luigi.json")
     const match = url.match(/\/(mario|luigi|peach|daisy)\.json/);
     const character = match ? match[1] : 'mario';
     const path: RawCharacterPath = {
@@ -101,9 +100,6 @@ class PersistenceServiceMock {
   clearSave() {}
 }
 
-/**
- * Mock du Router qui capture les appels navigate.
- */
 class RouterMock {
   navigatedUrl = '';
   navigate(url: string[]): void {
@@ -111,25 +107,28 @@ class RouterMock {
   }
 }
 
-describe('VictoryScreen', () => {
-  let component: VictoryScreen;
-  let fixture: ComponentFixture<VictoryScreen>;
+describe('GameOverScreen', () => {
+  let component: GameOverScreen;
+  let fixture: ComponentFixture<GameOverScreen>;
   let gameEngine: GameEngineService;
   let routerMock: RouterMock;
+  let persistenceMock: PersistenceServiceMock;
 
   beforeEach(async () => {
+    persistenceMock = new PersistenceServiceMock();
+
     await TestBed.configureTestingModule({
-      imports: [VictoryScreen],
+      imports: [GameOverScreen],
       providers: [
         GameEngineService,
         { provide: HttpClient, useClass: HttpClientMock },
         { provide: ContentLoaderService, useClass: ContentLoaderServiceMock },
         { provide: Router, useClass: RouterMock },
-        { provide: 'PersistenceService', useValue: new PersistenceServiceMock() },
+        { provide: PersistenceService, useValue: persistenceMock },
       ],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(VictoryScreen);
+    fixture = TestBed.createComponent(GameOverScreen);
     gameEngine = TestBed.inject(GameEngineService);
     routerMock = TestBed.inject(Router) as unknown as RouterMock;
     component = fixture.componentInstance;
@@ -141,115 +140,61 @@ describe('VictoryScreen', () => {
       fixture.detectChanges();
     });
 
-    it('affiche le titre "Victoire !"', () => {
-      const title = fixture.nativeElement.querySelector('.victory-title');
+    it('affiche le titre "Game Over"', () => {
+      const title = fixture.nativeElement.querySelector('.game-over-title');
       expect(title).toBeTruthy();
-      expect(title.textContent).toContain('Victoire');
+      expect(title.textContent).toContain('Game Over');
     });
 
     it('affiche le nom du personnage', () => {
-      const narration = fixture.nativeElement.querySelector('.victory-narration');
+      const narration = fixture.nativeElement.querySelector('.game-over-narration');
       expect(narration.textContent).toContain('Mario');
     });
 
     it('affiche l\'emoji du personnage', () => {
-      const narration = fixture.nativeElement.querySelector('.victory-narration');
+      const narration = fixture.nativeElement.querySelector('.game-over-narration');
       expect(narration.textContent).toContain('🍄');
     });
 
-    it('affiche le texte narratif de libération d\'Harmony', () => {
-      const narration = fixture.nativeElement.querySelector('.victory-narration');
-      expect(narration.textContent).toContain('Harmony est libérée');
+    it('affiche le texte narratif de Game Over', () => {
+      const narration = fixture.nativeElement.querySelector('.game-over-narration');
+      expect(narration.textContent).toContain('Harmony reste prisonnière');
     });
 
-    it('affiche le score final avec le nombre de Pièces', () => {
-      gameEngine.addCoins(4); // simuler 2 zones passées
-      fixture.detectChanges();
-
+    it('affiche le score avec le nombre de Zones explorées', () => {
       const scoreValue = fixture.nativeElement.querySelector('.score-value');
-      expect(scoreValue.textContent).toContain('4');
+      expect(scoreValue.textContent).toContain('1');
     });
 
-    it('affiche le label "Pièces collectées"', () => {
+    it('affiche le label "Zones explorées"', () => {
       const scoreLabel = fixture.nativeElement.querySelector('.score-label');
-      expect(scoreLabel.textContent).toContain('Pièces collectées');
+      expect(scoreLabel.textContent).toContain('Zones explorées');
     });
   });
 
-  describe('boutons d\'action', () => {
+  describe('bouton Retour au menu', () => {
     beforeEach(() => {
       gameEngine.startGame('mario');
       fixture.detectChanges();
     });
 
-    it('affiche le bouton "Recommencer"', () => {
-      const restartButton = fixture.nativeElement.querySelector('.action-restart');
-      expect(restartButton).toBeTruthy();
-      expect(restartButton.textContent).toContain('Recommencer');
-    });
-
-    it('affiche le bouton "Menu principal"', () => {
+    it('affiche le bouton "Retour au menu"', () => {
       const menuButton = fixture.nativeElement.querySelector('.action-menu');
       expect(menuButton).toBeTruthy();
-      expect(menuButton.textContent).toContain('Menu principal');
+      expect(menuButton.textContent).toContain('Retour au menu');
     });
 
-    it('cliquer sur "Recommencer" appelle restartGame()', () => {
-      const spy = vi.spyOn(gameEngine, 'restartGame');
-      const restartButton = fixture.nativeElement.querySelector('.action-restart');
-      restartButton.click();
-      fixture.detectChanges();
-
-      expect(spy).toHaveBeenCalled();
-    });
-
-    it('cliquer sur "Menu principal" appelle returnToMenu() et navigue vers /accueil', () => {
-      const spy = vi.spyOn(gameEngine, 'returnToMenu');
+    it('cliquer sur "Retour au menu" appelle clearSave() et navigue vers /accueil', () => {
+      const clearSpy = vi.spyOn(persistenceMock, 'clearSave');
       const menuButton = fixture.nativeElement.querySelector('.action-menu');
       menuButton.click();
       fixture.detectChanges();
 
-      expect(spy).toHaveBeenCalled();
+      expect(clearSpy).toHaveBeenCalled();
       expect(routerMock.navigatedUrl).toBe('/accueil');
     });
 
-    it('affiche le bouton "Choisir un autre personnage"', () => {
-      const anotherButton = fixture.nativeElement.querySelector('.action-another');
-      expect(anotherButton).toBeTruthy();
-      expect(anotherButton.textContent).toContain('Choisir un autre personnage');
-    });
-
-    it('cliquer sur "Choisir un autre personnage" appelle returnToCharacterSelect() et navigue vers /accueil', () => {
-      const spy = vi.spyOn(gameEngine, 'returnToCharacterSelect');
-      const anotherButton = fixture.nativeElement.querySelector('.action-another');
-      anotherButton.click();
-      fixture.detectChanges();
-
-      expect(spy).toHaveBeenCalled();
-      expect(routerMock.navigatedUrl).toBe('/accueil');
-    });
-
-    it('cliquer sur "Choisir un autre personnage" réinitialise gameWon', () => {
-      // Simuler une victoire
-      gameEngine.navigateToZone('mario-zone-3');
-      (gameEngine as any).quizActiveSignal.set(true);
-      gameEngine.submitQuizAnswer(0); // Quiz final réussi
-      expect(gameEngine.gameWon()).toBe(true);
-
-      const anotherButton = fixture.nativeElement.querySelector('.action-another');
-      anotherButton.click();
-      fixture.detectChanges();
-
-      expect(gameEngine.gameWon()).toBe(false);
-    });
-
-    it('les boutons ont des aria-labels descriptifs', () => {
-      const restartButton = fixture.nativeElement.querySelector('.action-restart');
-      expect(restartButton.getAttribute('aria-label')).toContain('Recommencer');
-
-      const anotherButton = fixture.nativeElement.querySelector('.action-another');
-      expect(anotherButton.getAttribute('aria-label')).toContain('Choisir un autre personnage');
-
+    it('le bouton a un aria-label descriptif', () => {
       const menuButton = fixture.nativeElement.querySelector('.action-menu');
       expect(menuButton.getAttribute('aria-label')).toContain('Retourner au menu');
     });
@@ -262,18 +207,18 @@ describe('VictoryScreen', () => {
     });
 
     it('le conteneur a role="main"', () => {
-      const container = fixture.nativeElement.querySelector('.victory-screen');
+      const container = fixture.nativeElement.querySelector('.game-over-screen');
       expect(container.getAttribute('role')).toBe('main');
     });
 
     it('le score a role="status" et aria-live="polite"', () => {
-      const score = fixture.nativeElement.querySelector('.victory-score');
+      const score = fixture.nativeElement.querySelector('.game-over-score');
       expect(score.getAttribute('role')).toBe('status');
       expect(score.getAttribute('aria-live')).toBe('polite');
     });
 
     it('la narration a role="region"', () => {
-      const narration = fixture.nativeElement.querySelector('.victory-narration');
+      const narration = fixture.nativeElement.querySelector('.game-over-narration');
       expect(narration.getAttribute('role')).toBe('region');
     });
   });
@@ -283,7 +228,7 @@ describe('VictoryScreen', () => {
       gameEngine.startGame('luigi');
       fixture.detectChanges();
 
-      const narration = fixture.nativeElement.querySelector('.victory-narration');
+      const narration = fixture.nativeElement.querySelector('.game-over-narration');
       expect(narration.textContent).toContain('Luigi');
       expect(narration.textContent).toContain('🌿');
     });
@@ -292,7 +237,7 @@ describe('VictoryScreen', () => {
       gameEngine.startGame('peach');
       fixture.detectChanges();
 
-      const narration = fixture.nativeElement.querySelector('.victory-narration');
+      const narration = fixture.nativeElement.querySelector('.game-over-narration');
       expect(narration.textContent).toContain('Peach');
       expect(narration.textContent).toContain('👑');
     });
@@ -301,7 +246,7 @@ describe('VictoryScreen', () => {
       gameEngine.startGame('daisy');
       fixture.detectChanges();
 
-      const narration = fixture.nativeElement.querySelector('.victory-narration');
+      const narration = fixture.nativeElement.querySelector('.game-over-narration');
       expect(narration.textContent).toContain('Daisy');
       expect(narration.textContent).toContain('🌸');
     });

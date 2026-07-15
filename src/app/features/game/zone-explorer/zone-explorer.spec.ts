@@ -14,6 +14,7 @@ import { QuizPanelComponent } from '../quiz-panel/quiz-panel';
 const MOCK_RAW_MARIO_PATH: RawCharacterPath = {
   character: 'mario',
   startZoneId: 'mario-zone-1',
+  gameOverNarration: '',
   zones: {
     'mario-zone-1': {
       id: 'mario-zone-1',
@@ -79,6 +80,7 @@ class ContentLoaderServiceMock {
       signal: () => ({
         character: 'mario' as const,
         startZoneId: MOCK_RAW_MARIO_PATH.startZoneId,
+        gameOverNarration: MOCK_RAW_MARIO_PATH.gameOverNarration,
         zones: MOCK_RAW_MARIO_PATH.zones,
       }),
       isLoading: () => false,
@@ -224,22 +226,22 @@ describe('ZoneExplorer', () => {
       expect(penaltyBlock.textContent).toContain('Pénalité');
     });
 
-    it('la pénalité contient le bouton "Recommencer le Quiz"', () => {
+    it('la pénalité contient le bouton "Réessayer"', () => {
       (gameEngine as any).quizActiveSignal.set(true);
       gameEngine.submitQuizAnswer(0); // faux
       fixture.detectChanges();
 
       const restartButton = fixture.nativeElement.querySelector('.restart-button');
       expect(restartButton).toBeTruthy();
-      expect(restartButton.textContent).toContain('Recommencer le Quiz');
+      expect(restartButton.textContent).toContain('Réessayer');
     });
 
-    it('cliquer sur "Recommencer le Quiz" appelle restartZone()', () => {
+    it('cliquer sur "Réessayer" appelle retryQuiz()', () => {
       (gameEngine as any).quizActiveSignal.set(true);
       gameEngine.submitQuizAnswer(0); // faux
       fixture.detectChanges();
 
-      const spy = vi.spyOn(gameEngine, 'restartZone');
+      const spy = vi.spyOn(gameEngine, 'retryQuiz');
       const restartButton = fixture.nativeElement.querySelector('.restart-button');
       restartButton.click();
       fixture.detectChanges();
@@ -335,7 +337,7 @@ describe('ZoneExplorer', () => {
       expect(successBlock.textContent).toContain('+2 Pièces');
     });
 
-    it('le message de succès contient le bouton "Quiz suivant" (pas final)', () => {
+    it('le message de succès contient le bouton "Continuer" (dernier quiz, pas final)', () => {
       (gameEngine as any).quizActiveSignal.set(true);
       gameEngine.submitQuizAnswer(1);
       gameEngine.advanceQuiz();
@@ -345,10 +347,10 @@ describe('ZoneExplorer', () => {
 
       const advanceButton = fixture.nativeElement.querySelector('.advance-button');
       expect(advanceButton).toBeTruthy();
-      expect(advanceButton.textContent).toContain('Quiz suivant');
+      expect(advanceButton.textContent).toContain('Continuer');
     });
 
-    it('cliquer sur "Quiz suivant" appelle advanceQuiz()', () => {
+    it('cliquer sur "Continuer" appelle continueAfterZone()', () => {
       (gameEngine as any).quizActiveSignal.set(true);
       gameEngine.submitQuizAnswer(1);
       gameEngine.advanceQuiz();
@@ -356,7 +358,7 @@ describe('ZoneExplorer', () => {
       gameEngine.submitQuizAnswer(0);
       fixture.detectChanges();
 
-      const spy = vi.spyOn(gameEngine, 'advanceQuiz');
+      const spy = vi.spyOn(gameEngine, 'continueAfterZone');
       const advanceButton = fixture.nativeElement.querySelector('.advance-button');
       advanceButton.click();
       fixture.detectChanges();

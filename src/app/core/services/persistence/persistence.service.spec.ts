@@ -100,6 +100,7 @@ describe('PersistenceService', () => {
       expect(parsed.quizIndex).toBe(0);
       expect(parsed.coins).toBe(0);
       expect(parsed.completedPaths).toEqual([]);
+      expect(parsed.zonesExplored).toBe(0);
     });
   });
 
@@ -164,6 +165,7 @@ describe('PersistenceService', () => {
         currentZoneId: 'luigi-zone-3',
         quizIndex: 1,
         coins: 15,
+        zonesExplored: 4,
       });
 
       const save = service.getGameSave();
@@ -173,6 +175,7 @@ describe('PersistenceService', () => {
       expect(save!.quizIndex).toBe(1);
       expect(save!.coins).toBe(15);
       expect(save!.completedPaths).toEqual([]);
+      expect(save!.zonesExplored).toBe(4);
     });
 
     it('fusionne avec la sauvegarde existante en conservant le personnage', () => {
@@ -181,6 +184,7 @@ describe('PersistenceService', () => {
         currentZoneId: 'peach-zone-1',
         quizIndex: 0,
         coins: 5,
+        zonesExplored: 2,
       });
 
       const save = service.getGameSave();
@@ -194,12 +198,14 @@ describe('PersistenceService', () => {
         currentZoneId: 'daisy-zone-1',
         quizIndex: 0,
         coins: 0,
+        zonesExplored: 1,
       });
 
       service.saveGame({
         currentZoneId: 'daisy-zone-2',
         quizIndex: 1,
         coins: 10,
+        zonesExplored: 2,
       });
 
       const save = service.getGameSave();
@@ -207,6 +213,7 @@ describe('PersistenceService', () => {
       expect(save!.currentZoneId).toBe('daisy-zone-2');
       expect(save!.coins).toBe(10);
       expect(save!.quizIndex).toBe(1);
+      expect(save!.zonesExplored).toBe(2);
     });
 
     it('fonctionne même sans personnage préalablement sauvegardé', () => {
@@ -214,6 +221,7 @@ describe('PersistenceService', () => {
         currentZoneId: '',
         quizIndex: 0,
         coins: 0,
+        zonesExplored: 0,
       });
 
       const save = service.getGameSave();
@@ -234,6 +242,7 @@ describe('PersistenceService', () => {
         currentZoneId: 'mario-zone-2',
         quizIndex: 1,
         coins: 8,
+        zonesExplored: 3,
       });
 
       const save = service.getGameSave();
@@ -242,6 +251,7 @@ describe('PersistenceService', () => {
       expect(save!.currentZoneId).toBe('mario-zone-2');
       expect(save!.quizIndex).toBe(1);
       expect(save!.coins).toBe(8);
+      expect(save!.zonesExplored).toBe(3);
     });
 
     it('retourne null quand le contenu du localStorage est corrompu', () => {
@@ -268,6 +278,7 @@ describe('PersistenceService', () => {
           quizIndex: -1,
           coins: 0,
           completedPaths: [],
+          zonesExplored: 1,
         })
       );
 
@@ -283,6 +294,7 @@ describe('PersistenceService', () => {
           quizIndex: 0,
           coins: -5,
           completedPaths: [],
+          zonesExplored: 1,
         })
       );
 
@@ -298,6 +310,7 @@ describe('PersistenceService', () => {
           quizIndex: 0,
           coins: 0,
           completedPaths: 'pas un tableau',
+          zonesExplored: 1,
         })
       );
 
@@ -313,6 +326,7 @@ describe('PersistenceService', () => {
           quizIndex: 0,
           coins: 0,
           completedPaths: [],
+          zonesExplored: 1,
         })
       );
 
@@ -328,6 +342,7 @@ describe('PersistenceService', () => {
           quizIndex: 0,
           coins: 0,
           completedPaths: [],
+          zonesExplored: 1,
         })
       );
 
@@ -352,6 +367,7 @@ describe('PersistenceService', () => {
         currentZoneId: 'luigi-zone-2',
         quizIndex: 1,
         coins: 10,
+        zonesExplored: 2,
       });
 
       expect(service.isGameInProgress()).toBe(true);

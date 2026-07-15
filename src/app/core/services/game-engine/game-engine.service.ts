@@ -21,7 +21,7 @@ export class GameEngineService {
 
   // ── État interne ────────────────────────────────────────────────
 
-  private readonly pathDataSignal = signal<CharacterPath>({ character: 'mario', startZoneId: '', zones: {} });
+  private readonly pathDataSignal = signal<CharacterPath>({ character: 'mario', startZoneId: '', gameOverNarration: '', zones: {} });
   private readonly pathLoadingSignal = signal<boolean>(false);
 
   private readonly currentZoneIdSignal = signal<string>('');
@@ -36,6 +36,8 @@ export class GameEngineService {
   private readonly hintTextSignal = signal<string | null>(null);
   private readonly eliminatedAnswersSignal = signal<number[]>([]);
   private readonly gameWonSignal = signal<boolean>(false);
+  private readonly gameOverSignal = signal<boolean>(false);
+  private readonly zonesExploredSignal = signal<number>(0);
 
   // ── Accès public (Signals) ──────────────────────────────────────
 
@@ -99,6 +101,12 @@ export class GameEngineService {
   /** Indique si le joueur a gagné la partie (Quiz final réussi) */
   readonly gameWon: Signal<boolean> = this.gameWonSignal;
 
+  /** Indique si le joueur est en Game Over (Pièces < 0) */
+  readonly gameOver: Signal<boolean> = this.gameOverSignal;
+
+  /** Nombre de Zones explorées par le joueur durant la partie */
+  readonly zonesExplored: Signal<number> = this.zonesExploredSignal;
+
   /** Indique si le Chemin est encore en cours de chargement asynchrone */
   readonly pathLoading: Signal<boolean> = this.pathLoadingSignal;
 
@@ -127,8 +135,10 @@ export class GameEngineService {
     this.coinsSignal.set(0);
     this.isZoneCompletedSignal.set(false);
     this.gameWonSignal.set(false);
+    this.gameOverSignal.set(false);
+    this.zonesExploredSignal.set(1);
     this.gameStartedSignal.set(true);
-    this.quizActiveSignal.set(true);
+    this.quizActiveSignal.set(false);
     this.quizFeedbackSignal.set(null);
     this.hintTextSignal.set(null);
     this.eliminatedAnswersSignal.set([]);
@@ -146,6 +156,7 @@ export class GameEngineService {
         this.pathDataSignal.set({
           character: rawPath.character,
           startZoneId: rawPath.startZoneId,
+          gameOverNarration: rawPath.gameOverNarration ?? '',
           zones: resolvedZones,
         });
         if (overrideZoneId) {
@@ -159,7 +170,7 @@ export class GameEngineService {
         this.pathLoadingSignal.set(false);
       },
       error: () => {
-        this.pathDataSignal.set({ character: characterId as 'mario' | 'luigi' | 'peach' | 'daisy', startZoneId: '', zones: {} });
+        this.pathDataSignal.set({ character: characterId as 'mario' | 'luigi' | 'peach' | 'daisy', startZoneId: '', gameOverNarration: '', zones: {} });
         this.pathLoadingSignal.set(false);
       },
     });
@@ -178,8 +189,9 @@ export class GameEngineService {
     this.pathLoadingSignal.set(true);
     this.currentQuizIndexSignal.set(gameSave.quizIndex);
     this.coinsSignal.set(gameSave.coins);
+    this.zonesExploredSignal.set(gameSave.zonesExplored ?? 1);
     this.isZoneCompletedSignal.set(false);
-    this.quizActiveSignal.set(true);
+    this.quizActiveSignal.set(false);
     this.quizFeedbackSignal.set(null);
     this.hintTextSignal.set(null);
     this.eliminatedAnswersSignal.set([]);
@@ -219,6 +231,7 @@ export class GameEngineService {
    */
   navigateToZone(nextZoneId: string): void {
     this.currentZoneIdSignal.set(nextZoneId);
+    this.zonesExploredSignal.update(z => z + 1);
     this.currentQuizIndexSignal.set(0);
     this.isZoneCompletedSignal.set(false);
     this.quizActiveSignal.set(true);
@@ -309,16 +322,24 @@ export class GameEngineService {
       currentZoneId: this.currentZoneIdSignal(),
       quizIndex: this.currentQuizIndexSignal(),
       coins: this.coinsSignal(),
+      zonesExplored: this.zonesExploredSignal(),
     });
   }
 
   /**
-   * Ajoute des Pièces au total du joueur (clampé à 0).
+   * Ajoute des Pièces au total du joueur.
    *
-   * @param amount - Nombre de Pièces à ajouter
+   * Si le solde devient négatif (Pièces < 0), le Game Over est déclenché
+   * et la sauvegarde est effacée.
+   *
+   * @param amount - Nombre de Pièces à ajouter (positif ou négatif)
    */
   addCoins(amount: number): void {
-    this.coinsSignal.update(current => Math.max(0, current + amount));
+    this.coinsSignal.update(current => current + amount);
+    if (this.coinsSignal() < 0) {
+      this.gameOverSignal.set(true);
+      this.persistenceService.clearSave();
+    }
   }
 
   /**
@@ -353,6 +374,12 @@ export class GameEngineService {
     }
     this.coinsSignal.update(c => c - cost);
     this.hintTextSignal.set(hint);
+    this.persistenceService.saveGame({
+      currentZoneId: this.currentZoneIdSignal(),
+      quizIndex: this.currentQuizIndexSignal(),
+      coins: this.coinsSignal(),
+      zonesExplored: this.zonesExploredSignal(),
+    });
     return true;
   }
 
@@ -382,28 +409,12 @@ export class GameEngineService {
     const toEliminate = incorrectIndices.slice(0, 2);
     this.coinsSignal.update(c => c - cost);
     this.eliminatedAnswersSignal.set(toEliminate);
-    return true;
-  }
-
-  /**
-   * Saute le Quiz courant et avance (coûte 2 Pièces, sans récompense).
-   *
-   * @returns true si le saut a réussi, false sinon
-   */
-  skipQuiz(): boolean {
-    if (!this.quizActiveSignal()) {
-      return false;
-    }
-    const cost = HINT_COSTS.skipQuiz;
-    if (this.coinsSignal() < cost) {
-      return false;
-    }
-    this.coinsSignal.update(c => c - cost);
-    this.quizActiveSignal.set(false);
-    this.quizFeedbackSignal.set(null);
-    this.hintTextSignal.set(null);
-    this.eliminatedAnswersSignal.set([]);
-    this.advanceQuiz();
+    this.persistenceService.saveGame({
+      currentZoneId: this.currentZoneIdSignal(),
+      quizIndex: this.currentQuizIndexSignal(),
+      coins: this.coinsSignal(),
+      zonesExplored: this.zonesExploredSignal(),
+    });
     return true;
   }
 
@@ -412,7 +423,7 @@ export class GameEngineService {
    * et efface la sauvegarde.
    */
   returnToMenu(): void {
-    this.pathDataSignal.set({ character: 'mario', startZoneId: '', zones: {} });
+    this.pathDataSignal.set({ character: 'mario', startZoneId: '', gameOverNarration: '', zones: {} });
     this.pathLoadingSignal.set(false);
     this.currentZoneIdSignal.set('');
     this.currentQuizIndexSignal.set(0);
@@ -424,6 +435,8 @@ export class GameEngineService {
     this.hintTextSignal.set(null);
     this.eliminatedAnswersSignal.set([]);
     this.gameWonSignal.set(false);
+    this.gameOverSignal.set(false);
+    this.zonesExploredSignal.set(0);
     this.persistenceService.clearSave();
   }
 
@@ -432,7 +445,7 @@ export class GameEngineService {
    * sans effacer les Chemins complétés.
    */
   returnToCharacterSelect(): void {
-    this.pathDataSignal.set({ character: 'mario', startZoneId: '', zones: {} });
+    this.pathDataSignal.set({ character: 'mario', startZoneId: '', gameOverNarration: '', zones: {} });
     this.pathLoadingSignal.set(false);
     this.currentZoneIdSignal.set('');
     this.currentQuizIndexSignal.set(0);
@@ -444,6 +457,8 @@ export class GameEngineService {
     this.hintTextSignal.set(null);
     this.eliminatedAnswersSignal.set([]);
     this.gameWonSignal.set(false);
+    this.gameOverSignal.set(false);
+    this.zonesExploredSignal.set(0);
     this.persistenceService.clearSave();
   }
 
@@ -456,6 +471,18 @@ export class GameEngineService {
     }
     const characterId = this.pathDataSignal().character;
     this.startGame(characterId);
+  }
+
+  /**
+   * Réactive le Quiz courant après une mauvaise réponse.
+   *
+   * Le joueur clique sur "Réessayer" : les boutons de réponse
+   * redeviennent actifs, le feedback est effacé, mais le quizIndex
+   * reste inchangé (le joueur rejoue le même Quiz).
+   */
+  retryQuiz(): void {
+    this.quizActiveSignal.set(true);
+    this.quizFeedbackSignal.set(null);
   }
 
   /**
@@ -485,12 +512,32 @@ export class GameEngineService {
       this.quizFeedbackSignal.set('correct');
       this.quizActiveSignal.set(false);
 
+      // Si c'est le Quiz final, déclencher la victoire
+      if (quiz.isFinal) {
+        this.gameWonSignal.set(true);
+        this.completedPathsService.addCompletedPath(this.pathDataSignal().character);
+      }
+
+      this.persistenceService.saveGame({
+        currentZoneId: this.currentZoneIdSignal(),
+        quizIndex: this.currentQuizIndexSignal(),
+        coins: this.coinsSignal(),
+        zonesExplored: this.zonesExploredSignal(),
+      });
+
       return;
     }
 
-    // Réponse incorrecte → -1 Pièce et recommencer le Quiz
+    // Réponse incorrecte → -1 Pièce, feedback d'erreur, quiz désactivé
+    // Le joueur doit cliquer sur "Réessayer" pour réactiver
     this.addCoins(-1);
     this.quizFeedbackSignal.set('incorrect');
     this.quizActiveSignal.set(false);
+    this.persistenceService.saveGame({
+      currentZoneId: this.currentZoneIdSignal(),
+      quizIndex: this.currentQuizIndexSignal(),
+      coins: this.coinsSignal(),
+      zonesExplored: this.zonesExploredSignal(),
+    });
   }
 }

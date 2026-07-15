@@ -26,14 +26,14 @@
   @if (quizFeedback() === 'incorrect') {
   <div class="event-block event-penalty" role="alert">
     <span class="event-icon" aria-hidden="true">⚠️</span>
-    <p class="event-text">Pénalité ! -1 Pièce. Recommence ce Quiz.</p>
+    <p class="event-text">Pénalité ! -1 Pièce. Réessaie ce Quiz.</p>
     <button
       type="button"
       class="restart-button"
-      aria-label="Recommencer le Quiz après pénalité"
-      (click)="onRestartZone()"
+      aria-label="Réessayer le Quiz après pénalité"
+      (click)="onRetryQuiz()"
     >
-      Recommencer le Quiz
+      Réessayer
     </button>
   </div>
   }
@@ -76,11 +76,9 @@
     [eliminatedAnswers]="eliminatedAnswers()"
     [canBuyHint]="canBuyHint()"
     [canBuyElimination]="canBuyElimination()"
-    [canSkipQuiz]="canSkipQuiz()"
     (answerSelected)="onSelectAnswer($event)"
     (hintRequested)="onBuyHint()"
     (eliminationRequested)="onBuyElimination()"
-    (skipRequested)="onSkipQuiz()"
   />
   }
   }

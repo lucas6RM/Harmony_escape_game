@@ -5,6 +5,12 @@
     <span class="coins-count">{{ coins() }}</span>
   </div>
 
+  <!-- Indicateur de Zones explorées -->
+  <div class="zones-display" role="status" aria-live="polite" aria-label="Zones explorées">
+    <span class="zones-icon" aria-hidden="true">🗺️</span>
+    <span class="zones-count">{{ zonesExplored() }}</span>
+  </div>
+
   <!-- Indicateur de chargement pendant le chargement du Chemin -->
   @if (loading()) {
   <div class="loading-state" role="status" aria-label="Chargement du Chemin en cours">
@@ -13,8 +19,11 @@
   </div>
   }
 
+  <!-- Scène de Game Over (Pièces < 0) -->
+  @if (gameOver()) {
+  <app-game-over-screen />
+  } @else if (gameWon()) {
   <!-- Scène de victoire (après Quiz final réussi) -->
-  @if (gameWon()) {
   <app-victory-screen />
   } @else if (gameStarted()) {
   <!-- Exploration de la Zone -->

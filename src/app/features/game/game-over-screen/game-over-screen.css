@@ -1,0 +1,140 @@
+.game-over-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem;
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ── En-tête ────────────────────────────────────────────────────── */
+.game-over-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.game-over-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #8b0000;
+  text-shadow: 0 0 10px rgba(139, 0, 0, 0.6);
+  margin: 0;
+}
+
+.game-over-icon {
+  font-size: 2rem;
+  animation: fadePulse 2s ease-in-out infinite alternate;
+}
+
+/* ── Narration ──────────────────────────────────────────────────── */
+.game-over-narration {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1.5rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 1rem;
+  border: 1px solid rgba(139, 0, 0, 0.4);
+}
+
+.narration-line {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin: 0;
+  color: #a0a0a0;
+}
+
+.narration-highlight {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #8b0000;
+}
+
+.narration-character {
+  font-style: italic;
+  color: #c084fc;
+  border-top: 1px solid rgba(192, 132, 252, 0.3);
+  padding-top: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+/* ── Score ──────────────────────────────────────────────────────── */
+.game-over-score {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.2rem;
+  padding: 1rem 2rem;
+  background: rgba(139, 0, 0, 0.1);
+  border-radius: 0.75rem;
+  border: 1px solid rgba(139, 0, 0, 0.25);
+}
+
+.score-icon {
+  font-size: 1.5rem;
+}
+
+.score-label {
+  color: #808080;
+}
+
+.score-value {
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: #dc2626;
+}
+
+/* ── Boutons ────────────────────────────────────────────────────── */
+.game-over-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.action-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.action-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.action-button:focus-visible {
+  outline: 2px solid #dc2626;
+  outline-offset: 2px;
+}
+
+.action-menu {
+  background: linear-gradient(135deg, #4a0000, #2d0000);
+  color: #fca5a5;
+  border: 1px solid rgba(220, 38, 38, 0.4);
+}
+
+.action-menu:hover {
+  background: linear-gradient(135deg, #5c0000, #3a0000);
+}
+
+/* ── Animation ──────────────────────────────────────────────────── */
+@keyframes fadePulse {
+  0% {
+    opacity: 0.4;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}

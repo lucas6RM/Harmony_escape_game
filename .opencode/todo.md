@@ -1,89 +1,47 @@
-# Issue #23 : Chemin de Daisy
+# Issues #31 & #32 : Supprimer saut Quiz + Game Over + Persistance
 
 ## Spécification
-Créer le fichier `daisy.json` contenant le Chemin complet de Daisy sous forme d'arbre de décision.
 
-## Structure du fichier
-```json
-{
-  "character": "daisy",
-  "startZoneId": "daisy-entree",
-  "zones": {
-    "daisy-entree": { ... },
-    ...
-  }
-}
-```
+### Issue #31 - Slice 1: Supprimer le saut de Quiz et nettoyer les types
+Retirer complètement la fonctionnalité "Sauter le Quiz" du jeu : supprimer la méthode `skipQuiz()` du `GameEngineService`, retirer `skip` des types (`HintType`, `HINT_COSTS`), et enlever le bouton "Sauter" du `QuizPanelComponent`. Mettre à jour les tests associés.
 
-## Arbre de décision
-```
-[daisy-entree]
-  ├─(terrain)──► [daisy-terrain-de-sport]
-  │                  ├─(rampe)──► [daisy-rampe-de-lancement] ──► [daisy-orbitale] ──► [daisy-chambre-harmony]
-  │                  └─(tunnel)──► [daisy-grotte-lumineuse] ──► [daisy-chambre-harmony]
-  └─(balcon)──► [daisy-terrasse-solaire]
-                   ├─(trampolin)──► [daisy-zone-trampoline] ──► [daisy-orbitale] ──► [daisy-chambre-harmony]
-                   └─(escalier)──► [daisy-salle-des-trophées] ──► [daisy-grotte-lumineuse] ──► [daisy-chambre-harmony]
-```
-
-## Zones (9 au total)
-1. **daisy-entree** — Le hall d'accueil, Daisy est pleine d'énergie et prête à agir.
-2. **daisy-terrain-de-sport** — Terrain de sport spatial avec obstacles
-3. **daisy-rampe-de-lancement** — Rampe pour se lancer dans les étoiles
-4. **daisy-orbitale** — Piste orbitale autour du palais
-5. **daisy-grotte-lumineuse** — Grotte remplie de cristaux lumineux
-6. **daisy-terrasse-solaire** — Terrasse ensoleillée avec vue panoramique
-7. **daisy-zone-trampoline** — Zone de trampolines gravitationnels
-8. **daisy-salle-des-trophées** — Salle avec les trophées d'Harmony
-9. **daisy-chambre-harmony** — Zone finale, Harmony retenue
-
-## Règles par Zone
-- **Narration** : ton dynamique, énergique, plein d'humour
-- **Quiz** : 2 à 3 Quiz par Zone (sauf la Zone finale qui en a 1 difficile)
-- **Choix narratifs** : au moins 2 choix par Zone (sauf les Zones terminales)
-- **Types de Quiz** : répartir entre Maths (CM1), Français (CM1), Univers Mario, Contexte
-
-## Économie
-- Bonne réponse : **+2 Pièces**
-- Mauvaise réponse : **-1 Pièce**, rejouer le Quiz
-- Sauter un Quiz : **-2 Pièces**, avance sans récompense
-- Indice : **1 Pièce**
-- Éliminer 2 fausses réponses : **2 Pièces**
-
-## Parcours possibles
-- Court : Entrée → Terrain → Grotte → Chambre (4 Zones)
-- Moyen : Entrée → Terrain → Rampe → Orbitale → Chambre (5 Zones)
-- Moyen : Entrée → Terrasse → Trampoline → Orbitale → Chambre (5 Zones)
-- Long : Entrée → Terrasse → Trophées → Grotte → Chambre (5 Zones)
-
-## Livrables
-- Fichier `src/assets/content/daisy.json` complet et valide
-- Tous les Quiz avec 4 réponses et `correctIndex`
-- Tous les `nextZoneId` cohérents avec l'arbre ci-dessus
+### Issue #32 - Slice 2: Mauvaise réponse moins punitive, Game Over, persistance Pièces
+Refondre le flux des mauvaises réponses et ajouter le Game Over + persistance des Pièces. Nouveau flux : plus de restartZone après erreur, le joueur perd 1 Pièce et reste sur la même question avec un bouton "Réessayer". Game Over si Pièces < 0. Persistance des Pièces et zones explorées.
 
 ## Skills à Charger
-- angular-developer (pour comprendre la structure du projet Angular)
-- domain-modeling (pour respecter le vocabulaire du domaine)
+- angular-developer
+- tdd
 
 ## Standards du Projet & Commandes
 - Build : `npm run build`
 - Test : `npm run test --watch=false`
 - Lint : `npm run lint`
 
+## RÈGLES CRITIQUES
+- Utiliser le vocabulaire du domaine (CONTEXT.md) : Zone, Quiz, Pièce, Aide, Personnage, Chemin. JAMAIS utiliser les termes à éviter (Level, Question, Coin, Hint, Hero, Path...).
+- Le contenu du jeu est piloté par JSON (ADR 0001).
+- Framework : Angular moderne avec signals.
+
 ## Tableau d'Avancement
-- [x] Tâche 1 : Créer le squelette du fichier `src/assets/content/daisy.json` avec la structure de base (character, startZoneId, zones vide) et les 9 Zones avec leur narration, leurs choix narratifs et leur arbre de décision cohérent.
-- [x] Tâche 2 : Rédiger les Quiz pour les Zones d'exploration (daisy-entree, daisy-terrain-de-sport, daisy-terrasse-solaire, daisy-rampe-de-lancement, daisy-grotte-lumineuse, daisy-zone-trampoline, daisy-salle-des-trophées, daisy-orbitale) — 2 à 3 Quiz par Zone, répartis entre Maths CM1, Français CM1, Univers Mario, Contexte.
-- [x] Tâche 3 : Rédiger le Quiz final de `daisy-chambre-harmony` (1 Quiz difficile de type Contexte avec `isFinal: true`), et valider la cohérence globale du fichier JSON (tous les nextZoneId corrects, format valide).
+
+### Issue #31
+- [x] Tâche 1 : Supprimer `skipQuiz()` du `GameEngineService` et retirer `skip` de `HintType` / `HINT_COSTS` dans les types
+- [x] Tâche 2 : Retirer le bouton "Sauter" du `QuizPanelComponent` et la logique de saut du `ZoneExplorerComponent`
+- [x] Tâche 3 : Mettre à jour ou retirer les tests liés à `skipQuiz`, vérifier que le jeu compile et les tests passent
+
+### Issue #32
+- [x] Tâche 4 : Refondre `submitQuizAnswer()` pour ne plus reset `quizIndex` après mauvaise réponse + créer `retryQuiz()` qui réactive `quizActive` et clear `quizFeedback`
+- [x] Tâche 5 : Retirer le clamp `Math.max(0, ...)` dans `addCoins()` + déclencher `gameOverSignal` quand Pièces < 0
+- [x] Tâche 6 : Créer le composant `GameOverScreen` (style `VictoryScreen`) avec narration spécifique au personnage, score Zones explorées, bouton "Retour au menu" vers `/accueil` + `clearSave()`
+- [x] Tâche 7 : Ajouter `zonesExplored` à `GameSave`, `gameOverNarration` à `CharacterPath`, persister les Pièces après chaque modification, afficher le compteur de Zones dans `GameShellComponent`
+- [ ] Tâche 8 : Mettre à jour le bloc pénalité dans `ZoneExplorerComponent` pour afficher "Réessayer" au lieu de "Recommencer le Quiz", mettre à jour les tests, vérifier compilation et tests
 
 ## Zone de Transit & Logs
 ### Tâche en cours :
-- Aucune (issue terminée)
+- Aucune (Issue #31 terminée)
 
 ### Compteur de rejets (tâche actuelle) :
 - 0 / 5
 
 ### Dernier retour de Review :
-- Aucun.
-
-### Blocage Actuel :
 - Aucun.

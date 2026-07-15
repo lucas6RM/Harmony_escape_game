@@ -8,5 +8,6 @@ import type { Zone } from './zone';
 export type RawCharacterPath = {
   character: 'mario' | 'luigi' | 'peach' | 'daisy';
   startZoneId: string;
+  gameOverNarration: string;
   zones: Record<string, Zone>;
 };

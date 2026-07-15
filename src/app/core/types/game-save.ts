@@ -31,6 +31,11 @@ export interface GameSave {
    * Identifiants des Personnages dont le Chemin a été terminé.
    */
   completedPaths: string[];
+
+  /**
+   * Nombre de Zones explorées par le joueur durant la partie.
+   */
+  zonesExplored: number;
 }
 
 /**

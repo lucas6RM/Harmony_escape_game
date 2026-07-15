@@ -10,6 +10,7 @@ import type { CharacterPath, RawCharacterPath, Zone } from '../../types';
 const DEFAULT_PATH: CharacterPath = {
   character: 'mario',
   startZoneId: '',
+  gameOverNarration: '',
   zones: {},
 };
 
@@ -40,6 +41,7 @@ export class ContentLoaderService {
     return {
       character: rawPath.character,
       startZoneId: rawPath.startZoneId,
+      gameOverNarration: rawPath.gameOverNarration ?? '',
       zones: resolvedZones,
     };
   }
@@ -59,7 +61,7 @@ export class ContentLoaderService {
           this.http.get<RawCharacterPath>(`assets/content/${params}.json`)
         );
       },
-      defaultValue: { character: 'mario', startZoneId: '', zones: {} },
+      defaultValue: { character: 'mario', startZoneId: '', gameOverNarration: '', zones: {} },
     });
 
     const pathSignal = computed<CharacterPath>(() => {

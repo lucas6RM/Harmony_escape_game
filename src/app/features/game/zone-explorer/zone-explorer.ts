@@ -58,11 +58,6 @@ export class ZoneExplorer {
     return this.quizActive() && this.coins() >= 2 && this.eliminatedAnswers().length === 0;
   });
 
-  /** true si le joueur peut sauter le Quiz (quiz actif, solde >= 2) */
-  readonly canSkipQuiz = computed(() => {
-    return this.quizActive() && this.coins() >= 2;
-  });
-
   /** true si le Quiz de la Zone courante est le Quiz final */
   readonly isFinalQuiz = computed(() => {
     const quiz = this.currentQuiz();
@@ -95,6 +90,14 @@ export class ZoneExplorer {
    */
   onRestartZone(): void {
     this.preserveScroll(() => this.gameEngine.restartZone());
+  }
+
+  /**
+   * Réactive le Quiz courant après une mauvaise réponse.
+   * Le joueur rejoue le même Quiz sans reset de quizIndex.
+   */
+  onRetryQuiz(): void {
+    this.preserveScroll(() => this.gameEngine.retryQuiz());
   }
 
   /**
@@ -132,13 +135,6 @@ export class ZoneExplorer {
    */
   onBuyElimination(): void {
     this.preserveScroll(() => this.gameEngine.buyElimination());
-  }
-
-  /**
-   * Saute le Quiz courant via le GameEngineService.
-   */
-  onSkipQuiz(): void {
-    this.preserveScroll(() => this.gameEngine.skipQuiz());
   }
 
   /**
