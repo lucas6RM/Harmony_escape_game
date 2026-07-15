@@ -33,7 +33,7 @@ Refondre le flux des mauvaises réponses et ajouter le Game Over + persistance d
 - [x] Tâche 4 : Refondre `submitQuizAnswer()` pour ne plus reset `quizIndex` après mauvaise réponse + créer `retryQuiz()` qui réactive `quizActive` et clear `quizFeedback`
 - [x] Tâche 5 : Retirer le clamp `Math.max(0, ...)` dans `addCoins()` + déclencher `gameOverSignal` quand Pièces < 0
 - [x] Tâche 6 : Créer le composant `GameOverScreen` (style `VictoryScreen`) avec narration spécifique au personnage, score Zones explorées, bouton "Retour au menu" vers `/accueil` + `clearSave()`
-- [ ] Tâche 7 : Ajouter `zonesExplored` à `GameSave`, `gameOverNarration` à `CharacterPath`, persister les Pièces après chaque modification, afficher le compteur de Zones dans `GameShellComponent`
+- [x] Tâche 7 : Ajouter `zonesExplored` à `GameSave`, `gameOverNarration` à `CharacterPath`, persister les Pièces après chaque modification, afficher le compteur de Zones dans `GameShellComponent`
 - [ ] Tâche 8 : Mettre à jour le bloc pénalité dans `ZoneExplorerComponent` pour afficher "Réessayer" au lieu de "Recommencer le Quiz", mettre à jour les tests, vérifier compilation et tests
 
 ## Zone de Transit & Logs
