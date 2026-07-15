@@ -1,44 +1,58 @@
-# Issues #31 & #32 : Supprimer saut Quiz + Game Over + Persistance
+# Issue #33 : Données narratives — indices scénarisés et Game Over
 
 ## Spécification
 
-### Issue #31 - Slice 1: Supprimer le saut de Quiz et nettoyer les types
-Retirer complètement la fonctionnalité "Sauter le Quiz" du jeu : supprimer la méthode `skipQuiz()` du `GameEngineService`, retirer `skip` des types (`HintType`, `HINT_COSTS`), et enlever le bouton "Sauter" du `QuizPanelComponent`. Mettre à jour les tests associés.
+Slice 3: Données narratives — indices scénarisés et Game Over
 
-### Issue #32 - Slice 2: Mauvaise réponse moins punitive, Game Over, persistance Pièces
-Refondre le flux des mauvaises réponses et ajouter le Game Over + persistance des Pièces. Nouveau flux : plus de restartZone après erreur, le joueur perd 1 Pièce et reste sur la même question avec un bouton "Réessayer". Game Over si Pièces < 0. Persistance des Pièces et zones explorées.
+**Parent**: #30
+
+**What to build**:
+Rédiger et insérer les données narratives dans les JSON des 4 chemins.
+
+**`hintText` scénarisés** :
+Pour chaque Quiz de chaque chemin, remplacer le `hintText` actuel par une phrase scénarisée qui met en scène le personnage tiers :
+- Chemin Mario → Luigi donne l'indice
+- Chemin Luigi → Mario donne l'indice
+- Chemin Peach → Toad donne l'indice
+- Chemin Daisy → Wario donne l'indice
+
+Chaque `hintText` doit inclure une phrase d'intro narrative (ex: "Luigi sort d'un tuyau et murmure : ...") suivie de l'indice proprement dit.
+
+**`gameOverNarration`** :
+Ajouter le champ `gameOverNarration` à chaque JSON de chemin avec un texte narratif théâtral spécifique au personnage.
+
+## Acceptance criteria
+
+- [ ] Chaque Quiz du chemin Mario a un `hintText` scénarisé avec Luigi
+- [ ] Chaque Quiz du chemin Luigi a un `hintText` scénarisé avec Mario
+- [ ] Chaque Quiz du chemin Peach a un `hintText` scénarisé avec Toad
+- [ ] Chaque Quiz du chemin Daisy a un `hintText` scénarisé avec Wario
+- [ ] Chaque chemin a un `gameOverNarration` théâtral et spécifique
+- [ ] Les fichiers JSON sont valides et le jeu charge correctement les données
+
+## Blocked by
+
+- #31 (types HintType nettoyés)
+- #32 (champ `gameOverNarration` ajouté au `CharacterPath`)
 
 ## Skills à Charger
-- angular-developer
-- tdd
+- domain-modeling (pour respecter le vocabulaire du domaine)
 
 ## Standards du Projet & Commandes
 - Build : `npm run build`
 - Test : `npm run test --watch=false`
 - Lint : `npm run lint`
 
-## RÈGLES CRITIQUES
-- Utiliser le vocabulaire du domaine (CONTEXT.md) : Zone, Quiz, Pièce, Aide, Personnage, Chemin. JAMAIS utiliser les termes à éviter (Level, Question, Coin, Hint, Hero, Path...).
-- Le contenu du jeu est piloté par JSON (ADR 0001).
-- Framework : Angular moderne avec signals.
-
 ## Tableau d'Avancement
-
-### Issue #31
-- [x] Tâche 1 : Supprimer `skipQuiz()` du `GameEngineService` et retirer `skip` de `HintType` / `HINT_COSTS` dans les types
-- [x] Tâche 2 : Retirer le bouton "Sauter" du `QuizPanelComponent` et la logique de saut du `ZoneExplorerComponent`
-- [x] Tâche 3 : Mettre à jour ou retirer les tests liés à `skipQuiz`, vérifier que le jeu compile et les tests passent
-
-### Issue #32
-- [x] Tâche 4 : Refondre `submitQuizAnswer()` pour ne plus reset `quizIndex` après mauvaise réponse + créer `retryQuiz()` qui réactive `quizActive` et clear `quizFeedback`
-- [x] Tâche 5 : Retirer le clamp `Math.max(0, ...)` dans `addCoins()` + déclencher `gameOverSignal` quand Pièces < 0
-- [x] Tâche 6 : Créer le composant `GameOverScreen` (style `VictoryScreen`) avec narration spécifique au personnage, score Zones explorées, bouton "Retour au menu" vers `/accueil` + `clearSave()`
-- [x] Tâche 7 : Ajouter `zonesExplored` à `GameSave`, `gameOverNarration` à `CharacterPath`, persister les Pièces après chaque modification, afficher le compteur de Zones dans `GameShellComponent`
-- [ ] Tâche 8 : Mettre à jour le bloc pénalité dans `ZoneExplorerComponent` pour afficher "Réessayer" au lieu de "Recommencer le Quiz", mettre à jour les tests, vérifier compilation et tests
+- [x] Tâche 1 : Scénariser les hintText du chemin Mario avec Luigi (fichier `src/assets/content/mario.json`)
+- [ ] Tâche 2 : Scénariser les hintText du chemin Luigi avec Mario (fichier `src/assets/content/luigi.json`)
+- [ ] Tâche 3 : Scénariser les hintText du chemin Peach avec Toad (fichier `src/assets/content/peach.json`)
+- [ ] Tâche 4 : Scénariser les hintText du chemin Daisy avec Wario (fichier `src/assets/content/daisy.json`)
+- [ ] Tâche 5 : Vérifier les gameOverNarration et valider les JSON (build + tests)
 
 ## Zone de Transit & Logs
 ### Tâche en cours :
-- Aucune (Issue #31 terminée)
+- Aucune
 
 ### Compteur de rejets (tâche actuelle) :
 - 0 / 5
