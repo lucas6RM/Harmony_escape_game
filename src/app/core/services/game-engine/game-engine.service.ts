@@ -386,28 +386,6 @@ export class GameEngineService {
   }
 
   /**
-   * Saute le Quiz courant et avance (coûte 2 Pièces, sans récompense).
-   *
-   * @returns true si le saut a réussi, false sinon
-   */
-  skipQuiz(): boolean {
-    if (!this.quizActiveSignal()) {
-      return false;
-    }
-    const cost = HINT_COSTS.skipQuiz;
-    if (this.coinsSignal() < cost) {
-      return false;
-    }
-    this.coinsSignal.update(c => c - cost);
-    this.quizActiveSignal.set(false);
-    this.quizFeedbackSignal.set(null);
-    this.hintTextSignal.set(null);
-    this.eliminatedAnswersSignal.set([]);
-    this.advanceQuiz();
-    return true;
-  }
-
-  /**
    * Retour au menu principal — réinitialise tout l'état du jeu
    * et efface la sauvegarde.
    */

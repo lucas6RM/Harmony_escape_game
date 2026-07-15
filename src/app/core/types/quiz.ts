@@ -38,9 +38,8 @@ export interface Quiz {
  * Type d'Aide disponible pendant un Quiz.
  * - `indice` : affiche un indice textuel (coûte 1 Pièce)
  * - `elimination` : masque 2 fausses réponses (coûte 2 Pièces)
- * - `skipQuiz` : saute le Quiz et avance (coûte 2 Pièces, sans récompense)
  */
-export type HintType = 'indice' | 'elimination' | 'skipQuiz';
+export type HintType = 'indice' | 'elimination';
 
 /**
  * Coût en Pièces de chaque type d'Aide.
@@ -48,5 +47,4 @@ export type HintType = 'indice' | 'elimination' | 'skipQuiz';
 export const HINT_COSTS: Record<HintType, number> = {
   indice: 1,
   elimination: 2,
-  skipQuiz: 2,
 };
